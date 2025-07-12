@@ -1,12 +1,12 @@
 ---
 title: "Building Better Tools Together: Our Open Source Commitment"
 date: "Fri Jul 11 19:58:35 -0400 2025"
+author: Josh Priddle
 excerpt: |
   At BuiltFast, we believe the best solutions come from developers who
   understand real-world problems. That's why we're committed to giving back to
   the community that shaped our careers—sharing the utilities, scripts, and
   solutions we've built along the way.
-
 ---
 
 At BuiltFast, we believe the best solutions come from developers who
