@@ -39,13 +39,6 @@ exclude:
   - vendor
   - tailwind.config.js
 
-include:
-  - _pages
-
-# Redirect settings
-redirect_from:
-  json: false
-
 # Redirect settings
 redirect_from:
   json: false
@@ -54,7 +47,7 @@ redirect_from:
 plugins:
   - jekyll-feed
   - jekyll-gist
-  # - jekyll-github-metadata
+  - jekyll-github-metadata
   - jekyll-paginate-v2
   - jekyll-redirect-from
   - jekyll-sitemap
