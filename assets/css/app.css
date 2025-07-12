@@ -199,8 +199,8 @@ article .highlight {
     @apply min-w-0 max-w-full;
 }
 
-article .highlighter-rouge .highlight pre {
-    @apply overflow-x-auto text-sm text-slate-500 bg-slate-800 p-4 rounded-sm leading-tight min-w-0;
+article .highlighter-rouge .highlight {
+    @apply overflow-x-auto text-sm p-2 rounded-sm leading-tight min-w-0;
 }
 
 article code {
@@ -259,3 +259,45 @@ a:not([class])::after {
 a:not([class]):hover::after {
   @apply w-full;
 }
+
+/**
+ * Code formatting
+ */
+pre,
+code {
+  @apply text-base leading-tight;
+}
+
+code {
+  @apply px-1 py-0.5;
+}
+
+pre {
+  @apply p-2;
+  overflow-x: scroll;
+
+  > code {
+    border: 0;
+    @apply px-0;
+  }
+}
+
+pre,
+code,
+kbd,
+samp,
+tt {
+  font-family: var(--font-pt-mono);
+  background-color: var(--color-gray-50);
+  @apply rounded-sm;
+}
+
+.dark pre,
+.dark code,
+.dark kbd,
+.dark samp,
+.dark tt {
+  background-color: var(--color-gray-900);
+}
+
+@import './additional-styles/syntax.css';
