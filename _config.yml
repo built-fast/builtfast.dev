@@ -1,0 +1,102 @@
+# Site settings
+url: https://builtfast.dev
+title: BuiltFast Engineering
+description: >
+  The BuiltFast Engineering team is a founder led group of web hosting
+  veterans who are passionate about building fast, reliable, and secure
+  platforms and software.
+timezone: 'America/New_York'
+
+analytics:
+  google: UA-FIXME
+
+# Plugin settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# Permalink settings
+permalink: '/blog/:title/'
+
+# Pagination settings
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: '/page:num/'
+  title: 'Page :num'
+  sort_reverse: true
+
+# Files to exclude
+exclude:
+  - .tags
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - bin
+  - vendor
+  - tailwind.config.js
+
+include:
+  - _pages
+
+# Redirect settings
+redirect_from:
+  json: false
+
+# Redirect settings
+redirect_from:
+  json: false
+
+# Gems
+plugins:
+  - jekyll-feed
+  - jekyll-gist
+  # - jekyll-github-metadata
+  - jekyll-paginate-v2
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-tailwind
+  - jemoji
+
+# Tailwind configuration
+tailwind:
+  input: "assets/css/app.css"
+  output: "_site/assets/css/app.css"
+  config: "tailwind.config.js"
+
+# Collections
+collections:
+  people:
+    output: false
+  projects:
+    output: true
+  oss:
+    output: true
+
+# Default values frontmatter
+defaults:
+  - scope:
+      path: "_projects/*"
+      type: "projects"
+    values:
+      layout: "page"
+      permalink: /projects/:name/
+
+  - scope:
+      path: "_oss/*"
+      type: "oss"
+    values:
+      layout: "page"
+      permalink: /oss/:name/
+
+  # Use the "post" layout for all posts
+  # If no category is specified, default to "blog"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      category: "blog"

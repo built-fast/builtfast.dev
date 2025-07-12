@@ -1,0 +1,11 @@
+{
+  "_layouts/*": {
+      "type": "layout"
+  },
+  "_includes/*": {
+      "type": "include"
+  },
+  "_pages/*": {
+      "type": "page"
+  }
+}

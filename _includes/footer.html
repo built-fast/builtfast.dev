@@ -1,0 +1,23 @@
+<footer class="border-t border-slate-200 dark:border-slate-800">
+  <div class="py-8">
+    <div class="text-center md:flex md:items-center md:justify-between">
+
+      <!-- Social links -->
+      <ul class="inline-flex mb-4 md:order-1 md:ml-4 md:mb-0 space-x-2">
+        <li>
+          <a class="flex justify-center items-center text-slate-400 dark:text-slate-500 hover:text-cyan-500 dark:hover:text-cyan-500 transition duration-150 ease-in-out" href="https://github.com/built-fast" aria-label="GitHub">
+            {% include icons/github.svg %}
+          </a>
+        </li>
+        <li>
+          <a class="flex justify-center items-center text-slate-400 dark:text-slate-500 hover:text-cyan-500 dark:hover:text-cyan-500 transition duration-150 ease-in-out" href="https://www.linkedin.com/company/builtfast/posts/?feedView=all" aria-label="LinkedIn">
+            {% include icons/linkedin.svg %}
+          </a>
+        </li>
+      </ul>
+
+      <!-- Copyright -->
+      <div class="text-sm text-slate-500 dark:text-slate-400">Copyright &copy; {{ site.time | date: '%Y' }} BuiltFast</div>
+    </div>
+  </div>
+</footer>

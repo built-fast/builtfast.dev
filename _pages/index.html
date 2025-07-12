@@ -1,0 +1,9 @@
+---
+layout: default
+homepage: true
+permalink: /
+---
+
+{% include latest-articles/list.html %}
+{% assign oss = site.oss | where_exp: "item", "item.hidden != true" %}
+{% include projects/list.html title="Open Source Projects" collection=oss %}

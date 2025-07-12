@@ -1,0 +1,8 @@
+---
+layout: page
+title: Projects
+permalink: /projects/
+---
+
+{% assign collection = site.projects | where_exp: "item", "item.hidden != true" %}
+{% include projects/list.html collection=collection %}

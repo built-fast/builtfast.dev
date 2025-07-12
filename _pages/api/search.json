@@ -1,0 +1,12 @@
+---
+permalink: /api/search.json
+---
+[{%- assign sorted_posts = site.posts | sort: 'date' | reverse -%}
+{%- for post in sorted_posts -%}
+{"url": "{{ post.url | relative_url }}", "title": {{ post.title | jsonify }}, "content": {{ post.content | strip_html | normalize_whitespace | jsonify }}, "date": "{{ post.date | date: '%Y-%m-%d' }}", "excerpt": {{ post.excerpt | strip_html | normalize_whitespace | jsonify }}, "type": "post"{%- if post.author -%}{%- assign author_person = site.people | where: "name", post.author | first -%}{%- if author_person -%}, "author": {"name": {{ author_person.name | jsonify }}, "role": {{ author_person.role | jsonify }}{%- if author_person.github -%}, "github_url": "https://github.com/{{ author_person.github }}"{%- endif -%}{%- if author_person.linkedin -%}, "linkedin_url": "https://linkedin.com/in/{{ author_person.linkedin }}"{%- endif -%}}{%- endif -%}{%- endif -%}}{%- if site.oss.size > 0 -%},{%- endif -%}
+{%- endfor -%}
+{%- assign sorted_oss = site.oss | sort: 'date' | reverse -%}
+{%- for project in sorted_oss -%}
+{"url": "{{ project.url | relative_url }}", "title": {{ project.title | jsonify }}, "content": {{ project.content | strip_html | normalize_whitespace | jsonify }}, "date": "{{ project.date | date: '%Y-%m-%d' }}", "excerpt": {{ project.excerpt | strip_html | normalize_whitespace | jsonify }}, "type": "oss"}{%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]
