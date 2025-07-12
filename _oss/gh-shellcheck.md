@@ -110,8 +110,7 @@ are then applied to remove any matching files from the final set.
 In your workflow, do something like:
 
 ```yaml
-{% raw %}
-jobs:
+{% raw %}jobs:
   shellcheck:
     name: Run shellcheck
 
@@ -128,8 +127,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh extension install built-fast/gh-shellcheck
-          gh shellcheck
-{% endraw %}
+          gh shellcheck{% endraw %}
 ```
 
 ## License
