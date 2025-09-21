@@ -9,7 +9,7 @@ on:
       - '.github/workflows/*.yml'
 
 jobs:
-  shellcheck:
+  action-lint:
     name: Run actionlint
 
     runs-on: ubuntu-latest
