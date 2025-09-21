@@ -2,6 +2,8 @@
 layout: post
 title: "Automating Homebrew Tap Updates with GitHub Actions"
 date: 2025-09-20
+date: "Sat Sep 20 18:00:00 -0400 2025"
+author: Josh Priddle
 categories: [homebrew, github-actions, automation, devops]
 tags: [macos, cli-tools, workflow, release-automation]
 ---
