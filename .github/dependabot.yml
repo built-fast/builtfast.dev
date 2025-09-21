@@ -13,9 +13,10 @@ updates:
       time: "11:00"
       timezone: "America/New_York"
     groups:
-      composer:
+      bundler:
         patterns:
           - "*"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
