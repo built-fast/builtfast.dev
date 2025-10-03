@@ -1,3 +1,4 @@
+{%- assign asset_hash = site.time | date: "%s" -%}
 <div x-data="handleSearch" @keydown.slash.window="openSearch">
   <!-- Search button -->
   <div class="flex flex-col justify-center">
@@ -139,7 +140,7 @@
       async loadPosts() {
         this.loading = true;
         try {
-          const response = await fetch('/api/search.json');
+          const response = await fetch('/api/search.json?_t={{ asset_hash }}');
           if (!response.ok) {
             throw new Error('Failed to search');
           }
