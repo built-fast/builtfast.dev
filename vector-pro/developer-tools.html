@@ -1,0 +1,375 @@
+---
+layout: default
+title: Vector Pro Developer Tools
+description: PHP SDK, CLI, WP-CLI commands, and MCP integration for working with Vector Pro.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="gradient-bg text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-cyan/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    Developer Tools
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Tools to make working with the Vector platform easier&mdash;whether you're integrating into your application, managing sites from the command line, or maintaining WordPress installations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-brand-cyan font-medium">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="https://api.builtfast.com/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference <span class="text-gray-400">&#8599;</span></a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>PHP SDK</h2>
+                    <p>A typed PHP client for the Vector Pro API with full IDE autocompletion and proper error handling.</p>
+
+                    <h3>Installation</h3>
+                </div>
+
+                <pre><code class="language-bash">composer require built-fast/vector-pro-sdk</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>Requires PHP 8.3+ and a PSR-18 HTTP client:</p>
+                </div>
+
+                <pre><code class="language-bash">composer require guzzlehttp/guzzle</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Basic Usage</h3>
+                </div>
+
+                <pre><code class="language-php">use VectorPro\Sdk\Client;
+
+$client = new Client('your-api-key');
+
+// List all sites
+$sites = $client->getSites();
+
+// Create a site
+$site = $client->createSite([
+    'partner_customer_id' => 'cust_123',
+    'dev_php_version' => '8.3',
+]);
+
+// Create an environment
+$environment = $client->createEnvironment($site['id'], [
+    'name' => 'production',
+    'php_version' => '8.3',
+    'is_production' => true,
+]);
+
+// Deploy
+$deployment = $client->createDeployment($site['id'], $environment['id']);</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Available Methods</h3>
+                    <p>The SDK covers all API endpoints:</p>
+
+                    <h4>Sites</h4>
+                </div>
+
+                <pre><code class="language-php">$client->getSites(page: 1, perPage: 15);
+$client->getSite('site_id');
+$client->createSite([...]);
+$client->updateSite('site_id', [...]);
+$client->deleteSite('site_id');
+$client->suspendSite('site_id');
+$client->unsuspendSite('site_id');
+$client->purgeSiteCache('site_id', ['paths' => ['/css/*']]);</code></pre>
+
+                <div class="prose max-w-none">
+                    <h4>Environments</h4>
+                </div>
+
+                <pre><code class="language-php">$client->getEnvironments('site_id');
+$client->getEnvironment('site_id', 'env_id');
+$client->createEnvironment('site_id', [...]);
+$client->updateEnvironment('site_id', 'env_id', [...]);
+$client->deleteEnvironment('site_id', 'env_id');</code></pre>
+
+                <div class="prose max-w-none">
+                    <h4>Deployments</h4>
+                </div>
+
+                <pre><code class="language-php">$client->getDeployments('site_id', 'env_id');
+$client->getDeployment('site_id', 'env_id', 'deploy_id');
+$client->createDeployment('site_id', 'env_id');
+$client->rollbackDeployment('site_id', 'env_id', 'deploy_id');</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Error Handling</h3>
+                </div>
+
+                <pre><code class="language-php">use VectorPro\Sdk\Exceptions\ClientException;
+
+try {
+    $client->createSite([]);
+} catch (ClientException $e) {
+    if ($e->isValidationError()) {
+        $errors = $e->getValidationErrors();
+    }
+    if ($e->isAuthenticationError()) { /* 401 */ }
+    if ($e->isNotFoundError()) { /* 404 */ }
+    if ($e->isServerError()) { /* 5xx */ }
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Laravel Integration</h3>
+                </div>
+
+                <pre><code class="language-php">// config/services.php
+'vector' => [
+    'api_key' => env('VECTOR_API_KEY'),
+],
+
+// Usage
+$client = new Client(config('services.vector.api_key'));</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Vector CLI</h2>
+                    <p>Manage sites and deployments from your terminal. Outputs human-readable tables interactively, JSON when piped.</p>
+
+                    <h3>Installation</h3>
+                </div>
+
+                <pre><code class="language-bash">composer global require built-fast/vector-pro-cli</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>Or download the PHAR from releases.</p>
+
+                    <h3>Authentication</h3>
+                </div>
+
+                <pre><code class="language-bash">vector auth:login                      # Interactive
+vector auth:login --token=your-token   # Direct
+export VECTOR_API_KEY=your-token       # Environment variable
+
+vector auth:status                     # Check status
+vector auth:logout                     # Remove stored token</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Site Management</h3>
+                </div>
+
+                <pre><code class="language-bash">vector site:list
+vector site:show &lt;site-id&gt;
+vector site:create --customer-id=cust_123 --php-version=8.3
+vector site:update &lt;site-id&gt; --php-version=8.4
+vector site:delete &lt;site-id&gt;
+vector site:suspend &lt;site-id&gt;
+vector site:unsuspend &lt;site-id&gt;
+vector site:purge-cache &lt;site-id&gt;
+vector site:logs &lt;site-id&gt; --type=error --lines=200</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Environments & Deployments</h3>
+                </div>
+
+                <pre><code class="language-bash">vector env:list --site=&lt;site-id&gt;
+vector env:create --site=&lt;site-id&gt; --name=staging --php-version=8.3
+vector env:delete &lt;env-id&gt; --site=&lt;site-id&gt;
+
+vector deploy:list --site=&lt;site-id&gt; --env=&lt;env-id&gt;
+vector deploy:create --site=&lt;site-id&gt; --env=&lt;env-id&gt;
+vector deploy:rollback &lt;deploy-id&gt; --site=&lt;site-id&gt; --env=&lt;env-id&gt;</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Output Formats</h3>
+                </div>
+
+                <pre><code class="language-bash">vector site:list              # Table output in terminal
+vector site:list | jq .       # JSON output when piped
+vector site:list --json       # Force JSON output</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>WP-CLI Commands</h2>
+                    <p>Every Vector site comes with extended WP-CLI commands for site management, diagnostics, and migrations. These are available via SSH on your development containers.</p>
+
+                    <h3>Site Blueprints</h3>
+                    <p>Export and import WordPress sites as portable archives&mdash;useful for migrating configured sites or creating templates.</p>
+                </div>
+
+                <pre><code class="language-bash"># Export a site
+wp vector blueprint export backup.tar.gz
+wp vector blueprint export backup.tar.gz --include-uploads --max-upload-size=100M
+wp vector blueprint export backup.tar.gz --include-plugins=my-plugin,another-plugin
+wp vector blueprint export backup.tar.gz --exclude-tables=wp_sessions,wp_logs
+
+# Import a site
+wp vector blueprint import backup.tar.gz --target-url=https://newsite.com
+wp vector blueprint import backup.tar.gz --target-url=https://newsite.com --dry-run
+
+# Validate an archive
+wp vector blueprint validate backup.tar.gz</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Database Cleanup</h3>
+                    <p>Clean up common sources of database bloat:</p>
+                </div>
+
+                <pre><code class="language-bash">wp vector cleanup revisions              # Delete all revisions
+wp vector cleanup revisions --keep=5     # Keep 5 revisions per post
+wp vector cleanup transients             # Delete expired transients
+wp vector cleanup trash                  # Empty trash
+wp vector cleanup orphans                # Delete orphaned postmeta
+wp vector cleanup all                    # Run all cleanup tasks
+wp vector cleanup all --dry-run          # Preview what would be deleted</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Database Diagnostics</h3>
+                </div>
+
+                <pre><code class="language-bash">wp vector db                             # Show database summary
+wp vector db tables                      # List tables with sizes
+wp vector db revisions                   # Count revisions per post
+wp vector db transients                  # Show transient stats
+wp vector db orphans                     # Find orphaned data</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Media Management</h3>
+                </div>
+
+                <pre><code class="language-bash">wp vector media                          # Show media library summary
+wp vector media orphaned                 # Find files not in media library
+wp vector media missing                  # Find attachments with missing files
+wp vector media duplicates               # Find duplicate files</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Options Inspection</h3>
+                </div>
+
+                <pre><code class="language-bash">wp vector options autoload               # List autoloaded options by size
+wp vector options autoload --limit=50    # Show more options
+wp vector options search &lt;pattern&gt;       # Search option names/values
+wp vector options size                   # Show total options table size</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Cron Inspection</h3>
+                </div>
+
+                <pre><code class="language-bash">wp vector cron                           # List scheduled events
+wp vector cron --overdue                 # Show only overdue events
+wp vector cron --hook=woocommerce        # Filter by hook name
+wp vector cron status                    # Show cron system status</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Other Commands</h3>
+                </div>
+
+                <pre><code class="language-bash">wp vector env                            # PHP, WordPress, database, server info
+wp vector health                         # Site health summary
+wp vector security                       # Run security checks
+wp vector users admins                   # List all admin users
+wp vector uploads-size                   # Check uploads size
+wp change-domain old.example.com new.example.com  # Change site domain
+wp user impersonate admin                # Generate one-time login URL</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Claude Integration (MCP)</h2>
+                    <p>Vector Pro supports the Model Context Protocol (MCP), allowing you to manage hosting infrastructure through Claude. Instead of writing API calls or clicking through dashboards, use natural language to perform operations.</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-brand-dark to-brand-dark/90 rounded-2xl p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/20 rounded-full filter blur-3xl"></div>
+                    <div class="relative z-10">
+                        <h3 class="font-display text-xl font-bold mb-4">Setup with Vector CLI</h3>
+                        <p class="text-gray-300 mb-4">The fastest way to get started:</p>
+                        <pre class="bg-black/30 rounded-lg p-4 text-sm"><code>vector mcp setup</code></pre>
+                        <p class="text-gray-400 text-sm mt-4">This will automatically configure Claude Desktop with your API credentials.</p>
+                        <a href="/vector-pro/mcp/" class="inline-flex items-center gap-2 text-brand-cyan hover:text-white mt-4 text-sm font-medium">
+                            Full MCP documentation
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h3>What You Can Do</h3>
+                    <p>Once configured, ask Claude things like:</p>
+                    <ul>
+                        <li>"List my Vector sites"</li>
+                        <li>"Deploy site abc123 to staging"</li>
+                        <li>"What's the status of the last deployment?"</li>
+                        <li>"Purge the CDN cache for production"</li>
+                        <li>"Block IP 192.168.1.100 on site abc123"</li>
+                        <li>"Rollback production to the previous deployment"</li>
+                    </ul>
+
+                    <h2>Quick Reference</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Task</th>
+                                <th class="text-left p-4 font-semibold">Tool</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100"><td class="p-4">Integrate Vector API into your app</td><td class="p-4">PHP SDK</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Manage sites from terminal</td><td class="p-4">Vector CLI</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">CI/CD deployments</td><td class="p-4">Vector CLI or PHP SDK</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Manage via natural language</td><td class="p-4">Claude (MCP)</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Migrate a WordPress site</td><td class="p-4"><code>wp vector blueprint</code></td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Clean up database bloat</td><td class="p-4"><code>wp vector cleanup</code></td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Diagnose performance issues</td><td class="p-4"><code>wp vector db</code>, <code>wp vector options</code></td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Audit media library</td><td class="p-4"><code>wp vector media</code></td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Security check</td><td class="p-4"><code>wp vector security</code></td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">Generate support login</td><td class="p-4"><code>wp user impersonate</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Nav -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/webhooks/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Webhooks</span>
+                        </a>
+                        <a href="/vector-pro/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <span>Back to Overview</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

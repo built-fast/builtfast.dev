@@ -1,0 +1,451 @@
+---
+layout: default
+title: Vector Pro Core Workflows
+description: Common operations with Vector Pro - managing sites, environments, deployments, cache, SSH keys, and secrets.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="gradient-bg text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-cyan/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    Core Workflows
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Common operations you'll perform with Vector Pro after initial setup. Each workflow includes the relevant API calls and important considerations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-brand-cyan font-medium">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="https://api.builtfast.com/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference <span class="text-gray-400">&#8599;</span></a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>Managing Sites</h2>
+
+                    <h3>Updating a Site</h3>
+                    <p>Update a site's metadata with a PUT request. Only the fields you include will be updated.</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT https://api.builtfast.com/api/v1/vector/sites/{site_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "partner_customer_id": "cust_67890",
+    "tags": ["wordpress", "enterprise"]
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p><strong>Updatable fields:</strong></p>
+                    <ul>
+                        <li><code>partner_customer_id</code> &mdash; Update your internal customer reference</li>
+                        <li><code>tags</code> &mdash; Update categorization tags (pass <code>null</code> to clear)</li>
+                    </ul>
+
+                    <h3>Suspending a Site</h3>
+                    <p>Suspend a site's development container to reduce costs during inactive periods. This scales down the container while preserving all data for quick resumption.</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT https://api.builtfast.com/api/v1/vector/sites/{site_id}/suspend \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>While suspended:</p>
+                    <ul>
+                        <li>The development environment is not accessible</li>
+                        <li>WP Admin and SFTP are unavailable</li>
+                        <li>Deployed environments continue to function normally</li>
+                        <li>All data is preserved</li>
+                    </ul>
+
+                    <h3>Unsuspending a Site</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT https://api.builtfast.com/api/v1/vector/sites/{site_id}/unsuspend \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Deleting a Site</h3>
+                    <p>Delete a site permanently. This is irreversible.</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X DELETE https://api.builtfast.com/api/v1/vector/sites/{site_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="bg-brand-orange/10 border-l-4 border-brand-orange p-6 rounded-r-xl">
+                    <p class="text-gray-700 font-semibold mb-2">Important</p>
+                    <p class="text-gray-600 text-sm">All environments must be deleted before you can delete a site. Delete each environment first, then delete the site.</p>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Managing Environments</h2>
+
+                    <h3>Creating a Staging Environment</h3>
+                    <p>Most sites need a staging environment for testing before production. Create one with <code>is_production: false</code>:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "staging",
+    "php_version": "8.3",
+    "custom_domain": null,
+    "is_production": false
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>Staging environments:</p>
+                    <ul>
+                        <li>Run on the same serverless infrastructure as production</li>
+                        <li>Do not include CDN (requests go directly to origin)</li>
+                        <li>Are accessible via the generated subdomain</li>
+                        <li>Can have custom domains attached if needed</li>
+                    </ul>
+
+                    <h3>Updating an Environment</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "custom_domain": "www.customersite.com",
+    "tags": ["live", "primary"]
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p><strong>Updatable fields:</strong></p>
+                    <ul>
+                        <li><code>name</code> &mdash; Rename the environment</li>
+                        <li><code>is_production</code> &mdash; Promote to production or demote</li>
+                        <li><code>custom_domain</code> &mdash; Attach or change custom domain</li>
+                        <li><code>tags</code> &mdash; Update categorization tags</li>
+                    </ul>
+
+                    <h3>Attaching a Custom Domain</h3>
+                    <p>When your customer wants to use their own domain:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "custom_domain": "www.customersite.com"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>After attaching the domain:</p>
+                    <ol>
+                        <li>Vector Pro provisions an SSL certificate automatically</li>
+                        <li>The customer needs to update their DNS to point to your infrastructure</li>
+                        <li>You can check SSL provisioning status via the SSL endpoint</li>
+                    </ol>
+
+                    <h3>Checking SSL Status</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/ssl \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>The <code>provisioning_step</code> field tracks progress: <code>requesting_cert</code> &rarr; <code>waiting_cert</code> &rarr; <code>deploying</code> &rarr; <code>configuring_dns</code> &rarr; <code>ready</code> &rarr; <code>waiting_custom_dns</code> &rarr; <code>provisioning_cdn_ssl</code> &rarr; <code>complete</code></p>
+
+                    <h3>Deleting an Environment</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X DELETE https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Deployments</h2>
+
+                    <h3>Triggering a Deployment</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/deployments \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Monitoring Deployment Status</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/deployments/{deployment_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>If a deployment fails, check the <code>stdout</code> and <code>stderr</code> fields for diagnostic information.</p>
+
+                    <h3>Rolling Back</h3>
+                    <p>Roll back to the last successful deployment:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/rollback \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>To roll back to a specific deployment:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/rollback \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_deployment_id": "01JFGXK4NQRST5VWX9YZ0ABCDI"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Cache Management</h2>
+                    <p>Production environments include CDN caching. When you need to clear cached content:</p>
+
+                    <h3>Full Cache Purge</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/purge-cache \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Purge by Cache Tag</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/purge-cache \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cache_tag": "images"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Purge Specific URL</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/purge-cache \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://www.customersite.com/style.css"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>SSH Keys</h2>
+                    <p>Manage SSH access to development containers.</p>
+
+                    <h3>Adding an SSH Key</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/ssh-keys \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "ssh_key_id": "01JFGXK4NQRST5VWX9YZ0ABCDK"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Listing Site SSH Keys</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/sites/{site_id}/ssh-keys \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Removing an SSH Key</h3>
+                </div>
+
+                <pre><code class="language-bash">curl -X DELETE https://api.builtfast.com/api/v1/vector/sites/{site_id}/ssh-keys/{ssh_key_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Secrets Management</h2>
+                    <p>Store sensitive configuration values that are injected as environment variables during deployment.</p>
+
+                    <h3>Global Secrets</h3>
+                    <p>Global secrets are available to all sites in your account:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/global-secrets \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "STRIPE_SECRET_KEY",
+    "value": "sk_live_..."
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Environment Secrets</h3>
+                    <p>Environment-specific secrets override global secrets:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/secrets \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "STRIPE_SECRET_KEY",
+    "value": "sk_test_..."
+  }'</code></pre>
+
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-brand-cyan mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold text-gray-900 mb-1">Note</p>
+                            <p>Secret values are never returned in API responses. You can update or delete secrets, but you cannot retrieve the stored value.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Event Logs</h2>
+                    <p>View an audit trail of activity in your account:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/events \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>Events are retained for 90 days and include site events, environment events, deployment events, CDN and DNS events, SSH key changes, and more.</p>
+
+                    <h2>Quick Reference</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Operation</th>
+                                <th class="text-left p-4 font-semibold">Method</th>
+                                <th class="text-left p-4 font-semibold">Endpoint</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Update site</td>
+                                <td class="p-4"><code>PUT</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Suspend site</td>
+                                <td class="p-4"><code>PUT</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/suspend</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Unsuspend site</td>
+                                <td class="p-4"><code>PUT</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/unsuspend</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Delete site</td>
+                                <td class="p-4"><code>DELETE</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Update environment</td>
+                                <td class="p-4"><code>PUT</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Delete environment</td>
+                                <td class="p-4"><code>DELETE</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Get SSL status</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}/ssl</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Create deployment</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}/deployments</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Rollback</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}/rollback</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Purge cache</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/purge-cache</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">List events</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/events</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Next CTA -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/getting-started/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Getting Started</span>
+                        </a>
+                        <a href="/vector-pro/webhooks/" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark/90 transition group">
+                            <span>Next: Webhooks</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

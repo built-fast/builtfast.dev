@@ -1,0 +1,388 @@
+---
+layout: default
+title: Vector Pro Webhooks & Events
+description: Real-time event system for automating workflows, syncing data, and building integrations with Vector Pro.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="gradient-bg text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-cyan/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    Webhooks & Events
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Real-time event system that notifies your applications when things happen on your account. Use webhooks to automate workflows, sync data, and build integrations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-brand-cyan font-medium">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="https://api.builtfast.com/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference <span class="text-gray-400">&#8599;</span></a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>Overview</h2>
+                    <p>When events occur in Vector&mdash;site creation, deployments, environment changes&mdash;the system:</p>
+                    <ol>
+                        <li><strong>Logs the event</strong> to your account's event history</li>
+                        <li><strong>Dispatches webhooks</strong> to any subscribed endpoints</li>
+                        <li><strong>Retries failed deliveries</strong> with exponential backoff</li>
+                    </ol>
+
+                    <h2>Event Types</h2>
+                    <h3>Site Events</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Event</th>
+                                <th class="text-left p-4 font-semibold">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.pending</code></td><td class="p-4">Site provisioning has been queued</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.created</code></td><td class="p-4">Site has been fully provisioned</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.updated</code></td><td class="p-4">Site settings have been modified</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.deleted</code></td><td class="p-4">Site has been terminated</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.suspended</code></td><td class="p-4">Site has been suspended</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.site.unsuspended</code></td><td class="p-4">Site has been unsuspended</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h3>Environment Events</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Event</th>
+                                <th class="text-left p-4 font-semibold">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.environment.created</code></td><td class="p-4">Environment has been created</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.environment.updated</code></td><td class="p-4">Environment settings have been modified</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.environment.deleted</code></td><td class="p-4">Environment has been deleted</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.environment.suspended</code></td><td class="p-4">Environment has been suspended</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.environment.unsuspended</code></td><td class="p-4">Environment has been unsuspended</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h3>Deployment Events</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Event</th>
+                                <th class="text-left p-4 font-semibold">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.deployment.started</code></td><td class="p-4">Deployment has started</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.deployment.completed</code></td><td class="p-4">Deployment completed successfully</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4"><code>vector.deployment.failed</code></td><td class="p-4">Deployment failed</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Webhook Types</h2>
+                    <p>Vector supports two webhook types:</p>
+
+                    <h3>HTTP Webhooks</h3>
+                    <p>Standard webhooks that POST JSON payloads to your HTTPS endpoint. Includes a cryptographic signature for verification.</p>
+                    <ul>
+                        <li><strong>URL requirement:</strong> Must use HTTPS</li>
+                        <li><strong>Authentication:</strong> HMAC-SHA256 signature in <code>X-Vector-Signature</code> header</li>
+                        <li><strong>Content-Type:</strong> <code>application/json</code></li>
+                    </ul>
+
+                    <h3>Slack Webhooks</h3>
+                    <p>Native Slack integration that formats events as rich Block Kit messages.</p>
+                    <ul>
+                        <li><strong>URL requirement:</strong> Must be a Slack incoming webhook URL</li>
+                        <li><strong>Authentication:</strong> URL-based (no secret required)</li>
+                        <li><strong>Format:</strong> Slack Block Kit with fields and context</li>
+                    </ul>
+
+                    <h2>Webhook Payload Structure</h2>
+                    <p>HTTP webhooks receive JSON payloads with this structure:</p>
+                </div>
+
+                <pre><code class="language-json">{
+  "event": "vector.site.created",
+  "occurred_at": "2025-01-20T14:30:00+00:00",
+  "data": {
+    "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+    "type": "vector_site",
+    "domain": "happy-panda.yourpartnerdomain.com",
+    "name": "My Site",
+    "region": "us-east-1"
+  }
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Signature Verification</h2>
+                    <p>Always verify webhook authenticity using the <code>X-Vector-Signature</code> header. This prevents attackers from spoofing webhook requests.</p>
+
+                    <h3>Header Format</h3>
+                </div>
+
+                <pre><code>X-Vector-Signature: t=1705762200,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Verification Steps</h3>
+                    <ol>
+                        <li><strong>Parse the header</strong> to extract timestamp (<code>t</code>) and signature (<code>v1</code>)</li>
+                        <li><strong>Build the signed payload:</strong> <code>{timestamp}.{raw_request_body}</code></li>
+                        <li><strong>Compute expected signature:</strong> HMAC-SHA256 using your webhook secret</li>
+                        <li><strong>Compare signatures</strong> using constant-time comparison</li>
+                        <li><strong>Validate timestamp</strong> is within acceptable tolerance (recommended: 5 minutes)</li>
+                    </ol>
+
+                    <h3>PHP Example</h3>
+                </div>
+
+                <pre><code class="language-php">function verifyWebhookSignature(Request $request, string $secret): void
+{
+    $header = $request->header('X-Vector-Signature');
+
+    if (!preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches)) {
+        throw new Exception('Invalid signature header format');
+    }
+
+    $timestamp = $matches[1];
+    $signature = $matches[2];
+
+    // Build signed payload
+    $signedPayload = $timestamp . '.' . $request->getContent();
+
+    // Compute expected signature
+    $expected = hash_hmac('sha256', $signedPayload, $secret);
+
+    // Constant-time comparison
+    if (!hash_equals($expected, $signature)) {
+        throw new Exception('Invalid signature');
+    }
+
+    // Validate timestamp (5 minute tolerance)
+    if (abs(time() - (int) $timestamp) > 300) {
+        throw new Exception('Request timestamp outside tolerance');
+    }
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Node.js Example</h3>
+                </div>
+
+                <pre><code class="language-javascript">const crypto = require('crypto');
+
+function verifyWebhookSignature(req, secret) {
+    const header = req.headers['x-vector-signature'];
+    const match = header.match(/t=(\d+),v1=([a-f0-9]+)/);
+
+    if (!match) {
+        throw new Error('Invalid signature header format');
+    }
+
+    const [, timestamp, signature] = match;
+
+    // Build signed payload
+    const signedPayload = `${timestamp}.${req.rawBody}`;
+
+    // Compute expected signature
+    const expected = crypto
+        .createHmac('sha256', secret)
+        .update(signedPayload)
+        .digest('hex');
+
+    // Constant-time comparison
+    if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature))) {
+        throw new Error('Invalid signature');
+    }
+
+    // Validate timestamp (5 minute tolerance)
+    if (Math.abs(Date.now() / 1000 - parseInt(timestamp)) > 300) {
+        throw new Error('Request timestamp outside tolerance');
+    }
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Retry Behavior</h2>
+                    <p>Failed webhook deliveries are automatically retried with exponential backoff.</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Attempt</th>
+                                <th class="text-left p-4 font-semibold">Delay</th>
+                                <th class="text-left p-4 font-semibold">Cumulative Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100"><td class="p-4">1</td><td class="p-4">Immediate</td><td class="p-4">0</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">2</td><td class="p-4">~42 seconds</td><td class="p-4">~42 seconds</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">3</td><td class="p-4">~2.5 minutes</td><td class="p-4">~3 minutes</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">4</td><td class="p-4">~9 minutes</td><td class="p-4">~12 minutes</td></tr>
+                            <tr class="border-t border-gray-100"><td class="p-4">5</td><td class="p-4">~30 minutes</td><td class="p-4">~42 minutes</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="prose max-w-none">
+                    <p><strong>Maximum attempts:</strong> 5</p>
+
+                    <h2>Best Practices</h2>
+
+                    <h3>Respond Quickly</h3>
+                    <p>Return a 2xx response as quickly as possible. Process the webhook payload asynchronously to avoid timeouts.</p>
+                </div>
+
+                <pre><code class="language-php">// Good: Queue for async processing
+public function handleWebhook(Request $request)
+{
+    ProcessWebhookJob::dispatch($request->all());
+
+    return response()->json(['received' => true]);
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Handle Duplicates</h3>
+                    <p>Webhooks may be delivered more than once. Use the <code>X-Vector-Delivery</code> header to deduplicate.</p>
+
+                    <h3>Protect Your Secret</h3>
+                    <ul>
+                        <li>Store your webhook secret securely (environment variables, secrets manager)</li>
+                        <li>Rotate secrets periodically using the rotate-secret endpoint</li>
+                        <li>Never log or expose the webhook secret</li>
+                    </ul>
+
+                    <h2>Creating a Webhook</h2>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/webhooks \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "http",
+    "url": "https://your-app.com/webhooks/vector",
+    "events": [
+      "vector.site.created",
+      "vector.deployment.completed",
+      "vector.deployment.failed"
+    ],
+    "enabled": true
+  }'</code></pre>
+
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-brand-cyan mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold text-gray-900 mb-1">Important</p>
+                            <p>The <code>secret</code> is only returned when creating a webhook or rotating the secret. Store it securely&mdash;you won't see it again.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Creating a Slack Webhook</h2>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/webhooks \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "slack",
+    "url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
+    "events": [
+      "vector.deployment.completed",
+      "vector.deployment.failed"
+    ],
+    "enabled": true
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Rotating a Webhook Secret</h2>
+                    <p>If your secret is compromised, rotate it immediately:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST "https://api.builtfast.com/api/v1/webhooks/{webhook_id}/rotate-secret" \
+  -H "Authorization: Bearer {your-api-token}"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>The old secret is invalidated immediately. Update your webhook handler with the new secret before the next delivery.</p>
+
+                    <h2>Disabling a Webhook</h2>
+                </div>
+
+                <pre><code class="language-bash">curl -X PUT "https://api.builtfast.com/api/v1/webhooks/{webhook_id}" \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{"enabled": false}'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>Disabled webhooks will not receive new deliveries but can be re-enabled at any time.</p>
+                </div>
+
+                <!-- Next CTA -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/core-workflows/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Core Workflows</span>
+                        </a>
+                        <a href="/vector-pro/developer-tools/" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark/90 transition group">
+                            <span>Next: Developer Tools</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

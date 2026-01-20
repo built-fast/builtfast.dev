@@ -1,0 +1,334 @@
+---
+layout: default
+title: Getting Started with Vector Pro
+description: Walk through your first interactions with the Vector Pro API - create a site, set up an environment, and trigger your first deployment.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="gradient-bg text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-cyan/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    Getting Started
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Walk through your first interactions with the Vector Pro API. By the end, you'll have created a site, set up an environment, and triggered your first deployment.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-brand-cyan font-medium">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="https://api.builtfast.com/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference <span class="text-gray-400">&#8599;</span></a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>What You'll Need</h2>
+                    <p>After onboarding, BuiltFast provides you with:</p>
+                    <ul>
+                        <li><strong>Your partner domain</strong> &mdash; The domain where your customers' sites will live (e.g., <code>yourpartnerdomain.com</code>)</li>
+                        <li><strong>API credentials</strong> &mdash; A Bearer token for authenticating API requests</li>
+                        <li><strong>Account access</strong> &mdash; Your account is pre-configured and ready to use</li>
+                    </ul>
+                    <p>If you're missing any of these, reach out to your BuiltFast contact.</p>
+
+                    <h2>Authentication</h2>
+                    <p>All API requests require authentication via Bearer token. Include your token in the <code>Authorization</code> header:</p>
+                </div>
+
+                <pre><code class="language-bash">Authorization: Bearer {your-api-token}</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>The API is hosted at <code>https://api.builtfast.com</code>. All requests should use HTTPS.</p>
+                    <p><strong>Example request:</strong></p>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/sites \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>If authentication fails, you'll receive a <code>401 Unauthenticated</code> response.</p>
+
+                    <h2>API Response Format</h2>
+                    <p>All responses follow a consistent structure:</p>
+                </div>
+
+                <pre><code class="language-json">{
+  "data": { ... },
+  "message": "Description of what happened",
+  "http_status": 200
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>For list endpoints, <code>data</code> is an array. For single-resource endpoints, <code>data</code> is an object. Error responses include details about what went wrong.</p>
+
+                    <h2>Creating Your First Site</h2>
+                    <p>Let's create a site. This provisions the development container where your customer will manage their WordPress installation.</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "partner_customer_id": "cust_12345",
+    "dev_php_version": "8.3"
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p><strong>Parameters:</strong></p>
+                    <ul>
+                        <li><code>partner_customer_id</code> (required) &mdash; Your internal identifier for this customer</li>
+                        <li><code>dev_php_version</code> (required) &mdash; PHP version for the development container (e.g., "8.2", "8.3", "8.4")</li>
+                        <li><code>tags</code> (optional) &mdash; Array of tags for categorizing the site</li>
+                    </ul>
+                    <p><strong>Response:</strong></p>
+                </div>
+
+                <pre><code class="language-json">{
+  "data": {
+    "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+    "partner_customer_id": "cust_12345",
+    "status": "pending",
+    "tags": [],
+    "dev_domain": "abc123.yourpartnerdomain.com",
+    "dev_db_username": "db-01jfgxk4nqrst5vwx9yz0abcde",
+    "dev_db_password": "aBcD1234!@#$EfGh5678",
+    "environments": [],
+    "created_at": "2025-05-27T09:50:21+00:00",
+    "updated_at": "2025-05-27T09:50:21+00:00"
+  },
+  "message": "Vector site creation initiated",
+  "http_status": 201
+}</code></pre>
+
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-brand-cyan mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold text-gray-900 mb-1">Store credentials securely</p>
+                            <p>The <code>dev_db_username</code> and <code>dev_db_password</code> are the credentials for direct database access if needed. Store them securely.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Checking Site Status</h2>
+                    <p>Poll the site endpoint to check when provisioning completes:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X GET https://api.builtfast.com/api/v1/vector/sites/{site_id} \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>When <code>status</code> changes to <code>active</code>, the development environment is ready. Your customer can now:</p>
+                    <ul>
+                        <li>Access WordPress admin at <code>https://{dev_domain}/wp-admin</code></li>
+                        <li>Connect via SFTP to upload files</li>
+                        <li>Install plugins, themes, and create content</li>
+                    </ul>
+
+                    <h2>Creating an Environment</h2>
+                    <p>With the site active, create an environment to deploy to. Let's create a production environment:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "production",
+    "php_version": "8.3",
+    "custom_domain": null,
+    "is_production": true
+  }'</code></pre>
+
+                <div class="prose max-w-none">
+                    <p><strong>Parameters:</strong></p>
+                    <ul>
+                        <li><code>name</code> (required) &mdash; A slug-format identifier for the environment</li>
+                        <li><code>php_version</code> (required) &mdash; PHP version for the environment</li>
+                        <li><code>custom_domain</code> (required, nullable) &mdash; Custom domain or <code>null</code></li>
+                        <li><code>is_production</code> (optional) &mdash; Set to <code>true</code> for production (enables CDN)</li>
+                        <li><code>tags</code> (optional) &mdash; Array of tags</li>
+                    </ul>
+                    <p><strong>Response:</strong></p>
+                </div>
+
+                <pre><code class="language-json">{
+  "data": {
+    "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+    "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+    "name": "production",
+    "is_production": true,
+    "status": "pending",
+    "provisioning_step": "pending",
+    "php_version": "8.3",
+    "fqdn": "def456.yourpartnerdomain.com",
+    "custom_domain": null,
+    "subdomain": "def456",
+    "created_at": "2025-05-27T09:55:00+00:00",
+    "updated_at": "2025-05-27T09:55:00+00:00"
+  },
+  "message": "Environment creation initiated",
+  "http_status": 201
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <h2>Triggering a Deployment</h2>
+                    <p>Once the environment is <code>active</code>, you can deploy. This pushes the current state of the development container to the environment:</p>
+                </div>
+
+                <pre><code class="language-bash">curl -X POST https://api.builtfast.com/api/v1/vector/sites/{site_id}/environments/{environment_id}/deployments \
+  -H "Authorization: Bearer {your-api-token}" \
+  -H "Accept: application/json"</code></pre>
+
+                <div class="prose max-w-none">
+                    <p><strong>Response:</strong></p>
+                </div>
+
+                <pre><code class="language-json">{
+  "data": {
+    "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+    "status": "pending",
+    "actor": "api@yourcompany.com",
+    "environment": {
+      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+      "name": "production",
+      "is_production": true
+    },
+    "created_at": "2025-05-27T10:00:00+00:00"
+  },
+  "message": "Deployment initiated",
+  "http_status": 201
+}</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>The deployment progresses through <code>pending</code> &rarr; <code>deploying</code> &rarr; <code>deployed</code> (or <code>failed</code>). Once <code>deployed</code>, the site is live at the environment's domain.</p>
+
+                    <h2>What Just Happened</h2>
+                    <p>You've completed the core workflow:</p>
+                    <ol>
+                        <li><strong>Created a site</strong> &mdash; Provisioned a development container with WordPress</li>
+                        <li><strong>Created an environment</strong> &mdash; Set up production infrastructure (serverless, with CDN)</li>
+                        <li><strong>Deployed</strong> &mdash; Pushed development content to production</li>
+                    </ol>
+                    <p>Your customer's site is now live on serverless infrastructure that scales automatically.</p>
+
+                    <h2>SDK & CLI</h2>
+                    <p>If you'd rather not write curl commands, we provide a PHP SDK and CLI tool:</p>
+                </div>
+
+                <pre><code class="language-bash"># PHP SDK
+composer require built-fast/vector-pro-sdk
+
+# CLI
+composer global require built-fast/vector-pro-cli</code></pre>
+
+                <div class="prose max-w-none">
+                    <p>The SDK gives you a typed client with methods like <code>$client-&gt;createSite()</code> and <code>$client-&gt;createDeployment()</code>. The CLI lets you manage sites directly from your terminal with commands like <code>vector site:list</code> and <code>vector deploy:create</code>.</p>
+                    <p>See the <a href="/vector-pro/developer-tools/">Developer Tools guide</a> for full documentation.</p>
+
+                    <h2>Quick Reference</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Operation</th>
+                                <th class="text-left p-4 font-semibold">Method</th>
+                                <th class="text-left p-4 font-semibold">Endpoint</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">List sites</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Create site</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Get site</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">List environments</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Create environment</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Deploy</td>
+                                <td class="p-4"><code>POST</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}/deployments</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">List deployments</td>
+                                <td class="p-4"><code>GET</code></td>
+                                <td class="p-4"><code>/api/v1/vector/sites/{site_id}/environments/{env_id}/deployments</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Next CTA -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/architecture/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Architecture</span>
+                        </a>
+                        <a href="/vector-pro/core-workflows/" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark/90 transition group">
+                            <span>Next: Core Workflows</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

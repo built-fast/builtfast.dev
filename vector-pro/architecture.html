@@ -1,0 +1,314 @@
+---
+layout: default
+title: Vector Pro Architecture
+description: Understanding Vector's architecture - how sites, environments, deployments, and the serverless infrastructure work together.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="gradient-bg text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-cyan/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    Architecture
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Understanding Vector's architecture is important because it represents a significant departure from traditional WordPress hosting&mdash;and that departure is what enables the scalability and reliability.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-brand-cyan font-medium">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="https://api.builtfast.com/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference <span class="text-gray-400">&#8599;</span></a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>The Core Concept</h2>
+                    <p>
+                        Traditional WordPress hosting runs on servers that are always on, waiting for requests. You pay for that capacity whether you use it or not, and when traffic exceeds capacity, the site slows down or crashes.
+                    </p>
+                    <p>
+                        Vector flips this model. Instead of always-on servers, Vector deploys WordPress to serverless infrastructure that spins up on demand. When a request comes in, the infrastructure responds. When traffic is low, you're not paying for idle capacity. When traffic spikes, the infrastructure scales automatically&mdash;no intervention required.
+                    </p>
+                    <p>This is what makes "survive Black Friday without thinking about scaling" possible.</p>
+
+                    <h2>Sites and Environments</h2>
+                    <p>When you create a site through Vector Pro, you're creating a container for multiple environments:</p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-brand-cyan/5">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4 bg-brand-dark text-white rounded-2xl">
+                            <div class="font-bold text-sm">Development</div>
+                            <div class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">WP Admin lives here</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                            <div class="font-bold text-sm text-gray-900">Staging</div>
+                            <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Test before production</div>
+                        </div>
+                        <div class="p-4 bg-brand-cyan/10 border border-brand-cyan/30 rounded-2xl">
+                            <div class="font-bold text-sm text-brand-dark">Production</div>
+                            <div class="text-[10px] text-brand-cyan mt-1 uppercase tracking-widest font-bold">Live site + CDN</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                            <div class="font-bold text-sm text-gray-900">Custom</div>
+                            <div class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">QA, client review, etc.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <p>Each environment is isolated. They don't share databases or files. This means you can safely test changes in staging without any risk to production.</p>
+
+                    <h3>Development Environment</h3>
+                    <p>The development environment is different from the others. It runs on a container (not serverless infrastructure) and provides the full WordPress experience:</p>
+                    <ul>
+                        <li><strong>WP Admin access</strong> &mdash; All WordPress administration happens here</li>
+                        <li><strong>SFTP access</strong> &mdash; File uploads go to the development environment</li>
+                        <li><strong>Plugin/theme installation</strong> &mdash; Install, update, and configure WordPress as usual</li>
+                        <li><strong>Content creation</strong> &mdash; Posts, pages, media&mdash;all managed in development</li>
+                    </ul>
+                    <p>Think of development as the "workshop" where your customer builds and maintains their WordPress site. It's familiar, it works like WordPress always has, and it gives full access to everything WordPress offers.</p>
+                    <p>The development environment is accessed via a subdomain on your partner domain (e.g., <code>happy-panda.yourpartnerdomain.com</code>).</p>
+
+                    <h3>Deployed Environments (Staging, Production, Custom)</h3>
+                    <p>Staging, production, and any custom environments are fundamentally different from development. They run on serverless infrastructure, which enables the automatic scaling&mdash;but it also means some things work differently.</p>
+                </div>
+
+                <div class="bg-brand-orange/10 border-l-4 border-brand-orange p-6 rounded-r-xl">
+                    <p class="text-gray-700 mb-4 font-semibold">Key difference: No writes in production.</p>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Deployed environments are read-only from WordPress's perspective. There's no WP Admin, no plugin installation, no file uploads, no content editing. The deployed environment serves the site&mdash;it doesn't allow changes to it.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        Serverless infrastructure doesn't have a persistent filesystem in the traditional sense. When a request comes in, the infrastructure spins up, handles the request, and spins down. Any files written during that request don't persist. This is what makes the scaling possible&mdash;there's no server state to manage&mdash;but it means WordPress's assumption that it can write to the filesystem doesn't hold.
+                    </p>
+                </div>
+
+                <div class="prose max-w-none">
+                    <p><strong>What this means in practice:</strong></p>
+                    <ul>
+                        <li>All WordPress work (content, plugins, themes, settings) happens in development</li>
+                        <li>Deploys take a snapshot of development and push it to the target environment</li>
+                        <li>The deployed environment serves that snapshot</li>
+                        <li>To make changes, you make them in development and deploy again</li>
+                    </ul>
+                    <p>For content-heavy sites, this workflow might feel unfamiliar at first. But it also means deployed sites are predictable and reproducible&mdash;what you deploy is exactly what runs, every time.</p>
+
+                    <h3>Environment Domains</h3>
+                    <p>Each environment gets a subdomain on your partner domain:</p>
+                    <ul>
+                        <li>Development: <code>happy-panda.yourpartnerdomain.com</code></li>
+                        <li>Staging: <code>quick-fox.yourpartnerdomain.com</code></li>
+                        <li>Production: <code>bright-star.yourpartnerdomain.com</code></li>
+                    </ul>
+                    <p>These are randomly generated word-pair subdomains. Production environments can also have custom domains attached.</p>
+
+                    <h2>The Deployment Flow</h2>
+                    <p>Deploying pushes code and assets from development to a target environment. Here's what happens:</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start gap-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <span class="bg-brand-cyan text-brand-dark w-10 h-10 rounded-xl flex items-center justify-center text-lg font-black flex-shrink-0">1</span>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">PHP files are packaged</h4>
+                            <p class="text-sm text-gray-500">The WordPress core, themes, plugins, and any custom code are prepared for serverless deployment</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <span class="bg-brand-cyan text-brand-dark w-10 h-10 rounded-xl flex items-center justify-center text-lg font-black flex-shrink-0">2</span>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Assets go to cloud storage</h4>
+                            <p class="text-sm text-gray-500">Uploaded media and static files are pushed to cloud storage where they're served efficiently</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <span class="bg-brand-cyan text-brand-dark w-10 h-10 rounded-xl flex items-center justify-center text-lg font-black flex-shrink-0">3</span>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Environment becomes active</h4>
+                            <p class="text-sm text-gray-500">Once deployment completes, the environment is live and serving traffic</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-brand-cyan mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold text-gray-900 mb-1">Important: Databases are separate</p>
+                            <p>Deployments push code and assets only&mdash;they do not copy the development database. Each environment maintains its own independent database. This separation is intentional. It prevents accidental data overwrites and gives you control over what content exists in each environment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <p>Deploys are triggered via API call. Your integration can trigger them manually, or you can build automation (CI/CD pipelines, scheduled deploys, etc.) on top of the API.</p>
+                    <p><strong>Current state:</strong> Today, all deploys originate from development. If you deploy to staging, test, then deploy to production, both deploys come from development's current state.</p>
+                    <p><strong>Future capability:</strong> We're building a "promote" feature that will allow promoting one environment directly to another (e.g., staging to production), enabling more sophisticated deployment workflows.</p>
+
+                    <h2>DNS and CDN</h2>
+                    <p>Vector uses a layered approach to DNS and content delivery.</p>
+
+                    <h3>CDN (Production Only)</h3>
+                    <p>Production environments include CDN for performance and protection:</p>
+                    <ul>
+                        <li><strong>Global edge caching</strong> &mdash; Static content is cached at edge locations worldwide</li>
+                        <li><strong>Intelligent caching</strong> &mdash; The CDN is configured for WordPress, so dynamic content (cart, checkout, logged-in experiences) remains dynamic while static content is cached aggressively</li>
+                        <li><strong>DDoS protection</strong> &mdash; The CDN layer provides protection against volumetric attacks</li>
+                        <li><strong>WAF</strong> &mdash; Web Application Firewall rules block common attack patterns</li>
+                    </ul>
+                    <p>Non-production environments (staging, custom) don't include CDN. They're meant for testing and review, not for serving production traffic.</p>
+
+                    <h3>SSL Certificates</h3>
+                    <p>SSL is automatic. When a custom domain is attached to a production environment, Vector Pro provisions and manages the SSL certificate. Partners and their customers don't need to deal with certificate generation, installation, or renewal.</p>
+
+                    <h2>Database Architecture</h2>
+                    <p>Each environment has its own completely independent database:</p>
+                    <ul>
+                        <li><strong>Development</strong> has a database where all content creation and WordPress administration happens</li>
+                        <li><strong>Each deployed environment</strong> has its own separate database that persists independently</li>
+                        <li>Databases are fully isolated&mdash;changes in one environment never affect others</li>
+                    </ul>
+
+                    <h2>What Happens Under Load</h2>
+                    <p>This is where the serverless architecture really matters.</p>
+                    <p><strong>Traditional hosting:</strong> Traffic spike &rarr; Server overloaded &rarr; Site slow or down &rarr; Scramble to add capacity &rarr; Customers frustrated</p>
+                    <p><strong>Vector:</strong> Traffic spike &rarr; Infrastructure scales automatically &rarr; Site stays fast &rarr; You don't even notice</p>
+                    <p>For partners, this means you can confidently sell hosting without caveats about traffic limits or overage fees. For your customers, it means their site stays up during their most important moments&mdash;product launches, viral content, Black Friday.</p>
+
+                    <h2>Lifecycle and States</h2>
+                    <p>Sites, environments, and deployments each progress through defined states. Understanding these states helps you build integrations that respond appropriately.</p>
+
+                    <h3>Site Lifecycle</h3>
+                    <p>When you create a site, it goes through provisioning before becoming available:</p>
+                    <p><code>pending &rarr; active</code></p>
+                    <ul>
+                        <li><strong>pending</strong> &mdash; Site creation has been initiated. The development container is being provisioned.</li>
+                        <li><strong>active</strong> &mdash; Provisioning is complete. The development environment is accessible.</li>
+                        <li><strong>suspended</strong> &mdash; The site has been suspended and is not accessible.</li>
+                        <li><strong>failed</strong> &mdash; Provisioning failed.</li>
+                    </ul>
+
+                    <h3>Environment Lifecycle</h3>
+                    <p><code>pending &rarr; active</code></p>
+                    <ul>
+                        <li><strong>pending</strong> &mdash; Environment creation has been initiated.</li>
+                        <li><strong>active</strong> &mdash; The environment is ready for deployments.</li>
+                    </ul>
+
+                    <h3>Deployment Lifecycle</h3>
+                    <p><code>pending &rarr; deploying &rarr; deployed</code> (or <code>failed</code>)</p>
+                    <ul>
+                        <li><strong>pending</strong> &mdash; Deployment has been queued.</li>
+                        <li><strong>deploying</strong> &mdash; Deployment is in progress.</li>
+                        <li><strong>deployed</strong> &mdash; Deployment completed successfully.</li>
+                        <li><strong>failed</strong> &mdash; Something went wrong.</li>
+                    </ul>
+
+                    <h2>Architecture Summary</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-4 font-semibold">Component</th>
+                                <th class="text-left p-4 font-semibold">Development</th>
+                                <th class="text-left p-4 font-semibold">Deployed Environments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Infrastructure</td>
+                                <td class="p-4">Container</td>
+                                <td class="p-4">Serverless</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">WP Admin</td>
+                                <td class="p-4 text-green-600">Yes</td>
+                                <td class="p-4 text-gray-400">No</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">SFTP</td>
+                                <td class="p-4 text-green-600">Yes</td>
+                                <td class="p-4 text-gray-400">No</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Writes</td>
+                                <td class="p-4 text-green-600">Yes</td>
+                                <td class="p-4 text-gray-400">No</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">CDN</td>
+                                <td class="p-4 text-gray-400">No</td>
+                                <td class="p-4">Production only</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">SSL</td>
+                                <td class="p-4 text-green-600">Auto</td>
+                                <td class="p-4 text-green-600">Auto</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Scaling</td>
+                                <td class="p-4">Fixed</td>
+                                <td class="p-4 text-brand-cyan font-medium">Automatic</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4">Database</td>
+                                <td class="p-4">Persistent</td>
+                                <td class="p-4">Independent per environment</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Next CTA -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Overview</span>
+                        </a>
+                        <a href="/vector-pro/getting-started/" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark/90 transition group">
+                            <span>Next: Getting Started</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
