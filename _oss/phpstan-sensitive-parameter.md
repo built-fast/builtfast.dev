@@ -3,6 +3,7 @@ title:  phpstan-sensitive-parameter
 period: Jul 2025
 date:   2025-07-04
 github: https://github.com/built-fast/phpstan-sensitive-parameter
+license: MIT
 tags:
   - PHP
   - PHPStan

@@ -2,31 +2,174 @@
 layout: default
 ---
 
-<!-- Back -->
-<div class="mb-3">
-  <a class="inline-flex text-cyan-500 rounded-full border border-slate-200 dark:border-slate-800 dark:bg-linear-to-t dark:from-slate-800 dark:to-slate-800/30" href="/">
-    <span class="sr-only">Back</span>
-    {% include icons/chevron-left.svg %}
-  </a>
+<div class="fixed top-0 left-0 w-full h-1 z-[60] pointer-events-none">
+    <div id="scroll-progress" class="h-full w-full bg-brand-orange origin-left" style="transform: scaleX(0)"></div>
 </div>
 
-<article>
-  <!-- Post header -->
-  <header>
-    <div class="flex items-center justify-between mb-1">
-      <!-- Post date -->
-      <div class="text-xs text-slate-500 uppercase">
-        <span class="text-cyan-500">—</span> {{ page.date | date: "%b %d, %Y" }}
-        {% if page.author %}<span class="text-slate-400 dark:text-slate-600">·</span> By {{ page.author }}{% endif %}
-        <span class="text-slate-400 dark:text-slate-600">·</span>
-        {% include read-time.html content=page.content %}
-      </div>
-    </div>
-    <h1 class="h1 font-outfit mb-4">{{ page.title }}</h1>
-  </header>
+<main class="pb-24">
+    <!-- Header with Data-Rich Hero -->
+    <header class="gradient-bg text-white pt-32 pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
+            <div class="floating-shape w-64 h-64 bg-brand-orange/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
+            <div class="absolute right-0 top-0 h-full w-1/3 flex items-center justify-center opacity-[0.03] select-none pointer-events-none">
+                <div class="text-[20rem] font-display font-black uppercase tracking-tighter rotate-6">BLOG</div>
+            </div>
+        </div>
 
-  <!-- Post content -->
-  <div class="text-slate-500 dark:text-slate-400 space-y-8">
-    {{ content }}
-  </div>
-</article>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/blog/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-bold uppercase tracking-widest mb-12 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Back to Blog
+            </a>
+
+            <div class="grid lg:grid-cols-3 gap-12 items-end">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        {% if page.tags.first %}
+                        <span class="badge badge-cyan">{{ page.tags.first | upcase }}</span>
+                        {% else %}
+                        <span class="badge badge-cyan">ENGINEERING</span>
+                        {% endif %}
+                        <span class="text-gray-400">·</span>
+                        <span class="text-sm text-gray-300">{{ page.date | date: "%B %d, %Y" }}</span>
+                        <span class="text-gray-400">·</span>
+                        <span class="text-sm text-gray-300">
+                            {% include read-time.html content=page.content %}
+                        </span>
+                    </div>
+
+                    <h1 class="font-display text-4xl md:text-7xl font-extrabold leading-tight mb-0">
+                        {{ page.title }}
+                    </h1>
+                </div>
+
+                <div class="lg:col-span-1">
+                    {% if page.author %}
+                        {% assign author_slug = page.author | slugify %}
+                        {% assign author = site.people | where: "name", page.author | first %}
+                        <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 flex items-center gap-6">
+                            <div class="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 border border-brand-cyan/30">
+                                <img src="/assets/images/avatars/{{ author_slug }}.jpg" alt="{{ page.author }}" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-bold text-brand-cyan uppercase tracking-widest mb-1">Written By</div>
+                                <h3 class="text-lg font-bold text-white">{{ page.author }}</h3>
+                                <div class="flex gap-3 mt-2">
+                                    {% if author.github %}
+                                    <a href="https://github.com/{{ author.github }}" class="text-gray-400 hover:text-white transition-colors">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                    </a>
+                                    {% endif %}
+                                    {% if author.linkedin %}
+                                    <a href="https://linkedin.com/in/{{ author.linkedin }}" class="text-gray-400 hover:text-white transition-colors">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+        <div class="grid lg:grid-cols-3 gap-16 items-start">
+            <div class="lg:col-span-2">
+                <div class="prose prose-lg lg:prose-xl max-w-none">
+                    {{ content }}
+                </div>
+
+                <!-- Social Share & Tags Footer -->
+                <footer class="mt-20 pt-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in page.tags %}
+                        <span class="badge badge-cyan bg-brand-cyan/5 border-brand-cyan/10 text-brand-cyan text-[10px]">{{ tag | upcase }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="flex items-center gap-6">
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Share</span>
+                        <div class="flex gap-4">
+                            <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-cyan hover:bg-brand-cyan/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-cyan hover:bg-brand-cyan/5 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
+                <!-- Related Posts -->
+                {% assign related_posts = site.posts | where_exp: "post", "post.url != page.url" %}
+                {% assign matching_posts = "" | split: "" %}
+                {% for post in related_posts %}
+                    {% for tag in page.tags %}
+                        {% if post.tags contains tag %}
+                            {% assign matching_posts = matching_posts | push: post %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% assign matching_posts = matching_posts | uniq | slice: 0, 3 %}
+
+                {% if matching_posts.size > 0 %}
+                <div class="bg-brand-gray rounded-2xl p-6 border border-gray-100">
+                    <h3 class="font-display text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">Related Posts</h3>
+                    <div class="space-y-4">
+                        {% for post in matching_posts %}
+                        <a href="{{ post.url }}" class="block group">
+                            <h4 class="text-sm font-semibold text-gray-700 group-hover:text-brand-cyan transition-colors leading-snug">{{ post.title }}</h4>
+                            <span class="text-xs text-gray-400 mt-1">{{ post.date | date: "%b %d, %Y" }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Vector Pro Card -->
+                <div class="bg-gradient-to-br from-brand-dark to-brand-dark/90 rounded-2xl p-6 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brand-cyan/20 rounded-full filter blur-2xl"></div>
+                    <div class="relative z-10">
+                        <div class="text-xs font-bold text-brand-cyan uppercase tracking-widest mb-2">Vector Pro</div>
+                        <h3 class="font-display text-lg font-bold mb-2">Serverless WordPress Hosting</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Deploy WordPress sites that scale automatically. No servers to manage.
+                        </p>
+                        <a href="https://builtfast.com" class="inline-flex items-center text-brand-cyan font-semibold text-sm hover:text-white transition-colors">
+                            Learn more
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </article>
+</main>
+
+<script>
+    // Scroll progress bar with requestAnimationFrame for smooth updates
+    let ticking = false;
+    const progressBar = document.getElementById('scroll-progress');
+
+    function updateProgress() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = winScroll / height;
+        progressBar.style.transform = 'scaleX(' + scrolled + ')';
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateProgress);
+            ticking = true;
+        }
+    }, { passive: true });
+</script>

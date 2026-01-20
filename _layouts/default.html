@@ -1,109 +1,260 @@
-{%- assign asset_hash = site.time | date: "%s" -%}
 {%- if page.title and page.title != site.title -%}
-{%- assign page_title = page.title | append: " --- " | append: site.title | smartify -%}
+{%- assign page_title = page.title | append: " | " | append: site.title | smartify -%}
 {%- else -%}
 {%- assign page_title = site.title | smartify -%}
 {%- endif -%}
-{%- assign page_url = page.url | remove_first: "index.html" | absolute_url -%}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | markdownify | strip_html | normalize_whitespace | escape_once | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
-    <meta name="og:description" content="{% if page.excerpt %}{{ page.excerpt | markdownify | strip_html | normalize_whitespace | escape_once | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
-
-    <meta property="og:locale" content="en" />
-    <meta property="og:url" content="{{ page_url }}" />
-    <meta property="og:site_name" content="{{ site.title | smartify }}" />
-    <meta property="og:title" content="{{ page_title }}" />
-    <meta name="author" content="{{ site.author.name }}" />
-
-    {%- if page.date %}
-    <meta property="og:type" content="article" />
-    <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
-    {%- else %}
-    <meta property="og:type" content="website" />
-    {%- endif %}
-
-    {% if paginator.previous_page %}<link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">{%- endif %}
-    {% if paginator.next_page %}<link rel="next" href="{{ paginator.next_page_path | absolute_url }}">{%- endif %}
-
-    {% feed_meta %}
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ "/assets/css/app.css" | relative_url }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-
-    <link rel="canonical" href="{{ page_url }}">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page_title }}</title>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4WXX1X23X3"></script>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | markdownify | strip_html | normalize_whitespace | escape_once | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-4WXX1X23X3');
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        display: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Monaco', 'Menlo', 'monospace'],
+                    },
+                    colors: {
+                        'brand-orange': '#ff6542',
+                        'brand-dark': '#050f19',
+                        'brand-blue': '#1e293b',
+                        'brand-cyan': '#1dc9d8',
+                        'brand-gray': '#f6f9fb',
+                        'brand-purple': '#8b5cf6',
+                    },
+                },
+            },
+        };
     </script>
-
-    <script>
-        if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
-            document.querySelector('html').classList.remove('dark');
-        } else {
-            document.querySelector('html').classList.add('dark');
+    <style>
+        html, body {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            max-width: 100vw;
         }
+
+        /* Gradient backgrounds */
+        .gradient-bg {
+            background: linear-gradient(135deg, #050f19 0%, #0a1628 50%, #050f19 100%);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #1dc9d8 0%, #ff6542 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating shapes */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -20px) rotate(5deg); }
+            50% { transform: translate(-5px, 10px) rotate(-5deg); }
+            75% { transform: translate(-15px, -10px) rotate(3deg); }
+        }
+
+        /* Badge styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-cyan {
+            background: rgba(29, 201, 216, 0.1);
+            color: #1dc9d8;
+            border: 1px solid rgba(29, 201, 216, 0.2);
+        }
+        .badge-orange {
+            background: rgba(255, 101, 66, 0.1);
+            color: #ff6542;
+            border: 1px solid rgba(255, 101, 66, 0.2);
+        }
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #8b5cf6;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        /* Post card hover */
+        .post-card {
+            transition: all 0.2s ease;
+        }
+        .post-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Prose styles for article content */
+        .prose {
+            color: #4b5563;
+            line-height: 1.75;
+        }
+        .prose p {
+            margin-bottom: 1.5rem;
+        }
+        .prose h2 {
+            font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .prose h3 {
+            font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .prose a {
+            color: #1dc9d8;
+            text-decoration: none;
+        }
+        .prose a:hover {
+            text-decoration: underline;
+        }
+        .prose ul, .prose ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .prose ul {
+            list-style-type: disc;
+        }
+        .prose ol {
+            list-style-type: decimal;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+        .prose blockquote {
+            border-left: 4px solid #1dc9d8;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #6b7280;
+            font-style: italic;
+        }
+        .prose strong {
+            color: #111827;
+            font-weight: 600;
+        }
+        .prose em {
+            font-style: italic;
+        }
+        .prose hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+        .prose img {
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        /* Code blocks */
+        pre {
+            background-color: #0d1117 !important;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            font-size: 13px;
+            margin: 1.5rem 0;
+        }
+        pre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6542, #1dc9d8);
+            border-radius: 12px 12px 0 0;
+        }
+        pre code {
+            color: #e2e8f0;
+            background: transparent !important;
+            padding: 0 !important;
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        /* Inline code */
+        :not(pre) > code {
+            background-color: rgba(29, 201, 216, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #1dc9d8;
+            border: 1px solid rgba(29, 201, 216, 0.2);
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        /* Markdown tables */
+        article table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        article table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        article table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        article table tr:hover {
+            background-color: #f8fafc;
+        }
+        article table code {
+            font-size: 0.8rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.highlighter-rouge pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
     </script>
 </head>
+<body class="font-sans bg-white text-gray-900 overflow-x-hidden w-full">
 
-<body class="font-inter antialiased bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200 tracking-tight">
+    {% include header.html %}
 
-    <div class="max-w-7xl mx-auto">
-        <div class="min-h-screen flex">
+    {{ content }}
 
-            {% include sidebar.html %}
+    {% include footer.html %}
 
-            <!-- Main content -->
-            <main class="grow overflow-hidden px-6">
-                <div class="w-full h-full max-w-[1072px] mx-auto flex flex-col">
-
-                    <!-- Header -->
-                    {% include header.html %}
-
-                    <!-- Hero -->
-                    {% if page.homepage %}
-                      {% include hero.html %}
-                    {% endif %}
-
-                    <!-- Page content -->
-                    <div class="grow md:flex space-y-8 md:space-y-0 md:space-x-8 pb-16 md:pb-20">
-
-                        <!-- Middle area -->
-                        <div class="grow">
-                          <div class="max-w-[940px]{% unless page.homepage %} pt-12 md:pt-16{% endunless %}">
-                                <div class="space-y-10">
-                                    {{ content }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer -->
-                    {% include footer.html %}
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <script src="{{ "/assets/js/vendors/alpinejs.min.js" | relative_url }}" defer></script>
-    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </body>
-
 </html>

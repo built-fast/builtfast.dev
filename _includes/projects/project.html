@@ -1,11 +1,18 @@
-<a class="rounded-lg border border-slate-200 dark:border-slate-800 dark:bg-linear-to-t dark:from-slate-800 dark:to-slate-800/30 transition-transform duration-700 hover:duration-100 ease-in-out p-5" href="{{ include.url }}">
-  <div class="flex flex-col h-full group">
-    <div class="grow">
-      <div class="text-lg font-outfit font-[650] mb-1">{{ include.title }}</div>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">{{ include.excerpt }}</p>
-    </div>
-    <div class="text-cyan-500 flex justify-end group-hover:translate-x-2 duration-150 ease-in-out">
-      {% include icons/move-right.svg %}
-    </div>
-  </div>
-</a>
+<article class="post-card bg-white border border-gray-200 rounded-xl p-6 hover:border-brand-cyan/30 h-full flex flex-col">
+    <a href="{{ include.url | relative_url }}" class="flex flex-col h-full group">
+        <div class="grow">
+            <h2 class="font-display text-xl font-semibold text-gray-900 mb-2 group-hover:text-brand-cyan transition">
+                {{ include.title }}
+            </h2>
+            <p class="text-gray-600 text-sm line-clamp-3">
+                {{ include.excerpt }}
+            </p>
+        </div>
+        <div class="mt-4 flex items-center text-brand-cyan font-medium text-sm group-hover:translate-x-1 transition-transform">
+            Learn more
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </div>
+    </a>
+</article>

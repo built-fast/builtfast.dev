@@ -1,8 +1,8 @@
 # Site settings
 url: https://builtfast.dev
-title: BuiltFast Engineering
+title: BuiltFast Developers
 description: >
-  The BuiltFast Engineering team is a founder led group of web hosting
+  The BuiltFast team is a founder led group of web hosting
   veterans who are passionate about building fast, reliable, and secure
   platforms and software.
 timezone: 'America/New_York'
@@ -75,14 +75,14 @@ defaults:
       path: "_projects/*"
       type: "projects"
     values:
-      layout: "page"
+      layout: "project"
       permalink: /projects/:name/
 
   - scope:
       path: "_oss/*"
       type: "oss"
     values:
-      layout: "page"
+      layout: "oss"
       permalink: /oss/:name/
 
   # Use the "post" layout for all posts

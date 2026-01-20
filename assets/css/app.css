@@ -187,12 +187,8 @@ layer(base);
 }
 
 /* Article content styling to match theme */
-article .language-javascript {
-    @apply min-w-0 max-w-full;
-}
-
 article .highlighter-rouge {
-    @apply min-w-0 max-w-full;
+    @apply min-w-0 max-w-full mb-6;
 }
 
 article .highlight {
@@ -300,4 +296,105 @@ tt {
   background-color: var(--color-gray-900);
 }
 
-@import './additional-styles/syntax.css';
+/* Highlight effects */
+.highlight-cyan {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+.highlight-cyan::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: 2px;
+    height: 30%;
+    background-color: #1dc9d8;
+    z-index: -1;
+    opacity: 0.75;
+    border-radius: 2px;
+}
+.highlight-orange {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+.highlight-orange::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 16px;
+    background-color: #ff6542;
+    z-index: -1;
+    opacity: 0.75;
+}
+
+/* Sidebar styles */
+.sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+
+.nav-link {
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+}
+.nav-link:hover {
+    color: #1dc9d8;
+    border-left-color: rgba(29, 201, 216, 0.5);
+}
+.nav-link.active {
+    color: #1dc9d8;
+    border-left-color: #1dc9d8;
+    background: rgba(29, 201, 216, 0.1);
+}
+
+/* Table styles */
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.docs-table th {
+    background: #050f19;
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+}
+.docs-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+.docs-table tbody tr:hover {
+    background: #f6f9fb;
+}
+
+.nav-link-airy {
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    padding-left: 16px;
+    margin-left: -2px;
+}
+.nav-link-airy:hover {
+    border-left-color: rgba(29, 201, 216, 0.3);
+}
+.nav-link-airy.active-airy {
+    color: #1dc9d8 !important;
+    border-left-color: #1dc9d8;
+    font-weight: 600;
+}

@@ -3,6 +3,7 @@ title:  gh-clover-annotate
 period: Jul 2025
 date:   2025-07-04
 github: https://github.com/built-fast/gh-clover-annotate
+license: MIT
 tags:
   - GitHub
   - PHP

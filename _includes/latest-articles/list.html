@@ -1,23 +1,14 @@
 <section>
-  <h2 class="text-xl font-[650] mb-3">Latest Articles</h2>
+  {% if include.title %}
+    <h2 class="font-display text-2xl font-bold text-gray-900 mb-8">{{ include.title }}</h2>
+  {% else %}
+    <h2 class="font-display text-2xl font-bold text-gray-900 mb-8">Latest Articles</h2>
+  {% endif %}
 
-  {% comment %}
-  <!-- Filters -->
-  <ul class="flex flex-wrap text-sm border-b border-slate-100 dark:border-slate-800">
-    {% for category in site.categories %}
-    <li class="px-3 -mb-px">
-      <a class="block py-3 text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300" href="/categories/{{ category[0] | slugify }}">{{ category[0] | capitalize }}</a>
-    </li>
-    {% endfor %}
-  </ul>
-  {% endcomment %}
-
-  <!-- Articles list -->
-  <div>
-    {%- assign posts = site.posts | sort: 'date' | reverse | limit: 5 %}
-
-    {%- for post in posts -%}
+  <div class="space-y-6">
+    {% assign collection = site.posts | where_exp: "item", "item.hidden != true" %}
+    {% for post in collection limit:5 %}
       {% include latest-articles/article.html post=post %}
-    {%- endfor -%}
+    {% endfor %}
   </div>
 </section>

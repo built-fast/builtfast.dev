@@ -1,9 +1,9 @@
 <section>
   {% if include.title %}
-    <h2 class="text-xl font-[650] mb-5">{{ include.title }}</h2>
+    <h2 class="font-display text-2xl font-bold text-gray-900 mb-8">{{ include.title }}</h2>
   {% endif %}
 
-  <div class="grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5">
+  <div class="grid md:grid-cols-2 gap-6">
     {% for project in include.collection %}
       {% include projects/project.html url=project.url title=project.title excerpt=project.excerpt %}
     {% endfor %}

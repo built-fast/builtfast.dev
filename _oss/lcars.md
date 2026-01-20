@@ -3,6 +3,7 @@ title:  LCARS
 period: Jun 2025
 date:   2025-06-01
 github: https://github.com/built-fast/lcars
+license: MIT
 tags:
   - Bash
   - Laravel

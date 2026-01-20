@@ -3,6 +3,7 @@ title:  gh-shellcheck
 period: Apr 2025
 date:   2025-04-01
 github: https://github.com/built-fast/gh-shellcheck
+license: MIT
 tags:
   - Bash
   - GitHub
