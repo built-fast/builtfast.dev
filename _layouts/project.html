@@ -3,73 +3,68 @@ layout: default
 ---
 
 <main class="pb-24">
-    <!-- Data-Rich Hero -->
-    <header class="gradient-bg text-white pt-32 pb-20 relative overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="floating-shape w-96 h-96 bg-brand-cyan/10 -top-48 -right-48"></div>
-            <div class="floating-shape w-64 h-64 bg-brand-orange/10 bottom-0 left-1/4" style="animation-delay: -5s;"></div>
-            <div class="absolute right-0 top-0 h-full w-1/3 flex items-center justify-center opacity-[0.03] select-none pointer-events-none">
-                <div class="text-[20rem] font-display font-black uppercase tracking-tighter -rotate-12">PROJECT</div>
-            </div>
-        </div>
+    <!-- Hero -->
+    <header class="hero-dark text-white pt-28 pb-16 relative overflow-hidden">
+        <div class="dot-grid"></div>
+        <div class="hero-glow"></div>
 
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <a href="/projects/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-bold uppercase tracking-widest mb-12 group">
+        <div class="max-w-6xl mx-auto px-6 relative">
+            <a href="/projects/" class="inline-flex items-center text-brand-muted hover:text-white transition text-sm font-medium mb-8 group">
                 <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                 Back to Projects
             </a>
 
             <div class="grid lg:grid-cols-3 gap-12 items-end">
                 <div class="lg:col-span-2">
-                    <div class="flex items-center gap-4 mb-6">
+                    <div class="flex flex-wrap items-center gap-3 mb-6">
                         <span class="badge badge-orange">CASE STUDY</span>
                         {% if page.period %}
-                        <span class="text-gray-400">·</span>
-                        <span class="text-sm text-gray-300">{{ page.period }}</span>
+                        <span class="text-brand-muted">·</span>
+                        <span class="text-sm text-brand-muted font-mono">{{ page.period }}</span>
                         {% endif %}
                     </div>
 
-                    <h1 class="font-display text-4xl md:text-7xl font-extrabold leading-tight mb-8">
+                    <h1 class="font-display text-3xl md:text-5xl font-extrabold leading-tight mb-6 tracking-tight">
                         {{ page.title }}
                     </h1>
 
                     {% if page.company %}
-                    <div class="flex items-center gap-3 text-gray-300 font-medium text-lg">
-                        <span class="text-gray-500 uppercase text-xs font-bold tracking-widest">Built for</span>
-                        <span class="text-white font-bold">{{ page.company }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-xs text-brand-muted uppercase tracking-wider">Built for</span>
+                        <span class="text-white font-semibold">{{ page.company }}</span>
                     </div>
                     {% endif %}
                 </div>
 
                 <div class="lg:col-span-1">
-                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8">
-                        <h4 class="text-xs font-bold text-brand-orange uppercase tracking-widest mb-6">Stack & Details</h4>
-                        <div class="space-y-6">
-                            {% if page.tags %}
-                            <div>
-                                <div class="text-[10px] text-gray-400 uppercase font-bold mb-2">Technical Stack</div>
-                                <div class="flex flex-wrap gap-2">
-                                    {% for tag in page.tags %}
-                                    <span class="badge badge-orange text-[10px] bg-brand-orange/20 border-brand-orange/30">{{ tag | upcase }}</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            {% endif %}
-                            
-                            <a href="mailto:hello@builtfast.dev" class="flex items-center justify-center w-full py-4 bg-brand-orange text-white rounded-2xl font-bold hover:bg-white hover:text-brand-dark transition-all group shadow-lg shadow-brand-orange/20">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                Start a Conversation
-                            </a>
+                    <div class="bg-brand-slate border border-white/10 rounded-xl p-6">
+                        <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-4">Stack & Details</div>
+                        {% if page.tags %}
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            {% for tag in page.tags %}
+                            <span class="badge badge-orange">{{ tag | upcase }}</span>
+                            {% endfor %}
                         </div>
+                        {% endif %}
+
+                        <a href="mailto:hello@builtfast.dev" class="btn-primary w-full justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Start a Conversation
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <article class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="prose prose-lg lg:prose-xl max-w-4xl mx-auto">
-            {{ content }}
+    <!-- Content -->
+    <article class="py-16 bg-brand-gray">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="bg-white rounded-xl border border-gray-100 p-8 md:p-10 max-w-4xl">
+                <div class="prose prose-lg max-w-none">
+                    {{ content }}
+                </div>
+            </div>
         </div>
     </article>
 </main>
