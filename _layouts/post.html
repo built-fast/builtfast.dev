@@ -73,16 +73,17 @@ layout: default
                         {% endfor %}
                     </div>
 
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3">
                         <span class="font-mono text-xs text-brand-muted uppercase tracking-wider">Share</span>
-                        <div class="flex gap-2">
-                            <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition">
-                                <span class="w-4 h-4">{% include icons/x-twitter.svg %}</span>
-                            </a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition">
-                                <span class="w-4 h-4">{% include icons/linkedin.svg %}</span>
-                            </a>
-                        </div>
+                        <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url | url_encode }}&text={{ page.title | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition" title="Share on X">
+                            <span class="w-4 h-4 block">{% include icons/x-twitter.svg %}</span>
+                        </a>
+                        <a href="https://bsky.app/intent/compose?text={{ page.title | url_encode }}%20{{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition" title="Share on Bluesky">
+                            <span class="w-4 h-4 block">{% include icons/bluesky.svg %}</span>
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition" title="Share on LinkedIn">
+                            <span class="w-4 h-4 block">{% include icons/linkedin.svg %}</span>
+                        </a>
                     </div>
                 </footer>
             </div>

@@ -68,6 +68,12 @@
   --color-purple-500: #8b5cf6;
 }
 
+/* Font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Alpine.js cloak */
 [x-cloak] {
   display: none !important;

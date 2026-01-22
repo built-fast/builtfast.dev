@@ -4,10 +4,13 @@
         <div class="grid md:grid-cols-4 gap-12 mb-12">
             <!-- Brand -->
             <div class="md:col-span-2">
-                <a href="/" class="flex items-center gap-3 mb-4">
+                <a href="/" class="group flex items-center gap-3 mb-4">
                     <span class="h-5 w-auto block">{% include icons/builtfast-logo.svg %}</span>
-                    <span class="text-brand-muted/40">|</span>
-                    <span class="font-mono text-sm text-brand-muted">dev</span>
+                    <span class="text-brand-muted/50 font-light">|</span>
+                    <span class="font-mono text-sm">
+                        <span class="text-[#475569] group-hover:text-brand-cyan transition-colors mr-1">❯</span>
+                        <span class="text-[#64748b]">developers</span>
+                    </span>
                 </a>
                 <p class="text-brand-muted text-sm leading-relaxed max-w-sm">
                     The engineering home of BuiltFast. Open source tools, API documentation, and technical writing.
@@ -41,8 +44,8 @@
                 <a href="https://github.com/built-fast" class="text-brand-muted hover:text-white transition">
                     <span class="w-5 h-5 block">{% include icons/github.svg %}</span>
                 </a>
-                <a href="https://twitter.com/builtfastcom" class="text-brand-muted hover:text-white transition">
-                    <span class="w-5 h-5 block">{% include icons/x-twitter.svg %}</span>
+                <a href="https://linkedin.com/company/builtfast" class="text-brand-muted hover:text-white transition">
+                    <span class="w-5 h-5 block">{% include icons/linkedin.svg %}</span>
                 </a>
             </div>
         </div>
