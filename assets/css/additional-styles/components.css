@@ -239,14 +239,13 @@ html, body {
 }
 
 .prose a {
-    color: #1dc9d8;
+    color: #0891b2;
     text-decoration: none;
-    border-bottom: 1px solid rgba(29, 201, 216, 0.3);
-    font-weight: 500;
+    border-bottom: 1px solid rgba(8, 145, 178, 0.3);
     transition: border-color 0.15s;
 }
 .prose a:hover {
-    border-color: #1dc9d8;
+    border-color: #0891b2;
 }
 
 .prose strong {
