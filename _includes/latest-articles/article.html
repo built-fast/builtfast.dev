@@ -10,7 +10,7 @@
             <span class="text-sm text-gray-500">{{ post.date | date: "%b %d, %Y" }}</span>
             <span class="text-gray-300">·</span>
             <span class="text-sm text-gray-500">
-                {% include read-time.html content=post.content %}
+                {% include content/read-time.html content=post.content %}
             </span>
         </div>
         <h2 class="font-display text-xl font-semibold text-gray-900 mb-2 hover:text-brand-cyan transition">

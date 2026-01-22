@@ -10,6 +10,12 @@ tags:
   - Node.js
   - SDK
   - API
+languages:
+  - name: TypeScript
+    icon: typescript
+  - name: Node.js
+    icon: node
+tagline: TypeScript SDK for the Vector Pro API
 excerpt: |
   A TypeScript SDK for the Vector Pro API with zero runtime dependencies.
   Built for high-performance Node.js applications using native fetch.

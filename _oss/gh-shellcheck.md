@@ -8,6 +8,10 @@ tags:
   - Bash
   - GitHub
   - Shellcheck
+languages:
+  - name: Bash
+    icon: bash
+tagline: Run ShellCheck in GitHub Actions
 excerpt: |
   A simple script to run ShellCheck on all shell scripts in a git repository
 ---

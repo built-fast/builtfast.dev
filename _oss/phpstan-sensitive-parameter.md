@@ -8,6 +8,10 @@ tags:
   - PHP
   - PHPStan
   - Security
+languages:
+  - name: PHP
+    icon: php
+tagline: Detect sensitive parameters missing attributes
 excerpt: >
   A PHPStan extension that detects parameters that might contain sensitive
   information and should be marked with the SensitiveParameter attribute.

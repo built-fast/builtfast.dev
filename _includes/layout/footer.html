@@ -1,0 +1,50 @@
+<!-- Footer -->
+<footer class="bg-brand-dark text-white py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand -->
+            <div class="md:col-span-2">
+                <a href="/" class="flex items-center gap-3 mb-4">
+                    <span class="h-5 w-auto block">{% include icons/builtfast-logo.svg %}</span>
+                    <span class="text-brand-muted/40">|</span>
+                    <span class="font-mono text-sm text-brand-muted">dev</span>
+                </a>
+                <p class="text-brand-muted text-sm leading-relaxed max-w-sm">
+                    The engineering home of BuiltFast. Open source tools, API documentation, and technical writing.
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h4 class="font-mono text-xs uppercase tracking-wider text-brand-muted/60 mb-4">Documentation</h4>
+                <ul class="space-y-2">
+                    <li><a href="/vector-pro/" class="text-sm text-brand-muted hover:text-white transition">Vector Pro</a></li>
+                    <li><a href="/vector-pro/getting-started/" class="text-sm text-brand-muted hover:text-white transition">Getting Started</a></li>
+                    <li><a href="https://api.builtfast.com/vector-pro/" class="text-sm text-brand-muted hover:text-white transition">API Reference</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-mono text-xs uppercase tracking-wider text-brand-muted/60 mb-4">Resources</h4>
+                <ul class="space-y-2">
+                    <li><a href="/blog/" class="text-sm text-brand-muted hover:text-white transition">Blog</a></li>
+                    <li><a href="/oss/" class="text-sm text-brand-muted hover:text-white transition">Open Source</a></li>
+                    <li><a href="https://builtfast.com" class="text-sm text-brand-muted hover:text-white transition">BuiltFast.com</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-brand-muted/60">&copy; {{ site.time | date: '%Y' }} BuiltFast. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/built-fast" class="text-brand-muted hover:text-white transition">
+                    <span class="w-5 h-5 block">{% include icons/github.svg %}</span>
+                </a>
+                <a href="https://twitter.com/builtfastcom" class="text-brand-muted hover:text-white transition">
+                    <span class="w-5 h-5 block">{% include icons/x-twitter.svg %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

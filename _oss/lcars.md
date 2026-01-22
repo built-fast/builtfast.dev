@@ -7,6 +7,10 @@ license: MIT
 tags:
   - Bash
   - Laravel
+languages:
+  - name: Bash
+    icon: bash
+tagline: CLI toolkit for Laravel development
 excerpt: |
   LCARS (Laravel CLI and Reusable Scripts) is a command-line toolkit that
   enhances Laravel development workflows with convenient utilities and

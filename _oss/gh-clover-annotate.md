@@ -9,7 +9,10 @@ tags:
   - PHP
   - PHPUnit
   - Pest
-project_type: oss
+languages:
+  - name: Bash
+    icon: bash
+tagline: Code coverage annotations for GitHub Actions
 excerpt: |
   A GitHub CLI extension to annotate GitHub Actions runs with code coverage
   statistics for projects using Clover style XML reports.

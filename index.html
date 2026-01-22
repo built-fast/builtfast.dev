@@ -6,40 +6,134 @@ permalink: /
 
 <!-- Hero Section -->
 <section class="hero-dark text-white pt-28 pb-20 relative overflow-hidden">
-    <!-- Dot grid background -->
     <div class="dot-grid"></div>
     <div class="hero-glow"></div>
 
-    <div class="max-w-6xl mx-auto px-6 relative">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-            <!-- Left: Content -->
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="max-w-2xl">
+            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight">
+                Built by<br>
+                <span class="text-brand-cyan">Developers</span>
+            </h1>
+
+            <p class="text-xl text-brand-muted leading-relaxed mb-8">
+                The engineering home of BuiltFast. Open source tools, technical writing, and API docs from a founder-led hosting company.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="/oss/" class="btn-primary">
+                    Open Source
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+                <a href="/blog/" class="btn-secondary">
+                    Blog
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Open Source -->
+<section class="py-16 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex justify-between items-end mb-8">
             <div>
-                <div class="inline-flex items-center gap-2 mb-6">
-                    <span class="badge badge-cyan">Developer Portal</span>
-                </div>
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-brand-dark tracking-tight">Open <span class="highlight-orange">Source</span></h2>
+                <p class="text-gray-600 mt-2">Tools we've built and use in production.</p>
+            </div>
+            <a href="/oss/" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-brand-dark hover:text-brand-orange transition">
+                View all
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
 
-                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-                    Built by<br>
-                    <span class="text-brand-cyan">Developers</span>
-                </h1>
-
-                <p class="text-lg text-brand-muted leading-relaxed mb-8 max-w-lg">
-                    The engineering home of BuiltFast. API documentation, open source tools, and technical writing from a founder-led hosting company.
-                </p>
-
-                <div class="flex flex-wrap gap-3">
-                    <a href="/vector-pro/" class="btn-primary">
-                        Vector Pro Docs
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        {% assign oss_projects = site.oss | sort: 'date' | reverse %}
+        <div class="grid lg:grid-cols-2 gap-6">
+            {% for tool in oss_projects limit:2 %}
+            <div class="card-terminal">
+                <div class="card-terminal-header">
+                    <div class="card-terminal-dot bg-red-500/80"></div>
+                    <div class="card-terminal-dot bg-yellow-500/80"></div>
+                    <div class="card-terminal-dot bg-green-500/80"></div>
+                    <span class="ml-2 text-xs text-brand-muted font-mono">{{ tool.title | downcase | replace: ' ', '-' }}</span>
+                    {% if tool.github %}
+                    <a href="{{ tool.github }}" class="ml-auto text-brand-muted hover:text-white transition">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
-                    <a href="/oss/" class="btn-secondary">
-                        Open Source
+                    {% endif %}
+                </div>
+                <div class="p-5">
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        {% for tag in tool.tags limit:3 %}
+                        <span class="badge badge-cyan">{{ tag | upcase }}</span>
+                        {% endfor %}
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">{{ tool.title }}</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed mb-4">{{ tool.excerpt | strip_html | truncate: 120 }}</p>
+                    <a href="{{ tool.url | relative_url }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-cyan hover:gap-3 transition-all">
+                        Read more
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-            <!-- Right: Terminal card -->
-            <div class="hidden lg:block">
+<!-- Latest from the Blog -->
+<section class="py-16 bg-brand-gray">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-brand-dark tracking-tight">From the <span class="highlight-cyan">Blog</span></h2>
+                <p class="text-gray-600 mt-2">Technical writing on hosting, infrastructure, and security.</p>
+            </div>
+            <a href="/blog/" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-brand-dark hover:text-brand-cyan transition">
+                View all
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        <div class="space-y-4">
+            {% for post in site.posts limit:4 %}
+            <a href="{{ post.url | relative_url }}" class="block group">
+                <article class="flex items-center gap-6 py-4 border-b border-gray-200 group-hover:border-brand-cyan/50 transition">
+                    <div class="hidden sm:block font-mono text-sm text-brand-muted w-24 flex-shrink-0">
+                        {{ post.date | date: "%b %d" }}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold text-brand-dark group-hover:text-brand-cyan transition truncate">{{ post.title }}</h3>
+                        <p class="text-sm text-gray-600 truncate mt-1">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <span class="badge badge-dark">{{ post.tags.first | default: "Engineering" | upcase }}</span>
+                    </div>
+                </article>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Vector Pro callout -->
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid lg:grid-cols-5 gap-8 items-center">
+            <div class="lg:col-span-2">
+                <span class="badge badge-orange mb-4">API</span>
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-brand-dark tracking-tight mb-4">
+                    Vector Pro
+                </h2>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Our serverless WordPress hosting API. White-label, scalable infrastructure for hosting companies and agencies.
+                </p>
+                <a href="/vector-pro/" class="inline-flex items-center gap-2 text-brand-orange font-semibold hover:gap-3 transition-all">
+                    View documentation
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+            <div class="lg:col-span-3">
                 <div class="card-terminal">
                     <div class="card-terminal-header">
                         <div class="card-terminal-dot bg-red-500/80"></div>
@@ -48,216 +142,43 @@ permalink: /
                         <span class="ml-2 text-xs text-brand-muted font-mono">vector-pro</span>
                     </div>
                     <div class="p-5 font-mono text-sm">
-                        <div class="text-brand-muted mb-2"># Create a new site</div>
-                        <div class="text-white mb-4">$ curl -X POST https://api.builtfast.com/v1/sites \<br>
-                        <span class="text-brand-muted pl-4">-H "Authorization: Bearer $TOKEN"</span></div>
-
-                        <div class="text-brand-muted mb-2"># Response</div>
+                        <div class="text-brand-muted mb-2"># Create a site</div>
+                        <div class="text-white mb-3">$ curl -X POST https://api.builtfast.com/v1/sites \</div>
+                        <div class="text-brand-muted pl-4 mb-4">-H "Authorization: Bearer $TOKEN"</div>
                         <div class="text-brand-cyan">{</div>
                         <div class="pl-4"><span class="text-brand-orange">"id"</span>: <span class="text-green-400">"site_abc123"</span>,</div>
-                        <div class="pl-4"><span class="text-brand-orange">"name"</span>: <span class="text-green-400">"my-wordpress-site"</span>,</div>
                         <div class="pl-4"><span class="text-brand-orange">"status"</span>: <span class="text-green-400">"provisioning"</span></div>
                         <div class="text-brand-cyan">}</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Quick links -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-12 border-t border-white/5">
-            <a href="/vector-pro/getting-started/" class="group p-4 rounded-lg border border-white/5 hover:border-brand-cyan/30 hover:bg-white/[0.02] transition">
-                <div class="font-mono text-xs text-brand-muted mb-2">01</div>
-                <div class="font-medium text-white group-hover:text-brand-cyan transition">Getting Started</div>
-            </a>
-            <a href="/vector-pro/architecture/" class="group p-4 rounded-lg border border-white/5 hover:border-brand-cyan/30 hover:bg-white/[0.02] transition">
-                <div class="font-mono text-xs text-brand-muted mb-2">02</div>
-                <div class="font-medium text-white group-hover:text-brand-cyan transition">Architecture</div>
-            </a>
-            <a href="/vector-pro/mcp/" class="group p-4 rounded-lg border border-white/5 hover:border-brand-cyan/30 hover:bg-white/[0.02] transition">
-                <div class="font-mono text-xs text-brand-muted mb-2">03</div>
-                <div class="font-medium text-white group-hover:text-brand-cyan transition">MCP Integration</div>
-            </a>
-            <a href="https://api.builtfast.com/vector-pro/" class="group p-4 rounded-lg border border-white/5 hover:border-brand-cyan/30 hover:bg-white/[0.02] transition">
-                <div class="font-mono text-xs text-brand-muted mb-2">04</div>
-                <div class="font-medium text-white group-hover:text-brand-cyan transition flex items-center gap-2">
-                    API Reference
-                    <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                </div>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- What We Do -->
-<section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-                <h2 class="font-display text-3xl md:text-4xl font-bold text-brand-dark mb-6 tracking-tight">
-                    Infrastructure for <span class="accent-underline">WordPress</span> at scale
-                </h2>
-                <p class="text-gray-600 text-lg leading-relaxed mb-8">
-                    Vector Pro is our API for serverless WordPress hosting. Provision sites, deploy to auto-scaling environments, and manage it all programmatically. Built for hosting companies, agencies, and SaaS products.
-                </p>
-
-                <div class="space-y-4">
-                    <div class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded bg-brand-cyan/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <div>
-                            <div class="font-semibold text-brand-dark">Serverless Architecture</div>
-                            <div class="text-gray-600 text-sm">Sites scale automatically. No capacity planning.</div>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded bg-brand-orange/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        </div>
-                        <div>
-                            <div class="font-semibold text-brand-dark">Security Built In</div>
-                            <div class="text-gray-600 text-sm">WAF, DDoS protection, SSL on every site.</div>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-8 h-8 rounded bg-brand-cyan/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                        </div>
-                        <div>
-                            <div class="font-semibold text-brand-dark">API-First</div>
-                            <div class="text-gray-600 text-sm">Everything is programmable. White-label ready.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8">
-                    <a href="/vector-pro/" class="inline-flex items-center gap-2 text-brand-orange font-semibold hover:gap-3 transition-all">
-                        Explore Vector Pro
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
-                <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-4">Who it's for</div>
-                <div class="space-y-4">
-                    <div class="p-4 bg-white rounded-lg border border-gray-100">
-                        <div class="font-semibold text-brand-dark mb-1">Hosting Companies</div>
-                        <div class="text-sm text-gray-600">Add scalable WordPress to your offerings without the infrastructure overhead.</div>
-                    </div>
-                    <div class="p-4 bg-white rounded-lg border border-gray-100">
-                        <div class="font-semibold text-brand-dark mb-1">Agencies</div>
-                        <div class="text-sm text-gray-600">Host client sites under your brand with enterprise reliability.</div>
-                    </div>
-                    <div class="p-4 bg-white rounded-lg border border-gray-100">
-                        <div class="font-semibold text-brand-dark mb-1">SaaS Products</div>
-                        <div class="text-sm text-gray-600">Theme developers and WordPress-based products needing reliable hosting.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Latest Articles -->
-<section class="py-20 bg-brand-gray">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-2">From the blog</div>
-                <h2 class="font-display text-3xl font-bold text-brand-dark tracking-tight">Latest Articles</h2>
-            </div>
-            <a href="/blog/" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-brand-dark hover:text-brand-cyan transition">
-                View all
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            {% for post in site.posts limit:3 %}
-            <article class="card-hover bg-white rounded-xl border border-gray-100 overflow-hidden flex flex-col">
-                <div class="p-6 flex-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="badge badge-dark">{{ post.tags.first | default: "Engineering" | upcase }}</span>
-                        <span class="text-xs text-brand-muted font-mono">{{ post.date | date: "%b %d" }}</span>
-                    </div>
-                    <h3 class="font-display text-lg font-bold text-brand-dark mb-3 leading-snug">
-                        <a href="{{ post.url | relative_url }}" class="hover:text-brand-cyan transition">{{ post.title }}</a>
-                    </h3>
-                    <p class="text-gray-600 text-sm line-clamp-2">
-                        {{ post.excerpt | strip_html | truncate: 100 }}
-                    </p>
-                </div>
-                <div class="px-6 pb-6">
-                    <a href="{{ post.url | relative_url }}" class="inline-flex items-center gap-1 text-sm font-semibold text-brand-orange hover:gap-2 transition-all">
-                        Read
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-
-        <div class="mt-8 text-center md:hidden">
-            <a href="/blog/" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-dark">
-                View all articles
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Open Source -->
-<section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-2">Community</div>
-                <h2 class="font-display text-3xl font-bold text-brand-dark tracking-tight">Open Source</h2>
-            </div>
-            <a href="/oss/" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-brand-dark hover:text-brand-cyan transition">
-                View all
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
-        </div>
-
-        {% assign oss_projects = site.oss | sort: 'date' | reverse %}
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {% for tool in oss_projects limit:4 %}
-            <a href="{{ tool.url | relative_url }}" class="group p-5 rounded-xl border border-gray-100 hover:border-brand-cyan/30 bg-brand-gray/30 hover:bg-brand-gray transition">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="w-9 h-9 rounded-lg bg-brand-cyan/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    </div>
-                    <svg class="w-4 h-4 text-brand-muted group-hover:text-brand-dark transition" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </div>
-                <div class="font-semibold text-brand-dark group-hover:text-brand-cyan transition mb-1">{{ tool.title }}</div>
-                <p class="text-sm text-gray-600 line-clamp-2">{{ tool.excerpt | strip_html | truncate: 80 }}</p>
-            </a>
-            {% endfor %}
-        </div>
     </div>
 </section>
 
 <!-- CTA -->
-<section class="hero-dark py-20 relative overflow-hidden">
+<section class="hero-dark py-20 relative overflow-hidden border-t border-white/5">
     <div class="dot-grid"></div>
 
-    <div class="max-w-4xl mx-auto px-6 text-center relative">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-            Ready to <span class="text-brand-cyan">get started</span>?
-        </h2>
-        <p class="text-brand-muted text-lg mb-8 max-w-xl mx-auto">
-            Serverless WordPress hosting that scales. White-label, API-first, built for partners.
-        </p>
-        <div class="flex flex-wrap justify-center gap-3">
-            <a href="https://builtfast.com" class="btn-primary">
-                Visit BuiltFast.com
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            </a>
-            <a href="https://github.com/built-fast" class="btn-secondary">
-                GitHub
-            </a>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+                <h2 class="font-display text-2xl font-bold text-white tracking-tight">
+                    Want to work together?
+                </h2>
+                <p class="text-brand-muted mt-1">
+                    We build hosting infrastructure and tools.
+                </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://builtfast.com" class="btn-primary">
+                    BuiltFast.com
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+                <a href="https://github.com/built-fast" class="btn-secondary">
+                    GitHub
+                </a>
+            </div>
         </div>
     </div>
 </section>

@@ -14,7 +14,7 @@ layout: default
 
         <div class="max-w-6xl mx-auto px-6 relative">
             <a href="/blog/" class="inline-flex items-center text-brand-muted hover:text-white transition text-sm font-medium mb-8 group">
-                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <span class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform">{% include icons/chevron-left.svg %}</span>
                 Back to Blog
             </a>
 
@@ -30,7 +30,7 @@ layout: default
                         <span class="text-sm text-brand-muted font-mono">{{ page.date | date: "%B %d, %Y" }}</span>
                         <span class="text-brand-muted">·</span>
                         <span class="text-sm text-brand-muted font-mono">
-                            {% include read-time.html content=page.content %}
+                            {% include content/read-time.html content=page.content %}
                         </span>
                     </div>
 
@@ -61,14 +61,12 @@ layout: default
     <article class="max-w-6xl mx-auto px-6 py-16">
         <div class="grid lg:grid-cols-3 gap-12 items-start">
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-xl border border-gray-100 p-8 md:p-10">
-                    <div class="prose prose-lg max-w-none">
-                        {{ content }}
-                    </div>
+                <div class="prose prose-lg max-w-none">
+                    {{ content }}
                 </div>
 
                 <!-- Tags & Share -->
-                <footer class="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                <footer class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6">
                     <div class="flex flex-wrap gap-2">
                         {% for tag in page.tags %}
                         <span class="badge badge-dark">{{ tag | upcase }}</span>
@@ -79,10 +77,10 @@ layout: default
                         <span class="font-mono text-xs text-brand-muted uppercase tracking-wider">Share</span>
                         <div class="flex gap-2">
                             <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                <span class="w-4 h-4">{% include icons/x-twitter.svg %}</span>
                             </a>
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}" target="_blank" class="w-8 h-8 rounded-lg bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-dark hover:bg-brand-cyan/10 transition">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                <span class="w-4 h-4">{% include icons/linkedin.svg %}</span>
                             </a>
                         </div>
                     </div>
@@ -118,25 +116,7 @@ layout: default
                 </div>
                 {% endif %}
 
-                <!-- Vector Pro Card -->
-                <div class="card-terminal">
-                    <div class="card-terminal-header">
-                        <div class="card-terminal-dot bg-red-500/80"></div>
-                        <div class="card-terminal-dot bg-yellow-500/80"></div>
-                        <div class="card-terminal-dot bg-green-500/80"></div>
-                        <span class="ml-2 text-xs text-brand-muted font-mono">vector-pro</span>
-                    </div>
-                    <div class="p-5">
-                        <div class="font-semibold text-white mb-2">Serverless WordPress</div>
-                        <p class="text-brand-muted text-sm leading-relaxed mb-4">
-                            Deploy sites that scale automatically. No servers to manage.
-                        </p>
-                        <a href="/vector-pro/" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-cyan hover:gap-3 transition-all">
-                            Learn more
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </a>
-                    </div>
-                </div>
+                {% include cards/vector-pro-cta.html %}
             </aside>
         </div>
     </article>

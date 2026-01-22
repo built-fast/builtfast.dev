@@ -11,6 +11,10 @@ tags:
   - CLI
   - DevOps
   - Infrastructure
+languages:
+  - name: Rust
+    icon: rust
+tagline: CLI for the Vector Pro API
 excerpt: |
   Command-line interface for the Vector Pro hosting platform API. Manage sites,
   environments, and deployments directly from your terminal.

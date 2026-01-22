@@ -10,6 +10,10 @@ tags:
   - SDK
   - API
   - Laravel
+languages:
+  - name: PHP
+    icon: php
+tagline: PHP SDK for the Vector Pro API
 excerpt: |
   A PHP SDK for the Vector Pro REST API. Built for modern PHP applications,
   fully typed, and PSR-18 compliant.

@@ -9,52 +9,120 @@ layout: default
 
         <div class="max-w-6xl mx-auto px-6 relative">
             <a href="/oss/" class="inline-flex items-center text-brand-muted hover:text-white transition text-sm font-medium mb-8 group">
-                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <span class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform">{% include icons/chevron-left.svg %}</span>
                 Open Source
             </a>
 
-            <div class="max-w-3xl">
-                <div class="flex flex-wrap items-center gap-3 mb-4">
-                    {% if page.tags %}
-                    {% for tag in page.tags %}
-                    <span class="badge badge-cyan">{{ tag | upcase }}</span>
-                    {% endfor %}
-                    {% endif %}
-                    {% if page.license %}
-                    <span class="badge badge-dark">{{ page.license }}</span>
+            <div class="grid lg:grid-cols-3 gap-12 items-end">
+                <div class="lg:col-span-2">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        {% if page.tags %}
+                        {% for tag in page.tags %}
+                        <span class="badge badge-cyan">{{ tag | upcase }}</span>
+                        {% endfor %}
+                        {% endif %}
+                        {% if page.license %}
+                        <span class="badge badge-dark">{{ page.license }}</span>
+                        {% endif %}
+                    </div>
+
+                    <h1 class="font-display text-3xl md:text-5xl font-extrabold leading-tight mb-4 tracking-tight">
+                        {{ page.title }}
+                    </h1>
+
+                    {% if page.excerpt %}
+                    <p class="text-lg text-brand-muted leading-relaxed">
+                        {{ page.excerpt | strip_html }}
+                    </p>
                     {% endif %}
                 </div>
 
-                <h1 class="font-display text-3xl md:text-5xl font-extrabold leading-tight mb-4 tracking-tight">
-                    {{ page.title }}
-                </h1>
-
-                {% if page.excerpt %}
-                <p class="text-lg text-brand-muted leading-relaxed mb-6">
-                    {{ page.excerpt | strip_html }}
-                </p>
-                {% endif %}
-
-                {% if page.github %}
-                <div class="flex flex-wrap gap-3">
-                    <a href="{{ page.github }}" class="btn-primary">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <div class="lg:col-span-1">
+                    {% if page.github %}
+                    <a href="{{ page.github }}" class="btn-primary w-full justify-center">
+                        <span class="w-4 h-4">{% include icons/github.svg %}</span>
                         View on GitHub
                     </a>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </section>
 
     <!-- Content -->
-    <article class="py-16 bg-brand-gray">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="bg-white rounded-xl border border-gray-100 p-8 md:p-10">
+    <article class="max-w-6xl mx-auto px-6 py-16">
+        <div class="grid lg:grid-cols-3 gap-12 items-start">
+            <div class="lg:col-span-2">
                 <div class="prose prose-lg max-w-none">
                     {{ content }}
                 </div>
             </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-6 lg:sticky lg:top-20">
+                <!-- Details -->
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-4">Details</div>
+                    <div class="space-y-4">
+                        {% if page.languages %}
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            <div>
+                                <div class="text-xs text-brand-muted">Languages</div>
+                                <div class="text-sm font-medium text-brand-dark">{% for lang in page.languages %}{{ lang.name }}{% unless forloop.last %}, {% endunless %}{% endfor %}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if page.license %}
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <div>
+                                <div class="text-xs text-brand-muted">License</div>
+                                <div class="text-sm font-medium text-brand-dark">{{ page.license }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if page.github %}
+                        <div class="flex items-center gap-3">
+                            <span class="w-5 h-5 text-brand-muted">{% include icons/github.svg %}</span>
+                            <div>
+                                <div class="text-xs text-brand-muted">Repository</div>
+                                <a href="{{ page.github }}" class="text-sm font-medium text-brand-cyan hover:underline">View Source</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Related OSS -->
+                {% assign related_oss = site.oss | where_exp: "oss", "oss.url != page.url" %}
+                {% assign matching_oss = "" | split: "" %}
+                {% for oss in related_oss %}
+                    {% for tag in page.tags %}
+                        {% if oss.tags contains tag %}
+                            {% assign matching_oss = matching_oss | push: oss %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% assign matching_oss = matching_oss | uniq | slice: 0, 3 %}
+
+                {% if matching_oss.size > 0 %}
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-4">Related Projects</div>
+                    <div class="space-y-4">
+                        {% for oss in matching_oss %}
+                        <a href="{{ oss.url }}" class="block group">
+                            <h4 class="text-sm font-semibold text-brand-dark group-hover:text-brand-cyan transition leading-snug">{{ oss.title }}</h4>
+                            {% if oss.tagline %}<p class="text-xs text-brand-muted mt-1">{{ oss.tagline }}</p>{% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% include cards/vector-pro-cta.html %}
+            </aside>
         </div>
     </article>
 </main>
