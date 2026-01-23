@@ -1,0 +1,564 @@
+name: Deployments
+description: |-
+
+  Manage code deployments to environments. Each deployment represents a release of
+  your WordPress site to a specific environment (staging or production).
+
+  Deployments are created with a `pending` status and progress through `deploying`
+  to either `deployed` (success) or `failed`. Each deployment records the actor
+  who initiated it and timing information.
+
+  ## Deployment Status Lifecycle
+
+  - `pending` - Deployment created, waiting to start
+  - `deploying` - Deployment in progress
+  - `deployed` - Deployment completed successfully
+  - `failed` - Deployment failed (check stdout/stderr for details)
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    metadata:
+      custom: []
+      groupName: Deployments
+      groupDescription: |-
+
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        ## Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Deployments'
+      description: |-
+        Retrieves a paginated list of all deployments for a specific environment,
+        ordered by most recent first.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                      "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "status": "deployed",
+                      "stdout": "Deployment output...",
+                      "stderr": null,
+                      "actor": "john@example.com",
+                      "environment": {
+                          "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                          "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                          "partner_customer_id": "cust_123456",
+                          "name": "production",
+                          "is_production": true,
+                          "status": "active",
+                          "php_version": "8.3",
+                          "tags": ["wordpress"],
+                          "fqdn": "example.com",
+                          "custom_domain": "example.com",
+                          "subdomain": "wispy-dust",
+                          "created_at": "2025-05-20T09:00:00+00:00",
+                          "updated_at": "2025-05-27T09:55:30+00:00"
+                      },
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:55:30+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Deployments retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments/{deployment}'
+    metadata:
+      custom: []
+      groupName: Deployments
+      groupDescription: |-
+
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        ## Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Deployment'
+      description: 'Retrieves details of a specific deployment including output logs and actor information.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      deployment:
+        custom: []
+        name: deployment
+        description: 'The deployment ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "deployed",
+                  "stdout": "Building project...\nUploading assets...\nDeployment complete.",
+                  "stderr": null,
+                  "actor": "john@example.com",
+                  "environment": {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "partner_customer_id": "cust_123456",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "php_version": "8.3",
+                      "tags": ["wordpress"],
+                      "fqdn": "example.com",
+                      "custom_domain": "example.com",
+                      "subdomain": "wispy-dust",
+                      "created_at": "2025-05-20T09:00:00+00:00",
+                      "updated_at": "2025-05-27T09:55:30+00:00"
+                  },
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:30+00:00"
+              },
+              "message": "Deployment retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Deployment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    metadata:
+      custom: []
+      groupName: Deployments
+      groupDescription: |-
+
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        ## Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Deployment'
+      description: |-
+        Triggers a new deployment for the environment. The deployment starts with
+        `pending` status and progresses through `deploying` to either `deployed`
+        or `failed`.
+
+        The authenticated user is recorded as the deployment actor.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "pending",
+                  "stdout": null,
+                  "stderr": null,
+                  "actor": "john@example.com",
+                  "environment": {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "partner_customer_id": "cust_123456",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "php_version": "8.3",
+                      "tags": ["wordpress"],
+                      "fqdn": "example.com",
+                      "custom_domain": "example.com",
+                      "subdomain": "wispy-dust",
+                      "created_at": "2025-05-20T09:00:00+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
+                  },
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Deployment initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/rollback'
+    metadata:
+      custom: []
+      groupName: Deployments
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Rollback Deployment'
+      description: |-
+        Triggers a rollback for the environment. By default, rolls back to the last
+        successful deployment. Optionally, you can specify a target_deployment_id to
+        rollback to a specific previous deployment.
+
+        The rollback creates a new deployment record with `pending` status that progresses
+        through `running` to either `completed` or `failed`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      target_deployment_id:
+        custom: []
+        name: target_deployment_id
+        description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
+        required: false
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      target_deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "pending",
+                  "stdout": null,
+                  "stderr": null,
+                  "actor": "john@example.com",
+                  "environment": {"id": "01JFGXK4NQRST5VWX9YZ0ABCDG", "name": "production", "is_production": true},
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Rollback initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"target_deployment_id": ["The specified deployment does not exist for this environment or has no Ymir deployment ID."]}, "message": "Validation failed", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

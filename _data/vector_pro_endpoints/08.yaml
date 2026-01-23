@@ -1,0 +1,109 @@
+name: 'Site CDN'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/purge-cache'
+    metadata:
+      custom: []
+      groupName: 'Site CDN'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: 'Purge CDN cache for a site. Supports full cache purge, purge by cache tag, or purge of specific URLs.'
+      title: 'Purge Cache'
+      description: |-
+        Purges the CDN cache for a site.
+        Can purge the entire cache, by cache tag, or a specific URL.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      cache_tag:
+        custom: []
+        name: cache_tag
+        description: 'Purge only content with this cache tag.'
+        required: false
+        example: images
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      url:
+        custom: []
+        name: url
+        description: 'Purge a specific URL.'
+        required: false
+        example: 'https://cdn.example.com/style.css'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      cache_tag: images
+      url: 'https://cdn.example.com/style.css'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Cache purged successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Full Purge'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"cache_tag": "images"},
+              "message": "Cache purged successfully for tag: images",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Tag Purge'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"url": "https://cdn.example.com/style.css"},
+              "message": "URL purged successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'URL Purge'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

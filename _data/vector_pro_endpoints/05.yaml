@@ -1,0 +1,272 @@
+name: SSL
+description: |-
+
+  Manage SSL provisioning for Vector environments.
+
+  SSL is automatically provisioned when environments are deployed. These endpoints
+  provide visibility into SSL status and manual intervention capabilities when
+  provisioning gets stuck.
+
+  ## Environment Status
+
+  The main `status` field tracks the environment lifecycle:
+  - `pending` - Environment created, awaiting first deploy
+  - `provisioning` - Resources being provisioned (including SSL)
+  - `active` - Environment fully operational
+  - `failed` - Provisioning failed
+
+  ## Provisioning Step
+
+  The `provisioning_step` field tracks detailed progress during provisioning:
+  - `null` - Not started
+  - `requesting_cert` - Requesting AWS ACM certificate
+  - `waiting_cert` - Waiting for certificate validation
+  - `deploying` - Deploying to Ymir
+  - `configuring_dns` - Configuring DNS records
+  - `ready` - Platform SSL complete (terminal for staging)
+  - `waiting_custom_dns` - Waiting for custom domain DNS (production only)
+  - `provisioning_cdn_ssl` - Requesting Let's Encrypt certificate
+  - `complete` - Fully complete (terminal for production with custom domain)
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl'
+    metadata:
+      custom: []
+      groupName: SSL
+      groupDescription: |-
+
+        Manage SSL provisioning for Vector environments.
+
+        SSL is automatically provisioned when environments are deployed. These endpoints
+        provide visibility into SSL status and manual intervention capabilities when
+        provisioning gets stuck.
+
+        ## Environment Status
+
+        The main `status` field tracks the environment lifecycle:
+        - `pending` - Environment created, awaiting first deploy
+        - `provisioning` - Resources being provisioned (including SSL)
+        - `active` - Environment fully operational
+        - `failed` - Provisioning failed
+
+        ## Provisioning Step
+
+        The `provisioning_step` field tracks detailed progress during provisioning:
+        - `null` - Not started
+        - `requesting_cert` - Requesting AWS ACM certificate
+        - `waiting_cert` - Waiting for certificate validation
+        - `deploying` - Deploying to Ymir
+        - `configuring_dns` - Configuring DNS records
+        - `ready` - Platform SSL complete (terminal for staging)
+        - `waiting_custom_dns` - Waiting for custom domain DNS (production only)
+        - `provisioning_cdn_ssl` - Requesting Let's Encrypt certificate
+        - `complete` - Fully complete (terminal for production with custom domain)
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get SSL Status'
+      description: 'Get the current SSL provisioning status for an environment.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "SSL status retrieved",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl/nudge'
+    metadata:
+      custom: []
+      groupName: SSL
+      groupDescription: |-
+
+        Nudge SSL provisioning for Vector environments.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Nudge SSL Provisioning'
+      description: |-
+        Manually nudge SSL provisioning for an environment. Use this when SSL
+        provisioning appears to be stuck or to retry after a failure.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      retry:
+        custom: []
+        name: retry
+        description: 'Whether to retry from a failed state. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      retry: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "deploying",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "SSL provisioning advanced from waiting_cert to deploying",
+              "http_status": 200
+          }
+        headers: []
+        description: Advanced
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "waiting_custom_dns",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns",
+              "http_status": 200
+          }
+        headers: []
+        description: Waiting
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

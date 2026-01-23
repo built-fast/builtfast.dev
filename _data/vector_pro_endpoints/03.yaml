@@ -1,0 +1,749 @@
+name: 'Environment Secrets'
+description: |-
+
+  Manage environment-level secrets for a specific environment. These secrets are
+  injected as environment variables during site deployment and are scoped to
+  a single environment.
+
+  Secret values are never returned in API responses for security. Certain keys
+  are reserved for system use and cannot be used.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    metadata:
+      custom: []
+      groupName: 'Environment Secrets'
+      groupDescription: |-
+
+        Manage environment-level secrets for a specific environment. These secrets are
+        injected as environment variables during site deployment and are scoped to
+        a single environment.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Environment Secrets'
+      description: |-
+        Retrieves a paginated list of all secrets for a specific environment.
+        Secret values are not included in the response for security.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "key": "STRIPE_SECRET_KEY",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Environment secrets retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: 'Environment Secrets'
+      groupDescription: |-
+
+        Manage environment-level secrets for a specific environment. These secrets are
+        injected as environment variables during site deployment and are scoped to
+        a single environment.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Environment Secret'
+      description: |-
+        Retrieves details of a specific environment secret.
+        The secret value is not included in the response for security.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Environment secret retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    metadata:
+      custom: []
+      groupName: 'Environment Secrets'
+      groupDescription: |-
+
+        Manage environment-level secrets for a specific environment. These secrets are
+        injected as environment variables during site deployment and are scoped to
+        a single environment.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Environment Secret'
+      description: |-
+        Creates a new secret for a specific environment. The secret will be available
+        to this environment during deployment.
+
+        The following keys are reserved and cannot be used:
+
+        - AUTH_KEY
+        - SECURE_AUTH_KEY
+        - LOGGED_IN_KEY
+        - NONCE_KEY
+        - AUTH_SALT
+        - SECURE_AUTH_SALT
+        - LOGGED_IN_SALT
+        - NONCE_SALT
+        - AUTOMATIC_UPDATER_DISABLED
+        - DISABLE_WP_CRON
+        - DISALLOW_FILE_EDIT
+        - DISALLOW_FILE_MODS
+        - DOMAIN_CURRENT_SITE
+        - WP_HOME
+        - WP_SITEURL
+        - YMIR_ASSETS_PATH
+        - YMIR_ASSETS_URL
+        - YMIR_CACHE_PREFIX
+        - YMIR_CACHE_TABLE
+        - YMIR_CDN_IMAGE_PROCESSING_ENABLED
+        - YMIR_DISTRIBUTION_ID
+        - YMIR_DOMAIN_NAMES
+        - YMIR_ENVIRONMENT
+        - YMIR_MAX_EXECUTION_TIME
+        - YMIR_PRIMARY_DOMAIN_NAME
+        - YMIR_PROJECT_TYPE
+        - YMIR_PUBLIC_STORE
+        - YMIR_REDIS_ENDPOINT
+        - YMIR_SECRETS_PATH
+        - YMIR_UPLOAD_URL
+        - _HANDLER
+        - AWS_ACCESS_KEY_ID
+        - AWS_EXECUTION_ENV
+        - AWS_LAMBDA_FUNCTION_MEMORY_SIZE
+        - AWS_LAMBDA_FUNCTION_NAME
+        - AWS_LAMBDA_FUNCTION_VERSION
+        - AWS_LAMBDA_LOG_GROUP_NAME
+        - AWS_LAMBDA_LOG_STREAM_NAME
+        - AWS_LAMBDA_RUNTIME_API
+        - AWS_REGION
+        - AWS_SECRET_ACCESS_KEY
+        - AWS_SESSION_TOKEN
+        - LAMBDA_RUNTIME_DIR
+        - LAMBDA_TASK_ROOT
+        - TZ
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: true
+        example: STRIPE_SECRET_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The secret value.'
+        required: true
+        example: sk_live_xxxx
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_SECRET_KEY
+      value: sk_live_xxxx
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Environment secret created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"key": ["The secret key is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: 'Environment Secrets'
+      groupDescription: |-
+
+        Manage environment-level secrets for a specific environment. These secrets are
+        injected as environment variables during site deployment and are scoped to
+        a single environment.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Environment Secret'
+      description: |-
+        Updates an existing environment secret. You can update the key, value, or both.
+
+        The following keys are reserved and cannot be used:
+
+        - AUTH_KEY
+        - SECURE_AUTH_KEY
+        - LOGGED_IN_KEY
+        - NONCE_KEY
+        - AUTH_SALT
+        - SECURE_AUTH_SALT
+        - LOGGED_IN_SALT
+        - NONCE_SALT
+        - AUTOMATIC_UPDATER_DISABLED
+        - DISABLE_WP_CRON
+        - DISALLOW_FILE_EDIT
+        - DISALLOW_FILE_MODS
+        - DOMAIN_CURRENT_SITE
+        - WP_HOME
+        - WP_SITEURL
+        - YMIR_ASSETS_PATH
+        - YMIR_ASSETS_URL
+        - YMIR_CACHE_PREFIX
+        - YMIR_CACHE_TABLE
+        - YMIR_CDN_IMAGE_PROCESSING_ENABLED
+        - YMIR_DISTRIBUTION_ID
+        - YMIR_DOMAIN_NAMES
+        - YMIR_ENVIRONMENT
+        - YMIR_MAX_EXECUTION_TIME
+        - YMIR_PRIMARY_DOMAIN_NAME
+        - YMIR_PROJECT_TYPE
+        - YMIR_PUBLIC_STORE
+        - YMIR_REDIS_ENDPOINT
+        - YMIR_SECRETS_PATH
+        - YMIR_UPLOAD_URL
+        - _HANDLER
+        - AWS_ACCESS_KEY_ID
+        - AWS_EXECUTION_ENV
+        - AWS_LAMBDA_FUNCTION_MEMORY_SIZE
+        - AWS_LAMBDA_FUNCTION_NAME
+        - AWS_LAMBDA_FUNCTION_VERSION
+        - AWS_LAMBDA_LOG_GROUP_NAME
+        - AWS_LAMBDA_LOG_STREAM_NAME
+        - AWS_LAMBDA_RUNTIME_API
+        - AWS_REGION
+        - AWS_SECRET_ACCESS_KEY
+        - AWS_SESSION_TOKEN
+        - LAMBDA_RUNTIME_DIR
+        - LAMBDA_TASK_ROOT
+        - TZ
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: false
+        example: STRIPE_API_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The new secret value.'
+        required: false
+        example: sk_live_yyyy
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_API_KEY
+      value: sk_live_yyyy
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_API_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Environment secret updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: 'Environment Secrets'
+      groupDescription: |-
+
+        Manage environment-level secrets for a specific environment. These secrets are
+        injected as environment variables during site deployment and are scoped to
+        a single environment.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Environment Secret'
+      description: 'Deletes an environment secret.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Environment secret deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

@@ -1,0 +1,167 @@
+name: 'Site Logs'
+description: |-
+
+  Fetch logs for a Vector site. Supports filtering by time range,
+  environment, and deployment.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/logs'
+    metadata:
+      custom: []
+      groupName: 'Site Logs'
+      groupDescription: |-
+
+        Fetch logs for a Vector site. Supports filtering by time range,
+        environment, and deployment.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Site Logs'
+      description: |-
+        Retrieves logs for the specified Vector site. Logs are returned in reverse
+        chronological order (newest first).
+
+        Use the `environment` and `deployment_id` filters to narrow down results.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters:
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Start time for log query. RFC3339 format or relative (e.g., "now-1h"). Default: now-1h.'
+        required: false
+        example: now-24h
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'End time for log query. RFC3339 format or relative. Default: now.'
+        required: false
+        example: now
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Maximum number of log entries to return (1-1000). Default: 100.'
+        required: false
+        example: 500
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'Filter by environment name (e.g., production, staging).'
+        required: false
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deployment_id:
+        custom: []
+        name: deployment_id
+        description: 'Filter by deployment ID.'
+        required: false
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      start_time: now-24h
+      end_time: now
+      limit: 500
+      environment: production
+      deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "tables": [
+                      {
+                          "name": "0",
+                          "columns": [
+                              {"name": "_time", "type": "datetime"},
+                              {"name": "message", "type": "string"},
+                              {"name": "level", "type": "string"}
+                          ],
+                          "rows": [
+                              ["2025-05-27T09:50:21Z", "Request completed", "info"]
+                          ]
+                      }
+                  ],
+                  "status": {
+                      "rowsExamined": 1000,
+                      "rowsMatched": 50
+                  }
+              },
+              "message": "Logs retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

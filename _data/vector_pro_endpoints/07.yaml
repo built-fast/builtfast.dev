@@ -1,0 +1,1761 @@
+name: 'Site WAF'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Allowed Referrers'
+      subgroupDescription: 'Manage allowed referrer hostnames for CDN access control. When configured, only requests from allowed referrers will be served. Supports wildcards (e.g., `*.example.com`).'
+      title: 'List Allowed Referrers'
+      description: 'Retrieves all allowed referrer hostnames for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"hostname": "example.com"},
+                  {"hostname": "*.example.com"}
+              ],
+              "message": "Allowed referrers retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked Referrers'
+      subgroupDescription: 'Manage blocked referrer hostnames for CDN access control. Requests from blocked referrers will be denied. Supports wildcards (e.g., `*.spam.com`).'
+      title: 'List Blocked Referrers'
+      description: 'Retrieves all blocked referrer hostnames for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"hostname": "spam.com"},
+                  {"hostname": "*.malicious.net"}
+              ],
+              "message": "Blocked referrers retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked IPs'
+      subgroupDescription: 'Manage blocked IP addresses for CDN access control. Requests from blocked IPs will be denied. Supports both IPv4 and IPv6 addresses.'
+      title: 'List Blocked IPs'
+      description: 'Retrieves all blocked IP addresses for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"ip": "192.168.1.100"},
+                  {"ip": "10.0.0.0"}
+              ],
+              "message": "Blocked IPs retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Rate Limits'
+      subgroupDescription: |-
+        Manage WAF rate limiting rules for a site.
+
+        Rate limits protect your site against DDoS attacks, brute force attempts, and API abuse by
+        limiting request frequency based on configurable thresholds. When a client exceeds the
+        allowed request count within the specified timeframe, they are blocked for the configured
+        block duration.
+
+        ## How Rate Limiting Works
+
+        Each rule defines:
+        - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
+        - **Block Duration**: How long to block offending clients (`block_time`)
+        - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
+        - **Transformations**: Data normalization applied before matching
+
+        ## Limits
+
+        - Maximum **25 rate limit rules** per site/zone
+        - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
+        - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
+
+        ## Available Operators
+
+        | Value | Description |
+        |-------|-------------|
+        | `begins-with` | Value starts with pattern |
+        | `ends-with` | Value ends with pattern |
+        | `contains` | Value contains pattern anywhere |
+        | `contains-word` | Value contains pattern as whole word |
+        | `str-match` | String pattern match |
+        | `eq` | Numeric equals |
+        | `ge` | Numeric greater than or equal |
+        | `gt` | Numeric greater than |
+        | `le` | Numeric less than or equal |
+        | `lt` | Numeric less than |
+        | `within` | Value is within set |
+        | `regex` | Regular expression match |
+        | `str-eq` | Exact string equals |
+        | `detect-sqli` | SQL injection detection (Premium) |
+        | `detect-xss` | XSS detection (Premium) |
+
+        ## Available Variables
+
+        | Value | Description |
+        |-------|-------------|
+        | `request-uri` | Request URI (normalized) |
+        | `request-uri-raw` | Request URI (raw, unnormalized) |
+        | `args` | All request arguments |
+        | `args-combined-size` | Total size of all arguments |
+        | `args-get` | GET query parameters |
+        | `args-get-names` | Names of GET parameters |
+        | `args-post` | POST body parameters |
+        | `args-post-names` | Names of POST parameters |
+        | `files-names` | Uploaded file names |
+        | `geo` | Geographic location (Premium) |
+        | `remote-addr` | Client IP address |
+        | `query-string` | Full query string |
+        | `request-basename` | Filename from URI |
+        | `request-body` | Full request body (Premium) |
+        | `request-cookies-names` | Cookie names |
+        | `request-cookies` | Cookie values |
+        | `request-filename` | Full file path from URI |
+        | `request-headers-names` | Header names |
+        | `request-headers` | Header values |
+        | `request-line` | Full HTTP request line |
+        | `request-method` | HTTP method (GET, POST, etc.) |
+        | `request-protocol` | HTTP protocol version |
+        | `response-body` | Response body (Premium) |
+        | `response-headers` | Response headers |
+        | `response-status` | Response status code |
+
+        ## Available Transformations
+
+        | Value | Description |
+        |-------|-------------|
+        | `cmdline` | Normalize command line |
+        | `compress-whitespace` | Collapse whitespace |
+        | `css-decode` | Decode CSS escapes |
+        | `hex-encode` | Hex encode |
+        | `html-entity-decode` | Decode HTML entities |
+        | `js-decode` | Decode JavaScript escapes |
+        | `length` | Get string length |
+        | `lowercase` | Convert to lowercase |
+        | `md5` | MD5 hash |
+        | `normalize-path` | Normalize path (Unix) |
+        | `normalise-path` | Normalize path (alias) |
+        | `normalize-path-win` | Normalize path (Windows) |
+        | `normalise-path-win` | Normalize path Windows (alias) |
+        | `remove-comments` | Strip comments |
+        | `remove-nulls` | Remove null bytes |
+        | `remove-whitespace` | Remove all whitespace |
+        | `replace-comments` | Replace comments with space |
+        | `sha1` | SHA1 hash |
+        | `url-decode` | URL decode |
+        | `url-decode-uni` | URL decode with Unicode |
+        | `utf8-to-unicode` | Convert UTF-8 to Unicode |
+      title: 'List Rate Limits'
+      description: 'Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": 12345,
+                      "name": "API Rate Limit",
+                      "description": "Limit API requests to 100/second",
+                      "shield_zone_id": 67890,
+                      "configuration": {
+                          "request_count": 100,
+                          "timeframe": 1,
+                          "block_time": 60,
+                          "value": "/api/*",
+                          "action": "rate-limit",
+                          "operator": "begins-with",
+                          "variables": ["request-uri"],
+                          "transformations": ["lowercase"]
+                      }
+                  }
+              ],
+              "message": "Rate limits retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{ruleId}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Rate Limits'
+      subgroupDescription: |-
+        Manage WAF rate limiting rules for a site.
+
+        Rate limits protect your site against DDoS attacks, brute force attempts, and API abuse by
+        limiting request frequency based on configurable thresholds. When a client exceeds the
+        allowed request count within the specified timeframe, they are blocked for the configured
+        block duration.
+
+        ## How Rate Limiting Works
+
+        Each rule defines:
+        - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
+        - **Block Duration**: How long to block offending clients (`block_time`)
+        - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
+        - **Transformations**: Data normalization applied before matching
+
+        ## Limits
+
+        - Maximum **25 rate limit rules** per site/zone
+        - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
+        - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
+
+        ## Available Operators
+
+        | Value | Description |
+        |-------|-------------|
+        | `begins-with` | Value starts with pattern |
+        | `ends-with` | Value ends with pattern |
+        | `contains` | Value contains pattern anywhere |
+        | `contains-word` | Value contains pattern as whole word |
+        | `str-match` | String pattern match |
+        | `eq` | Numeric equals |
+        | `ge` | Numeric greater than or equal |
+        | `gt` | Numeric greater than |
+        | `le` | Numeric less than or equal |
+        | `lt` | Numeric less than |
+        | `within` | Value is within set |
+        | `regex` | Regular expression match |
+        | `str-eq` | Exact string equals |
+        | `detect-sqli` | SQL injection detection (Premium) |
+        | `detect-xss` | XSS detection (Premium) |
+
+        ## Available Variables
+
+        | Value | Description |
+        |-------|-------------|
+        | `request-uri` | Request URI (normalized) |
+        | `request-uri-raw` | Request URI (raw, unnormalized) |
+        | `args` | All request arguments |
+        | `args-combined-size` | Total size of all arguments |
+        | `args-get` | GET query parameters |
+        | `args-get-names` | Names of GET parameters |
+        | `args-post` | POST body parameters |
+        | `args-post-names` | Names of POST parameters |
+        | `files-names` | Uploaded file names |
+        | `geo` | Geographic location (Premium) |
+        | `remote-addr` | Client IP address |
+        | `query-string` | Full query string |
+        | `request-basename` | Filename from URI |
+        | `request-body` | Full request body (Premium) |
+        | `request-cookies-names` | Cookie names |
+        | `request-cookies` | Cookie values |
+        | `request-filename` | Full file path from URI |
+        | `request-headers-names` | Header names |
+        | `request-headers` | Header values |
+        | `request-line` | Full HTTP request line |
+        | `request-method` | HTTP method (GET, POST, etc.) |
+        | `request-protocol` | HTTP protocol version |
+        | `response-body` | Response body (Premium) |
+        | `response-headers` | Response headers |
+        | `response-status` | Response status code |
+
+        ## Available Transformations
+
+        | Value | Description |
+        |-------|-------------|
+        | `cmdline` | Normalize command line |
+        | `compress-whitespace` | Collapse whitespace |
+        | `css-decode` | Decode CSS escapes |
+        | `hex-encode` | Hex encode |
+        | `html-entity-decode` | Decode HTML entities |
+        | `js-decode` | Decode JavaScript escapes |
+        | `length` | Get string length |
+        | `lowercase` | Convert to lowercase |
+        | `md5` | MD5 hash |
+        | `normalize-path` | Normalize path (Unix) |
+        | `normalise-path` | Normalize path (alias) |
+        | `normalize-path-win` | Normalize path (Windows) |
+        | `normalise-path-win` | Normalize path Windows (alias) |
+        | `remove-comments` | Strip comments |
+        | `remove-nulls` | Remove null bytes |
+        | `remove-whitespace` | Remove all whitespace |
+        | `replace-comments` | Replace comments with space |
+        | `sha1` | SHA1 hash |
+        | `url-decode` | URL decode |
+        | `url-decode-uni` | URL decode with Unicode |
+        | `utf8-to-unicode` | Convert UTF-8 to Unicode |
+      title: 'Get Rate Limit'
+      description: 'Retrieves a specific rate limit rule by ID.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "API Rate Limit",
+                  "description": "Limit API requests to 100/second",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 100,
+                      "timeframe": 1,
+                      "block_time": 60,
+                      "value": "/api/*",
+                      "action": "rate-limit",
+                      "operator": "begins-with",
+                      "variables": ["request-uri"],
+                      "transformations": ["lowercase"]
+                  }
+              },
+              "message": "Rate limit retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit not found",
+              "http_status": 404
+          }
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Allowed Referrers'
+      subgroupDescription: 'Manage allowed referrer hostnames for CDN access control. When configured, only requests from allowed referrers will be served. Supports wildcards (e.g., `*.example.com`).'
+      title: 'Add Allowed Referrer'
+      description: |-
+        Adds a hostname to the allowed referrers list.
+        Wildcards are supported (e.g., *.example.com).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to allow.'
+        required: true
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      hostname: example.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"hostname": "example.com"},
+              "message": "Allowed referrer added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers/{hostname}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Allowed Referrers'
+      subgroupDescription: 'Manage allowed referrer hostnames for CDN access control. When configured, only requests from allowed referrers will be served. Supports wildcards (e.g., `*.example.com`).'
+      title: 'Remove Allowed Referrer'
+      description: 'Removes a hostname from the allowed referrers list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to remove.'
+        required: true
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      hostname: example.com
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"hostname": "example.com"},
+              "message": "Allowed referrer removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked Referrers'
+      subgroupDescription: 'Manage blocked referrer hostnames for CDN access control. Requests from blocked referrers will be denied. Supports wildcards (e.g., `*.spam.com`).'
+      title: 'Add Blocked Referrer'
+      description: |-
+        Adds a hostname to the blocked referrers list.
+        Wildcards are supported (e.g., *.spam.com).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to block.'
+        required: true
+        example: spam.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      hostname: spam.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"hostname": "spam.com"},
+              "message": "Blocked referrer added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers/{hostname}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked Referrers'
+      subgroupDescription: 'Manage blocked referrer hostnames for CDN access control. Requests from blocked referrers will be denied. Supports wildcards (e.g., `*.spam.com`).'
+      title: 'Remove Blocked Referrer'
+      description: 'Removes a hostname from the blocked referrers list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to remove.'
+        required: true
+        example: spam.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      hostname: spam.com
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"hostname": "spam.com"},
+              "message": "Blocked referrer removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked IPs'
+      subgroupDescription: 'Manage blocked IP addresses for CDN access control. Requests from blocked IPs will be denied. Supports both IPv4 and IPv6 addresses.'
+      title: 'Add Blocked IP'
+      description: |-
+        Adds an IP address to the blocked list.
+        Supports both IPv4 and IPv6 addresses.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      ip:
+        custom: []
+        name: ip
+        description: 'The IP address to block.'
+        required: true
+        example: 192.168.1.100
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      ip: 192.168.1.100
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"ip": "192.168.1.100"},
+              "message": "Blocked IP added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips/{ip}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Blocked IPs'
+      subgroupDescription: 'Manage blocked IP addresses for CDN access control. Requests from blocked IPs will be denied. Supports both IPv4 and IPv6 addresses.'
+      title: 'Remove Blocked IP'
+      description: 'Removes an IP address from the blocked list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ip:
+        custom: []
+        name: ip
+        description: 'The IP address to remove.'
+        required: true
+        example: 192.168.1.100
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      ip: 192.168.1.100
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"ip": "192.168.1.100"},
+              "message": "Blocked IP removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Rate Limits'
+      subgroupDescription: |-
+        Manage WAF rate limiting rules for a site.
+
+        Rate limits protect your site against DDoS attacks, brute force attempts, and API abuse by
+        limiting request frequency based on configurable thresholds. When a client exceeds the
+        allowed request count within the specified timeframe, they are blocked for the configured
+        block duration.
+
+        ## How Rate Limiting Works
+
+        Each rule defines:
+        - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
+        - **Block Duration**: How long to block offending clients (`block_time`)
+        - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
+        - **Transformations**: Data normalization applied before matching
+
+        ## Limits
+
+        - Maximum **25 rate limit rules** per site/zone
+        - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
+        - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
+
+        ## Available Operators
+
+        | Value | Description |
+        |-------|-------------|
+        | `begins-with` | Value starts with pattern |
+        | `ends-with` | Value ends with pattern |
+        | `contains` | Value contains pattern anywhere |
+        | `contains-word` | Value contains pattern as whole word |
+        | `str-match` | String pattern match |
+        | `eq` | Numeric equals |
+        | `ge` | Numeric greater than or equal |
+        | `gt` | Numeric greater than |
+        | `le` | Numeric less than or equal |
+        | `lt` | Numeric less than |
+        | `within` | Value is within set |
+        | `regex` | Regular expression match |
+        | `str-eq` | Exact string equals |
+        | `detect-sqli` | SQL injection detection (Premium) |
+        | `detect-xss` | XSS detection (Premium) |
+
+        ## Available Variables
+
+        | Value | Description |
+        |-------|-------------|
+        | `request-uri` | Request URI (normalized) |
+        | `request-uri-raw` | Request URI (raw, unnormalized) |
+        | `args` | All request arguments |
+        | `args-combined-size` | Total size of all arguments |
+        | `args-get` | GET query parameters |
+        | `args-get-names` | Names of GET parameters |
+        | `args-post` | POST body parameters |
+        | `args-post-names` | Names of POST parameters |
+        | `files-names` | Uploaded file names |
+        | `geo` | Geographic location (Premium) |
+        | `remote-addr` | Client IP address |
+        | `query-string` | Full query string |
+        | `request-basename` | Filename from URI |
+        | `request-body` | Full request body (Premium) |
+        | `request-cookies-names` | Cookie names |
+        | `request-cookies` | Cookie values |
+        | `request-filename` | Full file path from URI |
+        | `request-headers-names` | Header names |
+        | `request-headers` | Header values |
+        | `request-line` | Full HTTP request line |
+        | `request-method` | HTTP method (GET, POST, etc.) |
+        | `request-protocol` | HTTP protocol version |
+        | `response-body` | Response body (Premium) |
+        | `response-headers` | Response headers |
+        | `response-status` | Response status code |
+
+        ## Available Transformations
+
+        | Value | Description |
+        |-------|-------------|
+        | `cmdline` | Normalize command line |
+        | `compress-whitespace` | Collapse whitespace |
+        | `css-decode` | Decode CSS escapes |
+        | `hex-encode` | Hex encode |
+        | `html-entity-decode` | Decode HTML entities |
+        | `js-decode` | Decode JavaScript escapes |
+        | `length` | Get string length |
+        | `lowercase` | Convert to lowercase |
+        | `md5` | MD5 hash |
+        | `normalize-path` | Normalize path (Unix) |
+        | `normalise-path` | Normalize path (alias) |
+        | `normalize-path-win` | Normalize path (Windows) |
+        | `normalise-path-win` | Normalize path Windows (alias) |
+        | `remove-comments` | Strip comments |
+        | `remove-nulls` | Remove null bytes |
+        | `remove-whitespace` | Remove all whitespace |
+        | `replace-comments` | Replace comments with space |
+        | `sha1` | SHA1 hash |
+        | `url-decode` | URL decode |
+        | `url-decode-uni` | URL decode with Unicode |
+        | `utf8-to-unicode` | Convert UTF-8 to Unicode |
+      title: 'Create Rate Limit'
+      description: 'Creates a new rate limit rule for a site. Maximum 25 rate limit rules per zone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The rule name (max 255 characters).'
+        required: true
+        example: 'API Rate Limit'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'optional The rule description (max 1000 characters).'
+        required: false
+        example: 'Limit API requests to prevent abuse'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      request_count:
+        custom: []
+        name: request_count
+        description: 'Number of requests allowed within the timeframe. Must be between 1 and 1,000,000.'
+        required: true
+        example: 100
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      timeframe:
+        custom: []
+        name: timeframe
+        description: 'Time window for counting requests. Must be exactly 1 (per second) or 10 (per 10 seconds).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      block_time:
+        custom: []
+        name: block_time
+        description: 'Duration to block clients who exceed the limit, in seconds. Must be one of: 30, 60, 300, 900, 1800, 3600.'
+        required: true
+        example: 60
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'optional URL path or pattern to match against. Max 2048 characters.'
+        required: false
+        example: '/api/*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      operator:
+        custom: []
+        name: operator
+        description: 'optional Match operator for comparing against the value. Must be one of: begins-with, ends-with, contains, contains-word, str-match, eq, ge, gt, le, lt, within, regex, str-eq, detect-sqli, detect-xss.'
+        required: false
+        example: begins-with
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      transformations:
+        custom: []
+        name: transformations
+        description: 'optional Transformations to apply to variable values before matching. Each must be one of: cmdline, compress-whitespace, css-decode, hex-encode, html-entity-decode, js-decode, length, lowercase, md5, normalize-path, normalise-path, normalize-path-win, normalise-path-win, remove-comments, remove-nulls, remove-whitespace, replace-comments, sha1, url-decode, url-decode-uni, utf8-to-unicode.'
+        required: false
+        example:
+          - lowercase
+          - url-decode
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      variables:
+        custom: []
+        name: variables
+        description: 'optional Request variables to inspect when matching. Each must be one of: request-uri, request-uri-raw, args, args-combined-size, args-get, args-get-names, args-post, args-post-names, files-names, geo, remote-addr, query-string, request-basename, request-body, request-cookies-names, request-cookies, request-filename, request-headers-names, request-headers, request-line, request-method, request-protocol, response-body, response-headers, response-status.'
+        required: false
+        example:
+          - request-uri
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'API Rate Limit'
+      description: 'Limit API requests to prevent abuse'
+      request_count: 100
+      timeframe: 1
+      block_time: 60
+      value: '/api/*'
+      operator: begins-with
+      transformations:
+        - lowercase
+        - url-decode
+      variables:
+        - request-uri
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "API Rate Limit",
+                  "description": "Limit API requests to prevent abuse",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 100,
+                      "timeframe": 1,
+                      "block_time": 60,
+                      "value": "/api/*",
+                      "action": "rate-limit",
+                      "operator": "begins-with",
+                      "variables": ["request-uri"],
+                      "transformations": ["lowercase", "url-decode"]
+                  }
+              },
+              "message": "Rate limit created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "timeframe": ["The timeframe field must be a valid enum value."],
+                  "block_time": ["The block duration field must be a valid enum value."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit rule limit reached (25 rules per zone)",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Limit Reached'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{ruleId}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Rate Limits'
+      subgroupDescription: |-
+        Manage WAF rate limiting rules for a site.
+
+        Rate limits protect your site against DDoS attacks, brute force attempts, and API abuse by
+        limiting request frequency based on configurable thresholds. When a client exceeds the
+        allowed request count within the specified timeframe, they are blocked for the configured
+        block duration.
+
+        ## How Rate Limiting Works
+
+        Each rule defines:
+        - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
+        - **Block Duration**: How long to block offending clients (`block_time`)
+        - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
+        - **Transformations**: Data normalization applied before matching
+
+        ## Limits
+
+        - Maximum **25 rate limit rules** per site/zone
+        - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
+        - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
+
+        ## Available Operators
+
+        | Value | Description |
+        |-------|-------------|
+        | `begins-with` | Value starts with pattern |
+        | `ends-with` | Value ends with pattern |
+        | `contains` | Value contains pattern anywhere |
+        | `contains-word` | Value contains pattern as whole word |
+        | `str-match` | String pattern match |
+        | `eq` | Numeric equals |
+        | `ge` | Numeric greater than or equal |
+        | `gt` | Numeric greater than |
+        | `le` | Numeric less than or equal |
+        | `lt` | Numeric less than |
+        | `within` | Value is within set |
+        | `regex` | Regular expression match |
+        | `str-eq` | Exact string equals |
+        | `detect-sqli` | SQL injection detection (Premium) |
+        | `detect-xss` | XSS detection (Premium) |
+
+        ## Available Variables
+
+        | Value | Description |
+        |-------|-------------|
+        | `request-uri` | Request URI (normalized) |
+        | `request-uri-raw` | Request URI (raw, unnormalized) |
+        | `args` | All request arguments |
+        | `args-combined-size` | Total size of all arguments |
+        | `args-get` | GET query parameters |
+        | `args-get-names` | Names of GET parameters |
+        | `args-post` | POST body parameters |
+        | `args-post-names` | Names of POST parameters |
+        | `files-names` | Uploaded file names |
+        | `geo` | Geographic location (Premium) |
+        | `remote-addr` | Client IP address |
+        | `query-string` | Full query string |
+        | `request-basename` | Filename from URI |
+        | `request-body` | Full request body (Premium) |
+        | `request-cookies-names` | Cookie names |
+        | `request-cookies` | Cookie values |
+        | `request-filename` | Full file path from URI |
+        | `request-headers-names` | Header names |
+        | `request-headers` | Header values |
+        | `request-line` | Full HTTP request line |
+        | `request-method` | HTTP method (GET, POST, etc.) |
+        | `request-protocol` | HTTP protocol version |
+        | `response-body` | Response body (Premium) |
+        | `response-headers` | Response headers |
+        | `response-status` | Response status code |
+
+        ## Available Transformations
+
+        | Value | Description |
+        |-------|-------------|
+        | `cmdline` | Normalize command line |
+        | `compress-whitespace` | Collapse whitespace |
+        | `css-decode` | Decode CSS escapes |
+        | `hex-encode` | Hex encode |
+        | `html-entity-decode` | Decode HTML entities |
+        | `js-decode` | Decode JavaScript escapes |
+        | `length` | Get string length |
+        | `lowercase` | Convert to lowercase |
+        | `md5` | MD5 hash |
+        | `normalize-path` | Normalize path (Unix) |
+        | `normalise-path` | Normalize path (alias) |
+        | `normalize-path-win` | Normalize path (Windows) |
+        | `normalise-path-win` | Normalize path Windows (alias) |
+        | `remove-comments` | Strip comments |
+        | `remove-nulls` | Remove null bytes |
+        | `remove-whitespace` | Remove all whitespace |
+        | `replace-comments` | Replace comments with space |
+        | `sha1` | SHA1 hash |
+        | `url-decode` | URL decode |
+        | `url-decode-uni` | URL decode with Unicode |
+        | `utf8-to-unicode` | Convert UTF-8 to Unicode |
+      title: 'Update Rate Limit'
+      description: |-
+        Updates an existing rate limit rule. All fields are optional - only include fields you want
+        to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'optional The rule name (max 255 characters).'
+        required: false
+        example: 'Updated Rate Limit'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'optional The rule description (max 1000 characters).'
+        required: false
+        example: 'Updated description for the rule'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      request_count:
+        custom: []
+        name: request_count
+        description: 'optional Number of requests allowed within the timeframe. Must be between 1 and 1,000,000.'
+        required: false
+        example: 200
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      timeframe:
+        custom: []
+        name: timeframe
+        description: 'optional Time window for counting requests. Must be exactly 1 (per second) or 10 (per 10 seconds).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      block_time:
+        custom: []
+        name: block_time
+        description: 'optional Duration to block clients who exceed the limit, in seconds. Must be one of: 30, 60, 300, 900, 1800, 3600.'
+        required: false
+        example: 300
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'optional URL path or pattern to match against. Max 2048 characters.'
+        required: false
+        example: '/api/v2/*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      operator:
+        custom: []
+        name: operator
+        description: 'optional Match operator for comparing against the value. Must be one of: begins-with, ends-with, contains, contains-word, str-match, eq, ge, gt, le, lt, within, regex, str-eq, detect-sqli, detect-xss.'
+        required: false
+        example: regex
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      transformations:
+        custom: []
+        name: transformations
+        description: 'optional Transformations to apply to variable values before matching. Each must be one of: cmdline, compress-whitespace, css-decode, hex-encode, html-entity-decode, js-decode, length, lowercase, md5, normalize-path, normalise-path, normalize-path-win, normalise-path-win, remove-comments, remove-nulls, remove-whitespace, replace-comments, sha1, url-decode, url-decode-uni, utf8-to-unicode.'
+        required: false
+        example:
+          - lowercase
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      variables:
+        custom: []
+        name: variables
+        description: 'optional Request variables to inspect when matching. Each must be one of: request-uri, request-uri-raw, args, args-combined-size, args-get, args-get-names, args-post, args-post-names, files-names, geo, remote-addr, query-string, request-basename, request-body, request-cookies-names, request-cookies, request-filename, request-headers-names, request-headers, request-line, request-method, request-protocol, response-body, response-headers, response-status.'
+        required: false
+        example:
+          - request-uri
+          - query-string
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Updated Rate Limit'
+      description: 'Updated description for the rule'
+      request_count: 200
+      timeframe: 10
+      block_time: 300
+      value: '/api/v2/*'
+      operator: regex
+      transformations:
+        - lowercase
+      variables:
+        - request-uri
+        - query-string
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "Updated Rate Limit",
+                  "description": "Updated description for the rule",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 200,
+                      "timeframe": 10,
+                      "block_time": 300,
+                      "value": "/api/v2/*",
+                      "action": "rate-limit",
+                      "operator": "regex",
+                      "variables": ["request-uri", "query-string"],
+                      "transformations": ["lowercase"]
+                  }
+              },
+              "message": "Rate limit updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "operator": ["The match operator field must be a valid enum value."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{ruleId}'
+    metadata:
+      custom: []
+      groupName: 'Site WAF'
+      groupDescription: ''
+      subgroup: 'Rate Limits'
+      subgroupDescription: |-
+        Manage WAF rate limiting rules for a site.
+
+        Rate limits protect your site against DDoS attacks, brute force attempts, and API abuse by
+        limiting request frequency based on configurable thresholds. When a client exceeds the
+        allowed request count within the specified timeframe, they are blocked for the configured
+        block duration.
+
+        ## How Rate Limiting Works
+
+        Each rule defines:
+        - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
+        - **Block Duration**: How long to block offending clients (`block_time`)
+        - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
+        - **Transformations**: Data normalization applied before matching
+
+        ## Limits
+
+        - Maximum **25 rate limit rules** per site/zone
+        - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
+        - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
+
+        ## Available Operators
+
+        | Value | Description |
+        |-------|-------------|
+        | `begins-with` | Value starts with pattern |
+        | `ends-with` | Value ends with pattern |
+        | `contains` | Value contains pattern anywhere |
+        | `contains-word` | Value contains pattern as whole word |
+        | `str-match` | String pattern match |
+        | `eq` | Numeric equals |
+        | `ge` | Numeric greater than or equal |
+        | `gt` | Numeric greater than |
+        | `le` | Numeric less than or equal |
+        | `lt` | Numeric less than |
+        | `within` | Value is within set |
+        | `regex` | Regular expression match |
+        | `str-eq` | Exact string equals |
+        | `detect-sqli` | SQL injection detection (Premium) |
+        | `detect-xss` | XSS detection (Premium) |
+
+        ## Available Variables
+
+        | Value | Description |
+        |-------|-------------|
+        | `request-uri` | Request URI (normalized) |
+        | `request-uri-raw` | Request URI (raw, unnormalized) |
+        | `args` | All request arguments |
+        | `args-combined-size` | Total size of all arguments |
+        | `args-get` | GET query parameters |
+        | `args-get-names` | Names of GET parameters |
+        | `args-post` | POST body parameters |
+        | `args-post-names` | Names of POST parameters |
+        | `files-names` | Uploaded file names |
+        | `geo` | Geographic location (Premium) |
+        | `remote-addr` | Client IP address |
+        | `query-string` | Full query string |
+        | `request-basename` | Filename from URI |
+        | `request-body` | Full request body (Premium) |
+        | `request-cookies-names` | Cookie names |
+        | `request-cookies` | Cookie values |
+        | `request-filename` | Full file path from URI |
+        | `request-headers-names` | Header names |
+        | `request-headers` | Header values |
+        | `request-line` | Full HTTP request line |
+        | `request-method` | HTTP method (GET, POST, etc.) |
+        | `request-protocol` | HTTP protocol version |
+        | `response-body` | Response body (Premium) |
+        | `response-headers` | Response headers |
+        | `response-status` | Response status code |
+
+        ## Available Transformations
+
+        | Value | Description |
+        |-------|-------------|
+        | `cmdline` | Normalize command line |
+        | `compress-whitespace` | Collapse whitespace |
+        | `css-decode` | Decode CSS escapes |
+        | `hex-encode` | Hex encode |
+        | `html-entity-decode` | Decode HTML entities |
+        | `js-decode` | Decode JavaScript escapes |
+        | `length` | Get string length |
+        | `lowercase` | Convert to lowercase |
+        | `md5` | MD5 hash |
+        | `normalize-path` | Normalize path (Unix) |
+        | `normalise-path` | Normalize path (alias) |
+        | `normalize-path-win` | Normalize path (Windows) |
+        | `normalise-path-win` | Normalize path Windows (alias) |
+        | `remove-comments` | Strip comments |
+        | `remove-nulls` | Remove null bytes |
+        | `remove-whitespace` | Remove all whitespace |
+        | `replace-comments` | Replace comments with space |
+        | `sha1` | SHA1 hash |
+        | `url-decode` | URL decode |
+        | `url-decode-uni` | URL decode with Unicode |
+        | `utf8-to-unicode` | Convert UTF-8 to Unicode |
+      title: 'Delete Rate Limit'
+      description: 'Permanently deletes a rate limit rule. This action cannot be undone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

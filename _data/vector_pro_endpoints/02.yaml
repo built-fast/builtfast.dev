@@ -1,0 +1,939 @@
+name: Environments
+description: |-
+
+  Manage deployment environments for sites. Each site can have multiple environments
+  with their own domains, PHP versions, and secrets. Environment names use a slug format
+  (lowercase letters, numbers, and hyphens).
+
+  Environments are created with a `pending` status and transition to `active` once
+  container provisioning completes. Each environment gets a unique subdomain under
+  your registered domain.
+
+  ## Environment Status Lifecycle
+
+  - `pending` - Environment creation initiated, provisioning in progress
+  - `active` - Environment is fully operational
+  - `suspended` - Environment is paused
+  - `terminating` - Environment deletion in progress
+  - `terminated` - Environment has been fully removed
+
+  ## Production Environment
+
+  Each site can have at most one production environment (`is_production: true`).
+  The production environment receives CDN integration via Bunny.net.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        ## Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        ## Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Environments'
+      description: 'Retrieves a paginated list of all environments for a specific site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "partner_customer_id": "customer-123",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "provisioning_step": "complete",
+                      "failure_reason": null,
+                      "php_version": "8.3",
+                      "tags": ["live", "primary"],
+                      "fqdn": "wispy-dust.vectorpages.com",
+                      "custom_domain": "ourshop.com",
+                      "custom_domain": "ourshop.com",
+                      "subdomain": "wispy-dust",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Environments retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        ## Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        ## Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Environment'
+      description: 'Retrieves details of a specific environment.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "ourshop.com",
+                  "custom_domain": "ourshop.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Environment retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        ## Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        ## Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Environment'
+      description: |-
+        Creates a new environment for a site. The environment is created with a
+        `pending` status and will transition to `active` once provisioning completes.
+
+        Each environment gets a unique auto-generated subdomain and uses the site's
+        configured domain.
+
+        **Important:** Only one environment per site can be marked as production
+        (`is_production: true`). The production environment receives CDN integration.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'A unique name for this environment (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      custom_domain:
+        custom: []
+        name: custom_domain
+        description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
+        required: true
+        example: ourshop.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      is_production:
+        custom: []
+        name: is_production
+        description: 'Whether this is the production environment. Only one per site. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      php_version:
+        custom: []
+        name: php_version
+        description: 'The PHP version for this environment. Options: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5.'
+        required: true
+        example: '8.3'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Optional array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique.'
+        required: false
+        example:
+          - live
+          - primary
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: production
+      custom_domain: ourshop.com
+      is_production: true
+      php_version: '8.3'
+      tags:
+        - live
+        - primary
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "pending",
+                  "provisioning_step": "pending",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "ourshop.com",
+                  "custom_domain": "ourshop.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Environment creation initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["Environment name must be lowercase letters, numbers, and hyphens only."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        ## Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        ## Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Environment'
+      description: 'Updates an existing environment. Only the fields provided will be updated.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The environment name (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
+        required: false
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      is_production:
+        custom: []
+        name: is_production
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      custom_domain:
+        custom: []
+        name: custom_domain
+        description: 'A custom vanity domain for this environment. Must be a valid domain name.'
+        required: false
+        example: newshop.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique. Pass `null` to clear tags.'
+        required: false
+        example:
+          - live
+          - updated
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: production
+      is_production: true
+      custom_domain: newshop.com
+      tags:
+        - live
+        - updated
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.4",
+                  "tags": ["live", "updated"],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "newshop.com",
+                  "custom_domain": "newshop.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Environment updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["An environment with this name already exists for this site."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        ## Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        ## Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Environment'
+      description: |-
+        Initiates deletion of an environment. This terminates all associated
+        containers, deployments, and CDN resources. The environment status
+        transitions to `terminating` and eventually `terminated`.
+
+        This operation is irreversible. All environment data will be permanently removed.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "terminating",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "ourshop.com",
+                  "custom_domain": "ourshop.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Environment deletion initiated",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/database/reset-password'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Reset the database password for a Vector Pro production environment.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Reset Password'
+      description: |-
+        Rotates the database password for a production environment via Ymir.
+        The old password is immediately invalidated.
+
+        The new password is returned ONLY in this response - store it securely
+        as it cannot be retrieved again.
+
+        **Important:** After rotating the password, you must redeploy the environment
+        for your application to pick up the new credentials.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      env:
+        custom: []
+        name: env
+        description: 'The environment name.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: production
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "database_user": "user_abc123_production",
+                  "database_password": "aBcD1234!@#$EfGh5678",
+                  "created_at": "2024-01-01T00:00:00.000000Z",
+                  "updated_at": "2024-01-01T00:00:00.000000Z"
+              },
+              "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 400
+        content: '{"data": {}, "message": "Environment does not have a database user configured. Deploy the environment first.", "http_status": 400}'
+        headers: []
+        description: 'No Database User'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 500
+        content: '{"data": {}, "message": "Failed to rotate database password", "http_status": 500}'
+        headers: []
+        description: 'Rotation Failed'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

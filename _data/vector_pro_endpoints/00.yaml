@@ -1,0 +1,72 @@
+name: 'PHP Versions'
+description: |-
+
+  Get available PHP versions for Vector environments.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/vector/php-versions
+    metadata:
+      custom: []
+      groupName: 'PHP Versions'
+      groupDescription: |-
+
+        Get available PHP versions for Vector environments.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List PHP Versions'
+      description: |-
+        Retrieves a list of all available PHP versions for Vector environments.
+
+        Currently supported versions: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"value": "7.2", "label": "PHP 7.2"},
+                  {"value": "7.3", "label": "PHP 7.3"},
+                  {"value": "7.4", "label": "PHP 7.4"},
+                  {"value": "8.0", "label": "PHP 8.0"},
+                  {"value": "8.1", "label": "PHP 8.1"},
+                  {"value": "8.2", "label": "PHP 8.2"},
+                  {"value": "8.3", "label": "PHP 8.3"},
+                  {"value": "8.4", "label": "PHP 8.4"},
+                  {"value": "8.5", "label": "PHP 8.5"}
+              ],
+              "message": "PHP versions retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
