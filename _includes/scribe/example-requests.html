@@ -1,0 +1,66 @@
+{% comment %}
+  Expects: endpoint
+{% endcomment %}
+
+{% assign method = endpoint.httpMethods[0] %}
+{% assign base_url = "https://api.builtfast.com" %}
+
+{% comment %} Build the URI with URL parameters replaced {% endcomment %}
+{% assign bound_uri = endpoint.uri %}
+{% for param_entry in endpoint.cleanUrlParameters %}
+    {% assign param_name = param_entry[0] %}
+    {% assign param_value = param_entry[1] %}
+    {% assign placeholder = "{" | append: param_name | append: "}" %}
+    {% assign bound_uri = bound_uri | replace: placeholder, param_value %}
+{% endfor %}
+
+{% comment %} Build query string {% endcomment %}
+{% assign query_string = "" %}
+{% for param_entry in endpoint.cleanQueryParameters %}
+    {% if forloop.first %}
+        {% assign query_string = "?" %}
+    {% else %}
+        {% assign query_string = query_string | append: "&" %}
+    {% endif %}
+    {% assign query_string = query_string | append: param_entry[0] | append: "=" | append: param_entry[1] %}
+{% endfor %}
+
+<div class="example-section">
+    <div class="code-block">
+        <div class="code-block-header">
+            <div class="code-block-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <span class="code-block-title">Example Request</span>
+            <div class="code-block-actions">
+                <select class="lang-dropdown" onchange="switchLanguage(this)">
+                    <option value="bash">Bash</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="php">PHP</option>
+                </select>
+                <button type="button" class="copy-btn" onclick="copyCode(this)" title="Copy to clipboard">
+                    <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="code-block-body">
+            <!-- Bash Example -->
+            <div class="example-code" data-lang="bash">
+                {% include scribe/example-request-bash.html endpoint=endpoint bound_uri=bound_uri query_string=query_string base_url=base_url %}
+            </div>
+
+            <!-- JavaScript Example -->
+            <div class="example-code" data-lang="javascript" style="display: none;">
+                {% include scribe/example-request-javascript.html endpoint=endpoint bound_uri=bound_uri query_string=query_string base_url=base_url %}
+            </div>
+
+            <!-- PHP Example -->
+            <div class="example-code" data-lang="php" style="display: none;">
+                {% include scribe/example-request-php.html endpoint=endpoint bound_uri=bound_uri base_url=base_url %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+{% comment %}
+  Expects: endpoint
+{% endcomment %}
+
+{% comment %} Determine default tab based on what has content {% endcomment %}
+{% assign body_size = endpoint.bodyParameters | size %}
+{% assign query_size = endpoint.queryParameters | size %}
+{% assign url_size = endpoint.urlParameters | size %}
+{% assign headers_size = endpoint.headers | size %}
+
+{% if body_size > 0 %}
+    {% assign default_tab = "body" %}
+{% elsif query_size > 0 %}
+    {% assign default_tab = "query" %}
+{% elsif url_size > 0 %}
+    {% assign default_tab = "url" %}
+{% else %}
+    {% assign default_tab = "headers" %}
+{% endif %}
+
+<div class="param-tabs my-7">
+    <div class="param-tabs-nav flex gap-1.5 border-b border-gray-200">
+        {% if body_size > 0 %}
+            <button type="button" class="param-tab{% if default_tab == 'body' %} active{% endif %}" data-tab="body">
+                Body <span class="tab-count">{{ body_size }}</span>
+            </button>
+        {% endif %}
+        {% if query_size > 0 %}
+            <button type="button" class="param-tab{% if default_tab == 'query' %} active{% endif %}" data-tab="query">
+                Query <span class="tab-count">{{ query_size }}</span>
+            </button>
+        {% endif %}
+        {% if url_size > 0 %}
+            <button type="button" class="param-tab{% if default_tab == 'url' %} active{% endif %}" data-tab="url">
+                URL <span class="tab-count">{{ url_size }}</span>
+            </button>
+        {% endif %}
+        {% if headers_size > 0 %}
+            <button type="button" class="param-tab{% if default_tab == 'headers' %} active{% endif %}" data-tab="headers">
+                Headers <span class="tab-count">{{ headers_size }}</span>
+            </button>
+        {% endif %}
+    </div>
+
+    <div class="param-tabs-content pt-1">
+        <!-- Body Parameters -->
+        {% if body_size > 0 %}
+            <div class="param-tab-panel{% if default_tab == 'body' %} active{% endif %}" data-panel="body">
+                <div class="param-table">
+                    {% for param_entry in endpoint.bodyParameters %}
+                        {% assign param = param_entry[1] %}
+                        {% include scribe/param-row.html param=param %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Query Parameters -->
+        {% if query_size > 0 %}
+            <div class="param-tab-panel{% if default_tab == 'query' %} active{% endif %}" data-panel="query">
+                <div class="param-table">
+                    {% for param_entry in endpoint.queryParameters %}
+                        {% assign param = param_entry[1] %}
+                        {% include scribe/param-row.html param=param %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- URL Parameters -->
+        {% if url_size > 0 %}
+            <div class="param-tab-panel{% if default_tab == 'url' %} active{% endif %}" data-panel="url">
+                <div class="param-table">
+                    {% for param_entry in endpoint.urlParameters %}
+                        {% assign param = param_entry[1] %}
+                        {% include scribe/param-row.html param=param %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Headers -->
+        {% if headers_size > 0 %}
+            <div class="param-tab-panel{% if default_tab == 'headers' %} active{% endif %}" data-panel="headers">
+                <div class="param-table">
+                    {% for header in endpoint.headers %}
+                        <div class="param-row grid grid-cols-[200px_1fr] gap-6 py-4">
+                            <div class="param-name-col flex flex-wrap items-baseline gap-2">
+                                <code class="param-name font-mono text-[13px] font-medium">{{ header[0] }}</code>
+                                <span class="param-required text-[10px] font-semibold">required</span>
+                            </div>
+                            <div class="param-desc-col text-sm leading-relaxed">
+                                <code class="param-example">{{ header[1] }}</code>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

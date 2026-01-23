@@ -1,0 +1,27 @@
+{% comment %}
+  Expects: endpoint, bound_uri, query_string, base_url
+{% endcomment %}
+{% assign method = endpoint.httpMethods[0] %}
+<pre><code class="language-javascript">const url = new URL(
+    "{{ base_url }}/{{ bound_uri }}"
+);
+{% if endpoint.cleanQueryParameters.size > 0 %}
+const params = {{ endpoint.cleanQueryParameters | jsonify }};
+Object.keys(params)
+    .forEach(key => url.searchParams.append(key, params[key]));
+{% endif %}
+{% if endpoint.headers.size > 0 %}
+const headers = {
+{% for header in endpoint.headers %}    "{{ header[0] }}": "{{ header[1] }}"{% unless forloop.last %},{% endunless %}
+{% endfor %}};
+{% endif %}
+{% if endpoint.cleanBodyParameters.size > 0 %}
+let body = {{ endpoint.cleanBodyParameters | jsonify }};
+{% endif %}
+
+fetch(url, {
+    method: "{{ method }}"{% if endpoint.headers.size > 0 %},
+    headers{% endif %}{% if endpoint.cleanBodyParameters.size > 0 %},
+    body: JSON.stringify(body){% endif %}
+
+}).then(response => response.json());</code></pre>

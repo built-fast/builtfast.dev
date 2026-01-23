@@ -1,0 +1,64 @@
+---
+layout: vector-pro-api
+title: API Reference
+---
+
+<section id="introduction" class="intro-section scroll-mt-20 pb-12">
+    <div class="intro-content">
+        {% capture intro %}{% include api-intro.md %}{% endcapture %}
+        {{ intro | markdownify }}
+    </div>
+</section>
+
+{% assign raw_data = site.data.vector_pro_endpoints %}
+{% if raw_data.first[1] %}
+    {% assign endpoint_files = raw_data | sort %}
+{% else %}
+    {% assign endpoint_files = raw_data %}
+{% endif %}
+
+{% for file in endpoint_files %}
+    {% comment %} Handle both single file (group directly) and multiple files (hash) {% endcomment %}
+    {% if file[1] %}
+        {% assign group = file[1] %}
+    {% else %}
+        {% assign group = file %}
+    {% endif %}
+    {% if group.name %}
+    {% assign group_slug = group.name | slugify %}
+
+    <section class="endpoint-group scroll-mt-20" id="{{ group_slug }}">
+        <!-- Group Header -->
+        <header class="group-header pt-16 pb-8 border-t-2 border-gray-200">
+            <h1 class="group-title">{{ group.name }}</h1>
+            {% if group.description %}
+                <div class="group-description">
+                    {{ group.description | markdownify }}
+                </div>
+            {% endif %}
+        </header>
+
+        <!-- Subgroups and Endpoints -->
+        {% assign current_subgroup = "" %}
+        {% for endpoint in group.endpoints %}
+            {% assign subgroup = endpoint.metadata.subgroup %}
+
+            {% if subgroup != "" and subgroup != current_subgroup %}
+                {% assign current_subgroup = subgroup %}
+                {% assign subgroup_slug = group_slug | append: "-" | append: subgroup | slugify %}
+
+                <div class="subgroup pt-10 pb-6 border-t border-slate-100 scroll-mt-20" id="{{ subgroup_slug }}">
+                    <h3 class="subgroup-title">{{ subgroup }}</h3>
+                    {% if endpoint.metadata.subgroupDescription %}
+                        <div class="subgroup-description">
+                            {{ endpoint.metadata.subgroupDescription | markdownify }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% include scribe/endpoint.html endpoint=endpoint group_slug=group_slug %}
+        {% endfor %}
+    </section>
+    {% endif %}
+{% endfor %}

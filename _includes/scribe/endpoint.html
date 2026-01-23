@@ -1,0 +1,45 @@
+{% comment %}
+  Expects: endpoint, group_slug
+{% endcomment %}
+
+{% assign method = endpoint.httpMethods[0] | downcase %}
+{% assign endpoint_slug = group_slug | append: "-" | append: method | append: endpoint.uri | slugify %}
+
+<article class="endpoint py-12 border-t border-gray-200 scroll-mt-20 first:border-t-0 first:pt-0" id="{{ endpoint_slug }}">
+    <!-- Title -->
+    <h2 class="endpoint-title">{{ endpoint.metadata.title }}</h2>
+
+    <!-- Endpoint Header - Method + Path -->
+    <div class="endpoint-route flex items-center gap-2.5 mb-4 flex-wrap">
+        <span class="http-method {{ method }}">{{ endpoint.httpMethods[0] }}</span>
+        <code class="endpoint-uri">/{{ endpoint.uri }}</code>
+        {% if endpoint.metadata.deprecated %}
+            <span class="badge-deprecated">Deprecated</span>
+        {% endif %}
+    </div>
+
+    {% if endpoint.metadata.description %}
+        <div class="endpoint-description mb-8">
+            {{ endpoint.metadata.description | markdownify }}
+        </div>
+    {% endif %}
+
+    <!-- Parameter Tabs -->
+    {% assign body_size = endpoint.bodyParameters | size %}
+    {% assign query_size = endpoint.queryParameters | size %}
+    {% assign url_size = endpoint.urlParameters | size %}
+    {% assign headers_size = endpoint.headers | size %}
+    {% assign has_any_params = body_size | plus: query_size | plus: url_size | plus: headers_size %}
+
+    {% if has_any_params > 0 %}
+        {% include scribe/parameter-tabs.html endpoint=endpoint %}
+    {% endif %}
+
+    <!-- Example Requests -->
+    {% include scribe/example-requests.html endpoint=endpoint %}
+
+    <!-- Example Responses -->
+    {% if endpoint.responses.size > 0 %}
+        {% include scribe/example-responses.html endpoint=endpoint %}
+    {% endif %}
+</article>

@@ -1,0 +1,307 @@
+---
+layout: default
+---
+
+<div class="api-docs">
+<!-- Styles in assets/css/additional-styles/api-docs.css -->
+
+<!-- Jets.js for sidebar search -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+<!-- Hero Section -->
+<section class="api-hero">
+    <!-- Floating shapes -->
+    <div class="api-hero-shape api-hero-shape-1"></div>
+    <div class="api-hero-shape api-hero-shape-2"></div>
+    <div class="api-hero-shape api-hero-shape-3"></div>
+
+    <div class="api-hero-inner">
+        <h1 class="api-hero-title">
+            Vector Pro<br>
+            <span class="api-hero-title-accent">API Reference</span>
+        </h1>
+
+        <p class="api-hero-description">
+            Complete API documentation for Vector Pro. Provision sites, manage environments, deploy to production, and integrate with your platform.
+        </p>
+
+        <div class="api-hero-cards">
+            <a href="https://api.builtfast.com/openapi.yaml" target="_blank" class="api-hero-card">
+                <svg class="api-hero-card-icon api-hero-card-icon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <div class="api-hero-card-title">OpenAPI</div>
+                <div class="api-hero-card-desc">Spec & schema</div>
+            </a>
+            <a href="https://api.builtfast.com/postman.json" target="_blank" class="api-hero-card">
+                <svg class="api-hero-card-icon api-hero-card-icon-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <div class="api-hero-card-title">Postman</div>
+                <div class="api-hero-card-desc">Collection</div>
+            </a>
+            <a href="https://github.com/built-fast/vector-pro-sdk-php" target="_blank" class="api-hero-card">
+                <svg class="api-hero-card-icon api-hero-card-icon-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                <div class="api-hero-card-title">PHP SDK</div>
+                <div class="api-hero-card-desc">Official client</div>
+            </a>
+            <a href="https://github.com/built-fast/vector-pro-sdk-node" target="_blank" class="api-hero-card">
+                <svg class="api-hero-card-icon api-hero-card-icon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+                <div class="api-hero-card-title">Node.js SDK</div>
+                <div class="api-hero-card-desc">TypeScript client</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="docs-layout">
+    {% include scribe/sidebar.html %}
+
+    <main class="docs-content">
+        {{ content }}
+    </main>
+</div>
+
+<script>
+// Toggle sidebar group expansion
+function toggleSidebarGroup(group) {
+    group.classList.toggle('expanded');
+
+    // Save state to localStorage
+    const groupId = group.dataset.group;
+    const expandedGroups = JSON.parse(localStorage.getItem('scribe-expanded-groups') || '{}');
+    expandedGroups[groupId] = group.classList.contains('expanded');
+    localStorage.setItem('scribe-expanded-groups', JSON.stringify(expandedGroups));
+}
+
+// Restore expanded state from localStorage
+document.addEventListener('DOMContentLoaded', function() {
+    const expandedGroups = JSON.parse(localStorage.getItem('scribe-expanded-groups') || '{}');
+
+    document.querySelectorAll('.api-docs .sidebar-group[data-group]').forEach(group => {
+        const groupId = group.dataset.group;
+        if (expandedGroups[groupId]) {
+            group.classList.add('expanded');
+        }
+    });
+
+    // Expand group containing current hash
+    if (window.location.hash) {
+        const targetLink = document.querySelector(`.api-docs .sidebar-item[href="${window.location.hash}"]`);
+        if (targetLink) {
+            const parentGroup = targetLink.closest('.sidebar-group');
+            if (parentGroup) {
+                parentGroup.classList.add('expanded');
+            }
+            targetLink.classList.add('active');
+        }
+    }
+});
+
+// Track scroll position and highlight current section
+function updateActiveSidebarItem() {
+    const sections = document.querySelectorAll('.api-docs .endpoint-group[id], .api-docs .subgroup[id], .api-docs .endpoint[id]');
+    const sidebarLinks = document.querySelectorAll('.api-docs .sidebar-item[href^="#"], .api-docs .sidebar-group-link[href^="#"], .api-docs .sidebar-subgroup-label[href^="#"]');
+
+    let currentId = '';
+    const scrollPos = window.scrollY + 120;
+
+    sections.forEach(section => {
+        if (section.offsetTop <= scrollPos) {
+            currentId = section.id;
+        }
+    });
+
+    sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href === `#${currentId}`) {
+            link.classList.add('active');
+            // Expand parent group
+            const parentGroup = link.closest('.sidebar-group');
+            if (parentGroup) {
+                parentGroup.classList.add('expanded');
+            }
+        }
+    });
+}
+
+// Throttled scroll handler
+let sidebarScrollTimeout;
+window.addEventListener('scroll', function() {
+    if (sidebarScrollTimeout) {
+        window.cancelAnimationFrame(sidebarScrollTimeout);
+    }
+    sidebarScrollTimeout = window.requestAnimationFrame(updateActiveSidebarItem);
+});
+
+// Handle hash changes
+window.addEventListener('hashchange', function() {
+    const targetLink = document.querySelector(`.api-docs .sidebar-item[href="${window.location.hash}"]`);
+    if (targetLink) {
+        document.querySelectorAll('.api-docs .sidebar-item').forEach(i => i.classList.remove('active'));
+        targetLink.classList.add('active');
+
+        const parentGroup = targetLink.closest('.sidebar-group');
+        if (parentGroup) {
+            parentGroup.classList.add('expanded');
+        }
+    }
+});
+
+// Initialize highlight.js
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.api-docs pre code').forEach((block) => {
+        hljs.highlightElement(block);
+    });
+});
+
+// Initialize Jets.js for sidebar search
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('sidebar-search');
+    if (searchInput && typeof Jets !== 'undefined') {
+        const jets = new Jets({
+            searchTag: '#sidebar-search',
+            contentTag: '.api-docs .sidebar-nav',
+            didSearch: function(searchPhrase) {
+                const groups = document.querySelectorAll('.api-docs .sidebar-group');
+                groups.forEach(group => {
+                    if (searchPhrase.length > 0) {
+                        group.classList.add('expanded');
+                    } else {
+                        const groupId = group.dataset.group;
+                        const savedGroups = JSON.parse(localStorage.getItem('scribe-expanded-groups') || '{}');
+                        if (savedGroups[groupId]) {
+                            group.classList.add('expanded');
+                        } else {
+                            group.classList.remove('expanded');
+                        }
+                    }
+                });
+            }
+        });
+    }
+});
+
+// Endpoint code block functions
+function copyCode(button) {
+    const codeBlock = button.closest('.code-block');
+    const visibleExample = codeBlock.querySelector('.example-code:not([style*="display: none"])')
+                        || codeBlock.querySelector('.example-code');
+
+    if (!visibleExample) return;
+
+    const code = visibleExample.querySelector('code');
+    if (!code) return;
+
+    const text = code.textContent;
+
+    navigator.clipboard.writeText(text).then(() => {
+        button.classList.add('copied');
+        button.querySelector('.copy-icon').style.display = 'none';
+        button.querySelector('.check-icon').style.display = 'block';
+
+        setTimeout(() => {
+            button.classList.remove('copied');
+            button.querySelector('.copy-icon').style.display = 'block';
+            button.querySelector('.check-icon').style.display = 'none';
+        }, 2000);
+    });
+}
+
+function copyResponse(button) {
+    const codeBlock = button.closest('.code-block');
+    const visibleResponse = codeBlock.querySelector('.response-code:not([style*="display: none"])')
+                        || codeBlock.querySelector('.response-code');
+
+    if (!visibleResponse) return;
+
+    const code = visibleResponse.querySelector('.response-body code');
+    if (!code) return;
+
+    const text = code.textContent;
+
+    navigator.clipboard.writeText(text).then(() => {
+        button.classList.add('copied');
+        button.querySelector('.copy-icon').style.display = 'none';
+        button.querySelector('.check-icon').style.display = 'block';
+
+        setTimeout(() => {
+            button.classList.remove('copied');
+            button.querySelector('.copy-icon').style.display = 'block';
+            button.querySelector('.check-icon').style.display = 'none';
+        }, 2000);
+    });
+}
+
+function switchResponse(select) {
+    const index = select.value;
+    const container = select.closest('.code-block');
+    const responses = container.querySelectorAll('.response-code');
+
+    responses.forEach(response => {
+        response.style.display = response.dataset.responseIndex === index ? 'block' : 'none';
+    });
+
+    if (typeof hljs !== 'undefined') {
+        container.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+    }
+}
+
+function switchLanguage(select) {
+    const lang = select.value;
+    const container = select.closest('.code-block');
+    const examples = container.querySelectorAll('.example-code');
+
+    examples.forEach(example => {
+        example.style.display = example.dataset.lang === lang ? 'block' : 'none';
+    });
+
+    localStorage.setItem('scribe-preferred-lang', lang);
+
+    // Sync all dropdowns
+    document.querySelectorAll('.api-docs .lang-dropdown:not(.response-dropdown)').forEach(dropdown => {
+        if (dropdown !== select) {
+            const option = dropdown.querySelector(`option[value="${lang}"]`);
+            if (option) {
+                dropdown.value = lang;
+                const otherContainer = dropdown.closest('.code-block');
+                if (otherContainer) {
+                    otherContainer.querySelectorAll('.example-code').forEach(example => {
+                        example.style.display = example.dataset.lang === lang ? 'block' : 'none';
+                    });
+                }
+            }
+        }
+    });
+
+    if (typeof hljs !== 'undefined') {
+        container.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+    }
+}
+
+// Initialize preferred language and tab switching
+document.addEventListener('DOMContentLoaded', function() {
+    const preferredLang = localStorage.getItem('scribe-preferred-lang');
+    if (preferredLang) {
+        document.querySelectorAll('.api-docs .lang-dropdown:not(.response-dropdown)').forEach(dropdown => {
+            const option = dropdown.querySelector(`option[value="${preferredLang}"]`);
+            if (option) {
+                dropdown.value = preferredLang;
+                switchLanguage(dropdown);
+            }
+        });
+    }
+
+    // Tab switching
+    document.querySelectorAll('.api-docs .param-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabsContainer = this.closest('.param-tabs');
+            const tabName = this.dataset.tab;
+
+            tabsContainer.querySelectorAll('.param-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            tabsContainer.querySelectorAll('.param-tab-panel').forEach(p => p.classList.remove('active'));
+            tabsContainer.querySelector(`[data-panel="${tabName}"]`).classList.add('active');
+        });
+    });
+});
+</script>
+</div>

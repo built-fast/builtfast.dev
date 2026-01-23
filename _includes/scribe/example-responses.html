@@ -1,0 +1,54 @@
+{% comment %}
+  Expects: endpoint
+{% endcomment %}
+
+{% assign responses = endpoint.responses %}
+{% assign has_multiple = responses.size > 1 %}
+
+<div class="code-block">
+    <div class="code-block-header">
+        <div class="code-block-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+        </div>
+        <span class="code-block-title">Example Response</span>
+        <div class="code-block-actions">
+            {% if has_multiple %}
+                <select class="lang-dropdown response-dropdown" onchange="switchResponse(this)">
+                    {% for response in responses %}
+                        <option value="{{ forloop.index0 }}">{{ response.status }} {{ response.description }}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                {% for response in responses %}
+                    {% if response.status >= 200 and response.status < 300 %}
+                        {% assign status_class = "success" %}
+                    {% elsif response.status >= 400 %}
+                        {% assign status_class = "error" %}
+                    {% else %}
+                        {% assign status_class = "warning" %}
+                    {% endif %}
+                    <span class="status-badge {{ status_class }}">{{ response.status }}</span>
+                {% endfor %}
+            {% endif %}
+            <button type="button" class="copy-btn" onclick="copyResponse(this)" title="Copy to clipboard">
+                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M20 6 9 17l-5-5"/></svg>
+            </button>
+        </div>
+    </div>
+    <div class="code-block-body">
+        {% for response in responses %}
+            <div class="response-code" data-response-index="{{ forloop.index0 }}"{% if forloop.index0 > 0 %} style="display: none;"{% endif %}>
+                <div class="response-body">
+                    {% if response.status == 204 %}
+                        <pre><code class="empty-response">No content</code></pre>
+                    {% else %}
+                        <pre><code class="language-json">{{ response.content }}</code></pre>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

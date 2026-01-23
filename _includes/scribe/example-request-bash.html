@@ -1,0 +1,9 @@
+{% comment %}
+  Expects: endpoint, bound_uri, query_string, base_url
+{% endcomment %}
+{% assign method = endpoint.httpMethods[0] %}
+<pre><code class="language-bash">curl --request {{ method }} \
+{% if method == "GET" %}    --get {% endif %}"{{ base_url }}/{{ bound_uri }}{{ query_string }}"{% if endpoint.headers.size > 0 %} \
+{% for header in endpoint.headers %}    --header "{{ header[0] }}: {{ header[1] }}"{% unless forloop.last %} \
+{% endunless %}{% endfor %}{% endif %}{% if endpoint.cleanBodyParameters.size > 0 %} \
+    --data '{{ endpoint.cleanBodyParameters | jsonify }}'{% endif %}</code></pre>

@@ -131,7 +131,7 @@ html, body {
 .feature-icon {
     width: 56px;
     height: 56px;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,7 +155,7 @@ html, body {
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -190,7 +190,7 @@ html, body {
 .card-terminal {
     background: #0a0f14;
     border: 1px solid #1e293b;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     overflow: hidden;
 }
 .card-terminal-header {
@@ -216,6 +216,16 @@ html, body {
 
 .prose p {
     margin-bottom: 1.25em;
+}
+
+.prose h1 {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
 
 .prose h2 {
@@ -289,10 +299,10 @@ html, body {
 
 /* Inline code */
 .prose code {
-    background: rgba(29, 201, 216, 0.1);
-    color: #0e7490;
+    background: var(--color-code-bg);
+    color: var(--color-code-text);
     padding: 0.2em 0.4em;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-size: 0.875em;
     font-family: var(--font-mono);
     font-weight: 500;
@@ -301,7 +311,7 @@ html, body {
 /* Code blocks - terminal style */
 .prose pre {
     background: #0a0f14;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 1rem 1.25rem;
     padding-top: 2.75rem;
     overflow-x: auto;
@@ -382,7 +392,7 @@ html, body {
     background: #ff6542;
     color: white;
     padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     font-weight: 600;
     font-size: 14px;
     transition: all 0.15s;
@@ -399,7 +409,7 @@ html, body {
     background: transparent;
     color: #1dc9d8;
     padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     font-weight: 600;
     font-size: 14px;
     border: 1px solid rgba(29, 201, 216, 0.4);

@@ -1,0 +1,25 @@
+{% comment %}
+  Expects: param
+{% endcomment %}
+
+<div class="param-row grid grid-cols-[200px_1fr] gap-6 py-4">
+    <div class="param-name-col flex flex-wrap items-baseline gap-2">
+        <code class="param-name font-mono text-[13px] font-medium">{{ param.name }}</code>
+        <span class="param-type text-[11px] font-mono">{{ param.type | default: "string" }}</span>
+        {% if param.required %}
+            <span class="param-required text-[10px] font-semibold">required</span>
+        {% else %}
+            <span class="param-optional text-[10px] font-semibold">optional</span>
+        {% endif %}
+    </div>
+    <div class="param-desc-col text-sm leading-relaxed">
+        {% if param.description %}
+            <p class="param-description">{{ param.description }}</p>
+        {% endif %}
+        {% if param.enumValues and param.enumValues.size > 0 %}
+            <p class="param-enum mt-2 text-[13px]">
+                Allowed: {% for val in param.enumValues %}<code>{{ val }}</code>{% unless forloop.last %} {% endunless %}{% endfor %}
+            </p>
+        {% endif %}
+    </div>
+</div>
