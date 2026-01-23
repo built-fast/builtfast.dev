@@ -29,6 +29,12 @@ description: |-
   | `vector.dev-site.database-password-reset` | Database password has been reset |
   | `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |
   | `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |
+  | `vector.dev-site.db-import-started` | Database import has started |
+  | `vector.dev-site.db-import-completed` | Database import completed successfully |
+  | `vector.dev-site.db-import-failed` | Database import failed |
+  | `vector.dev-site.db-export-started` | Database export has started |
+  | `vector.dev-site.db-export-completed` | Database export completed successfully |
+  | `vector.dev-site.db-export-failed` | Database export failed |
 
   ### SSH Key Events
   | Event | Description |
@@ -111,6 +117,12 @@ endpoints:
         | `vector.dev-site.database-password-reset` | Database password has been reset |
         | `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |
         | `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |
+        | `vector.dev-site.db-import-started` | Database import has started |
+        | `vector.dev-site.db-import-completed` | Database import completed successfully |
+        | `vector.dev-site.db-import-failed` | Database import failed |
+        | `vector.dev-site.db-export-started` | Database export has started |
+        | `vector.dev-site.db-export-completed` | Database export completed successfully |
+        | `vector.dev-site.db-export-failed` | Database export failed |
 
         ### SSH Key Events
         | Event | Description |

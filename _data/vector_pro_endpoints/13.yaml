@@ -159,8 +159,8 @@ endpoints:
 
         - `*` - Full access (default)
         - `vector:mcp` - Full MCP access (for AI assistants like Claude)
-        - `vector:sites:read` - Read sites, environments, deployments
-        - `vector:sites:write` - Manage sites, environments, deployments
+        - `vector:sites:read` - Read sites, environments, deployments, database operations
+        - `vector:sites:write` - Manage sites, environments, deployments, database import/export
         - `vector:logs:read` - Read site logs
         - `vector:cdn:read` - Read CDN settings
         - `vector:cdn:write` - Manage CDN settings and cache

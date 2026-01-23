@@ -21,7 +21,7 @@ tags:
     description: "\nManage environment-level secrets for a specific environment. These secrets are\ninjected as environment variables during site deployment and are scoped to\na single environment.\n\nSecret values are never returned in API responses for security. Certain keys\nare reserved for system use and cannot be used."
   -
     name: Events
-    description: "\nView event logs for Vector Pro resources. Events are logged automatically when\nactions occur (site creation, deployments, etc.) and are retained for 90 days.\n\nEvent logs provide an audit trail of all activity in your account.\n\n## Available Event Types\n\n### Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.site.pending` | Site provisioning has been queued |\n| `vector.site.created` | Site has been fully provisioned |\n| `vector.site.updated` | Site settings have been modified |\n| `vector.site.deleted` | Site has been terminated |\n| `vector.site.suspended` | Site has been suspended |\n| `vector.site.unsuspended` | Site has been unsuspended |\n\n### Dev Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.dev-site.created` | Development container has been provisioned |\n| `vector.dev-site.suspended` | Development container has been suspended |\n| `vector.dev-site.unsuspended` | Development container has been unsuspended |\n| `vector.dev-site.terminated` | Development container has been terminated |\n| `vector.dev-site.sftp-password-reset` | SFTP password has been reset |\n| `vector.dev-site.database-password-reset` | Database password has been reset |\n| `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |\n| `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |\n\n### SSH Key Events\n| Event | Description |\n|-------|-------------|\n| `vector.ssh-key.created` | SSH key has been created |\n| `vector.ssh-key.deleted` | SSH key has been deleted |\n\n### Environment Events\n| Event | Description |\n|-------|-------------|\n| `vector.environment.created` | Production environment has been created |\n| `vector.environment.updated` | Environment settings have been modified |\n| `vector.environment.deleted` | Environment has been deleted |\n| `vector.environment.suspended` | Environment has been suspended |\n| `vector.environment.unsuspended` | Environment has been unsuspended |\n| `vector.environment.database-password-reset` | Database password has been reset |\n\n### Deployment Events\n| Event | Description |\n|-------|-------------|\n| `vector.deployment.started` | Deployment to production has started |\n| `vector.deployment.completed` | Deployment completed successfully |\n| `vector.deployment.failed` | Deployment failed |\n\n### CDN Events\n| Event | Description |\n|-------|-------------|\n| `vector.cdn.setup-started` | CDN configuration has started |\n| `vector.cdn.setup-completed` | CDN setup completed successfully |\n| `vector.cdn.setup-failed` | CDN setup failed |\n\n### DNS Events\n| Event | Description |\n|-------|-------------|\n| `vector.dns.record-created` | DNS record has been created |\n| `vector.dns.record-deleted` | DNS record has been deleted |\n\n### Webhook Events\n| Event | Description |\n|-------|-------------|\n| `vector.webhook.created` | Webhook endpoint has been registered |\n| `vector.webhook.updated` | Webhook configuration has been modified |\n| `vector.webhook.deleted` | Webhook endpoint has been removed |"
+    description: "\nView event logs for Vector Pro resources. Events are logged automatically when\nactions occur (site creation, deployments, etc.) and are retained for 90 days.\n\nEvent logs provide an audit trail of all activity in your account.\n\n## Available Event Types\n\n### Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.site.pending` | Site provisioning has been queued |\n| `vector.site.created` | Site has been fully provisioned |\n| `vector.site.updated` | Site settings have been modified |\n| `vector.site.deleted` | Site has been terminated |\n| `vector.site.suspended` | Site has been suspended |\n| `vector.site.unsuspended` | Site has been unsuspended |\n\n### Dev Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.dev-site.created` | Development container has been provisioned |\n| `vector.dev-site.suspended` | Development container has been suspended |\n| `vector.dev-site.unsuspended` | Development container has been unsuspended |\n| `vector.dev-site.terminated` | Development container has been terminated |\n| `vector.dev-site.sftp-password-reset` | SFTP password has been reset |\n| `vector.dev-site.database-password-reset` | Database password has been reset |\n| `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |\n| `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |\n| `vector.dev-site.db-import-started` | Database import has started |\n| `vector.dev-site.db-import-completed` | Database import completed successfully |\n| `vector.dev-site.db-import-failed` | Database import failed |\n| `vector.dev-site.db-export-started` | Database export has started |\n| `vector.dev-site.db-export-completed` | Database export completed successfully |\n| `vector.dev-site.db-export-failed` | Database export failed |\n\n### SSH Key Events\n| Event | Description |\n|-------|-------------|\n| `vector.ssh-key.created` | SSH key has been created |\n| `vector.ssh-key.deleted` | SSH key has been deleted |\n\n### Environment Events\n| Event | Description |\n|-------|-------------|\n| `vector.environment.created` | Production environment has been created |\n| `vector.environment.updated` | Environment settings have been modified |\n| `vector.environment.deleted` | Environment has been deleted |\n| `vector.environment.suspended` | Environment has been suspended |\n| `vector.environment.unsuspended` | Environment has been unsuspended |\n| `vector.environment.database-password-reset` | Database password has been reset |\n\n### Deployment Events\n| Event | Description |\n|-------|-------------|\n| `vector.deployment.started` | Deployment to production has started |\n| `vector.deployment.completed` | Deployment completed successfully |\n| `vector.deployment.failed` | Deployment failed |\n\n### CDN Events\n| Event | Description |\n|-------|-------------|\n| `vector.cdn.setup-started` | CDN configuration has started |\n| `vector.cdn.setup-completed` | CDN setup completed successfully |\n| `vector.cdn.setup-failed` | CDN setup failed |\n\n### DNS Events\n| Event | Description |\n|-------|-------------|\n| `vector.dns.record-created` | DNS record has been created |\n| `vector.dns.record-deleted` | DNS record has been deleted |\n\n### Webhook Events\n| Event | Description |\n|-------|-------------|\n| `vector.webhook.created` | Webhook endpoint has been registered |\n| `vector.webhook.updated` | Webhook configuration has been modified |\n| `vector.webhook.deleted` | Webhook endpoint has been removed |"
   -
     name: 'Global Secrets'
     description: "\nManage account-level secrets that are available to all sites within your account.\nThese secrets are injected as environment variables during site deployment.\n\nGlobal secrets apply to all environments across all sites in your account. For\nenvironment-specific secrets, use the Environment Secrets API instead.\n\nSecret values are never returned in API responses for security. Certain keys\nare reserved for system use and cannot be used."
@@ -1913,6 +1913,1158 @@ paths:
         name: site
         description: 'The site ID.'
         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/import':
+    post:
+      summary: 'Import Database Directly'
+      operationId: importDatabaseDirectly
+      description: "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application/sql.\n\nThis is a synchronous operation that blocks until the import completes."
+      parameters:
+        -
+          in: query
+          name: drop_tables
+          description: 'Drop all existing tables before import. Default: false.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Drop all existing tables before import. Default: false.'
+            example: true
+            nullable: true
+        -
+          in: query
+          name: disable_foreign_keys
+          description: 'Disable foreign key checks during import. Default: true.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Disable foreign key checks during import. Default: true.'
+            example: true
+            nullable: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    success: true
+                    duration_ms: 1234
+                  message: 'Database imported successfully'
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      duration_ms:
+                        type: integer
+                        example: 1234
+                  message:
+                    type: string
+                    example: 'Database imported successfully'
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        422:
+          description: 'Empty Body'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    content:
+                      - 'SQL content is required in the request body'
+                  message: 'Request body is empty'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      content:
+                        type: array
+                        example:
+                          - 'SQL content is required in the request body'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Request body is empty'
+                  http_status:
+                    type: integer
+                    example: 422
+        500:
+          description: 'Import Failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    success: false
+                    duration_ms: 567
+                    error: 'Access denied for user'
+                  message: 'Database import failed'
+                  http_status: 500
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      duration_ms:
+                        type: integer
+                        example: 567
+                      error:
+                        type: string
+                        example: 'Access denied for user'
+                  message:
+                    type: string
+                    example: 'Database import failed'
+                  http_status:
+                    type: integer
+                    example: 500
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/imports':
+    post:
+      summary: 'Create Import Session'
+      operationId: createImportSession
+      description: "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+      parameters: []
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    status: pending
+                    filename: backup-2025-01-23.sql
+                    content_length: 104857600
+                    checksum:
+                      provided_md5: d41d8cd98f00b204e9800998ecf8427e
+                      s3_etag: null
+                    options:
+                      drop_tables: true
+                      disable_foreign_keys: true
+                    upload_url: 'https://s3.amazonaws.com/bucket/imports/...'
+                    upload_expires_at: '2025-01-23T11:00:00+00:00'
+                    duration_ms: null
+                    error_message: null
+                    created_at: '2025-01-23T10:00:00+00:00'
+                    started_at: null
+                    completed_at: null
+                  message: 'Import session created successfully'
+                  http_status: 201
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      status:
+                        type: string
+                        example: pending
+                      filename:
+                        type: string
+                        example: backup-2025-01-23.sql
+                      content_length:
+                        type: integer
+                        example: 104857600
+                      checksum:
+                        type: object
+                        properties:
+                          provided_md5:
+                            type: string
+                            example: d41d8cd98f00b204e9800998ecf8427e
+                          s3_etag:
+                            type: string
+                            example: null
+                      options:
+                        type: object
+                        properties:
+                          drop_tables:
+                            type: boolean
+                            example: true
+                          disable_foreign_keys:
+                            type: boolean
+                            example: true
+                      upload_url:
+                        type: string
+                        example: 'https://s3.amazonaws.com/bucket/imports/...'
+                      upload_expires_at:
+                        type: string
+                        example: '2025-01-23T11:00:00+00:00'
+                      duration_ms:
+                        type: string
+                        example: null
+                      error_message:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-01-23T10:00:00+00:00'
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                  message:
+                    type: string
+                    example: 'Import session created successfully'
+                  http_status:
+                    type: integer
+                    example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    content_length:
+                      - 'The content length must not exceed 10GB.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      content_length:
+                        type: array
+                        example:
+                          - 'The content length must not exceed 10GB.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  description: 'Optional filename for reference.'
+                  example: backup-2025-01-23.sql
+                  nullable: true
+                content_length:
+                  type: integer
+                  description: 'Optional file size in bytes for validation.'
+                  example: 104857600
+                  nullable: true
+                content_md5:
+                  type: string
+                  description: 'Optional MD5 checksum (32 hex chars) for integrity verification.'
+                  example: d41d8cd98f00b204e9800998ecf8427e
+                  nullable: true
+                options:
+                  type: object
+                  description: 'Optional import options.'
+                  example: []
+                  nullable: true
+                  properties:
+                    drop_tables:
+                      type: boolean
+                      description: 'Drop all existing tables before import. Default: false.'
+                      example: true
+                      nullable: true
+                    disable_foreign_keys:
+                      type: boolean
+                      description: 'Disable foreign key checks during import. Default: true.'
+                      example: true
+                      nullable: true
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/imports/{import}/run':
+    post:
+      summary: 'Run Import'
+      operationId: runImport
+      description: "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
+      parameters: []
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    status: uploaded
+                    filename: backup-2025-01-23.sql
+                    content_length: 104857600
+                    checksum:
+                      provided_md5: d41d8cd98f00b204e9800998ecf8427e
+                      s3_etag: null
+                    options:
+                      drop_tables: true
+                      disable_foreign_keys: true
+                    duration_ms: null
+                    error_message: null
+                    created_at: '2025-01-23T10:00:00+00:00'
+                    uploaded_at: '2025-01-23T10:00:30+00:00'
+                    started_at: null
+                    completed_at: null
+                  message: 'Database import started'
+                  http_status: 202
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      status:
+                        type: string
+                        example: uploaded
+                      filename:
+                        type: string
+                        example: backup-2025-01-23.sql
+                      content_length:
+                        type: integer
+                        example: 104857600
+                      checksum:
+                        type: object
+                        properties:
+                          provided_md5:
+                            type: string
+                            example: d41d8cd98f00b204e9800998ecf8427e
+                          s3_etag:
+                            type: string
+                            example: null
+                      options:
+                        type: object
+                        properties:
+                          drop_tables:
+                            type: boolean
+                            example: true
+                          disable_foreign_keys:
+                            type: boolean
+                            example: true
+                      duration_ms:
+                        type: string
+                        example: null
+                      error_message:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-01-23T10:00:00+00:00'
+                      uploaded_at:
+                        type: string
+                        example: '2025-01-23T10:00:30+00:00'
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                  message:
+                    type: string
+                    example: 'Database import started'
+                  http_status:
+                    type: integer
+                    example: 202
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Import not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Import not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Ready'
+                    type: object
+                    example:
+                      data: {  }
+                      errors:
+                        status:
+                          - 'Import must be in pending or uploaded status'
+                      message: 'Import is not ready to run'
+                      http_status: 422
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      errors:
+                        type: object
+                        properties:
+                          status:
+                            type: array
+                            example:
+                              - 'Import must be in pending or uploaded status'
+                            items:
+                              type: string
+                      message:
+                        type: string
+                        example: 'Import is not ready to run'
+                      http_status:
+                        type: integer
+                        example: 422
+                  -
+                    description: Expired
+                    type: object
+                    example:
+                      data: {  }
+                      errors:
+                        expires_at:
+                          - 'Please create a new import session'
+                      message: 'Import session has expired'
+                      http_status: 422
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      errors:
+                        type: object
+                        properties:
+                          expires_at:
+                            type: array
+                            example:
+                              - 'Please create a new import session'
+                            items:
+                              type: string
+                      message:
+                        type: string
+                        example: 'Import session has expired'
+                      http_status:
+                        type: integer
+                        example: 422
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: import
+        description: 'The import ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/imports/{import}':
+    get:
+      summary: 'Get Import Status'
+      operationId: getImportStatus
+      description: "Get the current status of a database import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    status: completed
+                    filename: backup-2025-01-23.sql
+                    content_length: 104857600
+                    checksum:
+                      provided_md5: d41d8cd98f00b204e9800998ecf8427e
+                      s3_etag: d41d8cd98f00b204e9800998ecf8427e
+                    options:
+                      drop_tables: true
+                      disable_foreign_keys: true
+                    duration_ms: 45000
+                    error_message: null
+                    created_at: '2025-01-23T10:00:00+00:00'
+                    started_at: '2025-01-23T10:01:00+00:00'
+                    completed_at: '2025-01-23T10:01:45+00:00'
+                  message: 'Import retrieved successfully'
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      status:
+                        type: string
+                        example: completed
+                      filename:
+                        type: string
+                        example: backup-2025-01-23.sql
+                      content_length:
+                        type: integer
+                        example: 104857600
+                      checksum:
+                        type: object
+                        properties:
+                          provided_md5:
+                            type: string
+                            example: d41d8cd98f00b204e9800998ecf8427e
+                          s3_etag:
+                            type: string
+                            example: d41d8cd98f00b204e9800998ecf8427e
+                      options:
+                        type: object
+                        properties:
+                          drop_tables:
+                            type: boolean
+                            example: true
+                          disable_foreign_keys:
+                            type: boolean
+                            example: true
+                      duration_ms:
+                        type: integer
+                        example: 45000
+                      error_message:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-01-23T10:00:00+00:00'
+                      started_at:
+                        type: string
+                        example: '2025-01-23T10:01:00+00:00'
+                      completed_at:
+                        type: string
+                        example: '2025-01-23T10:01:45+00:00'
+                  message:
+                    type: string
+                    example: 'Import retrieved successfully'
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Import not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Import not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: import
+        description: 'The import ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/export':
+    post:
+      summary: 'Create Export'
+      operationId: createExport
+      description: "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
+      parameters: []
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    status: pending
+                    format: sql
+                    size_bytes: null
+                    duration_ms: null
+                    error_message: null
+                    download_expires_at: null
+                    created_at: '2025-01-23T10:00:00+00:00'
+                    started_at: null
+                    completed_at: null
+                  message: 'Database export started'
+                  http_status: 202
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      status:
+                        type: string
+                        example: pending
+                      format:
+                        type: string
+                        example: sql
+                      size_bytes:
+                        type: string
+                        example: null
+                      duration_ms:
+                        type: string
+                        example: null
+                      error_message:
+                        type: string
+                        example: null
+                      download_expires_at:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-01-23T10:00:00+00:00'
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                  message:
+                    type: string
+                    example: 'Database export started'
+                  http_status:
+                    type: integer
+                    example: 202
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                format:
+                  type: string
+                  description: 'Export format. Currently only "sql" is supported. Default: sql.'
+                  example: sql
+                  nullable: true
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/db/exports/{export}':
+    get:
+      summary: 'Get Export Status'
+      operationId: getExportStatus
+      description: "Get the current status of a database export operation. If complete and not\nexpired, includes a presigned download URL valid for 1 hour."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: Completed
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        status: completed
+                        format: sql
+                        size_bytes: 52428800
+                        duration_ms: 30000
+                        error_message: null
+                        download_url: 'https://s3.amazonaws.com/bucket/exports/...'
+                        download_expires_at: '2025-01-23T11:00:00+00:00'
+                        created_at: '2025-01-23T10:00:00+00:00'
+                        started_at: '2025-01-23T10:00:01+00:00'
+                        completed_at: '2025-01-23T10:00:31+00:00'
+                      message: 'Export retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          vector_site_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          status:
+                            type: string
+                            example: completed
+                          format:
+                            type: string
+                            example: sql
+                          size_bytes:
+                            type: integer
+                            example: 52428800
+                          duration_ms:
+                            type: integer
+                            example: 30000
+                          error_message:
+                            type: string
+                            example: null
+                          download_url:
+                            type: string
+                            example: 'https://s3.amazonaws.com/bucket/exports/...'
+                          download_expires_at:
+                            type: string
+                            example: '2025-01-23T11:00:00+00:00'
+                          created_at:
+                            type: string
+                            example: '2025-01-23T10:00:00+00:00'
+                          started_at:
+                            type: string
+                            example: '2025-01-23T10:00:01+00:00'
+                          completed_at:
+                            type: string
+                            example: '2025-01-23T10:00:31+00:00'
+                      message:
+                        type: string
+                        example: 'Export retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+                  -
+                    description: Processing
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        status: processing
+                        format: sql
+                        size_bytes: null
+                        duration_ms: null
+                        error_message: null
+                        download_expires_at: null
+                        created_at: '2025-01-23T10:00:00+00:00'
+                        started_at: '2025-01-23T10:00:01+00:00'
+                        completed_at: null
+                      message: 'Export retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          vector_site_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          status:
+                            type: string
+                            example: processing
+                          format:
+                            type: string
+                            example: sql
+                          size_bytes:
+                            type: string
+                            example: null
+                          duration_ms:
+                            type: string
+                            example: null
+                          error_message:
+                            type: string
+                            example: null
+                          download_expires_at:
+                            type: string
+                            example: null
+                          created_at:
+                            type: string
+                            example: '2025-01-23T10:00:00+00:00'
+                          started_at:
+                            type: string
+                            example: '2025-01-23T10:00:01+00:00'
+                          completed_at:
+                            type: string
+                            example: null
+                      message:
+                        type: string
+                        example: 'Export retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Export not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Export not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: export
+        description: 'The export ID.'
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
         required: true
         schema:
           type: string
@@ -9709,7 +10861,7 @@ paths:
     post:
       summary: 'Create API Key'
       operationId: createAPIKey
-      description: "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n## Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments\n- `vector:sites:write` - Manage sites, environments, deployments\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
+      description: "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n## Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments, database operations\n- `vector:sites:write` - Manage sites, environments, deployments, database import/export\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
       parameters: []
       responses:
         201:

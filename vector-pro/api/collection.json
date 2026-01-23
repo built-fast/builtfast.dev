@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "a27d197a-b94c-4652-8b47-429360c0e643",
+        "_postman_id": "c7f16c9f-0294-4b07-82cf-10e64e6c1733",
         "description": "Vector Pro by BuiltFast",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -647,6 +647,409 @@
                                     "header": [],
                                     "code": 404,
                                     "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Import Database Directly",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/import",
+                                    "query": [
+                                        {
+                                            "key": "drop_tables",
+                                            "value": "1",
+                                            "description": "Drop all existing tables before import. Default: false.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "disable_foreign_keys",
+                                            "value": "1",
+                                            "description": "Disable foreign key checks during import. Default: true.",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/import?drop_tables=1&disable_foreign_keys=1",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application\/sql.\n\nThis is a synchronous operation that blocks until the import completes."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"success\": true,\n        \"duration_ms\": 1234\n    },\n    \"message\": \"Database imported successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"content\": [\"SQL content is required in the request body\"]}, \"message\": \"Request body is empty\", \"http_status\": 422}",
+                                    "name": "Empty Body"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 500,
+                                    "body": "{\n    \"data\": {\n        \"success\": false,\n        \"duration_ms\": 567,\n        \"error\": \"Access denied for user\"\n    },\n    \"message\": \"Database import failed\",\n    \"http_status\": 500\n}",
+                                    "name": "Import Failed"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Import Session",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"filename\":\"backup-2025-01-23.sql\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true}}"
+                                },
+                                "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 201,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-23T11:00:00+00:00\",\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"content_length\": [\"The content length must not exceed 10GB.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Run Import",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports\/:import\/run",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports\/:import\/run",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "import",
+                                            "key": "import",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                                            "description": "The import ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"uploaded\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-23T10:00:30+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database import started\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Import not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"status\": [\"Import must be in pending or uploaded status\"]}, \"message\": \"Import is not ready to run\", \"http_status\": 422}",
+                                    "name": "Not Ready"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"expires_at\": [\"Please create a new import session\"]}, \"message\": \"Import session has expired\", \"http_status\": 422}",
+                                    "name": "Expired"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Import Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports\/:import",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports\/:import",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "import",
+                                            "key": "import",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                                            "description": "The import ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of a database import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:01:00+00:00\",\n        \"completed_at\": \"2025-01-23T10:01:45+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Import not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Export",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/export",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/export",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"format\":\"sql\"}"
+                                },
+                                "description": "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"format\": \"sql\",\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_expires_at\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database export started\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Export Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/exports\/:export",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/exports\/:export",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "export",
+                                            "key": "export",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                                            "description": "The export ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of a database export operation. If complete and not\nexpired, includes a presigned download URL valid for 1 hour."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"format\": \"sql\",\n        \"size_bytes\": 52428800,\n        \"duration_ms\": 30000,\n        \"error_message\": null,\n        \"download_url\": \"https:\/\/s3.amazonaws.com\/bucket\/exports\/...\",\n        \"download_expires_at\": \"2025-01-23T11:00:00+00:00\",\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:00:01+00:00\",\n        \"completed_at\": \"2025-01-23T10:00:31+00:00\"\n    },\n    \"message\": \"Export retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Completed"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"processing\",\n        \"format\": \"sql\",\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_expires_at\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:00:01+00:00\",\n        \"completed_at\": null\n    },\n    \"message\": \"Export retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Processing"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Export not found\", \"http_status\": 404}",
                                     "name": "Not Found"
                                 }
                             ]
@@ -1749,7 +2152,7 @@
         },
         {
             "name": "Events",
-            "description": "\nView event logs for Vector Pro resources. Events are logged automatically when\nactions occur (site creation, deployments, etc.) and are retained for 90 days.\n\nEvent logs provide an audit trail of all activity in your account.\n\n## Available Event Types\n\n### Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.site.pending` | Site provisioning has been queued |\n| `vector.site.created` | Site has been fully provisioned |\n| `vector.site.updated` | Site settings have been modified |\n| `vector.site.deleted` | Site has been terminated |\n| `vector.site.suspended` | Site has been suspended |\n| `vector.site.unsuspended` | Site has been unsuspended |\n\n### Dev Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.dev-site.created` | Development container has been provisioned |\n| `vector.dev-site.suspended` | Development container has been suspended |\n| `vector.dev-site.unsuspended` | Development container has been unsuspended |\n| `vector.dev-site.terminated` | Development container has been terminated |\n| `vector.dev-site.sftp-password-reset` | SFTP password has been reset |\n| `vector.dev-site.database-password-reset` | Database password has been reset |\n| `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |\n| `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |\n\n### SSH Key Events\n| Event | Description |\n|-------|-------------|\n| `vector.ssh-key.created` | SSH key has been created |\n| `vector.ssh-key.deleted` | SSH key has been deleted |\n\n### Environment Events\n| Event | Description |\n|-------|-------------|\n| `vector.environment.created` | Production environment has been created |\n| `vector.environment.updated` | Environment settings have been modified |\n| `vector.environment.deleted` | Environment has been deleted |\n| `vector.environment.suspended` | Environment has been suspended |\n| `vector.environment.unsuspended` | Environment has been unsuspended |\n| `vector.environment.database-password-reset` | Database password has been reset |\n\n### Deployment Events\n| Event | Description |\n|-------|-------------|\n| `vector.deployment.started` | Deployment to production has started |\n| `vector.deployment.completed` | Deployment completed successfully |\n| `vector.deployment.failed` | Deployment failed |\n\n### CDN Events\n| Event | Description |\n|-------|-------------|\n| `vector.cdn.setup-started` | CDN configuration has started |\n| `vector.cdn.setup-completed` | CDN setup completed successfully |\n| `vector.cdn.setup-failed` | CDN setup failed |\n\n### DNS Events\n| Event | Description |\n|-------|-------------|\n| `vector.dns.record-created` | DNS record has been created |\n| `vector.dns.record-deleted` | DNS record has been deleted |\n\n### Webhook Events\n| Event | Description |\n|-------|-------------|\n| `vector.webhook.created` | Webhook endpoint has been registered |\n| `vector.webhook.updated` | Webhook configuration has been modified |\n| `vector.webhook.deleted` | Webhook endpoint has been removed |",
+            "description": "\nView event logs for Vector Pro resources. Events are logged automatically when\nactions occur (site creation, deployments, etc.) and are retained for 90 days.\n\nEvent logs provide an audit trail of all activity in your account.\n\n## Available Event Types\n\n### Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.site.pending` | Site provisioning has been queued |\n| `vector.site.created` | Site has been fully provisioned |\n| `vector.site.updated` | Site settings have been modified |\n| `vector.site.deleted` | Site has been terminated |\n| `vector.site.suspended` | Site has been suspended |\n| `vector.site.unsuspended` | Site has been unsuspended |\n\n### Dev Site Events\n| Event | Description |\n|-------|-------------|\n| `vector.dev-site.created` | Development container has been provisioned |\n| `vector.dev-site.suspended` | Development container has been suspended |\n| `vector.dev-site.unsuspended` | Development container has been unsuspended |\n| `vector.dev-site.terminated` | Development container has been terminated |\n| `vector.dev-site.sftp-password-reset` | SFTP password has been reset |\n| `vector.dev-site.database-password-reset` | Database password has been reset |\n| `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |\n| `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |\n| `vector.dev-site.db-import-started` | Database import has started |\n| `vector.dev-site.db-import-completed` | Database import completed successfully |\n| `vector.dev-site.db-import-failed` | Database import failed |\n| `vector.dev-site.db-export-started` | Database export has started |\n| `vector.dev-site.db-export-completed` | Database export completed successfully |\n| `vector.dev-site.db-export-failed` | Database export failed |\n\n### SSH Key Events\n| Event | Description |\n|-------|-------------|\n| `vector.ssh-key.created` | SSH key has been created |\n| `vector.ssh-key.deleted` | SSH key has been deleted |\n\n### Environment Events\n| Event | Description |\n|-------|-------------|\n| `vector.environment.created` | Production environment has been created |\n| `vector.environment.updated` | Environment settings have been modified |\n| `vector.environment.deleted` | Environment has been deleted |\n| `vector.environment.suspended` | Environment has been suspended |\n| `vector.environment.unsuspended` | Environment has been unsuspended |\n| `vector.environment.database-password-reset` | Database password has been reset |\n\n### Deployment Events\n| Event | Description |\n|-------|-------------|\n| `vector.deployment.started` | Deployment to production has started |\n| `vector.deployment.completed` | Deployment completed successfully |\n| `vector.deployment.failed` | Deployment failed |\n\n### CDN Events\n| Event | Description |\n|-------|-------------|\n| `vector.cdn.setup-started` | CDN configuration has started |\n| `vector.cdn.setup-completed` | CDN setup completed successfully |\n| `vector.cdn.setup-failed` | CDN setup failed |\n\n### DNS Events\n| Event | Description |\n|-------|-------------|\n| `vector.dns.record-created` | DNS record has been created |\n| `vector.dns.record-deleted` | DNS record has been deleted |\n\n### Webhook Events\n| Event | Description |\n|-------|-------------|\n| `vector.webhook.created` | Webhook endpoint has been registered |\n| `vector.webhook.updated` | Webhook configuration has been modified |\n| `vector.webhook.deleted` | Webhook endpoint has been removed |",
             "item": [
                 {
                     "name": "List Event Logs",
@@ -4070,7 +4473,7 @@
                             "mode": "raw",
                             "raw": "{\"name\":\"Production API Key\",\"abilities\":[\"vector:sites:read\",\"vector:sites:write\"]}"
                         },
-                        "description": "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n## Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments\n- `vector:sites:write` - Manage sites, environments, deployments\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
+                        "description": "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n## Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments, database operations\n- `vector:sites:write` - Manage sites, environments, deployments, database import\/export\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
                     },
                     "response": [
                         {
