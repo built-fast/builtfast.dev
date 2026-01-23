@@ -10,12 +10,7 @@ title: API Reference
     </div>
 </section>
 
-{% assign raw_data = site.data.vector_pro_endpoints %}
-{% if raw_data.first[1] %}
-    {% assign endpoint_files = raw_data | sort %}
-{% else %}
-    {% assign endpoint_files = raw_data %}
-{% endif %}
+{% assign endpoint_files = site.data.vector_pro_endpoints | ordered_data: "vector_pro_endpoints" %}
 
 {% for file in endpoint_files %}
     {% comment %} Handle both single file (group directly) and multiple files (hash) {% endcomment %}

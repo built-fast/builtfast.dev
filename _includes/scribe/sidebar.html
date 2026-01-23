@@ -13,7 +13,7 @@
             <div class="sidebar-section-title">Endpoints</div>
             <nav class="sidebar-nav" id="toc">
                 <a href="#introduction" class="sidebar-item">Introduction</a>
-                {% assign endpoint_files = site.data.vector_pro_endpoints | sort %}
+                {% assign endpoint_files = site.data.vector_pro_endpoints | ordered_data: "vector_pro_endpoints" %}
                 {% for file in endpoint_files %}
                     {% assign group = file[1] %}
                     {% if group.name %}

@@ -54,6 +54,17 @@ plugins:
   - jekyll-tailwind
   - jemoji
 
+# Custom data ordering (Scribe-style, use * for alphabetical remainder)
+ordered_data:
+  vector_pro_endpoints:
+    key: name
+    order:
+      - Sites
+      - Environments
+      - Deployments
+      - "*"
+      - API Keys
+
 # Tailwind configuration
 tailwind:
   input: "assets/css/app.css"
