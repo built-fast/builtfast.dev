@@ -28,6 +28,10 @@ pagination:
   title: 'Page :num'
   sort_reverse: true
 
+# Files to force include
+include:
+  - _api
+
 # Files to exclude
 exclude:
   - .tags
@@ -35,9 +39,10 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - LICENSE
+  - CLAUDE.md
   - bin
   - vendor
-  - tailwind.config.js
 
 # Redirect settings
 redirect_from:
@@ -69,7 +74,6 @@ ordered_data:
 tailwind:
   input: "assets/css/app.css"
   output: "_site/assets/css/app.css"
-  config: "tailwind.config.js"
 
 # Collections
 collections:

@@ -1,5 +1,5 @@
 ---
-permalink: /api/search.json
+permalink: /__api/search.json
 ---
 [{%- assign sorted_posts = site.posts | sort: 'date' | reverse -%}
 {%- for post in sorted_posts -%}
