@@ -70,7 +70,19 @@ module Jekyll
       end
 
       # Compact to remove nil gaps from sparse array assignment
-      before.compact + middle + after.compact
+      result = before.compact + middle + after.compact
+
+      # Sort endpoints within each group by subgroup
+      result.each do |item|
+        item_data = item.is_a?(Array) ? item[1] : item
+        next unless item_data.is_a?(Hash) && item_data["endpoints"].is_a?(Array)
+
+        item_data["endpoints"].sort_by! do |endpoint|
+          endpoint.dig("metadata", "subgroup").to_s.downcase
+        end
+      end
+
+      result
     end
   end
 end
