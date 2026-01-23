@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="{{ '/assets/js/terminal-prompt.js' | relative_url }}"></script>
+    {% if page.konami %}<script src="{{ '/assets/js/konami.js' | relative_url }}"></script>{% endif %}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.highlighter-rouge pre code').forEach((block) => {
