@@ -1,0 +1,212 @@
+---
+layout: default
+title: OpenAPI Specification - Vector Pro
+description: Download the Vector Pro OpenAPI spec to generate clients, documentation, or integrate with your toolchain.
+---
+
+<main class="pb-24">
+    <!-- Hero -->
+    <section class="hero-dark text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="dot-grid"></div>
+        <div class="hero-glow"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <a href="/vector-pro/" class="inline-flex items-center text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Vector Pro
+            </a>
+
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 mb-4">
+                    <span class="badge badge-cyan">Tool</span>
+                </div>
+                <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                    OpenAPI Specification
+                </h1>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Download the Vector Pro OpenAPI spec to generate clients, build documentation, or integrate with your development toolchain.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-1">
+                <div class="sticky top-24">
+                    <nav class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4 pb-2 border-b border-gray-100">Documentation</h4>
+                        <a href="/vector-pro/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Overview</a>
+                        <a href="/vector-pro/architecture/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Architecture</a>
+                        <a href="/vector-pro/getting-started/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Getting Started</a>
+                        <a href="/vector-pro/core-workflows/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Core Workflows</a>
+                        <a href="/vector-pro/webhooks/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Webhooks</a>
+                        <a href="/vector-pro/developer-tools/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Developer Tools</a>
+                    </nav>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <h4 class="text-xs font-bold text-brand-dark uppercase tracking-[0.2em] mb-4">Resources</h4>
+                        <a href="/vector-pro/api/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">API Reference</a>
+                        <a href="/vector-pro/mcp/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">MCP Integration</a>
+                        <a href="/vector-pro/tools/postman/" class="block py-2 text-sm text-gray-500 hover:text-brand-cyan transition-colors">Postman Collection</a>
+                        <a href="/vector-pro/tools/openapi/" class="block py-2 text-sm text-brand-cyan font-medium">OpenAPI Spec</a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Column -->
+            <div class="lg:col-span-3 space-y-12">
+                <div class="prose max-w-none">
+                    <h2>What is OpenAPI?</h2>
+                    <p>
+                        <a href="https://www.openapis.org/" target="_blank" rel="noopener">OpenAPI</a> (formerly Swagger) is the industry standard for describing REST APIs. An OpenAPI specification is a machine-readable YAML or JSON file that documents every endpoint, parameter, request body, and response in an API.
+                    </p>
+                    <p>
+                        With an OpenAPI spec, you can generate API clients in any language, create interactive documentation, validate requests, and integrate with hundreds of developer tools.
+                    </p>
+
+                    <h2>Vector Pro OpenAPI Spec</h2>
+                    <p>
+                        Our OpenAPI 3.1 specification covers the complete Vector Pro API, including all endpoints, authentication requirements, request/response schemas, and error formats.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="/vector-pro/api/openapi.yaml" class="inline-flex items-center gap-2 bg-brand-orange text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-orange/90 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Download openapi.yaml
+                    </a>
+                    <a href="https://www.openapis.org/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-dark/90 transition">
+                        Learn about OpenAPI
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Common Use Cases</h2>
+
+                    <h3>Generate API Clients</h3>
+                    <p>
+                        Use <a href="https://openapi-generator.tech/" target="_blank" rel="noopener">OpenAPI Generator</a> to create typed clients in your language of choice:
+                    </p>
+                </div>
+
+                <pre><code class="language-bash"># Install OpenAPI Generator
+npm install @openapitools/openapi-generator-cli -g
+
+# Generate a TypeScript client
+openapi-generator-cli generate \
+  -i https://builtfast.dev/vector-pro/api/openapi.yaml \
+  -g typescript-fetch \
+  -o ./vector-pro-client
+
+# Generate a Python client
+openapi-generator-cli generate \
+  -i https://builtfast.dev/vector-pro/api/openapi.yaml \
+  -g python \
+  -o ./vector-pro-client
+
+# Generate a Go client
+openapi-generator-cli generate \
+  -i https://builtfast.dev/vector-pro/api/openapi.yaml \
+  -g go \
+  -o ./vector-pro-client</code></pre>
+
+                <div class="prose max-w-none">
+                    <h3>Import into API Tools</h3>
+                    <p>Most API development tools support OpenAPI import:</p>
+                    <ul>
+                        <li><strong>Postman</strong> &mdash; Import &rarr; OpenAPI to create a collection</li>
+                        <li><strong>Insomnia</strong> &mdash; Import/Export &rarr; From URL or file</li>
+                        <li><strong>HTTPie</strong> &mdash; Use with the OpenAPI plugin</li>
+                        <li><strong>VS Code</strong> &mdash; REST Client and Thunder Client extensions</li>
+                    </ul>
+
+                    <h3>Generate Documentation</h3>
+                    <p>
+                        Tools like <a href="https://redocly.com/" target="_blank" rel="noopener">Redocly</a>, <a href="https://stoplight.io/" target="_blank" rel="noopener">Stoplight</a>, and <a href="https://swagger.io/tools/swagger-ui/" target="_blank" rel="noopener">Swagger UI</a> can render beautiful API documentation from the spec.
+                    </p>
+                </div>
+
+                <!-- AI Tip -->
+                <div class="bg-gradient-to-br from-brand-dark to-brand-dark/90 rounded-2xl p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/20 rounded-full filter blur-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-4">
+                            <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span class="text-xs font-bold text-brand-cyan uppercase tracking-wider">Pro Tip</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">Build Integrations with AI Assistants</h3>
+                        <p class="text-gray-300 mb-4">
+                            AI coding assistants like Claude, ChatGPT, and Cursor work exceptionally well with OpenAPI specs. Paste the spec into your conversation and ask for exactly what you need&mdash;the structured format gives the AI complete context about endpoints, parameters, and response shapes.
+                        </p>
+                        <p class="text-gray-400 text-sm mb-4">Example prompt:</p>
+                        <div class="bg-black/30 rounded-lg p-4 text-sm font-mono text-gray-300">
+                            <p class="text-brand-cyan mb-2"># Attach openapi.yaml to the conversation, then:</p>
+                            <p>"Using the attached Vector Pro OpenAPI spec, write a Laravel service class that creates a new site, polls until it's active, creates a production environment, and triggers a deployment. Include proper error handling and return a DTO with the site and environment details."</p>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-4">
+                            The AI will generate working code that matches the exact API contract&mdash;correct endpoints, required parameters, response types, and error handling.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Spec Details</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <tbody>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4 font-semibold bg-gray-50 w-1/3">OpenAPI Version</td>
+                                <td class="p-4">3.1.0</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4 font-semibold bg-gray-50">Format</td>
+                                <td class="p-4">YAML</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4 font-semibold bg-gray-50">Authentication</td>
+                                <td class="p-4">Bearer token (<code>Authorization: Bearer {token}</code>)</td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4 font-semibold bg-gray-50">Base URL</td>
+                                <td class="p-4"><code>https://api.builtfast.com</code></td>
+                            </tr>
+                            <tr class="border-t border-gray-100">
+                                <td class="p-4 font-semibold bg-gray-50">Content Type</td>
+                                <td class="p-4"><code>application/json</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="prose max-w-none">
+                    <h2>Keeping Up to Date</h2>
+                    <p>
+                        The OpenAPI spec is versioned alongside the API. When new endpoints or parameters are added, the spec is updated. For automated workflows, fetch the spec directly from the URL rather than storing a local copy:
+                    </p>
+                </div>
+
+                <pre><code class="language-bash"># Always get the latest spec
+curl -O https://builtfast.dev/vector-pro/api/openapi.yaml</code></pre>
+
+                <!-- Nav -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <a href="/vector-pro/tools/postman/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+                            <span>Postman Collection</span>
+                        </a>
+                        <a href="/vector-pro/api/" class="inline-flex items-center gap-2 text-gray-500 hover:text-brand-cyan transition group">
+                            <span>API Reference</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
