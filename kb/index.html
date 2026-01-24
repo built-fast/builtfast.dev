@@ -1,0 +1,234 @@
+---
+layout: default
+title: Knowledge Base
+permalink: /kb/
+---
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-slate-50 via-white to-cyan-50/30 pt-28 pb-16 relative overflow-hidden border-b border-slate-200/60">
+    <!-- Geometric background elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-64 h-64 rounded-full bg-brand-cyan/[0.03] blur-3xl"></div>
+        <div class="absolute bottom-10 right-20 w-80 h-80 rounded-full bg-brand-orange/[0.02] blur-3xl"></div>
+        <!-- Filing cabinet lines -->
+        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(148, 163, 184, 0.06) 79px, rgba(148, 163, 184, 0.06) 80px);"></div>
+    </div>
+    <div class="absolute -bottom-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent"></div>
+
+    <div class="max-w-5xl mx-auto px-6 relative">
+        <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 mb-4">
+                <span class="w-8 h-8 rounded-lg bg-brand-cyan/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </span>
+                <span class="font-mono text-xs text-slate-500 uppercase tracking-wider">Documentation</span>
+            </div>
+
+            <h1 class="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-[1.1] mb-4 tracking-tight">
+                Knowledge Base
+            </h1>
+
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Guides, tutorials, and reference documentation for BuiltFast projects. Find answers, learn best practices, and get the most from your hosting.
+            </p>
+        </div>
+
+        <!-- Search placeholder -->
+        <div class="mt-8 max-w-xl" x-data="{ query: '' }">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    placeholder="Search articles..."
+                    class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-cyan/20 focus:border-brand-cyan transition shadow-sm"
+                    x-model="query"
+                    disabled
+                    title="Search coming soon"
+                >
+                <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                    <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs text-slate-400 bg-slate-100 rounded border border-slate-200 font-mono">
+                        Coming soon
+                    </kbd>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories & Articles -->
+<main class="py-16 bg-white" x-data="kbFilter()">
+    <div class="max-w-5xl mx-auto px-6">
+
+        {% assign all_articles = site.kb | sort: 'date' | reverse %}
+        {% assign categories = all_articles | map: 'category' | uniq | compact %}
+
+        <!-- Category Pills -->
+        <div class="flex flex-wrap items-center gap-3 mb-12">
+            <button
+                @click="setCategory(null)"
+                :class="!activeCategory ? 'kb-category-pill-active' : 'kb-category-pill'"
+                class="transition-all"
+            >
+                <span class="w-2 h-2 rounded-full" :class="!activeCategory ? 'bg-white' : 'bg-slate-400'"></span>
+                All Articles
+                <span class="ml-1 text-xs opacity-60">({{ all_articles.size }})</span>
+            </button>
+
+            {% for category in categories %}
+            {% assign cat_articles = all_articles | where: 'category', category %}
+            {% assign cat_data = site.data.kb_categories[category] %}
+            <button
+                @click="setCategory('{{ category }}')"
+                :class="activeCategory === '{{ category }}' ? 'kb-category-pill-active' : 'kb-category-pill'"
+                class="transition-all"
+            >
+                <span class="w-2 h-2 rounded-full" :class="activeCategory === '{{ category }}' ? 'bg-white' : 'bg-brand-cyan'"></span>
+                {{ cat_data.name | default: category | capitalize }}
+                <span class="ml-1 text-xs opacity-60">({{ cat_articles.size }})</span>
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Category Sections -->
+        {% for category in categories %}
+        {% assign cat_articles = all_articles | where: 'category', category %}
+        {% assign cat_data = site.data.kb_categories[category] %}
+        {% assign cat_icon = cat_data.icon | default: 'document' %}
+
+        <section
+            class="mb-16 last:mb-0"
+            x-show="!activeCategory || activeCategory === '{{ category }}'"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+        >
+            <!-- Category Header -->
+            <div class="flex items-center gap-4 mb-6">
+                <div class="kb-category-icon">
+                    {% if cat_icon == 'wordpress' %}
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zM3.443 12c0-.899.143-1.764.406-2.575l4.48 12.28A8.566 8.566 0 013.443 12zm8.557 8.557c-.891 0-1.746-.142-2.548-.401l2.706-7.867 2.772 7.598c.018.044.039.086.063.125a8.537 8.537 0 01-2.993.545zm1.169-12.567c.543-.028 1.032-.086 1.032-.086.486-.057.428-.771-.057-.743 0 0-1.461.115-2.403.115-.885 0-2.374-.115-2.374-.115-.486-.028-.543.714-.057.743 0 0 .46.058.946.086l1.404 3.848-1.972 5.915-3.28-9.763c.543-.028 1.032-.086 1.032-.086.485-.057.428-.771-.058-.743 0 0-1.461.115-2.402.115-.169 0-.368-.004-.579-.01A8.54 8.54 0 0112 3.443a8.5 8.5 0 016.576 3.102c-.043-.003-.084-.01-.128-.01-1.343 0-2.294.771-2.294 1.599 0 .743.428 1.371 1.028 2.057.514.629 1.028 1.428 1.028 2.587 0 .8-.314 1.733-.728 3.028l-.956 3.192-3.358-10.007zm3.946 12.029l2.748-7.948c.514-1.285.686-2.315.686-3.232 0-.332-.022-.641-.061-.934a8.556 8.556 0 01-3.373 12.114z"/>
+                    </svg>
+                    {% elsif cat_icon == 'lightning' %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    {% elsif cat_icon == 'shield' %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    {% elsif cat_icon == 'code' %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    {% else %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    {% endif %}
+                </div>
+                <div>
+                    <h2 class="font-display text-xl font-bold text-slate-900">{{ cat_data.name | default: category | capitalize }}</h2>
+                    <p class="text-sm text-slate-500">{{ cat_articles.size }} article{% if cat_articles.size != 1 %}s{% endif %}</p>
+                </div>
+            </div>
+
+            <!-- Articles Grid -->
+            <div class="grid md:grid-cols-2 gap-4">
+                {% for article in cat_articles %}
+                <a href="{{ article.url | relative_url }}" class="kb-article-card group">
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold text-slate-800 group-hover:text-brand-cyan transition leading-snug mb-2">
+                            {{ article.title }}
+                        </h3>
+                        {% if article.excerpt %}
+                        <p class="text-sm text-slate-500 line-clamp-2 leading-relaxed">
+                            {{ article.excerpt | strip_html | truncate: 120 }}
+                        </p>
+                        {% endif %}
+                        <div class="flex items-center gap-3 mt-3">
+                            <span class="font-mono text-xs text-slate-400">{{ article.date | date: "%b %d, %Y" }}</span>
+                            {% if article.tags.first %}
+                            <span class="kb-tag-small">{{ article.tags.first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-brand-cyan/10 group-hover:text-brand-cyan transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+
+        <!-- Empty state -->
+        {% if all_articles.size == 0 %}
+        <div class="text-center py-20">
+            <div class="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-slate-900 mb-2">No articles yet</h3>
+            <p class="text-slate-500">Check back soon for guides and tutorials.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</main>
+
+<!-- CTA -->
+<section class="py-16 bg-slate-50 border-t border-slate-200/60">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+                <h2 class="font-display text-xl font-bold text-slate-900">
+                    Can't find what you're looking for?
+                </h2>
+                <p class="text-slate-600 mt-1">
+                    Reach out to our team for personalized support.
+                </p>
+            </div>
+            <a href="https://builtfast.com/contact" class="btn-primary">
+                Contact Support
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+function kbFilter() {
+    return {
+        activeCategory: null,
+        init() {
+            // Check URL params for initial category
+            const params = new URLSearchParams(window.location.search);
+            const cat = params.get('category');
+            if (cat) this.activeCategory = cat;
+        },
+        setCategory(cat) {
+            this.activeCategory = cat;
+            // Update URL without reload
+            const url = new URL(window.location);
+            if (cat) {
+                url.searchParams.set('category', cat);
+            } else {
+                url.searchParams.delete('category');
+            }
+            history.pushState({}, '', url);
+        }
+    }
+}
+</script>

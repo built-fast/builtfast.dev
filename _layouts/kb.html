@@ -1,0 +1,156 @@
+---
+layout: default
+---
+
+<div class="fixed top-0 left-0 w-full h-1 z-[60] pointer-events-none">
+    <div id="scroll-progress" class="h-full w-full bg-brand-cyan origin-left" style="transform: scaleX(0)"></div>
+</div>
+
+<main class="pb-24">
+    <!-- Header -->
+    <header class="bg-gradient-to-br from-slate-50 via-white to-cyan-50/30 pt-28 pb-12 relative overflow-hidden border-b border-slate-200/60">
+        <!-- Geometric accent -->
+        <div class="absolute top-0 right-0 w-96 h-96 opacity-[0.03]" style="background: conic-gradient(from 45deg, #1dc9d8, #ff6542, #1dc9d8); filter: blur(60px);"></div>
+        <div class="absolute -bottom-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent"></div>
+
+        <div class="max-w-5xl mx-auto px-6 relative">
+            <a href="/kb/" class="inline-flex items-center text-slate-500 hover:text-brand-cyan transition text-sm font-medium mb-6 group">
+                <span class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform">{% include icons/chevron-left.svg %}</span>
+                Knowledge Base
+            </a>
+
+            {% assign cat_data = site.data.kb_categories[page.category] %}
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+                {% if page.category %}
+                <a href="/kb/?category={{ page.category }}" class="badge-kb-category">
+                    <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                    {{ cat_data.name | default: page.category | capitalize }}
+                </a>
+                {% endif %}
+                <span class="text-slate-300">|</span>
+                <span class="text-sm text-slate-500 font-mono">{{ page.date | date: "%B %d, %Y" }}</span>
+                <span class="text-slate-300">|</span>
+                <span class="text-sm text-slate-500 font-mono">{% include content/read-time.html content=page.content %}</span>
+            </div>
+
+            <h1 class="font-display text-3xl md:text-4xl font-bold text-slate-900 leading-tight tracking-tight max-w-3xl">
+                {{ page.title }}
+            </h1>
+
+            {% if page.excerpt %}
+            <p class="text-lg text-slate-600 mt-4 max-w-2xl leading-relaxed">
+                {{ page.excerpt | strip_html }}
+            </p>
+            {% endif %}
+        </div>
+    </header>
+
+    <article class="max-w-5xl mx-auto px-6 py-12">
+        <div class="grid lg:grid-cols-4 gap-12 items-start">
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <div class="prose prose-lg max-w-none prose-kb">
+                    {{ content }}
+                </div>
+
+                <!-- Tags & Meta -->
+                <footer class="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in page.tags %}
+                        <a href="/kb/?tag={{ tag | slugify }}" class="kb-tag">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+
+                    {% if page.author %}
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-slate-400 uppercase tracking-wider font-mono">Written by</span>
+                        <span class="text-sm font-medium text-slate-700">{{ page.author }}</span>
+                    </div>
+                    {% endif %}
+                </footer>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-6 lg:sticky lg:top-24">
+                <!-- Table of Contents placeholder -->
+                <div class="bg-slate-50/80 rounded-xl p-5 border border-slate-200/60" id="toc-container">
+                    <div class="font-mono text-[10px] text-slate-400 uppercase tracking-widest mb-3">On this page</div>
+                    <nav id="toc" class="space-y-2 text-sm">
+                        <!-- JS will populate this -->
+                    </nav>
+                </div>
+
+                <!-- Related Articles -->
+                {% assign related_kb = site.kb | where_exp: "kb", "kb.url != page.url" %}
+                {% assign matching_kb = "" | split: "" %}
+                {% for kb in related_kb %}
+                    {% if kb.category == page.category %}
+                        {% assign matching_kb = matching_kb | push: kb %}
+                    {% endif %}
+                {% endfor %}
+                {% assign matching_kb = matching_kb | slice: 0, 3 %}
+
+                {% if matching_kb.size > 0 %}
+                <div class="bg-slate-50/80 rounded-xl p-5 border border-slate-200/60">
+                    <div class="font-mono text-[10px] text-slate-400 uppercase tracking-widest mb-3">Related</div>
+                    <div class="space-y-3">
+                        {% for kb in matching_kb %}
+                        <a href="{{ kb.url }}" class="block group">
+                            <h4 class="text-sm font-medium text-slate-700 group-hover:text-brand-cyan transition leading-snug">{{ kb.title }}</h4>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </aside>
+        </div>
+    </article>
+</main>
+
+<script>
+    // Scroll progress
+    let ticking = false;
+    const progressBar = document.getElementById('scroll-progress');
+
+    function updateProgress() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = winScroll / height;
+        progressBar.style.transform = 'scaleX(' + scrolled + ')';
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateProgress);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    // Generate TOC from h2 and h3 headers
+    document.addEventListener('DOMContentLoaded', function() {
+        const article = document.querySelector('.prose-kb');
+        const toc = document.getElementById('toc');
+        const tocContainer = document.getElementById('toc-container');
+        const headings = article.querySelectorAll('h2, h3');
+
+        if (headings.length === 0) {
+            tocContainer.style.display = 'none';
+            return;
+        }
+
+        headings.forEach((heading, index) => {
+            const id = heading.id || 'section-' + index;
+            heading.id = id;
+
+            const link = document.createElement('a');
+            link.href = '#' + id;
+            link.textContent = heading.textContent;
+            link.className = heading.tagName === 'H3'
+                ? 'block text-slate-500 hover:text-brand-cyan transition pl-3 border-l border-slate-200'
+                : 'block text-slate-600 hover:text-brand-cyan transition font-medium';
+
+            toc.appendChild(link);
+        });
+    });
+</script>

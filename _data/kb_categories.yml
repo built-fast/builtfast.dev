@@ -1,0 +1,27 @@
+# Knowledge Base Categories
+# Maps category slugs (used in front matter and URLs) to display metadata
+
+wordpress:
+  name: WordPress
+  description: Guides for setting up and managing WordPress sites
+  icon: wordpress  # References icon include logic in templates
+
+general:
+  name: General
+  description: General documentation and getting started guides
+  icon: document
+
+security:
+  name: Security
+  description: Security best practices and hardening guides
+  icon: shield
+
+performance:
+  name: Performance
+  description: Optimization and performance tuning
+  icon: lightning
+
+api:
+  name: API
+  description: API documentation and integration guides
+  icon: code
