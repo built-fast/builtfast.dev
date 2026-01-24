@@ -83,6 +83,8 @@ collections:
     output: true
   oss:
     output: true
+  kb:
+    output: true
 
 # Default values frontmatter
 defaults:
@@ -99,6 +101,13 @@ defaults:
     values:
       layout: "oss"
       permalink: /oss/:name/
+
+  - scope:
+      path: ""
+      type: "kb"
+    values:
+      layout: "kb"
+      permalink: /kb/:path/
 
   # Use the "post" layout for all posts
   # If no category is specified, default to "blog"

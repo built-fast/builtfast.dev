@@ -2,6 +2,8 @@
 layout: default
 title: Blog
 permalink: /blog/
+pagination:
+  enabled: true
 ---
 
 <!-- Hero -->
@@ -27,9 +29,10 @@ permalink: /blog/
 <main class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-6">
 
-        {% assign posts = site.posts %}
+        {% assign posts = paginator.posts %}
         {% if posts.size > 0 %}
-            <!-- Featured Post -->
+            <!-- Featured Post (only on first page) -->
+            {% if paginator.page == 1 %}
             {% assign latest = posts.first %}
             <div class="mb-16">
                 <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-4">Latest</div>
@@ -69,12 +72,22 @@ permalink: /blog/
             </div>
 
             <div class="section-line mb-12"></div>
+            {% endif %}
 
             <!-- Post Grid -->
-            {% if posts.size > 1 %}
-            <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-6">All Posts</div>
+            {% if paginator.page == 1 %}
+                {% assign grid_posts = posts | slice: 1, posts.size %}
+                {% if grid_posts.size > 0 %}
+                <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-6">All Posts</div>
+                {% endif %}
+            {% else %}
+                {% assign grid_posts = posts %}
+                <div class="font-mono text-xs text-brand-muted uppercase tracking-wider mb-6">Page {{ paginator.page }}</div>
+            {% endif %}
+
+            {% if grid_posts.size > 0 %}
             <div class="grid md:grid-cols-2 gap-6">
-                {% for post in posts offset:1 %}
+                {% for post in grid_posts %}
                 <article class="card-hover bg-brand-gray/50 rounded-xl border border-gray-100 p-6 flex flex-col">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="badge badge-dark">{{ post.tags.first | default: "Engineering" | upcase }}</span>
@@ -97,6 +110,30 @@ permalink: /blog/
                 {% endfor %}
             </div>
             {% endif %}
+
+            <!-- Pagination -->
+            {% if paginator.total_pages > 1 %}
+            <nav class="mt-14 flex items-center justify-center gap-3" aria-label="Pagination">
+                {% if paginator.previous_page %}
+                <a href="{{ paginator.previous_page_path | relative_url }}" class="group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-brand-dark hover:bg-brand-slate rounded-lg transition">
+                    <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    Previous
+                </a>
+                {% endif %}
+
+                <span class="px-4 py-2 font-mono text-sm text-brand-muted">
+                    {{ paginator.page }}<span class="text-gray-300 mx-1">/</span>{{ paginator.total_pages }}
+                </span>
+
+                {% if paginator.next_page %}
+                <a href="{{ paginator.next_page_path | relative_url }}" class="group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-brand-dark hover:bg-brand-slate rounded-lg transition">
+                    Next
+                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                {% endif %}
+            </nav>
+            {% endif %}
+
         {% else %}
             <div class="text-center py-20">
                 <p class="text-gray-500 text-lg">No posts yet. Check back soon.</p>
