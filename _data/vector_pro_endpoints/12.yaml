@@ -9,6 +9,7 @@ description: |-
   ## Available Event Types
 
   ### Site Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.site.pending` | Site provisioning has been queued |
@@ -19,6 +20,7 @@ description: |-
   | `vector.site.unsuspended` | Site has been unsuspended |
 
   ### Dev Site Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.dev-site.created` | Development container has been provisioned |
@@ -37,12 +39,14 @@ description: |-
   | `vector.dev-site.db-export-failed` | Database export failed |
 
   ### SSH Key Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.ssh-key.created` | SSH key has been created |
   | `vector.ssh-key.deleted` | SSH key has been deleted |
 
   ### Environment Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.environment.created` | Production environment has been created |
@@ -53,6 +57,7 @@ description: |-
   | `vector.environment.database-password-reset` | Database password has been reset |
 
   ### Deployment Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.deployment.started` | Deployment to production has started |
@@ -60,6 +65,7 @@ description: |-
   | `vector.deployment.failed` | Deployment failed |
 
   ### CDN Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.cdn.setup-started` | CDN configuration has started |
@@ -67,12 +73,14 @@ description: |-
   | `vector.cdn.setup-failed` | CDN setup failed |
 
   ### DNS Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.dns.record-created` | DNS record has been created |
   | `vector.dns.record-deleted` | DNS record has been deleted |
 
   ### Webhook Events
+
   | Event | Description |
   |-------|-------------|
   | `vector.webhook.created` | Webhook endpoint has been registered |
@@ -97,6 +105,7 @@ endpoints:
         ## Available Event Types
 
         ### Site Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.site.pending` | Site provisioning has been queued |
@@ -107,6 +116,7 @@ endpoints:
         | `vector.site.unsuspended` | Site has been unsuspended |
 
         ### Dev Site Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.dev-site.created` | Development container has been provisioned |
@@ -125,12 +135,14 @@ endpoints:
         | `vector.dev-site.db-export-failed` | Database export failed |
 
         ### SSH Key Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.ssh-key.created` | SSH key has been created |
         | `vector.ssh-key.deleted` | SSH key has been deleted |
 
         ### Environment Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.environment.created` | Production environment has been created |
@@ -141,6 +153,7 @@ endpoints:
         | `vector.environment.database-password-reset` | Database password has been reset |
 
         ### Deployment Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.deployment.started` | Deployment to production has started |
@@ -148,6 +161,7 @@ endpoints:
         | `vector.deployment.failed` | Deployment failed |
 
         ### CDN Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.cdn.setup-started` | CDN configuration has started |
@@ -155,12 +169,14 @@ endpoints:
         | `vector.cdn.setup-failed` | CDN setup failed |
 
         ### DNS Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.dns.record-created` | DNS record has been created |
         | `vector.dns.record-deleted` | DNS record has been deleted |
 
         ### Webhook Events
+
         | Event | Description |
         |-------|-------------|
         | `vector.webhook.created` | Webhook endpoint has been registered |
