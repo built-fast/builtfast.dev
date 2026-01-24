@@ -1,0 +1,32 @@
+---
+---
+/* TEAM */
+# Built by humans, for humans.
+# Optimizing for speed and reliability since day one.
+# We turn caffeine into code and servers into speed demons.
+{% for person in site.people %}
+Name: {{ person.name }}
+Role: {{ person.role }}
+GitHub: https://github.com/{{ person.github }}
+LinkedIn: https://linkedin.com/in/{{ person.linkedin }}
+Skills: {{ person.skills | join: ", " }}
+{% endfor %}
+/* SITE */
+Last update: {{ site.time | date: "%Y/%m/%d" }}
+Standards: HTML5, CSS3, Love, and a bit of Magic
+Components: Jekyll, Tailwind CSS, Material Design principles
+Software: Ruby, PHP, Bash, and far too many terminal tabs
+Location: {{ site.timezone }}
+
+/* THANKS */
+The Open Source Community (we stand on the shoulders of giants)
+The creators of Jekyll and Tailwind CSS
+Our early adopters, partners, and anyone who appreciates a fast page load
+
+/* METADATA (FOR GREPPING) */
+Build-Time: {{ site.time | date: "%Y-%m-%dT%H:%M:%S%z" }}
+{%- if site.github.build_revision %}
+Build-Commit: https://github.com/{{ site.github.repository_nwo }}/commit/{{ site.github.build_revision }}
+{%- endif %}
+
+/* Found us? You're our kind of human. */
