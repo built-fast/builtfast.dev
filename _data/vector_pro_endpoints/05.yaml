@@ -7,7 +7,7 @@ description: |-
   provide visibility into SSL status and manual intervention capabilities when
   provisioning gets stuck.
 
-  ## Environment Status
+  #### Environment Status
 
   The main `status` field tracks the environment lifecycle:
   - `pending` - Environment created, awaiting first deploy
@@ -15,7 +15,7 @@ description: |-
   - `active` - Environment fully operational
   - `failed` - Provisioning failed
 
-  ## Provisioning Step
+  #### Provisioning Step
 
   The `provisioning_step` field tracks detailed progress during provisioning:
   - `null` - Not started
@@ -44,7 +44,7 @@ endpoints:
         provide visibility into SSL status and manual intervention capabilities when
         provisioning gets stuck.
 
-        ## Environment Status
+        #### Environment Status
 
         The main `status` field tracks the environment lifecycle:
         - `pending` - Environment created, awaiting first deploy
@@ -52,7 +52,7 @@ endpoints:
         - `active` - Environment fully operational
         - `failed` - Provisioning failed
 
-        ## Provisioning Step
+        #### Provisioning Step
 
         The `provisioning_step` field tracks detailed progress during provisioning:
         - `null` - Not started

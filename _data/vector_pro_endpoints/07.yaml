@@ -202,7 +202,7 @@ endpoints:
         allowed request count within the specified timeframe, they are blocked for the configured
         block duration.
 
-        ## How Rate Limiting Works
+        #### How Rate Limiting Works
 
         Each rule defines:
         - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
@@ -210,13 +210,13 @@ endpoints:
         - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
         - **Transformations**: Data normalization applied before matching
 
-        ## Limits
+        #### Limits
 
         - Maximum **25 rate limit rules** per site/zone
         - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
         - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
 
-        ## Available Operators
+        #### Available Operators
 
         | Value | Description |
         |-------|-------------|
@@ -236,7 +236,7 @@ endpoints:
         | `detect-sqli` | SQL injection detection (Premium) |
         | `detect-xss` | XSS detection (Premium) |
 
-        ## Available Variables
+        #### Available Variables
 
         | Value | Description |
         |-------|-------------|
@@ -266,7 +266,7 @@ endpoints:
         | `response-headers` | Response headers |
         | `response-status` | Response status code |
 
-        ## Available Transformations
+        #### Available Transformations
 
         | Value | Description |
         |-------|-------------|
@@ -373,7 +373,7 @@ endpoints:
         allowed request count within the specified timeframe, they are blocked for the configured
         block duration.
 
-        ## How Rate Limiting Works
+        #### How Rate Limiting Works
 
         Each rule defines:
         - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
@@ -381,13 +381,13 @@ endpoints:
         - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
         - **Transformations**: Data normalization applied before matching
 
-        ## Limits
+        #### Limits
 
         - Maximum **25 rate limit rules** per site/zone
         - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
         - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
 
-        ## Available Operators
+        #### Available Operators
 
         | Value | Description |
         |-------|-------------|
@@ -407,7 +407,7 @@ endpoints:
         | `detect-sqli` | SQL injection detection (Premium) |
         | `detect-xss` | XSS detection (Premium) |
 
-        ## Available Variables
+        #### Available Variables
 
         | Value | Description |
         |-------|-------------|
@@ -437,7 +437,7 @@ endpoints:
         | `response-headers` | Response headers |
         | `response-status` | Response status code |
 
-        ## Available Transformations
+        #### Available Transformations
 
         | Value | Description |
         |-------|-------------|
@@ -991,7 +991,7 @@ endpoints:
         allowed request count within the specified timeframe, they are blocked for the configured
         block duration.
 
-        ## How Rate Limiting Works
+        #### How Rate Limiting Works
 
         Each rule defines:
         - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
@@ -999,13 +999,13 @@ endpoints:
         - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
         - **Transformations**: Data normalization applied before matching
 
-        ## Limits
+        #### Limits
 
         - Maximum **25 rate limit rules** per site/zone
         - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
         - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
 
-        ## Available Operators
+        #### Available Operators
 
         | Value | Description |
         |-------|-------------|
@@ -1025,7 +1025,7 @@ endpoints:
         | `detect-sqli` | SQL injection detection (Premium) |
         | `detect-xss` | XSS detection (Premium) |
 
-        ## Available Variables
+        #### Available Variables
 
         | Value | Description |
         |-------|-------------|
@@ -1055,7 +1055,7 @@ endpoints:
         | `response-headers` | Response headers |
         | `response-status` | Response status code |
 
-        ## Available Transformations
+        #### Available Transformations
 
         | Value | Description |
         |-------|-------------|
@@ -1300,7 +1300,7 @@ endpoints:
         allowed request count within the specified timeframe, they are blocked for the configured
         block duration.
 
-        ## How Rate Limiting Works
+        #### How Rate Limiting Works
 
         Each rule defines:
         - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
@@ -1308,13 +1308,13 @@ endpoints:
         - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
         - **Transformations**: Data normalization applied before matching
 
-        ## Limits
+        #### Limits
 
         - Maximum **25 rate limit rules** per site/zone
         - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
         - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
 
-        ## Available Operators
+        #### Available Operators
 
         | Value | Description |
         |-------|-------------|
@@ -1334,7 +1334,7 @@ endpoints:
         | `detect-sqli` | SQL injection detection (Premium) |
         | `detect-xss` | XSS detection (Premium) |
 
-        ## Available Variables
+        #### Available Variables
 
         | Value | Description |
         |-------|-------------|
@@ -1364,7 +1364,7 @@ endpoints:
         | `response-headers` | Response headers |
         | `response-status` | Response status code |
 
-        ## Available Transformations
+        #### Available Transformations
 
         | Value | Description |
         |-------|-------------|
@@ -1611,7 +1611,7 @@ endpoints:
         allowed request count within the specified timeframe, they are blocked for the configured
         block duration.
 
-        ## How Rate Limiting Works
+        #### How Rate Limiting Works
 
         Each rule defines:
         - **Threshold**: Number of requests (`request_count`) allowed within a time window (`timeframe`)
@@ -1619,13 +1619,13 @@ endpoints:
         - **Matching Criteria**: Which requests to count using `variables`, `operator`, and `value`
         - **Transformations**: Data normalization applied before matching
 
-        ## Limits
+        #### Limits
 
         - Maximum **25 rate limit rules** per site/zone
         - `timeframe` must be exactly **1** (per second) or **10** (per 10 seconds)
         - `block_time` must be one of: **30**, **60**, **300**, **900**, **1800**, **3600** seconds
 
-        ## Available Operators
+        #### Available Operators
 
         | Value | Description |
         |-------|-------------|
@@ -1645,7 +1645,7 @@ endpoints:
         | `detect-sqli` | SQL injection detection (Premium) |
         | `detect-xss` | XSS detection (Premium) |
 
-        ## Available Variables
+        #### Available Variables
 
         | Value | Description |
         |-------|-------------|
@@ -1675,7 +1675,7 @@ endpoints:
         | `response-headers` | Response headers |
         | `response-status` | Response status code |
 
-        ## Available Transformations
+        #### Available Transformations
 
         | Value | Description |
         |-------|-------------|

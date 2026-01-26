@@ -6,9 +6,9 @@ description: |-
 
   Event logs provide an audit trail of all activity in your account.
 
-  ## Available Event Types
+  #### Available Event Types
 
-  ### Site Events
+  ##### Site Events
 
   | Event | Description |
   |-------|-------------|
@@ -19,7 +19,7 @@ description: |-
   | `vector.site.suspended` | Site has been suspended |
   | `vector.site.unsuspended` | Site has been unsuspended |
 
-  ### Dev Site Events
+  ##### Dev Site Events
 
   | Event | Description |
   |-------|-------------|
@@ -38,14 +38,14 @@ description: |-
   | `vector.dev-site.db-export-completed` | Database export completed successfully |
   | `vector.dev-site.db-export-failed` | Database export failed |
 
-  ### SSH Key Events
+  ##### SSH Key Events
 
   | Event | Description |
   |-------|-------------|
   | `vector.ssh-key.created` | SSH key has been created |
   | `vector.ssh-key.deleted` | SSH key has been deleted |
 
-  ### Environment Events
+  ##### Environment Events
 
   | Event | Description |
   |-------|-------------|
@@ -56,7 +56,7 @@ description: |-
   | `vector.environment.unsuspended` | Environment has been unsuspended |
   | `vector.environment.database-password-reset` | Database password has been reset |
 
-  ### Deployment Events
+  ##### Deployment Events
 
   | Event | Description |
   |-------|-------------|
@@ -64,7 +64,7 @@ description: |-
   | `vector.deployment.completed` | Deployment completed successfully |
   | `vector.deployment.failed` | Deployment failed |
 
-  ### CDN Events
+  ##### CDN Events
 
   | Event | Description |
   |-------|-------------|
@@ -72,14 +72,14 @@ description: |-
   | `vector.cdn.setup-completed` | CDN setup completed successfully |
   | `vector.cdn.setup-failed` | CDN setup failed |
 
-  ### DNS Events
+  ##### DNS Events
 
   | Event | Description |
   |-------|-------------|
   | `vector.dns.record-created` | DNS record has been created |
   | `vector.dns.record-deleted` | DNS record has been deleted |
 
-  ### Webhook Events
+  ##### Webhook Events
 
   | Event | Description |
   |-------|-------------|
@@ -102,9 +102,9 @@ endpoints:
 
         Event logs provide an audit trail of all activity in your account.
 
-        ## Available Event Types
+        #### Available Event Types
 
-        ### Site Events
+        ##### Site Events
 
         | Event | Description |
         |-------|-------------|
@@ -115,7 +115,7 @@ endpoints:
         | `vector.site.suspended` | Site has been suspended |
         | `vector.site.unsuspended` | Site has been unsuspended |
 
-        ### Dev Site Events
+        ##### Dev Site Events
 
         | Event | Description |
         |-------|-------------|
@@ -134,14 +134,14 @@ endpoints:
         | `vector.dev-site.db-export-completed` | Database export completed successfully |
         | `vector.dev-site.db-export-failed` | Database export failed |
 
-        ### SSH Key Events
+        ##### SSH Key Events
 
         | Event | Description |
         |-------|-------------|
         | `vector.ssh-key.created` | SSH key has been created |
         | `vector.ssh-key.deleted` | SSH key has been deleted |
 
-        ### Environment Events
+        ##### Environment Events
 
         | Event | Description |
         |-------|-------------|
@@ -152,7 +152,7 @@ endpoints:
         | `vector.environment.unsuspended` | Environment has been unsuspended |
         | `vector.environment.database-password-reset` | Database password has been reset |
 
-        ### Deployment Events
+        ##### Deployment Events
 
         | Event | Description |
         |-------|-------------|
@@ -160,7 +160,7 @@ endpoints:
         | `vector.deployment.completed` | Deployment completed successfully |
         | `vector.deployment.failed` | Deployment failed |
 
-        ### CDN Events
+        ##### CDN Events
 
         | Event | Description |
         |-------|-------------|
@@ -168,14 +168,14 @@ endpoints:
         | `vector.cdn.setup-completed` | CDN setup completed successfully |
         | `vector.cdn.setup-failed` | CDN setup failed |
 
-        ### DNS Events
+        ##### DNS Events
 
         | Event | Description |
         |-------|-------------|
         | `vector.dns.record-created` | DNS record has been created |
         | `vector.dns.record-deleted` | DNS record has been deleted |
 
-        ### Webhook Events
+        ##### Webhook Events
 
         | Event | Description |
         |-------|-------------|

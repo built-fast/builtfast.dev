@@ -9,7 +9,7 @@ description: |-
   container provisioning completes. Each environment gets a unique subdomain under
   your registered domain.
 
-  ## Environment Status Lifecycle
+  #### Environment Status Lifecycle
 
   - `pending` - Environment creation initiated, provisioning in progress
   - `active` - Environment is fully operational
@@ -17,7 +17,7 @@ description: |-
   - `terminating` - Environment deletion in progress
   - `terminated` - Environment has been fully removed
 
-  ## Production Environment
+  #### Production Environment
 
   Each site can have at most one production environment (`is_production: true`).
   The production environment receives CDN integration via Bunny.net.
@@ -40,7 +40,7 @@ endpoints:
         container provisioning completes. Each environment gets a unique subdomain under
         your registered domain.
 
-        ## Environment Status Lifecycle
+        #### Environment Status Lifecycle
 
         - `pending` - Environment creation initiated, provisioning in progress
         - `active` - Environment is fully operational
@@ -48,7 +48,7 @@ endpoints:
         - `terminating` - Environment deletion in progress
         - `terminated` - Environment has been fully removed
 
-        ## Production Environment
+        #### Production Environment
 
         Each site can have at most one production environment (`is_production: true`).
         The production environment receives CDN integration via Bunny.net.
@@ -182,7 +182,7 @@ endpoints:
         container provisioning completes. Each environment gets a unique subdomain under
         your registered domain.
 
-        ## Environment Status Lifecycle
+        #### Environment Status Lifecycle
 
         - `pending` - Environment creation initiated, provisioning in progress
         - `active` - Environment is fully operational
@@ -190,7 +190,7 @@ endpoints:
         - `terminating` - Environment deletion in progress
         - `terminated` - Environment has been fully removed
 
-        ## Production Environment
+        #### Production Environment
 
         Each site can have at most one production environment (`is_production: true`).
         The production environment receives CDN integration via Bunny.net.
@@ -308,7 +308,7 @@ endpoints:
         container provisioning completes. Each environment gets a unique subdomain under
         your registered domain.
 
-        ## Environment Status Lifecycle
+        #### Environment Status Lifecycle
 
         - `pending` - Environment creation initiated, provisioning in progress
         - `active` - Environment is fully operational
@@ -316,7 +316,7 @@ endpoints:
         - `terminating` - Environment deletion in progress
         - `terminated` - Environment has been fully removed
 
-        ## Production Environment
+        #### Production Environment
 
         Each site can have at most one production environment (`is_production: true`).
         The production environment receives CDN integration via Bunny.net.
@@ -506,7 +506,7 @@ endpoints:
         container provisioning completes. Each environment gets a unique subdomain under
         your registered domain.
 
-        ## Environment Status Lifecycle
+        #### Environment Status Lifecycle
 
         - `pending` - Environment creation initiated, provisioning in progress
         - `active` - Environment is fully operational
@@ -514,7 +514,7 @@ endpoints:
         - `terminating` - Environment deletion in progress
         - `terminated` - Environment has been fully removed
 
-        ## Production Environment
+        #### Production Environment
 
         Each site can have at most one production environment (`is_production: true`).
         The production environment receives CDN integration via Bunny.net.
@@ -696,7 +696,7 @@ endpoints:
         container provisioning completes. Each environment gets a unique subdomain under
         your registered domain.
 
-        ## Environment Status Lifecycle
+        #### Environment Status Lifecycle
 
         - `pending` - Environment creation initiated, provisioning in progress
         - `active` - Environment is fully operational
@@ -704,7 +704,7 @@ endpoints:
         - `terminating` - Environment deletion in progress
         - `terminated` - Environment has been fully removed
 
-        ## Production Environment
+        #### Production Environment
 
         Each site can have at most one production environment (`is_production: true`).
         The production environment receives CDN integration via Bunny.net.

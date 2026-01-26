@@ -6,7 +6,7 @@ description: |-
 
   Supports both HTTP webhooks and Slack webhooks for notifications.
 
-  ## Webhook Signature Verification
+  #### Webhook Signature Verification
 
   HTTP webhook payloads include an `X-Vector-Signature` header for verifying
   authenticity. The header format is:
@@ -58,7 +58,7 @@ endpoints:
 
         Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        ## Webhook Signature Verification
+        #### Webhook Signature Verification
 
         HTTP webhook payloads include an `X-Vector-Signature` header for verifying
         authenticity. The header format is:
@@ -197,7 +197,7 @@ endpoints:
 
         Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        ## Webhook Signature Verification
+        #### Webhook Signature Verification
 
         HTTP webhook payloads include an `X-Vector-Signature` header for verifying
         authenticity. The header format is:
@@ -452,7 +452,7 @@ endpoints:
 
         Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        ## Webhook Signature Verification
+        #### Webhook Signature Verification
 
         HTTP webhook payloads include an `X-Vector-Signature` header for verifying
         authenticity. The header format is:
@@ -651,7 +651,7 @@ endpoints:
 
         Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        ## Webhook Signature Verification
+        #### Webhook Signature Verification
 
         HTTP webhook payloads include an `X-Vector-Signature` header for verifying
         authenticity. The header format is:
@@ -834,7 +834,7 @@ endpoints:
 
         Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        ## Webhook Signature Verification
+        #### Webhook Signature Verification
 
         HTTP webhook payloads include an `X-Vector-Signature` header for verifying
         authenticity. The header format is:

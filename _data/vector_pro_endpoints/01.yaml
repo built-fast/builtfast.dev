@@ -8,7 +8,7 @@ description: |-
   Sites are created with a `pending` status and transition to `active` once provisioning
   completes. You can suspend sites to reduce costs during low-traffic periods.
 
-  ## Site Status Lifecycle
+  #### Site Status Lifecycle
 
   - `pending` - Site creation initiated, provisioning in progress
   - `active` - Site is fully operational and serving traffic
@@ -33,7 +33,7 @@ endpoints:
         Sites are created with a `pending` status and transition to `active` once provisioning
         completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        ## Site Status Lifecycle
+        #### Site Status Lifecycle
 
         - `pending` - Site creation initiated, provisioning in progress
         - `active` - Site is fully operational and serving traffic
@@ -158,7 +158,7 @@ endpoints:
         Sites are created with a `pending` status and transition to `active` once provisioning
         completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        ## Site Status Lifecycle
+        #### Site Status Lifecycle
 
         - `pending` - Site creation initiated, provisioning in progress
         - `active` - Site is fully operational and serving traffic
@@ -271,7 +271,7 @@ endpoints:
         Sites are created with a `pending` status and transition to `active` once provisioning
         completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        ## Site Status Lifecycle
+        #### Site Status Lifecycle
 
         - `pending` - Site creation initiated, provisioning in progress
         - `active` - Site is fully operational and serving traffic
@@ -314,7 +314,7 @@ endpoints:
         name: dev_php_version
         description: ''
         required: true
-        example: '7.3'
+        example: '7.2'
         type: string
         enumValues:
           - '7.2'
@@ -344,7 +344,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       partner_customer_id: cust_12345
-      dev_php_version: '7.3'
+      dev_php_version: '7.2'
       tags:
         - wordpress
         - production
@@ -440,7 +440,7 @@ endpoints:
         Sites are created with a `pending` status and transition to `active` once provisioning
         completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        ## Site Status Lifecycle
+        #### Site Status Lifecycle
 
         - `pending` - Site creation initiated, provisioning in progress
         - `active` - Site is fully operational and serving traffic
@@ -581,7 +581,7 @@ endpoints:
         Sites are created with a `pending` status and transition to `active` once provisioning
         completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        ## Site Status Lifecycle
+        #### Site Status Lifecycle
 
         - `pending` - Site creation initiated, provisioning in progress
         - `active` - Site is fully operational and serving traffic
