@@ -1,81 +1,37 @@
-name: Deployments
+name: Account
 description: |-
 
-  Manage code deployments to environments. Each deployment represents a release of
-  your WordPress site to a specific environment (staging or production).
-
-  Deployments are created with a `pending` status and progress through `deploying`
-  to either `deployed` (success) or `failed`. Each deployment records the actor
-  who initiated it and timing information.
-
-  #### Deployment Status Lifecycle
-
-  - `pending` - Deployment created, waiting to start
-  - `deploying` - Deployment in progress
-  - `deployed` - Deployment completed successfully
-  - `failed` - Deployment failed (check stdout/stderr for details)
+  Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    uri: api/v1/vector/ssh-keys
     metadata:
       custom: []
-      groupName: Deployments
-      groupDescription: |-
+      groupName: Account
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage account-level default SSH keys. These keys serve as templates that are
+        automatically installed on new dev sites when they are created.
 
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
-
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'List Deployments'
+        **Important**: Changes to account-level keys do not affect existing sites.
+        To add or remove keys from an existing site, use the site-specific SSH key
+        endpoints instead.
+      title: 'List SSH Keys'
       description: |-
-        Retrieves a paginated list of all deployments for a specific environment,
-        ordered by most recent first.
+        Retrieves a paginated list of account-level default SSH keys. These are
+        template keys that will be installed on new dev sites.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters:
       per_page:
         custom: []
@@ -113,34 +69,20 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                      "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "status": "deployed",
-                      "stdout": "Deployment output...",
-                      "stderr": null,
-                      "actor": "john@example.com",
-                      "environment": {
-                          "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                          "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                          "partner_customer_id": "cust_123456",
-                          "name": "production",
-                          "is_production": true,
-                          "status": "active",
-                          "php_version": "8.3",
-                          "tags": ["wordpress"],
-                          "fqdn": "example.com",
-                          "custom_domain": "example.com",
-                          "subdomain": "wispy-dust",
-                          "created_at": "2025-05-20T09:00:00+00:00",
-                          "updated_at": "2025-05-27T09:55:30+00:00"
-                      },
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "account_id": 1,
+                      "vector_site_id": null,
+                      "name": "deploy key",
+                      "fingerprint": "SHA256:abc123def456...",
+                      "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                      "is_account_default": true,
+                      "created_at": "2026-01-15T10:00:00+00:00",
+                      "updated_at": "2026-01-15T10:00:00+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "Deployments retrieved successfully",
+              "message": "SSH keys retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -157,12 +99,6 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Environment Not Found'
     responseFields: []
     auth:
       - headers
@@ -175,29 +111,21 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments/{deployment}'
+    uri: 'api/v1/vector/ssh-keys/{key}'
     metadata:
       custom: []
-      groupName: Deployments
-      groupDescription: |-
+      groupName: Account
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage account-level default SSH keys. These keys serve as templates that are
+        automatically installed on new dev sites when they are created.
 
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
-
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get Deployment'
-      description: 'Retrieves details of a specific deployment including output logs and actor information.'
+        **Important**: Changes to account-level keys do not affect existing sites.
+        To add or remove keys from an existing site, use the site-specific SSH key
+        endpoints instead.
+      title: 'Get SSH Key'
+      description: 'Retrieves details of a specific account-level SSH key.'
       authenticated: true
       deprecated: false
     headers:
@@ -205,43 +133,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
+      key:
         custom: []
-        name: site
-        description: 'The site ID.'
+        name: key
+        description: 'The SSH key ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      deployment:
-        custom: []
-        name: deployment
-        description: 'The deployment ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
+      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -254,31 +158,17 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "deployed",
-                  "stdout": "Building project...\nUploading assets...\nDeployment complete.",
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
-                      "name": "production",
-                      "is_production": true,
-                      "status": "active",
-                      "php_version": "8.3",
-                      "tags": ["wordpress"],
-                      "fqdn": "example.com",
-                      "custom_domain": "example.com",
-                      "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
-                  },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:30+00:00"
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "vector_site_id": null,
+                  "name": "deploy key",
+                  "fingerprint": "SHA256:abc123def456...",
+                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                  "is_account_default": true,
+                  "created_at": "2026-01-15T10:00:00+00:00",
+                  "updated_at": "2026-01-15T10:00:00+00:00"
               },
-              "message": "Deployment retrieved successfully",
+              "message": "SSH key retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -298,7 +188,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Deployment not found", "http_status": 404}'
+        content: '{"data": {}, "message": "SSH key not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -313,70 +203,62 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    uri: api/v1/vector/ssh-keys
     metadata:
       custom: []
-      groupName: Deployments
-      groupDescription: |-
+      groupName: Account
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage account-level default SSH keys. These keys serve as templates that are
+        automatically installed on new dev sites when they are created.
 
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
-
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create Deployment'
+        **Important**: Changes to account-level keys do not affect existing sites.
+        To add or remove keys from an existing site, use the site-specific SSH key
+        endpoints instead.
+      title: 'Create SSH Key'
       description: |-
-        Triggers a new deployment for the environment. The deployment starts with
-        `pending` status and progresses through `deploying` to either `deployed`
-        or `failed`.
+        Creates a new account-level default SSH key. This key will be automatically
+        installed on any new dev sites created after this point.
 
-        The authenticated user is recorded as the deployment actor.
+        **Note**: This does not affect existing sites. To add a key to an existing
+        site, use the site-specific SSH key endpoint.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'A friendly name for the SSH key.'
+        required: true
+        example: 'deploy key'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      public_key:
+        custom: []
+        name: public_key
+        description: 'The SSH public key in OpenSSH format.'
+        required: true
+        example: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'deploy key'
+      public_key: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
     fileParameters: []
     responses:
       -
@@ -385,35 +267,133 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "pending",
-                  "stdout": null,
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
-                      "name": "production",
-                      "is_production": true,
-                      "status": "active",
-                      "php_version": "8.3",
-                      "tags": ["wordpress"],
-                      "fqdn": "example.com",
-                      "custom_domain": "example.com",
-                      "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
-                  },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "vector_site_id": null,
+                  "name": "deploy key",
+                  "fingerprint": "SHA256:abc123def456...",
+                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                  "is_account_default": true,
+                  "created_at": "2026-01-15T10:00:00+00:00",
+                  "updated_at": "2026-01-15T10:00:00+00:00"
               },
-              "message": "Deployment initiated",
+              "message": "SSH key created successfully",
               "http_status": 201
           }
         headers: []
-        description: Created
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"public_key": ["Unable to parse SSH public key. Ensure it is in valid OpenSSH format."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Invalid Key'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"public_key": ["An SSH key with this fingerprint already exists for this account."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Duplicate Key'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/ssh-keys/{key}'
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage account-level default SSH keys. These keys serve as templates that are
+        automatically installed on new dev sites when they are created.
+
+        **Important**: Changes to account-level keys do not affect existing sites.
+        To add or remove keys from an existing site, use the site-specific SSH key
+        endpoints instead.
+      title: 'Delete SSH Key'
+      description: |-
+        Deletes an account-level default SSH key. This does not remove the key
+        from any existing sites where it has already been installed.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The SSH key ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "vector_site_id": null,
+                  "name": "deploy key",
+                  "fingerprint": "SHA256:abc123def456...",
+                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                  "is_account_default": true,
+                  "created_at": "2026-01-15T10:00:00+00:00",
+                  "updated_at": "2026-01-15T10:00:00+00:00"
+              },
+              "message": "SSH key deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
       -
         custom: []
         status: 401
@@ -429,9 +409,317 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        content: '{"data": {}, "message": "SSH key not found", "http_status": 404}'
         headers: []
-        description: 'Environment Not Found'
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/vector/api-keys
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: |-
+
+        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
+      subgroup: 'API Keys'
+      subgroupDescription: |-
+        Manage API access tokens for authentication. Tokens provide Bearer token
+        authentication for all API requests.
+
+        The plain text token is returned only once when created - store it securely
+        as it cannot be retrieved again. Tokens can be revoked at any time.
+
+        #### Usage
+
+        Include the token in the `Authorization` header:
+
+        ```
+        Authorization: Bearer {your-api-token}
+        ```
+      title: 'List API Keys'
+      description: |-
+        Retrieves a paginated list of API keys for the authenticated user.
+        Token values are never returned - only metadata like name, creation date,
+        and last used timestamp.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": 1,
+                      "name": "Production API Key",
+                      "last_used_at": "2025-05-27T10:30:00+00:00",
+                      "expires_at": null,
+                      "created_at": "2025-05-27T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "API keys retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/vector/global-secrets
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage account-level secrets that are available to all sites within your account.
+        These secrets are injected as environment variables during site deployment.
+
+        Global secrets apply to all environments across all sites in your account. For
+        environment-specific secrets, use the Environment Secrets API instead.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      title: 'List Secrets'
+      description: |-
+        Retrieves a paginated list of all global secrets for your account.
+        Secret values are not included in the response for security.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "key": "STRIPE_SECRET_KEY",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Global secrets retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/global-secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage account-level secrets that are available to all sites within your account.
+        These secrets are injected as environment variables during site deployment.
+
+        Global secrets apply to all environments across all sites in your account. For
+        environment-specific secrets, use the Environment Secrets API instead.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      title: 'Get Secret'
+      description: |-
+        Retrieves details of a specific global secret.
+        The secret value is not included in the response for security.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      accountSecret:
+        custom: []
+        name: accountSecret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      secret: architecto
+      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Global secret retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -444,69 +732,95 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/rollback'
+    uri: api/v1/vector/api-keys
     metadata:
       custom: []
-      groupName: Deployments
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Rollback Deployment'
-      description: |-
-        Triggers a rollback for the environment. By default, rolls back to the last
-        successful deployment. Optionally, you can specify a target_deployment_id to
-        rollback to a specific previous deployment.
+      groupName: Account
+      groupDescription: |-
 
-        The rollback creates a new deployment record with `pending` status that progresses
-        through `running` to either `completed` or `failed`.
+        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
+      subgroup: 'API Keys'
+      subgroupDescription: |-
+        Manage API access tokens for authentication. Tokens provide Bearer token
+        authentication for all API requests.
+
+        The plain text token is returned only once when created - store it securely
+        as it cannot be retrieved again. Tokens can be revoked at any time.
+
+        #### Usage
+
+        Include the token in the `Authorization` header:
+
+        ```
+        Authorization: Bearer {your-api-token}
+        ```
+      title: 'Create API Key'
+      description: |-
+        Creates a new API key for the authenticated user. The plain text token is
+        returned ONLY in this response - store it securely as it cannot be
+        retrieved again.
+
+        Use this token in the `Authorization` header for all API requests.
+
+        Token names are automatically prefixed with `vector-` for identification.
+
+        #### Abilities
+
+        Abilities control what operations the token can perform. Available abilities:
+
+        - `*` - Full access (default)
+        - `vector:mcp` - Full MCP access (for AI assistants like Claude)
+        - `vector:sites:read` - Read sites, environments, deployments, database operations
+        - `vector:sites:write` - Manage sites, environments, deployments, database import/export
+        - `vector:logs:read` - Read site logs
+        - `vector:cdn:read` - Read CDN settings
+        - `vector:cdn:write` - Manage CDN settings and cache
+        - `vector:webhooks:read` - Read webhooks
+        - `vector:webhooks:write` - Manage webhooks
+        - `vector:secrets:read` - Read API keys and global secrets
+        - `vector:secrets:write` - Manage API keys and global secrets
+        - `vector:ssh-keys:read` - Read SSH keys
+        - `vector:ssh-keys:write` - Manage SSH keys
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      target_deployment_id:
+      name:
         custom: []
-        name: target_deployment_id
-        description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
-        required: false
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        name: name
+        description: 'A descriptive name for this API key.'
+        required: true
+        example: 'Production API Key'
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
+        deprecated: false
+      abilities:
+        custom: []
+        name: abilities
+        description: 'Optional array of abilities. Defaults to ["*"] for full access.'
+        required: false
+        example:
+          - 'vector:sites:read'
+          - 'vector:sites:write'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
         deprecated: false
     cleanBodyParameters:
-      target_deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+      name: 'Production API Key'
+      abilities:
+        - 'vector:sites:read'
+        - 'vector:sites:write'
     fileParameters: []
     responses:
       -
@@ -515,17 +829,231 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "pending",
-                  "stdout": null,
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {"id": "01JFGXK4NQRST5VWX9YZ0ABCDG", "name": "production", "is_production": true},
+                  "id": 1,
+                  "name": "vector-Production API Key",
+                  "token": "1|a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
+                  "abilities": ["*"],
+                  "expires_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "API key created successfully. Store this token securely - it will not be shown again.",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["The name field is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/api-keys/{token}'
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: |-
+
+        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
+      subgroup: 'API Keys'
+      subgroupDescription: |-
+        Manage API access tokens for authentication. Tokens provide Bearer token
+        authentication for all API requests.
+
+        The plain text token is returned only once when created - store it securely
+        as it cannot be retrieved again. Tokens can be revoked at any time.
+
+        #### Usage
+
+        Include the token in the `Authorization` header:
+
+        ```
+        Authorization: Bearer {your-api-token}
+        ```
+      title: 'Delete API Key'
+      description: |-
+        Deletes an API key. You cannot delete the token currently being used
+        for authentication. This operation is irreversible.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      token:
+        custom: []
+        name: token
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      tokenId:
+        custom: []
+        name: tokenId
+        description: 'The API key ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      token: architecto
+      tokenId: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 1,
+                  "name": "Production API Key",
+                  "last_used_at": "2025-05-27T10:30:00+00:00",
+                  "expires_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "API key deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Cannot delete the token currently in use", "http_status": 403}'
+        headers: []
+        description: 'Cannot Delete Current Token'
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "API key not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/vector/global-secrets
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage account-level secrets that are available to all sites within your account.
+        These secrets are injected as environment variables during site deployment.
+
+        Global secrets apply to all environments across all sites in your account. For
+        environment-specific secrets, use the Environment Secrets API instead.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      title: 'Create Secret'
+      description: |-
+        Creates a new global secret for your account. The secret will be available
+        to all sites within your account during deployment.
+
+        The following keys are reserved and cannot be used:
+        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: true
+        example: STRIPE_SECRET_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The secret value.'
+        required: true
+        example: sk_live_xxxx
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_SECRET_KEY
+      value: sk_live_xxxx
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Rollback initiated",
+              "message": "Global secret created successfully",
               "http_status": 201
           }
         headers: []
@@ -544,16 +1072,258 @@ endpoints:
         description: Unauthorized
       -
         custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"key": ["The secret key is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
         headers: []
-        description: 'Environment Not Found'
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/global-secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage account-level secrets that are available to all sites within your account.
+        These secrets are injected as environment variables during site deployment.
+
+        Global secrets apply to all environments across all sites in your account. For
+        environment-specific secrets, use the Environment Secrets API instead.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      title: 'Update Secret'
+      description: |-
+        Updates an existing global secret. You can update the key, value, or both.
+
+        The following keys are reserved and cannot be used:
+        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      accountSecret:
+        custom: []
+        name: accountSecret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      secret: architecto
+      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: false
+        example: STRIPE_API_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The new secret value.'
+        required: false
+        example: sk_live_yyyy
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_API_KEY
+      value: sk_live_yyyy
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_API_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Global secret updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
       -
         custom: []
         status: 422
-        content: '{"data": {}, "errors": {"target_deployment_id": ["The specified deployment does not exist for this environment or has no Ymir deployment ID."]}, "message": "Validation failed", "http_status": 422}'
+        content: |-
+          {
+              "data": {},
+              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
         headers: []
         description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/global-secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage account-level secrets that are available to all sites within your account.
+        These secrets are injected as environment variables during site deployment.
+
+        Global secrets apply to all environments across all sites in your account. For
+        environment-specific secrets, use the Environment Secrets API instead.
+
+        Secret values are never returned in API responses for security. Certain keys
+        are reserved for system use and cannot be used.
+      title: 'Delete Secret'
+      description: 'Deletes a global secret from your account.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      accountSecret:
+        custom: []
+        name: accountSecret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      secret: architecto
+      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "key": "STRIPE_SECRET_KEY",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Global secret deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers

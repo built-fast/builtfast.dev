@@ -1,74 +1,120 @@
-name: 'Environment Secrets'
+name: Webhooks
 description: |-
 
-  Manage environment-level secrets for a specific environment. These secrets are
-  injected as environment variables during site deployment and are scoped to
-  a single environment.
+  Manage webhooks that receive site event notifications. Webhooks are called when
+  events occur on your sites (deployments, status changes, etc.).
 
-  Secret values are never returned in API responses for security. Certain keys
-  are reserved for system use and cannot be used.
+  Supports both HTTP webhooks and Slack webhooks for notifications.
+
+  #### Webhook Signature Verification
+
+  HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+  authenticity. The header format is:
+
+  ```
+  X-Vector-Signature: t=1234567890,v1=abc123...
+  ```
+
+  To verify a webhook:
+
+  1. Parse the timestamp (`t`) and signature (`v1`) from the header
+  2. Construct the signed message: `{timestamp}.{raw_request_body}`
+  3. Compute HMAC-SHA256 using your webhook secret as the key
+  4. Compare with the provided signature using constant-time comparison
+  5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+  Example verification (PHP):
+
+  ```php
+  $header = $request->header('X-Vector-Signature');
+  preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+  $timestamp = $matches[1];
+  $signature = $matches[2];
+
+  $message = $timestamp . '.' . $request->getContent();
+  $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+  if (!hash_equals($expected, $signature)) {
+      throw new Exception('Invalid signature');
+  }
+
+  if (abs(time() - (int)$timestamp) > 300) {
+      throw new Exception('Timestamp too old');
+  }
+  ```
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    uri: api/v1/vector/webhooks
     metadata:
       custom: []
-      groupName: 'Environment Secrets'
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Environment Secrets'
+      title: 'List Webhooks'
       description: |-
-        Retrieves a paginated list of all secrets for a specific environment.
-        Secret values are not included in the response for security.
+        Retrieves a paginated list of all webhooks for the authenticated account.
+        Webhook secrets are never included in list responses.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters:
       per_page:
         custom: []
         name: per_page
         description: 'Number of items per page (max 100). Default: 15.'
         required: false
-        example: 10
+        example: 25
         type: integer
         enumValues: []
         exampleWasSpecified: true
@@ -77,7 +123,7 @@ endpoints:
       page:
         custom: []
         name: page
-        description: 'Page number for pagination.'
+        description: 'Page number for pagination. Default: 1.'
         required: false
         example: 1
         type: integer
@@ -86,7 +132,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      per_page: 10
+      per_page: 25
       page: 1
     bodyParameters: []
     cleanBodyParameters: []
@@ -99,15 +145,142 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "key": "STRIPE_SECRET_KEY",
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "account_id": 1,
+                      "type": "http",
+                      "url": "https://example.com/webhook",
+                      "events": ["vector.site.created", "vector.deployment.completed"],
+                      "enabled": true,
                       "created_at": "2025-05-27T09:50:21+00:00",
                       "updated_at": "2025-05-27T09:50:21+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "Environment secrets retrieved successfully",
+              "message": "Webhooks retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/webhooks/{webhook}'
+    metadata:
+      custom: []
+      groupName: Webhooks
+      groupDescription: |-
+
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
+
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Webhook'
+      description: |-
+        Retrieves details of a specific webhook. The secret is never included
+        in this response - use the rotate-secret endpoint if you need a new secret.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      webhook:
+        custom: []
+        name: webhook
+        description: 'The webhook ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created", "vector.deployment.completed"],
+                  "enabled": true,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Webhook retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -127,7 +300,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -142,24 +315,20 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/webhooks/{webhook}/logs'
     metadata:
       custom: []
-      groupName: 'Environment Secrets'
-      groupDescription: |-
-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
-
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+      groupName: Webhooks
+      groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get Environment Secret'
+      title: 'List Logs'
       description: |-
-        Retrieves details of a specific environment secret.
-        The secret value is not included in the response for security.
+        Retrieves a paginated list of delivery logs for a specific webhook.
+        Logs are returned in reverse chronological order (newest first).
+
+        Each log entry includes the event type, request payload, response details,
+        and latency information. Logs are automatically pruned after 90 days.
       authenticated: true
       deprecated: false
     headers:
@@ -167,45 +336,45 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
+      webhook:
         custom: []
-        name: site
-        description: 'The site ID.'
+        name: webhook
+        description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
-    queryParameters: []
-    cleanQueryParameters: []
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -215,13 +384,24 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Environment secret retrieved successfully",
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                      "vector_webhook_delivery_id": "01JFGXK4NQRST5VWX9YZ0ABCDK",
+                      "vector_webhook_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "event": "vector.site.created",
+                      "request_body": {"event": "vector.site.created", "data": {}},
+                      "attempt": 1,
+                      "response_status": 200,
+                      "response_body": "{\"success\": true}",
+                      "response_headers": {"content-type": "application/json"},
+                      "latency_ms": 150,
+                      "created_at": "2025-05-27T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Webhook logs retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -241,9 +421,9 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
-        description: 'Not Found'
+        description: 'Webhook Not Found'
     responseFields: []
     auth:
       - headers
@@ -256,132 +436,126 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    uri: api/v1/vector/webhooks
     metadata:
       custom: []
-      groupName: 'Environment Secrets'
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create Environment Secret'
+      title: 'Create Webhook'
       description: |-
-        Creates a new secret for a specific environment. The secret will be available
-        to this environment during deployment.
+        Creates a new webhook for the current account. For HTTP webhooks, the secret
+        is returned ONLY in this response - store it securely as it cannot be
+        retrieved again (only rotated via the rotate-secret endpoint).
 
-        The following keys are reserved and cannot be used:
-
-        - AUTH_KEY
-        - SECURE_AUTH_KEY
-        - LOGGED_IN_KEY
-        - NONCE_KEY
-        - AUTH_SALT
-        - SECURE_AUTH_SALT
-        - LOGGED_IN_SALT
-        - NONCE_SALT
-        - AUTOMATIC_UPDATER_DISABLED
-        - DISABLE_WP_CRON
-        - DISALLOW_FILE_EDIT
-        - DISALLOW_FILE_MODS
-        - DOMAIN_CURRENT_SITE
-        - WP_HOME
-        - WP_SITEURL
-        - YMIR_ASSETS_PATH
-        - YMIR_ASSETS_URL
-        - YMIR_CACHE_PREFIX
-        - YMIR_CACHE_TABLE
-        - YMIR_CDN_IMAGE_PROCESSING_ENABLED
-        - YMIR_DISTRIBUTION_ID
-        - YMIR_DOMAIN_NAMES
-        - YMIR_ENVIRONMENT
-        - YMIR_MAX_EXECUTION_TIME
-        - YMIR_PRIMARY_DOMAIN_NAME
-        - YMIR_PROJECT_TYPE
-        - YMIR_PUBLIC_STORE
-        - YMIR_REDIS_ENDPOINT
-        - YMIR_SECRETS_PATH
-        - YMIR_UPLOAD_URL
-        - _HANDLER
-        - AWS_ACCESS_KEY_ID
-        - AWS_EXECUTION_ENV
-        - AWS_LAMBDA_FUNCTION_MEMORY_SIZE
-        - AWS_LAMBDA_FUNCTION_NAME
-        - AWS_LAMBDA_FUNCTION_VERSION
-        - AWS_LAMBDA_LOG_GROUP_NAME
-        - AWS_LAMBDA_LOG_STREAM_NAME
-        - AWS_LAMBDA_RUNTIME_API
-        - AWS_REGION
-        - AWS_SECRET_ACCESS_KEY
-        - AWS_SESSION_TOKEN
-        - LAMBDA_RUNTIME_DIR
-        - LAMBDA_TASK_ROOT
-        - TZ
+        Slack webhooks do not require secrets as they use URL-based authentication.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      key:
+      type:
         custom: []
-        name: key
-        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
-        required: true
-        example: STRIPE_SECRET_KEY
+        name: type
+        description: 'The webhook type. Options: `http`, `slack`. Default: http.'
+        required: false
+        example: http
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      value:
+      url:
         custom: []
-        name: value
-        description: 'The secret value.'
+        name: url
+        description: 'The webhook URL. For HTTP: must use HTTPS. For Slack: must be a Slack webhook URL.'
         required: true
-        example: sk_live_xxxx
+        example: 'https://example.com/webhook'
         type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      events:
+        custom: []
+        name: events
+        description: 'Array of events to subscribe to. See available events below.'
+        required: true
+        example:
+          - vector.site.created
+          - vector.deployment.completed
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the webhook is enabled. Default: true.'
+        required: false
+        example: true
+        type: boolean
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      key: STRIPE_SECRET_KEY
-      value: sk_live_xxxx
+      type: http
+      url: 'https://example.com/webhook'
+      events:
+        - vector.site.created
+        - vector.deployment.completed
+      enabled: true
     fileParameters: []
     responses:
       -
@@ -390,16 +564,41 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created", "vector.deployment.completed"],
+                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
+                  "enabled": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Environment secret created successfully",
+              "message": "Webhook created successfully. Store the secret securely - it will not be shown again.",
               "http_status": 201
           }
         headers: []
-        description: Created
+        description: 'HTTP Webhook Created'
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "slack",
+                  "url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
+                  "events": ["vector.deployment.completed", "vector.deployment.failed"],
+                  "enabled": true,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Slack webhook created successfully.",
+              "http_status": 201
+          }
+        headers: []
+        description: 'Slack Webhook Created'
       -
         custom: []
         status: 401
@@ -414,17 +613,11 @@ endpoints:
         description: Unauthorized
       -
         custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
         status: 422
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key is required."]},
+              "errors": {"events": ["At least one event must be specified."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -442,71 +635,61 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/webhooks/{webhook}'
     metadata:
       custom: []
-      groupName: 'Environment Secrets'
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update Environment Secret'
+      title: 'Update Webhook'
       description: |-
-        Updates an existing environment secret. You can update the key, value, or both.
+        Updates an existing webhook configuration. The secret cannot be updated
+        through this endpoint - use the rotate-secret endpoint instead.
 
-        The following keys are reserved and cannot be used:
-
-        - AUTH_KEY
-        - SECURE_AUTH_KEY
-        - LOGGED_IN_KEY
-        - NONCE_KEY
-        - AUTH_SALT
-        - SECURE_AUTH_SALT
-        - LOGGED_IN_SALT
-        - NONCE_SALT
-        - AUTOMATIC_UPDATER_DISABLED
-        - DISABLE_WP_CRON
-        - DISALLOW_FILE_EDIT
-        - DISALLOW_FILE_MODS
-        - DOMAIN_CURRENT_SITE
-        - WP_HOME
-        - WP_SITEURL
-        - YMIR_ASSETS_PATH
-        - YMIR_ASSETS_URL
-        - YMIR_CACHE_PREFIX
-        - YMIR_CACHE_TABLE
-        - YMIR_CDN_IMAGE_PROCESSING_ENABLED
-        - YMIR_DISTRIBUTION_ID
-        - YMIR_DOMAIN_NAMES
-        - YMIR_ENVIRONMENT
-        - YMIR_MAX_EXECUTION_TIME
-        - YMIR_PRIMARY_DOMAIN_NAME
-        - YMIR_PROJECT_TYPE
-        - YMIR_PUBLIC_STORE
-        - YMIR_REDIS_ENDPOINT
-        - YMIR_SECRETS_PATH
-        - YMIR_UPLOAD_URL
-        - _HANDLER
-        - AWS_ACCESS_KEY_ID
-        - AWS_EXECUTION_ENV
-        - AWS_LAMBDA_FUNCTION_MEMORY_SIZE
-        - AWS_LAMBDA_FUNCTION_NAME
-        - AWS_LAMBDA_FUNCTION_VERSION
-        - AWS_LAMBDA_LOG_GROUP_NAME
-        - AWS_LAMBDA_LOG_STREAM_NAME
-        - AWS_LAMBDA_RUNTIME_API
-        - AWS_REGION
-        - AWS_SECRET_ACCESS_KEY
-        - AWS_SESSION_TOKEN
-        - LAMBDA_RUNTIME_DIR
-        - LAMBDA_TASK_ROOT
-        - TZ
+        The webhook type cannot be changed after creation.
       authenticated: true
       deprecated: false
     headers:
@@ -514,71 +697,63 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
+      webhook:
         custom: []
-        name: site
-        description: 'The site ID.'
+        name: webhook
+        description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      key:
+      url:
         custom: []
-        name: key
-        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        name: url
+        description: 'The webhook URL. Must use HTTPS for HTTP webhooks.'
         required: false
-        example: STRIPE_API_KEY
+        example: 'https://example.com/new-webhook'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      value:
+      events:
         custom: []
-        name: value
-        description: 'The new secret value.'
+        name: events
+        description: 'Array of events to subscribe to.'
         required: false
-        example: sk_live_yyyy
-        type: string
+        example:
+          - vector.site.created
+          - vector.site.updated
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the webhook is enabled.'
+        required: false
+        example: false
+        type: boolean
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      key: STRIPE_API_KEY
-      value: sk_live_yyyy
+      url: 'https://example.com/new-webhook'
+      events:
+        - vector.site.created
+        - vector.site.updated
+      enabled: false
     fileParameters: []
     responses:
       -
@@ -587,12 +762,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_API_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/new-webhook",
+                  "events": ["vector.site.created", "vector.site.updated"],
+                  "enabled": false,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
-              "message": "Environment secret updated successfully",
+              "message": "Webhook updated successfully",
               "http_status": 200
           }
         headers: []
@@ -612,7 +791,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
       -
@@ -621,7 +800,7 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "errors": {"events": ["At least one event must be specified."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -639,22 +818,59 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/webhooks/{webhook}'
     metadata:
       custom: []
-      groupName: 'Environment Secrets'
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete Environment Secret'
-      description: 'Deletes an environment secret.'
+      title: 'Delete Webhook'
+      description: |-
+        Deletes a webhook. All associated delivery logs will also be deleted.
+        This operation is irreversible.
       authenticated: true
       deprecated: false
     headers:
@@ -662,43 +878,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
+      webhook:
         custom: []
-        name: site
-        description: 'The site ID.'
+        name: webhook
+        description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -711,12 +903,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created"],
+                  "enabled": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Environment secret deleted successfully",
+              "message": "Webhook deleted successfully",
               "http_status": 200
           }
         headers: []
@@ -736,7 +932,93 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/webhooks/{webhook}/rotate-secret'
+    metadata:
+      custom: []
+      groupName: Webhooks
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Rotate Secret'
+      description: |-
+        Generates a new secret for the webhook. The old secret is immediately
+        invalidated and any pending deliveries will use the new secret.
+
+        The new secret is returned ONLY in this response - store it securely
+        as it cannot be retrieved again.
+
+        This endpoint is only available for HTTP webhooks. Slack webhooks do not
+        use secrets.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      webhook:
+        custom: []
+        name: webhook
+        description: 'The webhook ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd"
+              },
+              "message": "Webhook secret rotated successfully. Store the new secret securely - it will not be shown again.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
