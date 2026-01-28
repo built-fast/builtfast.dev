@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "fbb77460-fda1-4872-8a3e-0c997ff26606",
+        "_postman_id": "cf7ff9ae-5034-4f17-9f1a-9b4de617f7ed",
         "description": "Vector Pro by BuiltFast",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -263,7 +263,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.3\",\"tags\":[\"wordpress\",\"production\"]}"
+                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.2\",\"tags\":[\"wordpress\",\"production\"]}"
                         },
                         "description": "Creates a new site for the authenticated account. The site is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nA development container is automatically provisioned for the site, accessible\nvia the `dev_domain` in the response."
                     },
@@ -3309,6 +3309,50 @@
             "description": "\nManage your Vector Pro account settings including API keys, SSH keys, and global secrets.",
             "item": [
                 {
+                    "name": "Get Account Summary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/account",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/account"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains, and\nsite\/environment counts grouped by status."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-west-2.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"mysite.com\", \"another.org\"],\n        \"sites\": {\n            \"total\": 5,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0,\n                \"termination_requested\": 0,\n                \"terminated\": 1,\n                \"canceled\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 8,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"terminating\": 0,\n                \"terminated\": 1,\n                \"failed\": 0\n            }\n        }\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        }
+                    ]
+                },
+                {
                     "name": "SSH Keys",
                     "description": "Manage account-level default SSH keys. These keys serve as templates that are\nautomatically installed on new dev sites when they are created.\n\n**Important**: Changes to account-level keys do not affect existing sites.\nTo add or remove keys from an existing site, use the site-specific SSH key\nendpoints instead.",
                     "item": [
@@ -4028,56 +4072,6 @@
                                     "name": "Not Found"
                                 }
                             ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Account Summary",
-            "description": "\nGet a quick summary of your Vector Pro account including owner details,\ncluster DNS endpoints, domains, and site\/environment counts by status.",
-            "item": [
-                {
-                    "name": "Get Account Summary",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/account",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/account"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains, and\nsite\/environment counts grouped by status."
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-west-2.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"mysite.com\", \"another.org\"],\n        \"sites\": {\n            \"total\": 5,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0,\n                \"termination_requested\": 0,\n                \"terminated\": 1,\n                \"canceled\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 8,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"terminating\": 0,\n                \"terminated\": 1,\n                \"failed\": 0\n            }\n        }\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
-                        },
-                        {
-                            "header": [],
-                            "code": 401,
-                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                            "name": "Unauthenticated"
-                        },
-                        {
-                            "header": [],
-                            "code": 403,
-                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                            "name": "Unauthorized"
                         }
                     ]
                 }
