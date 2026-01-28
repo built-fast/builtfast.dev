@@ -1,81 +1,59 @@
-name: Environments
+name: Sites
 description: |-
 
-  Manage deployment environments for sites. Each site can have multiple environments
-  with their own domains, PHP versions, and secrets. Environment names use a slug format
-  (lowercase letters, numbers, and hyphens).
+  Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+  the primary resource representing customer applications, each with associated
+  environments (staging/production), deployments, and CDN configurations.
 
-  Environments are created with a `pending` status and transition to `active` once
-  container provisioning completes. Each environment gets a unique subdomain under
-  your registered domain.
+  Sites are created with a `pending` status and transition to `active` once provisioning
+  completes. You can suspend sites to reduce costs during low-traffic periods.
 
-  #### Environment Status Lifecycle
+  #### Site Status Lifecycle
 
-  - `pending` - Environment creation initiated, provisioning in progress
-  - `active` - Environment is fully operational
-  - `suspended` - Environment is paused
-  - `terminating` - Environment deletion in progress
-  - `terminated` - Environment has been fully removed
-
-  #### Production Environment
-
-  Each site can have at most one production environment (`is_production: true`).
-  The production environment receives CDN integration via Bunny.net.
+  - `pending` - Site creation initiated, provisioning in progress
+  - `active` - Site is fully operational and serving traffic
+  - `suspended` - Site is paused to reduce costs (can be unsuspended)
+  - `terminating` - Site deletion in progress
+  - `terminated` - Site has been fully removed
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments'
+    uri: api/v1/vector/sites
     metadata:
       custom: []
-      groupName: Environments
+      groupName: Sites
       groupDescription: |-
 
-        Manage deployment environments for sites. Each site can have multiple environments
-        with their own domains, PHP versions, and secrets. Environment names use a slug format
-        (lowercase letters, numbers, and hyphens).
+        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        the primary resource representing customer applications, each with associated
+        environments (staging/production), deployments, and CDN configurations.
 
-        Environments are created with a `pending` status and transition to `active` once
-        container provisioning completes. Each environment gets a unique subdomain under
-        your registered domain.
+        Sites are created with a `pending` status and transition to `active` once provisioning
+        completes. You can suspend sites to reduce costs during low-traffic periods.
 
-        #### Environment Status Lifecycle
+        #### Site Status Lifecycle
 
-        - `pending` - Environment creation initiated, provisioning in progress
-        - `active` - Environment is fully operational
-        - `suspended` - Environment is paused
-        - `terminating` - Environment deletion in progress
-        - `terminated` - Environment has been fully removed
-
-        #### Production Environment
-
-        Each site can have at most one production environment (`is_production: true`).
-        The production environment receives CDN integration via Bunny.net.
+        - `pending` - Site creation initiated, provisioning in progress
+        - `active` - Site is fully operational and serving traffic
+        - `suspended` - Site is paused to reduce costs (can be unsuspended)
+        - `terminating` - Site deletion in progress
+        - `terminated` - Site has been fully removed
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Environments'
-      description: 'Retrieves a paginated list of all environments for a specific site.'
+      title: 'List Sites'
+      description: |-
+        Retrieves a paginated list of all sites for the authenticated account.
+        Results include each site's environments and their associated domains.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters:
       per_page:
         custom: []
@@ -101,273 +79,6 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       per_page: 25
-      page: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": [
-                  {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "customer-123",
-                      "name": "production",
-                      "is_production": true,
-                      "status": "active",
-                      "provisioning_step": "complete",
-                      "failure_reason": null,
-                      "php_version": "8.3",
-                      "tags": ["live", "primary"],
-                      "fqdn": "wispy-dust.vectorpages.com",
-                      "custom_domain": "ourshop.com",
-                      "custom_domain": "ourshop.com",
-                      "subdomain": "wispy-dust",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
-                  }
-              ],
-              "links": {},
-              "meta": {},
-              "message": "Environments retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
-        headers: []
-        description: 'Site Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: |-
-
-        Manage deployment environments for sites. Each site can have multiple environments
-        with their own domains, PHP versions, and secrets. Environment names use a slug format
-        (lowercase letters, numbers, and hyphens).
-
-        Environments are created with a `pending` status and transition to `active` once
-        container provisioning completes. Each environment gets a unique subdomain under
-        your registered domain.
-
-        #### Environment Status Lifecycle
-
-        - `pending` - Environment creation initiated, provisioning in progress
-        - `active` - Environment is fully operational
-        - `suspended` - Environment is paused
-        - `terminating` - Environment deletion in progress
-        - `terminated` - Environment has been fully removed
-
-        #### Production Environment
-
-        Each site can have at most one production environment (`is_production: true`).
-        The production environment receives CDN integration via Bunny.net.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get Environment'
-      description: 'Retrieves details of a specific environment.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
-                  "name": "production",
-                  "is_production": true,
-                  "status": "active",
-                  "provisioning_step": "complete",
-                  "failure_reason": null,
-                  "php_version": "8.3",
-                  "tags": ["live", "primary"],
-                  "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
-                  "custom_domain": "ourshop.com",
-                  "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Environment retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
-
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'List Secrets'
-      description: |-
-        Retrieves a paginated list of all secrets for a specific environment.
-        Secret values are not included in the response for security.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-    queryParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'Number of items per page (max 100). Default: 15.'
-        required: false
-        example: 10
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      page:
-        custom: []
-        name: page
-        description: 'Page number for pagination.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      per_page: 10
       page: 1
     bodyParameters: []
     cleanBodyParameters: []
@@ -381,14 +92,31 @@ endpoints:
               "data": [
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "key": "STRIPE_SECRET_KEY",
+                      "account_id": 1,
+                      "partner_customer_id": "cust_12345",
+                      "status": "active",
+                      "tags": ["wordpress", "production"],
+                      "dev_domain": "site-abc123.dev.example.com",
+                      "environments": [
+                          {
+                              "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                              "name": "production",
+                              "is_production": true,
+                              "status": "active",
+                              "php_version": "8.3",
+                              "platform_domain": "wispy-dust.vectorpages.com",
+                              "custom_domain": "ourshop.com",
+                              "created_at": "2025-05-27T09:50:21+00:00",
+                              "updated_at": "2025-05-27T09:50:21+00:00"
+                          }
+                      ],
                       "created_at": "2025-05-27T09:50:21+00:00",
                       "updated_at": "2025-05-27T09:50:21+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "Environment secrets retrieved successfully",
+              "message": "Success",
               "http_status": 200
           }
         headers: []
@@ -405,12 +133,6 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -423,23 +145,30 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/sites/{site}'
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+      groupName: Sites
+      groupDescription: |-
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Get Secret'
-      description: |-
-        Retrieves details of a specific environment secret.
-        The secret value is not included in the response for security.
+        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        the primary resource representing customer applications, each with associated
+        environments (staging/production), deployments, and CDN configurations.
+
+        Sites are created with a `pending` status and transition to `active` once provisioning
+        completes. You can suspend sites to reduce costs during low-traffic periods.
+
+        #### Site Status Lifecycle
+
+        - `pending` - Site creation initiated, provisioning in progress
+        - `active` - Site is fully operational and serving traffic
+        - `suspended` - Site is paused to reduce costs (can be unsuspended)
+        - `terminating` - Site deletion in progress
+        - `terminated` - Site has been fully removed
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Site'
+      description: 'Retrieves details of a specific site including its environments and domains.'
       authenticated: true
       deprecated: false
     headers:
@@ -458,32 +187,8 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -497,493 +202,32 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Environment secret retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Deployments
-      subgroupDescription: |-
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
-
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      title: 'List Deployments'
-      description: |-
-        Retrieves a paginated list of all deployments for a specific environment,
-        ordered by most recent first.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-    queryParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'Number of items per page (max 100). Default: 15.'
-        required: false
-        example: 25
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      page:
-        custom: []
-        name: page
-        description: 'Page number for pagination. Default: 1.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      per_page: 25
-      page: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": [
-                  {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                      "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "status": "deployed",
-                      "stdout": "Deployment output...",
-                      "stderr": null,
-                      "actor": "john@example.com",
-                      "environment": {
+                  "account_id": 1,
+                  "partner_customer_id": "cust_12345",
+                  "status": "active",
+                  "tags": ["wordpress", "production"],
+                  "dev_domain": "site-abc123.dev.example.com",
+                  "environments": [
+                      {
                           "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                          "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                          "partner_customer_id": "cust_123456",
                           "name": "production",
                           "is_production": true,
                           "status": "active",
                           "php_version": "8.3",
-                          "tags": ["wordpress"],
-                          "fqdn": "example.com",
-                          "custom_domain": "example.com",
-                          "subdomain": "wispy-dust",
-                          "created_at": "2025-05-20T09:00:00+00:00",
-                          "updated_at": "2025-05-27T09:55:30+00:00"
-                      },
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
-                  }
-              ],
-              "links": {},
-              "meta": {},
-              "message": "Deployments retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Environment Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments/{deployment}'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Deployments
-      subgroupDescription: |-
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
-
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      title: 'Get Deployment'
-      description: 'Retrieves details of a specific deployment including output logs and actor information.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      deployment:
-        custom: []
-        name: deployment
-        description: 'The deployment ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "deployed",
-                  "stdout": "Building project...\nUploading assets...\nDeployment complete.",
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
-                      "name": "production",
-                      "is_production": true,
-                      "status": "active",
-                      "php_version": "8.3",
-                      "tags": ["wordpress"],
-                      "fqdn": "example.com",
-                      "custom_domain": "example.com",
-                      "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
-                  },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:30+00:00"
-              },
-              "message": "Deployment retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Deployment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/vector/sites/{site}/environments'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: |-
-
-        Manage deployment environments for sites. Each site can have multiple environments
-        with their own domains, PHP versions, and secrets. Environment names use a slug format
-        (lowercase letters, numbers, and hyphens).
-
-        Environments are created with a `pending` status and transition to `active` once
-        container provisioning completes. Each environment gets a unique subdomain under
-        your registered domain.
-
-        #### Environment Status Lifecycle
-
-        - `pending` - Environment creation initiated, provisioning in progress
-        - `active` - Environment is fully operational
-        - `suspended` - Environment is paused
-        - `terminating` - Environment deletion in progress
-        - `terminated` - Environment has been fully removed
-
-        #### Production Environment
-
-        Each site can have at most one production environment (`is_production: true`).
-        The production environment receives CDN integration via Bunny.net.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create Environment'
-      description: |-
-        Creates a new environment for a site. The environment is created with a
-        `pending` status and will transition to `active` once provisioning completes.
-
-        Each environment gets a unique auto-generated subdomain and uses the site's
-        configured domain.
-
-        **Important:** Only one environment per site can be marked as production
-        (`is_production: true`). The production environment receives CDN integration.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'A unique name for this environment (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      custom_domain:
-        custom: []
-        name: custom_domain
-        description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
-        required: true
-        example: ourshop.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      is_production:
-        custom: []
-        name: is_production
-        description: 'Whether this is the production environment. Only one per site. Default: false.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      php_version:
-        custom: []
-        name: php_version
-        description: 'The PHP version for this environment. Options: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5.'
-        required: true
-        example: '8.3'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      tags:
-        custom: []
-        name: tags
-        description: 'Optional array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique.'
-        required: false
-        example:
-          - live
-          - primary
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: production
-      custom_domain: ourshop.com
-      is_production: true
-      php_version: '8.3'
-      tags:
-        - live
-        - primary
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
-                  "name": "production",
-                  "is_production": true,
-                  "status": "pending",
-                  "provisioning_step": "pending",
-                  "failure_reason": null,
-                  "php_version": "8.3",
-                  "tags": ["live", "primary"],
-                  "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
-                  "custom_domain": "ourshop.com",
-                  "subdomain": "wispy-dust",
+                          "platform_domain": "wispy-dust.vectorpages.com",
+                          "custom_domain": "ourshop.com",
+                          "created_at": "2025-05-27T09:50:21+00:00",
+                          "updated_at": "2025-05-27T09:50:21+00:00"
+                      }
+                  ],
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Environment creation initiated",
-              "http_status": 201
+              "message": "Site retrieved successfully",
+              "http_status": 200
           }
         headers: []
-        description: Created
+        description: Success
       -
         custom: []
         status: 401
@@ -1001,339 +245,6 @@ endpoints:
         status: 404
         content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
-        description: 'Site Not Found'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"name": ["Environment name must be lowercase letters, numbers, and hyphens only."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PUT
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: |-
-
-        Manage deployment environments for sites. Each site can have multiple environments
-        with their own domains, PHP versions, and secrets. Environment names use a slug format
-        (lowercase letters, numbers, and hyphens).
-
-        Environments are created with a `pending` status and transition to `active` once
-        container provisioning completes. Each environment gets a unique subdomain under
-        your registered domain.
-
-        #### Environment Status Lifecycle
-
-        - `pending` - Environment creation initiated, provisioning in progress
-        - `active` - Environment is fully operational
-        - `suspended` - Environment is paused
-        - `terminating` - Environment deletion in progress
-        - `terminated` - Environment has been fully removed
-
-        #### Production Environment
-
-        Each site can have at most one production environment (`is_production: true`).
-        The production environment receives CDN integration via Bunny.net.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update Environment'
-      description: 'Updates an existing environment. Only the fields provided will be updated.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'The environment name (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
-        required: false
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      is_production:
-        custom: []
-        name: is_production
-        description: ''
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      custom_domain:
-        custom: []
-        name: custom_domain
-        description: 'A custom vanity domain for this environment. Must be a valid domain name.'
-        required: false
-        example: newshop.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      tags:
-        custom: []
-        name: tags
-        description: 'Array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique. Pass `null` to clear tags.'
-        required: false
-        example:
-          - live
-          - updated
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: production
-      is_production: true
-      custom_domain: newshop.com
-      tags:
-        - live
-        - updated
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
-                  "name": "production",
-                  "is_production": true,
-                  "status": "active",
-                  "provisioning_step": "complete",
-                  "failure_reason": null,
-                  "php_version": "8.4",
-                  "tags": ["live", "updated"],
-                  "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "newshop.com",
-                  "custom_domain": "newshop.com",
-                  "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
-              },
-              "message": "Environment updated successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"name": ["An environment with this name already exists for this site."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: |-
-
-        Manage deployment environments for sites. Each site can have multiple environments
-        with their own domains, PHP versions, and secrets. Environment names use a slug format
-        (lowercase letters, numbers, and hyphens).
-
-        Environments are created with a `pending` status and transition to `active` once
-        container provisioning completes. Each environment gets a unique subdomain under
-        your registered domain.
-
-        #### Environment Status Lifecycle
-
-        - `pending` - Environment creation initiated, provisioning in progress
-        - `active` - Environment is fully operational
-        - `suspended` - Environment is paused
-        - `terminating` - Environment deletion in progress
-        - `terminated` - Environment has been fully removed
-
-        #### Production Environment
-
-        Each site can have at most one production environment (`is_production: true`).
-        The production environment receives CDN integration via Bunny.net.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Delete Environment'
-      description: |-
-        Initiates deletion of an environment. This terminates all associated
-        containers, deployments, and CDN resources. The environment status
-        transitions to `terminating` and eventually `terminated`.
-
-        This operation is irreversible. All environment data will be permanently removed.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
-                  "name": "production",
-                  "is_production": true,
-                  "status": "terminating",
-                  "provisioning_step": "complete",
-                  "failure_reason": null,
-                  "php_version": "8.3",
-                  "tags": [],
-                  "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
-                  "custom_domain": "ourshop.com",
-                  "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
-              },
-              "message": "Environment deletion initiated",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
         description: 'Not Found'
     responseFields: []
     auth:
@@ -1346,26 +257,44 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/database/reset-password'
+      - GET
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl'
     metadata:
       custom: []
-      groupName: Environments
+      groupName: Sites
       groupDescription: ''
-      subgroup: Databases
+      subgroup: SSL
       subgroupDescription: |-
-        Manage database credentials for production environments. Each environment has its
-        own isolated database with credentials that can be rotated for security.
-      title: 'Reset Password'
-      description: |-
-        Rotates the database password for a production environment via Ymir.
-        The old password is immediately invalidated.
+        Manage SSL provisioning for Vector environments.
 
-        The new password is returned ONLY in this response - store it securely
-        as it cannot be retrieved again.
+        SSL is automatically provisioned when environments are deployed. These endpoints
+        provide visibility into SSL status and manual intervention capabilities when
+        provisioning gets stuck.
 
-        **Important:** After rotating the password, you must redeploy the environment
-        for your application to pick up the new credentials.
+        ##### Environment Status
+
+        The main `status` field tracks the environment lifecycle:
+
+        - `pending` - Environment created, awaiting first deploy
+        - `provisioning` - Resources being provisioned (including SSL)
+        - `active` - Environment fully operational
+        - `failed` - Provisioning failed
+
+        ##### Provisioning Step
+
+        The `provisioning_step` field tracks detailed progress during provisioning:
+
+        - `null` - Not started
+        - `requesting_cert` - Requesting AWS ACM certificate
+        - `waiting_cert` - Waiting for certificate validation
+        - `deploying` - Deploying to Ymir
+        - `configuring_dns` - Configuring DNS records
+        - `ready` - Platform SSL complete (terminal for staging)
+        - `waiting_custom_dns` - Waiting for custom domain DNS (production only)
+        - `provisioning_cdn_ssl` - Requesting Let's Encrypt certificate
+        - `complete` - Fully complete (terminal for production with custom domain)
+      title: 'Get Status'
+      description: 'Get the current SSL provisioning status for an environment.'
       authenticated: true
       deprecated: false
     headers:
@@ -1387,9 +316,9 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1397,7 +326,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1423,46 +352,14 @@ endpoints:
                   "fqdn": "wispy-dust.vectorpages.com",
                   "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "database_user": "user_abc123_production",
-                  "database_password": "aBcD1234!@#$EfGh5678",
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
               },
-              "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
+              "message": "SSL status retrieved",
               "http_status": 200
           }
         headers: []
         description: Success
-      -
-        custom: []
-        status: 400
-        content: '{"data": {}, "message": "Environment does not have a database user configured. Deploy the environment first.", "http_status": 400}'
-        headers: []
-        description: 'No Database User'
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
-        status: 500
-        content: '{"data": {}, "message": "Failed to rotate database password", "http_status": 500}'
-        headers: []
-        description: 'Rotation Failed'
     responseFields: []
     auth:
       - headers
@@ -1475,86 +372,96 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    uri: api/v1/vector/sites
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+      groupName: Sites
+      groupDescription: |-
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Create Secret'
+        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        the primary resource representing customer applications, each with associated
+        environments (staging/production), deployments, and CDN configurations.
+
+        Sites are created with a `pending` status and transition to `active` once provisioning
+        completes. You can suspend sites to reduce costs during low-traffic periods.
+
+        #### Site Status Lifecycle
+
+        - `pending` - Site creation initiated, provisioning in progress
+        - `active` - Site is fully operational and serving traffic
+        - `suspended` - Site is paused to reduce costs (can be unsuspended)
+        - `terminating` - Site deletion in progress
+        - `terminated` - Site has been fully removed
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Site'
       description: |-
-        Creates a new secret for a specific environment. The secret will be available
-        to this environment during deployment.
+        Creates a new site for the authenticated account. The site is created with a
+        `pending` status and will transition to `active` once provisioning completes.
 
-        The following keys are reserved and cannot be used:
-        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+        A development container is automatically provisioned for the site, accessible
+        via the `dev_domain` in the response.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      key:
+      partner_customer_id:
         custom: []
-        name: key
-        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        name: partner_customer_id
+        description: 'Your internal customer identifier. Used to correlate sites with your billing or CRM system.'
         required: true
-        example: STRIPE_SECRET_KEY
+        example: cust_12345
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      value:
+      dev_php_version:
         custom: []
-        name: value
-        description: 'The secret value.'
+        name: dev_php_version
+        description: ''
         required: true
-        example: sk_live_xxxx
+        example: '8.3'
         type: string
+        enumValues:
+          - '7.2'
+          - '7.3'
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
+          - '8.5'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Optional array of tags for categorizing the site. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique.'
+        required: false
+        example:
+          - wordpress
+          - production
+        type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      key: STRIPE_SECRET_KEY
-      value: sk_live_xxxx
+      partner_customer_id: cust_12345
+      dev_php_version: '8.3'
+      tags:
+        - wordpress
+        - production
     fileParameters: []
     responses:
       -
@@ -1564,11 +471,24 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "partner_customer_id": "cust_12345",
+                  "status": "pending",
+                  "dev_php_version": "8.3",
+                  "tags": ["wordpress", "production"],
+                  "dev_domain": "my-site.vectorpages.com",
+                  "dev_sftp": {
+                      "hostname": "ssh.vectorpages.com",
+                      "port": 22,
+                      "username": "my-site",
+                      "password": "aBcD1234!@#$EfGh5678"
+                  },
+                  "dev_db_username": "db-01jfgxk4nqrst5vwx9yz0abcde",
+                  "dev_db_password": "aBcD1234!@#$EfGh5678",
+                  "environments": [],
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Environment secret created successfully",
+              "message": "Vector site creation initiated",
               "http_status": 201
           }
         headers: []
@@ -1587,22 +507,28 @@ endpoints:
         description: Unauthorized
       -
         custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"partner_customer_id": ["The partner customer id field is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
         headers: []
-        description: 'Not Found'
+        description: 'Validation Error'
       -
         custom: []
         status: 422
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key is required."]},
-              "message": "Validation failed",
+              "errors": {"cluster": ["No Vector cluster is configured for your account."]},
+              "message": "No Vector cluster available for this account",
               "http_status": 422
           }
         headers: []
-        description: 'Validation Error'
+        description: 'No Cluster Available'
     responseFields: []
     auth:
       - headers
@@ -1615,25 +541,30 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/sites/{site}'
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+      groupName: Sites
+      groupDescription: |-
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Update Secret'
-      description: |-
-        Updates an existing environment secret. You can update the key, value, or both.
+        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        the primary resource representing customer applications, each with associated
+        environments (staging/production), deployments, and CDN configurations.
 
-        The following keys are reserved and cannot be used:
-        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+        Sites are created with a `pending` status and transition to `active` once provisioning
+        completes. You can suspend sites to reduce costs during low-traffic periods.
+
+        #### Site Status Lifecycle
+
+        - `pending` - Site creation initiated, provisioning in progress
+        - `active` - Site is fully operational and serving traffic
+        - `suspended` - Site is paused to reduce costs (can be unsuspended)
+        - `terminating` - Site deletion in progress
+        - `terminated` - Site has been fully removed
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Site'
+      description: "Updates an existing site's metadata. Only the fields provided will be updated."
       authenticated: true
       deprecated: false
     headers:
@@ -1652,60 +583,40 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      key:
+      partner_customer_id:
         custom: []
-        name: key
-        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        name: partner_customer_id
+        description: 'Your internal customer identifier.'
         required: false
-        example: STRIPE_API_KEY
+        example: cust_67890
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      value:
+      tags:
         custom: []
-        name: value
-        description: 'The new secret value.'
+        name: tags
+        description: 'Array of tags for categorizing the site. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique. Pass `null` to clear tags.'
         required: false
-        example: sk_live_yyyy
-        type: string
+        example:
+          - wordpress
+          - staging
+        type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      key: STRIPE_API_KEY
-      value: sk_live_yyyy
+      partner_customer_id: cust_67890
+      tags:
+        - wordpress
+        - staging
     fileParameters: []
     responses:
       -
@@ -1715,11 +626,16 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_API_KEY",
+                  "account_id": 1,
+                  "partner_customer_id": "cust_67890",
+                  "status": "active",
+                  "tags": ["wordpress", "staging"],
+                  "dev_domain": "site-abc123.dev.example.com",
+                  "environments": [],
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
-              "message": "Environment secret updated successfully",
+              "message": "Vector site updated successfully",
               "http_status": 200
           }
         headers: []
@@ -1739,7 +655,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
       -
@@ -1748,7 +664,7 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "errors": {"tags": ["Tags must be an array of strings."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -1766,21 +682,39 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/sites/{site}'
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage environment-level secrets for a specific environment. These secrets are
-        injected as environment variables during site deployment and are scoped to
-        a single environment.
+      groupName: Sites
+      groupDescription: |-
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Delete Secret'
-      description: 'Deletes an environment secret.'
+        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        the primary resource representing customer applications, each with associated
+        environments (staging/production), deployments, and CDN configurations.
+
+        Sites are created with a `pending` status and transition to `active` once provisioning
+        completes. You can suspend sites to reduce costs during low-traffic periods.
+
+        #### Site Status Lifecycle
+
+        - `pending` - Site creation initiated, provisioning in progress
+        - `active` - Site is fully operational and serving traffic
+        - `suspended` - Site is paused to reduce costs (can be unsuspended)
+        - `terminating` - Site deletion in progress
+        - `terminated` - Site has been fully removed
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Site'
+      description: |-
+        Initiates deletion of a site. This terminates the site's development container
+        and CDN resources. The site status transitions to `terminating` and eventually
+        `terminated`.
+
+        **Important:** All environments must be terminated before the site can be deleted.
+        Use the environment delete endpoint to terminate each environment first.
+
+        This operation is irreversible. All site data and configurations will be
+        permanently removed.
       authenticated: true
       deprecated: false
     headers:
@@ -1799,32 +733,8 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1838,11 +748,16 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "account_id": 1,
+                  "partner_customer_id": "cust_12345",
+                  "status": "terminating",
+                  "tags": [],
+                  "dev_domain": "site-abc123.dev.example.com",
+                  "environments": [],
                   "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "updated_at": "2025-05-27T10:30:45+00:00"
               },
-              "message": "Environment secret deleted successfully",
+              "message": "Vector site deletion initiated",
               "http_status": 200
           }
         headers: []
@@ -1862,7 +777,502 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"site": ["Cannot delete site that has active environments. Please terminate all environments first."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Active Environments'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/clone'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Clone an existing site's development container to create a new site.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Clone Site'
+      description: |-
+        Creates a new site by cloning an existing site's development container,
+        including files and database. Only the development container is cloned;
+        production and staging environments are not copied. The new site is created
+        with fresh, empty environments.
+
+        This workflow is useful for testing larger redesigns or refactors in
+        isolation while still allowing maintenance of the original site. The cloned
+        site operates independently, so changes to one do not affect the other.
+
+        The new site inherits attributes from the source site unless overridden in
+        the request. The cloned site is created with a `pending` status and will
+        transition to `active` once the clone operation completes.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The source site ID to clone from.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      partner_customer_id:
+        custom: []
+        name: partner_customer_id
+        description: 'Optional customer identifier. Inherits from source if not provided.'
+        required: false
+        example: cust_67890
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      dev_php_version:
+        custom: []
+        name: dev_php_version
+        description: 'Optional PHP version. Inherits from source if not provided.'
+        required: false
+        example: '8.3'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Optional tags. Inherits from source if not provided.'
+        required: false
+        example:
+          - wordpress
+          - clone
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      partner_customer_id: cust_67890
+      dev_php_version: '8.3'
+      tags:
+        - wordpress
+        - clone
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "account_id": 1,
+                  "partner_customer_id": "cust_12345",
+                  "status": "pending",
+                  "tags": ["wordpress", "clone"],
+                  "dev_domain": "site-xyz789.dev.example.com",
+                  "dev_db_username": "db-01jfgxk4nqrst5vwx9yz0abcdf",
+                  "dev_db_password": "aBcD1234!@#$EfGh5678",
+                  "environments": [],
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Vector site clone initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"site": ["Source site must be in active state to clone."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error - Site Not Active'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"site": ["Source site must have a dev container to clone."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error - No Dev Container'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/suspend'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Suspend a site's development container to reduce costs during low-traffic periods.
+        The container resources remain intact for quick resumption.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Suspend Site'
+      description: |-
+        Suspends a site's development container by scaling the ECS service to zero.
+        This reduces costs during low-traffic periods while preserving container
+        resources for quick resumption.
+
+        The site must be in `active` status to be suspended. Suspended sites can be
+        resumed using the unsuspend endpoint.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "account_id": 1,
+                  "partner_customer_id": "cust_12345",
+                  "status": "suspended",
+                  "tags": [],
+                  "dev_domain": "site-abc123.dev.example.com",
+                  "environments": [],
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Vector site suspension initiated",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"status": ["Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended."]},
+              "message": "Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended.",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Invalid State'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/unsuspend'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Unsuspend a previously suspended site's development container to resume operations.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Unsuspend Site'
+      description: |-
+        Resumes a previously suspended site's development container by scaling the
+        ECS service back to one. The site must be in `suspended` status to be unsuspended.
+
+        After unsuspension, the site transitions back to `active` status and resumes
+        serving traffic.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "account_id": 1,
+                  "partner_customer_id": "cust_12345",
+                  "status": "active",
+                  "tags": [],
+                  "dev_domain": "site-abc123.dev.example.com",
+                  "environments": [],
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T10:30:45+00:00"
+              },
+              "message": "Vector site unsuspension initiated",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"status": ["Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended."]},
+              "message": "Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended.",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Invalid State'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/sftp/reset-password'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: SFTP
+      subgroupDescription: |-
+        Manage SFTP access to your site's development container. SFTP provides secure
+        file transfer for uploading themes, plugins, and other files directly to your dev environment.
+      title: 'Reset Password'
+      description: |-
+        Generates a new SFTP password for the site's development container.
+        The old password is immediately invalidated.
+
+        The new password is returned ONLY in this response - store it securely
+        as it cannot be retrieved again.
+
+        SFTP connection details:
+        - hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)
+        - port: 22
+        - username: site subdomain (e.g., my-site)
+        - password: the generated password
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": null,
+                  "status": "active",
+                  "dev_php_version": "8.3",
+                  "tags": [],
+                  "dev_domain": "my-site.vectorpages.com",
+                  "dev_sftp": {
+                      "hostname": "ssh.vectorpages.com",
+                      "port": 22,
+                      "username": "my-site",
+                      "password": "aBcD1234!@#$EfGh5678"
+                  },
+                  "environments": [],
+                  "created_at": "2024-01-01T00:00:00.000000Z",
+                  "updated_at": "2024-01-01T00:00:00.000000Z"
+              },
+              "message": "SFTP password reset successfully. Store the new password securely - it will not be shown again.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -1877,33 +1287,22 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    uri: 'api/v1/vector/sites/{site}/database/reset-password'
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Deployments
-      subgroupDescription: |-
-        Manage code deployments to environments. Each deployment represents a release of
-        your WordPress site to a specific environment (staging or production).
+      groupName: Sites
+      groupDescription: |-
 
-        Deployments are created with a `pending` status and progress through `deploying`
-        to either `deployed` (success) or `failed`. Each deployment records the actor
-        who initiated it and timing information.
-
-        #### Deployment Status Lifecycle
-
-        - `pending` - Deployment created, waiting to start
-        - `deploying` - Deployment in progress
-        - `deployed` - Deployment completed successfully
-        - `failed` - Deployment failed (check stdout/stderr for details)
-      title: 'Create Deployment'
+        Reset the database password for a Vector Pro site's development container.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Reset Password'
       description: |-
-        Triggers a new deployment for the environment. The deployment starts with
-        `pending` status and progresses through `deploying` to either `deployed`
-        or `failed`.
+        Generates a new database password for the site's development container.
+        The old password is immediately invalidated.
 
-        The authenticated user is recorded as the deployment actor.
+        The new password is returned ONLY in this response - store it securely
+        as it cannot be retrieved again.
       authenticated: true
       deprecated: false
     headers:
@@ -1922,20 +1321,8 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1944,39 +1331,28 @@ endpoints:
     responses:
       -
         custom: []
-        status: 201
+        status: 200
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "pending",
-                  "stdout": null,
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
-                      "name": "production",
-                      "is_production": true,
-                      "status": "active",
-                      "php_version": "8.3",
-                      "tags": ["wordpress"],
-                      "fqdn": "example.com",
-                      "custom_domain": "example.com",
-                      "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
-                  },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "account_id": "01JFGXK4NQRST5VWX9YZ0ABCDA",
+                  "partner_customer_id": null,
+                  "status": "active",
+                  "dev_php_version": "8.3",
+                  "tags": [],
+                  "dev_domain": "site-abc123.vectorpages.com",
+                  "dev_db_username": "db-01jfgxk4nqrst5vwx9yz0abcde",
+                  "dev_db_password": "aBcD1234!@#$EfGh5678",
+                  "environments": [],
+                  "created_at": "2024-01-01T00:00:00.000000Z",
+                  "updated_at": "2024-01-01T00:00:00.000000Z"
               },
-              "message": "Deployment initiated",
-              "http_status": 201
+              "message": "Database password reset successfully. Store the new password securely - it will not be shown again.",
+              "http_status": 200
           }
         headers: []
-        description: Created
+        description: Success
       -
         custom: []
         status: 401
@@ -1992,9 +1368,9 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
-        description: 'Environment Not Found'
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -2007,21 +1383,762 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/rollback'
+    uri: 'api/v1/vector/sites/{site}/db/import'
     metadata:
       custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Deployments
-      subgroupDescription: ''
-      title: 'Rollback Deployment'
-      description: |-
-        Triggers a rollback for the environment. By default, rolls back to the last
-        successful deployment. Optionally, you can specify a target_deployment_id to
-        rollback to a specific previous deployment.
+      groupName: Sites
+      groupDescription: |-
 
-        The rollback creates a new deployment record with `pending` status that progresses
-        through `running` to either `completed` or `failed`.
+        Direct database import for small files (<50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Import Directly'
+      description: |-
+        Import SQL content directly from the request body. For files under 50MB.
+        The request body should contain raw SQL content with Content-Type: application/sql.
+
+        This is a synchronous operation that blocks until the import completes.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters:
+      drop_tables:
+        custom: []
+        name: drop_tables
+        description: 'Drop all existing tables before import. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      disable_foreign_keys:
+        custom: []
+        name: disable_foreign_keys
+        description: 'Disable foreign key checks during import. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      drop_tables: true
+      disable_foreign_keys: true
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "success": true,
+                  "duration_ms": 1234
+              },
+              "message": "Database imported successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"content": ["SQL content is required in the request body"]}, "message": "Request body is empty", "http_status": 422}'
+        headers: []
+        description: 'Empty Body'
+      -
+        custom: []
+        status: 500
+        content: |-
+          {
+              "data": {
+                  "success": false,
+                  "duration_ms": 567,
+                  "error": "Access denied for user"
+              },
+              "message": "Database import failed",
+              "http_status": 500
+          }
+        headers: []
+        description: 'Import Failed'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/db/imports'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Database import session management for large file uploads (>50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Create Import Session'
+      description: |-
+        Create a database import session for large files (>50MB). Returns a presigned
+        S3 upload URL that can be used to upload the SQL file directly to storage.
+
+        After uploading, call the "Run Import" endpoint to execute the import.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      filename:
+        custom: []
+        name: filename
+        description: 'Optional filename for reference.'
+        required: false
+        example: backup-2025-01-23.sql
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      content_length:
+        custom: []
+        name: content_length
+        description: 'Optional file size in bytes for validation.'
+        required: false
+        example: 104857600
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      content_md5:
+        custom: []
+        name: content_md5
+        description: 'Optional MD5 checksum (32 hex chars) for integrity verification.'
+        required: false
+        example: d41d8cd98f00b204e9800998ecf8427e
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      options:
+        custom: []
+        name: options
+        description: 'Optional import options.'
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.drop_tables:
+        custom: []
+        name: options.drop_tables
+        description: 'Drop all existing tables before import. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      options.disable_foreign_keys:
+        custom: []
+        name: options.disable_foreign_keys
+        description: 'Disable foreign key checks during import. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      filename: backup-2025-01-23.sql
+      content_length: 104857600
+      content_md5: d41d8cd98f00b204e9800998ecf8427e
+      options:
+        drop_tables: true
+        disable_foreign_keys: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "pending",
+                  "filename": "backup-2025-01-23.sql",
+                  "content_length": 104857600,
+                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "upload_url": "https://s3.amazonaws.com/bucket/imports/...",
+                  "upload_expires_at": "2025-01-23T11:00:00+00:00",
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Import session created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"content_length": ["The content length must not exceed 10GB."]}, "message": "Validation failed", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/db/imports/{import}/run'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Execute a database import from S3 after the file has been uploaded.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Run Import'
+      description: |-
+        Execute a database import from S3 after the file has been uploaded via the
+        presigned URL. Dispatches an async job to perform the import.
+
+        The import must be in `pending` or `uploaded` status and not expired.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      import: 01JFGXK4NQRST5VWX9YZ0ABCDF
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "uploaded",
+                  "filename": "backup-2025-01-23.sql",
+                  "content_length": 104857600,
+                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "uploaded_at": "2025-01-23T10:00:30+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Database import started",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"status": ["Import must be in pending or uploaded status"]}, "message": "Import is not ready to run", "http_status": 422}'
+        headers: []
+        description: 'Not Ready'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"expires_at": ["Please create a new import session"]}, "message": "Import session has expired", "http_status": 422}'
+        headers: []
+        description: Expired
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/db/imports/{import}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Database import session management for large file uploads (>50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Get Import Status'
+      description: |-
+        Get the current status of a database import operation. If the import is still
+        pending and not expired, includes a fresh presigned upload URL.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      import: 01JFGXK4NQRST5VWX9YZ0ABCDF
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "completed",
+                  "filename": "backup-2025-01-23.sql",
+                  "content_length": 104857600,
+                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": "d41d8cd98f00b204e9800998ecf8427e"},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "duration_ms": 45000,
+                  "error_message": null,
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "started_at": "2025-01-23T10:01:00+00:00",
+                  "completed_at": "2025-01-23T10:01:45+00:00"
+              },
+              "message": "Import retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/db/export'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Database export operations.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Create Export'
+      description: |-
+        Start a database export operation. Dispatches an async job to create
+        the export and upload it to S3. Poll the status endpoint to check progress
+        and retrieve the download URL when complete.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      format:
+        custom: []
+        name: format
+        description: 'Export format. Currently only "sql" is supported. Default: sql.'
+        required: false
+        example: sql
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      format: sql
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "pending",
+                  "format": "sql",
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_expires_at": null,
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Database export started",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/db/exports/{export}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Database export operations.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Get Export Status'
+      description: |-
+        Get the current status of a database export operation. If complete and not
+        expired, includes a presigned download URL valid for 1 hour.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      export:
+        custom: []
+        name: export
+        description: 'The export ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      export: 01JFGXK4NQRST5VWX9YZ0ABCDG
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "completed",
+                  "format": "sql",
+                  "size_bytes": 52428800,
+                  "duration_ms": 30000,
+                  "error_message": null,
+                  "download_url": "https://s3.amazonaws.com/bucket/exports/...",
+                  "download_expires_at": "2025-01-23T11:00:00+00:00",
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "started_at": "2025-01-23T10:00:01+00:00",
+                  "completed_at": "2025-01-23T10:00:31+00:00"
+              },
+              "message": "Export retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "status": "processing",
+                  "format": "sql",
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_expires_at": null,
+                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "started_at": "2025-01-23T10:00:01+00:00",
+                  "completed_at": null
+              },
+              "message": "Export retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Processing
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Export not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl/nudge'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: SSL
+      subgroupDescription: ''
+      title: Nudge
+      description: |-
+        Manually nudge SSL provisioning for an environment. Use this when SSL
+        provisioning appears to be stuck or to retry after a failure.
       authenticated: true
       deprecated: false
     headers:
@@ -2043,9 +2160,9 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2053,14 +2170,175 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      target_deployment_id:
+      retry:
         custom: []
-        name: target_deployment_id
-        description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
+        name: retry
+        description: 'Whether to retry from a failed state. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      retry: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "deploying",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "SSL provisioning advanced from waiting_cert to deploying",
+              "http_status": 200
+          }
+        headers: []
+        description: Advanced
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "partner_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "waiting_custom_dns",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns",
+              "http_status": 200
+          }
+        headers: []
+        description: Waiting
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/logs'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: Logs
+      subgroupDescription: |-
+        Fetch logs for a Vector site. Supports filtering by time range,
+        environment, and deployment.
+      title: 'Get Logs'
+      description: |-
+        Retrieves logs for the specified Vector site. Logs are returned in reverse
+        chronological order (newest first).
+
+        Use the `environment` and `deployment_id` filters to narrow down results.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters:
+      start_time:
+        custom: []
+        name: start_time
+        description: 'Start time for log query. RFC3339 format or relative (e.g., "now-1h"). Default: now-1h.'
+        required: false
+        example: now-24h
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      end_time:
+        custom: []
+        name: end_time
+        description: 'End time for log query. RFC3339 format or relative. Default: now.'
+        required: false
+        example: now
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Maximum number of log entries to return (1-1000). Default: 100.'
+        required: false
+        example: 500
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'Filter by environment name (e.g., production, staging).'
+        required: false
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      deployment_id:
+        custom: []
+        name: deployment_id
+        description: 'Filter by deployment ID.'
         required: false
         example: 01JFGXK4NQRST5VWX9YZ0ABCDH
         type: string
@@ -2068,31 +2346,45 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-    cleanBodyParameters:
-      target_deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+    cleanQueryParameters:
+      start_time: now-24h
+      end_time: now
+      limit: 500
+      environment: production
+      deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
+        status: 200
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "status": "pending",
-                  "stdout": null,
-                  "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {"id": "01JFGXK4NQRST5VWX9YZ0ABCDG", "name": "production", "is_production": true},
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "tables": [
+                      {
+                          "name": "0",
+                          "columns": [
+                              {"name": "_time", "type": "datetime"},
+                              {"name": "message", "type": "string"},
+                              {"name": "level", "type": "string"}
+                          ],
+                          "rows": [
+                              ["2025-05-27T09:50:21Z", "Request completed", "info"]
+                          ]
+                      }
+                  ],
+                  "status": {
+                      "rowsExamined": 1000,
+                      "rowsMatched": 50
+                  }
               },
-              "message": "Rollback initiated",
-              "http_status": 201
+              "message": "Logs retrieved successfully",
+              "http_status": 200
           }
         headers: []
-        description: Created
+        description: Success
       -
         custom: []
         status: 401
@@ -2108,15 +2400,1876 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
-        description: 'Environment Not Found'
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: ''
+      title: 'List Allowed Referrers'
+      description: 'Retrieves all allowed referrer hostnames for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"hostname": "example.com"},
+                  {"hostname": "*.example.com"}
+              ],
+              "message": "Allowed referrers retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
+      title: 'List Blocked Referrers'
+      description: 'Retrieves all blocked referrer hostnames for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"hostname": "spam.com"},
+                  {"hostname": "*.malicious.net"}
+              ],
+              "message": "Blocked referrers retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Blocked IPs'
+      subgroupDescription: |-
+        Block specific IP addresses or CIDR ranges from accessing your site.
+        Blocked IPs receive a `403 Forbidden` response.
+
+        - Single IPs: `192.168.1.1`
+        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+      title: 'List Blocked IPs'
+      description: 'Retrieves all blocked IP addresses for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"ip": "192.168.1.100"},
+                  {"ip": "10.0.0.0"}
+              ],
+              "message": "Blocked IPs retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Rate Limits'
+      subgroupDescription: |-
+        Protect against DDoS, brute force, and API abuse by limiting request frequency.
+
+        Each rule defines:
+        - **Threshold**: Requests allowed within a time window
+        - **Block Duration**: How long to block offending clients (30s to 1 hour)
+        - **Matching Criteria**: Target specific paths, methods, or request patterns
+
+        Maximum **25 rate limit rules** per site.
+      title: 'List Rate Limits'
+      description: 'Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": 12345,
+                      "name": "API Rate Limit",
+                      "description": "Limit API requests to 100/second",
+                      "shield_zone_id": 67890,
+                      "configuration": {
+                          "request_count": 100,
+                          "timeframe": 1,
+                          "block_time": 60,
+                          "value": "/api/*",
+                          "action": "rate-limit",
+                          "operator": "begins-with",
+                          "variables": ["request-uri"],
+                          "transformations": ["lowercase"]
+                      }
+                  }
+              ],
+              "message": "Rate limits retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Rate Limits'
+      subgroupDescription: |-
+        Protect against DDoS, brute force, and API abuse by limiting request frequency.
+
+        Each rule defines:
+        - **Threshold**: Requests allowed within a time window
+        - **Block Duration**: How long to block offending clients (30s to 1 hour)
+        - **Matching Criteria**: Target specific paths, methods, or request patterns
+
+        Maximum **25 rate limit rules** per site.
+      title: 'Get Rate Limit'
+      description: 'Retrieves a specific rate limit rule by ID.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      rule: architecto
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "API Rate Limit",
+                  "description": "Limit API requests to 100/second",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 100,
+                      "timeframe": 1,
+                      "block_time": 60,
+                      "value": "/api/*",
+                      "action": "rate-limit",
+                      "operator": "begins-with",
+                      "variables": ["request-uri"],
+                      "transformations": ["lowercase"]
+                  }
+              },
+              "message": "Rate limit retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit not found",
+              "http_status": 404
+          }
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: ''
+      title: 'Add Allowed Referrer'
+      description: |-
+        Adds a hostname to the allowed referrers list.
+        Wildcards are supported (e.g., *.example.com).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to allow.'
+        required: true
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      hostname: example.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"hostname": "example.com"},
+              "message": "Allowed referrer added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers/{hostname}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: ''
+      title: 'Remove Allowed Referrer'
+      description: 'Removes a hostname from the allowed referrers list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to remove.'
+        required: true
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      hostname: example.com
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"hostname": "example.com"},
+              "message": "Allowed referrer removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
+      title: 'Add Blocked Referrer'
+      description: |-
+        Adds a hostname to the blocked referrers list.
+        Wildcards are supported (e.g., *.spam.com).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to block.'
+        required: true
+        example: spam.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      hostname: spam.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"hostname": "spam.com"},
+              "message": "Blocked referrer added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-referrers/{hostname}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Referrers'
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
+      title: 'Remove Blocked Referrer'
+      description: 'Removes a hostname from the blocked referrers list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      hostname:
+        custom: []
+        name: hostname
+        description: 'The hostname to remove.'
+        required: true
+        example: spam.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      hostname: spam.com
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"hostname": "spam.com"},
+              "message": "Blocked referrer removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Blocked IPs'
+      subgroupDescription: |-
+        Block specific IP addresses or CIDR ranges from accessing your site.
+        Blocked IPs receive a `403 Forbidden` response.
+
+        - Single IPs: `192.168.1.1`
+        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+      title: 'Add Blocked IP'
+      description: |-
+        Adds an IP address to the blocked list.
+        Supports both IPv4 and IPv6 addresses.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      ip:
+        custom: []
+        name: ip
+        description: 'The IP address to block.'
+        required: true
+        example: 192.168.1.100
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      ip: 192.168.1.100
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {"ip": "192.168.1.100"},
+              "message": "Blocked IP added successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/blocked-ips/{ip}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Blocked IPs'
+      subgroupDescription: |-
+        Block specific IP addresses or CIDR ranges from accessing your site.
+        Blocked IPs receive a `403 Forbidden` response.
+
+        - Single IPs: `192.168.1.1`
+        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+      title: 'Remove Blocked IP'
+      description: 'Removes an IP address from the blocked list.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ip:
+        custom: []
+        name: ip
+        description: 'The IP address to remove.'
+        required: true
+        example: 192.168.1.100
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      ip: 192.168.1.100
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"ip": "192.168.1.100"},
+              "message": "Blocked IP removed successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Rate Limits'
+      subgroupDescription: |-
+        Protect against DDoS, brute force, and API abuse by limiting request frequency.
+
+        Each rule defines:
+        - **Threshold**: Requests allowed within a time window
+        - **Block Duration**: How long to block offending clients (30s to 1 hour)
+        - **Matching Criteria**: Target specific paths, methods, or request patterns
+
+        Maximum **25 rate limit rules** per site.
+      title: 'Create Rate Limit'
+      description: 'Creates a new rate limit rule for a site. Maximum 25 rate limit rules per zone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The rule name (max 255 characters).'
+        required: true
+        example: 'API Rate Limit'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'The rule description (max 1000 characters).'
+        required: false
+        example: 'Limit API requests to prevent abuse'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      request_count:
+        custom: []
+        name: request_count
+        description: 'Number of requests allowed within the timeframe. Must be between 1 and 1,000,000.'
+        required: true
+        example: 100
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      timeframe:
+        custom: []
+        name: timeframe
+        description: 'Time window for counting requests. Must be exactly 1 (per second) or 10 (per 10 seconds).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      block_time:
+        custom: []
+        name: block_time
+        description: 'Duration to block clients who exceed the limit, in seconds. Must be one of: 30, 60, 300, 900, 1800, 3600.'
+        required: true
+        example: 60
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'URL path or pattern to match against. Max 2048 characters.'
+        required: false
+        example: '/api/*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      operator:
+        custom: []
+        name: operator
+        description: 'Match operator for comparing against the value. Must be one of: begins-with, ends-with, contains, contains-word, str-match, eq, ge, gt, le, lt, within, regex, str-eq, detect-sqli, detect-xss.'
+        required: false
+        example: begins-with
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      transformations:
+        custom: []
+        name: transformations
+        description: 'Transformations to apply to variable values before matching. Each must be one of: cmdline, compress-whitespace, css-decode, hex-encode, html-entity-decode, js-decode, length, lowercase, md5, normalize-path, normalise-path, normalize-path-win, normalise-path-win, remove-comments, remove-nulls, remove-whitespace, replace-comments, sha1, url-decode, url-decode-uni, utf8-to-unicode.'
+        required: false
+        example:
+          - lowercase
+          - url-decode
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      variables:
+        custom: []
+        name: variables
+        description: 'Request variables to inspect when matching. Each must be one of: request-uri, request-uri-raw, args, args-combined-size, args-get, args-get-names, args-post, args-post-names, files-names, geo, remote-addr, query-string, request-basename, request-body, request-cookies-names, request-cookies, request-filename, request-headers-names, request-headers, request-line, request-method, request-protocol, response-body, response-headers, response-status.'
+        required: false
+        example:
+          - request-uri
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'API Rate Limit'
+      description: 'Limit API requests to prevent abuse'
+      request_count: 100
+      timeframe: 1
+      block_time: 60
+      value: '/api/*'
+      operator: begins-with
+      transformations:
+        - lowercase
+        - url-decode
+      variables:
+        - request-uri
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "API Rate Limit",
+                  "description": "Limit API requests to prevent abuse",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 100,
+                      "timeframe": 1,
+                      "block_time": 60,
+                      "value": "/api/*",
+                      "action": "rate-limit",
+                      "operator": "begins-with",
+                      "variables": ["request-uri"],
+                      "transformations": ["lowercase", "url-decode"]
+                  }
+              },
+              "message": "Rate limit created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
       -
         custom: []
         status: 422
-        content: '{"data": {}, "errors": {"target_deployment_id": ["The specified deployment does not exist for this environment or has no Ymir deployment ID."]}, "message": "Validation failed", "http_status": 422}'
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "timeframe": ["The timeframe field must be a valid enum value."],
+                  "block_time": ["The block duration field must be a valid enum value."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
         headers: []
         description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit rule limit reached (25 rules per zone)",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Limit Reached'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Rate Limits'
+      subgroupDescription: |-
+        Protect against DDoS, brute force, and API abuse by limiting request frequency.
+
+        Each rule defines:
+        - **Threshold**: Requests allowed within a time window
+        - **Block Duration**: How long to block offending clients (30s to 1 hour)
+        - **Matching Criteria**: Target specific paths, methods, or request patterns
+
+        Maximum **25 rate limit rules** per site.
+      title: 'Update Rate Limit'
+      description: |-
+        Updates an existing rate limit rule. All fields are optional - only include fields you want
+        to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      rule: architecto
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The rule name (max 255 characters).'
+        required: false
+        example: 'Updated Rate Limit'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'The rule description (max 1000 characters).'
+        required: false
+        example: 'Updated description for the rule'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      request_count:
+        custom: []
+        name: request_count
+        description: 'Number of requests allowed within the timeframe. Must be between 1 and 1,000,000.'
+        required: false
+        example: 200
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      timeframe:
+        custom: []
+        name: timeframe
+        description: 'Time window for counting requests. Must be exactly 1 (per second) or 10 (per 10 seconds).'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      block_time:
+        custom: []
+        name: block_time
+        description: 'Duration to block clients who exceed the limit, in seconds. Must be one of: 30, 60, 300, 900, 1800, 3600.'
+        required: false
+        example: 300
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'URL path or pattern to match against. Max 2048 characters.'
+        required: false
+        example: '/api/v2/*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      operator:
+        custom: []
+        name: operator
+        description: 'Match operator for comparing against the value. Must be one of: begins-with, ends-with, contains, contains-word, str-match, eq, ge, gt, le, lt, within, regex, str-eq, detect-sqli, detect-xss.'
+        required: false
+        example: regex
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      transformations:
+        custom: []
+        name: transformations
+        description: 'Transformations to apply to variable values before matching. Each must be one of: cmdline, compress-whitespace, css-decode, hex-encode, html-entity-decode, js-decode, length, lowercase, md5, normalize-path, normalise-path, normalize-path-win, normalise-path-win, remove-comments, remove-nulls, remove-whitespace, replace-comments, sha1, url-decode, url-decode-uni, utf8-to-unicode.'
+        required: false
+        example:
+          - lowercase
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      variables:
+        custom: []
+        name: variables
+        description: 'Request variables to inspect when matching. Each must be one of: request-uri, request-uri-raw, args, args-combined-size, args-get, args-get-names, args-post, args-post-names, files-names, geo, remote-addr, query-string, request-basename, request-body, request-cookies-names, request-cookies, request-filename, request-headers-names, request-headers, request-line, request-method, request-protocol, response-body, response-headers, response-status.'
+        required: false
+        example:
+          - request-uri
+          - query-string
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Updated Rate Limit'
+      description: 'Updated description for the rule'
+      request_count: 200
+      timeframe: 10
+      block_time: 300
+      value: '/api/v2/*'
+      operator: regex
+      transformations:
+        - lowercase
+      variables:
+        - request-uri
+        - query-string
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 12345,
+                  "name": "Updated Rate Limit",
+                  "description": "Updated description for the rule",
+                  "shield_zone_id": 67890,
+                  "configuration": {
+                      "request_count": 200,
+                      "timeframe": 10,
+                      "block_time": 300,
+                      "value": "/api/v2/*",
+                      "action": "rate-limit",
+                      "operator": "regex",
+                      "variables": ["request-uri", "query-string"],
+                      "transformations": ["lowercase"]
+                  }
+              },
+              "message": "Rate limit updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "operator": ["The match operator field must be a valid enum value."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/rate-limits/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Rate Limits'
+      subgroupDescription: |-
+        Protect against DDoS, brute force, and API abuse by limiting request frequency.
+
+        Each rule defines:
+        - **Threshold**: Requests allowed within a time window
+        - **Block Duration**: How long to block offending clients (30s to 1 hour)
+        - **Matching Criteria**: Target specific paths, methods, or request patterns
+
+        Maximum **25 rate limit rules** per site.
+      title: 'Delete Rate Limit'
+      description: 'Permanently deletes a rate limit rule. This action cannot be undone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The rate limit rule ID.'
+        required: true
+        example: 12345
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      rule: architecto
+      ruleId: 12345
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Rate limit deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/purge-cache'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: CDN
+      subgroupDescription: 'Purge CDN cache for a site. Supports full cache purge, purge by cache tag, or purge of specific URLs.'
+      title: 'Purge Cache'
+      description: |-
+        Purges the CDN cache for a site.
+        Can purge the entire cache, by cache tag, or a specific URL.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      cache_tag:
+        custom: []
+        name: cache_tag
+        description: 'Purge only content with this cache tag.'
+        required: false
+        example: images
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      url:
+        custom: []
+        name: url
+        description: 'Purge a specific URL.'
+        required: false
+        example: 'https://cdn.example.com/style.css'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      cache_tag: images
+      url: 'https://cdn.example.com/style.css'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Cache purged successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Full Purge'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"cache_tag": "images"},
+              "message": "Cache purged successfully for tag: images",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Tag Purge'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {"url": "https://cdn.example.com/style.css"},
+              "message": "URL purged successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'URL Purge'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/ssh-keys'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage SSH keys installed on specific dev sites. These keys are actually
+        deployed to the site's container and grant SSH access.
+
+        When a new dev site is created, account-level default SSH keys are
+        automatically copied to the site. Use these endpoints to manage keys
+        on existing sites.
+      title: 'List SSH Keys'
+      description: 'Retrieves all SSH keys installed on a specific dev site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "account_id": 1,
+                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                      "name": "developer key",
+                      "fingerprint": "SHA256:abc123def456...",
+                      "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                      "is_account_default": false,
+                      "created_at": "2026-01-15T10:00:00+00:00",
+                      "updated_at": "2026-01-15T10:00:00+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "SSH keys retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/ssh-keys'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage SSH keys installed on specific dev sites. These keys are actually
+        deployed to the site's container and grant SSH access.
+
+        When a new dev site is created, account-level default SSH keys are
+        automatically copied to the site. Use these endpoints to manage keys
+        on existing sites.
+      title: 'Add SSH Key'
+      description: |-
+        Adds a new SSH key to a specific dev site. The key will be deployed to the
+        site's container and grant SSH access.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'A friendly name for the SSH key.'
+        required: true
+        example: 'developer key'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      public_key:
+        custom: []
+        name: public_key
+        description: 'The SSH public key in OpenSSH format.'
+        required: true
+        example: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'developer key'
+      public_key: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                  "name": "developer key",
+                  "fingerprint": "SHA256:abc123def456...",
+                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                  "is_account_default": false,
+                  "created_at": "2026-01-15T10:00:00+00:00",
+                  "updated_at": "2026-01-15T10:00:00+00:00"
+              },
+              "message": "SSH key added to site successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"public_key": ["Unable to parse SSH public key. Ensure it is in valid OpenSSH format."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Invalid Key'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"public_key": ["This SSH key is already installed on this site."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Duplicate Key'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/ssh-keys/{key}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'SSH Keys'
+      subgroupDescription: |-
+        Manage SSH keys installed on specific dev sites. These keys are actually
+        deployed to the site's container and grant SSH access.
+
+        When a new dev site is created, account-level default SSH keys are
+        automatically copied to the site. Use these endpoints to manage keys
+        on existing sites.
+      title: 'Remove SSH Key'
+      description: |-
+        Removes an SSH key from a specific dev site. The key will be removed from
+        the site's container and SSH access will be revoked.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      key:
+        custom: []
+        name: key
+        description: 'The SSH key ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDK
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      key: 01JFGXK4NQRST5VWX9YZ0ABCDK
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDK",
+                  "account_id": 1,
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                  "name": "developer key",
+                  "fingerprint": "SHA256:abc123def456...",
+                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
+                  "is_account_default": false,
+                  "created_at": "2026-01-15T10:00:00+00:00",
+                  "updated_at": "2026-01-15T10:00:00+00:00"
+              },
+              "message": "SSH key removed from site successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "SSH key not found on this site", "http_status": 404}'
+        headers: []
+        description: 'Key Not Found'
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
     responseFields: []
     auth:
       - headers

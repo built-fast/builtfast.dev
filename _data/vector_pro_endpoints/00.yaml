@@ -1,26 +1,28 @@
-name: 'PHP Versions'
+name: 'Account Summary'
 description: |-
 
-  Get available PHP versions for Vector environments.
+  Get a quick summary of your Vector Pro account including owner details,
+  cluster DNS endpoints, domains, and site/environment counts by status.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/vector/php-versions
+    uri: api/v1/vector/account
     metadata:
       custom: []
-      groupName: 'PHP Versions'
+      groupName: 'Account Summary'
       groupDescription: |-
 
-        Get available PHP versions for Vector environments.
+        Get a quick summary of your Vector Pro account including owner details,
+        cluster DNS endpoints, domains, and site/environment counts by status.
       subgroup: ''
       subgroupDescription: ''
-      title: 'List PHP Versions'
+      title: 'Get Account Summary'
       description: |-
-        Retrieves a list of all available PHP versions for Vector environments.
-
-        Currently supported versions: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5
+        Retrieves a summary of the authenticated account's Vector Pro information
+        including owner details, cluster DNS endpoints, verified domains, and
+        site/environment counts grouped by status.
       authenticated: true
       deprecated: false
     headers:
@@ -40,18 +42,51 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": [
-                  {"value": "7.2", "label": "PHP 7.2"},
-                  {"value": "7.3", "label": "PHP 7.3"},
-                  {"value": "7.4", "label": "PHP 7.4"},
-                  {"value": "8.0", "label": "PHP 8.0"},
-                  {"value": "8.1", "label": "PHP 8.1"},
-                  {"value": "8.2", "label": "PHP 8.2"},
-                  {"value": "8.3", "label": "PHP 8.3"},
-                  {"value": "8.4", "label": "PHP 8.4"},
-                  {"value": "8.5", "label": "PHP 8.5"}
-              ],
-              "message": "PHP versions retrieved successfully",
+              "data": {
+                  "owner": {
+                      "name": "John Doe",
+                      "email": "john@example.com"
+                  },
+                  "account": {
+                      "name": "My Account",
+                      "company": "Acme Corp"
+                  },
+                  "cluster": {
+                      "alb_dns_name": "alb-abc123.us-west-2.elb.amazonaws.com",
+                      "aurora_cluster_endpoint": "cluster.abc123.us-west-2.rds.amazonaws.com",
+                      "ssh_nlb_dns": "nlb-abc123.us-west-2.elb.amazonaws.com"
+                  },
+                  "domains": ["mysite.com", "another.org"],
+                  "sites": {
+                      "total": 5,
+                      "by_status": {
+                          "pending": 0,
+                          "activation_requested": 0,
+                          "active": 3,
+                          "suspension_requested": 0,
+                          "suspended": 1,
+                          "unsuspension_requested": 0,
+                          "termination_requested": 0,
+                          "terminated": 1,
+                          "canceled": 0
+                      }
+                  },
+                  "environments": {
+                      "total": 8,
+                      "by_status": {
+                          "pending": 1,
+                          "provisioning": 0,
+                          "active": 5,
+                          "suspending": 0,
+                          "suspended": 1,
+                          "unsuspending": 0,
+                          "terminating": 0,
+                          "terminated": 1,
+                          "failed": 0
+                      }
+                  }
+              },
+              "message": "Account summary retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -62,6 +97,12 @@ endpoints:
         content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
         headers: []
         description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers

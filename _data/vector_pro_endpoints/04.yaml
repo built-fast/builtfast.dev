@@ -1,29 +1,105 @@
-name: Account
+name: Webhooks
 description: |-
 
-  Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
+  Manage webhooks that receive site event notifications. Webhooks are called when
+  events occur on your sites (deployments, status changes, etc.).
+
+  Supports both HTTP webhooks and Slack webhooks for notifications.
+
+  #### Webhook Signature Verification
+
+  HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+  authenticity. The header format is:
+
+  ```
+  X-Vector-Signature: t=1234567890,v1=abc123...
+  ```
+
+  To verify a webhook:
+
+  1. Parse the timestamp (`t`) and signature (`v1`) from the header
+  2. Construct the signed message: `{timestamp}.{raw_request_body}`
+  3. Compute HMAC-SHA256 using your webhook secret as the key
+  4. Compare with the provided signature using constant-time comparison
+  5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+  Example verification (PHP):
+
+  ```php
+  $header = $request->header('X-Vector-Signature');
+  preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+  $timestamp = $matches[1];
+  $signature = $matches[2];
+
+  $message = $timestamp . '.' . $request->getContent();
+  $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+  if (!hash_equals($expected, $signature)) {
+      throw new Exception('Invalid signature');
+  }
+
+  if (abs(time() - (int)$timestamp) > 300) {
+      throw new Exception('Timestamp too old');
+  }
+  ```
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/vector/ssh-keys
+    uri: api/v1/vector/webhooks
     metadata:
       custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: 'SSH Keys'
-      subgroupDescription: |-
-        Manage account-level default SSH keys. These keys serve as templates that are
-        automatically installed on new dev sites when they are created.
+      groupName: Webhooks
+      groupDescription: |-
 
-        **Important**: Changes to account-level keys do not affect existing sites.
-        To add or remove keys from an existing site, use the site-specific SSH key
-        endpoints instead.
-      title: 'List SSH Keys'
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
+
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Webhooks'
       description: |-
-        Retrieves a paginated list of account-level default SSH keys. These are
-        template keys that will be installed on new dev sites.
+        Retrieves a paginated list of all webhooks for the authenticated account.
+        Webhook secrets are never included in list responses.
       authenticated: true
       deprecated: false
     headers:
@@ -71,18 +147,17 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
                       "account_id": 1,
-                      "vector_site_id": null,
-                      "name": "deploy key",
-                      "fingerprint": "SHA256:abc123def456...",
-                      "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
-                      "is_account_default": true,
-                      "created_at": "2026-01-15T10:00:00+00:00",
-                      "updated_at": "2026-01-15T10:00:00+00:00"
+                      "type": "http",
+                      "url": "https://example.com/webhook",
+                      "events": ["vector.site.created", "vector.deployment.completed"],
+                      "enabled": true,
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "SSH keys retrieved successfully",
+              "message": "Webhooks retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -111,354 +186,169 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/ssh-keys/{key}'
+    uri: 'api/v1/vector/webhooks/{webhook}'
     metadata:
       custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: 'SSH Keys'
-      subgroupDescription: |-
-        Manage account-level default SSH keys. These keys serve as templates that are
-        automatically installed on new dev sites when they are created.
-
-        **Important**: Changes to account-level keys do not affect existing sites.
-        To add or remove keys from an existing site, use the site-specific SSH key
-        endpoints instead.
-      title: 'Get SSH Key'
-      description: 'Retrieves details of a specific account-level SSH key.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      key:
-        custom: []
-        name: key
-        description: 'The SSH key ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "vector_site_id": null,
-                  "name": "deploy key",
-                  "fingerprint": "SHA256:abc123def456...",
-                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
-                  "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
-              },
-              "message": "SSH key retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "SSH key not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/vector/ssh-keys
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: 'SSH Keys'
-      subgroupDescription: |-
-        Manage account-level default SSH keys. These keys serve as templates that are
-        automatically installed on new dev sites when they are created.
-
-        **Important**: Changes to account-level keys do not affect existing sites.
-        To add or remove keys from an existing site, use the site-specific SSH key
-        endpoints instead.
-      title: 'Create SSH Key'
-      description: |-
-        Creates a new account-level default SSH key. This key will be automatically
-        installed on any new dev sites created after this point.
-
-        **Note**: This does not affect existing sites. To add a key to an existing
-        site, use the site-specific SSH key endpoint.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'A friendly name for the SSH key.'
-        required: true
-        example: 'deploy key'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      public_key:
-        custom: []
-        name: public_key
-        description: 'The SSH public key in OpenSSH format.'
-        required: true
-        example: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      name: 'deploy key'
-      public_key: 'ssh-rsa AAAAB3NzaC1yc2EA... user@host'
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "vector_site_id": null,
-                  "name": "deploy key",
-                  "fingerprint": "SHA256:abc123def456...",
-                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
-                  "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
-              },
-              "message": "SSH key created successfully",
-              "http_status": 201
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"public_key": ["Unable to parse SSH public key. Ensure it is in valid OpenSSH format."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Invalid Key'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"public_key": ["An SSH key with this fingerprint already exists for this account."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Duplicate Key'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/vector/ssh-keys/{key}'
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: 'SSH Keys'
-      subgroupDescription: |-
-        Manage account-level default SSH keys. These keys serve as templates that are
-        automatically installed on new dev sites when they are created.
-
-        **Important**: Changes to account-level keys do not affect existing sites.
-        To add or remove keys from an existing site, use the site-specific SSH key
-        endpoints instead.
-      title: 'Delete SSH Key'
-      description: |-
-        Deletes an account-level default SSH key. This does not remove the key
-        from any existing sites where it has already been installed.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      key:
-        custom: []
-        name: key
-        description: 'The SSH key ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "vector_site_id": null,
-                  "name": "deploy key",
-                  "fingerprint": "SHA256:abc123def456...",
-                  "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
-                  "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
-              },
-              "message": "SSH key deleted successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "SSH key not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/v1/vector/api-keys
-    metadata:
-      custom: []
-      groupName: Account
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
-      subgroup: 'API Keys'
-      subgroupDescription: |-
-        Manage API access tokens for authentication. Tokens provide Bearer token
-        authentication for all API requests.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        The plain text token is returned only once when created - store it securely
-        as it cannot be retrieved again. Tokens can be revoked at any time.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        #### Usage
+        #### Webhook Signature Verification
 
-        Include the token in the `Authorization` header:
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
 
         ```
-        Authorization: Bearer {your-api-token}
+        X-Vector-Signature: t=1234567890,v1=abc123...
         ```
-      title: 'List API Keys'
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Webhook'
       description: |-
-        Retrieves a paginated list of API keys for the authenticated user.
-        Token values are never returned - only metadata like name, creation date,
-        and last used timestamp.
+        Retrieves details of a specific webhook. The secret is never included
+        in this response - use the rotate-secret endpoint if you need a new secret.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      webhook:
+        custom: []
+        name: webhook
+        description: 'The webhook ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created", "vector.deployment.completed"],
+                  "enabled": true,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Webhook retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/webhooks/{webhook}/logs'
+    metadata:
+      custom: []
+      groupName: Webhooks
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Logs'
+      description: |-
+        Retrieves a paginated list of delivery logs for a specific webhook.
+        Logs are returned in reverse chronological order (newest first).
+
+        Each log entry includes the event type, request payload, response details,
+        and latency information. Logs are automatically pruned after 90 days.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      webhook:
+        custom: []
+        name: webhook
+        description: 'The webhook ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters:
       per_page:
         custom: []
@@ -496,208 +386,22 @@ endpoints:
           {
               "data": [
                   {
-                      "id": 1,
-                      "name": "Production API Key",
-                      "last_used_at": "2025-05-27T10:30:00+00:00",
-                      "expires_at": null,
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                      "vector_webhook_delivery_id": "01JFGXK4NQRST5VWX9YZ0ABCDK",
+                      "vector_webhook_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "event": "vector.site.created",
+                      "request_body": {"event": "vector.site.created", "data": {}},
+                      "attempt": 1,
+                      "response_status": 200,
+                      "response_body": "{\"success\": true}",
+                      "response_headers": {"content-type": "application/json"},
+                      "latency_ms": 150,
                       "created_at": "2025-05-27T09:50:21+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "API keys retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/v1/vector/global-secrets
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
-
-        Global secrets apply to all environments across all sites in your account. For
-        environment-specific secrets, use the Environment Secrets API instead.
-
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'List Secrets'
-      description: |-
-        Retrieves a paginated list of all global secrets for your account.
-        Secret values are not included in the response for security.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'Number of items per page (max 100). Default: 15.'
-        required: false
-        example: 10
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      page:
-        custom: []
-        name: page
-        description: 'Page number for pagination.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      per_page: 10
-      page: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": [
-                  {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "key": "STRIPE_SECRET_KEY",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
-                  }
-              ],
-              "links": {},
-              "meta": {},
-              "message": "Global secrets retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/global-secrets/{secret}'
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
-
-        Global secrets apply to all environments across all sites in your account. For
-        environment-specific secrets, use the Environment Secrets API instead.
-
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Get Secret'
-      description: |-
-        Retrieves details of a specific global secret.
-        The secret value is not included in the response for security.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      secret:
-        custom: []
-        name: secret
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Global secret retrieved successfully",
+              "message": "Webhook logs retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -717,9 +421,9 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
-        description: 'Not Found'
+        description: 'Webhook Not Found'
     responseFields: []
     auth:
       - headers
@@ -732,55 +436,62 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/vector/api-keys
+    uri: api/v1/vector/webhooks
     metadata:
       custom: []
-      groupName: Account
+      groupName: Webhooks
       groupDescription: |-
 
-        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
-      subgroup: 'API Keys'
-      subgroupDescription: |-
-        Manage API access tokens for authentication. Tokens provide Bearer token
-        authentication for all API requests.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        The plain text token is returned only once when created - store it securely
-        as it cannot be retrieved again. Tokens can be revoked at any time.
+        Supports both HTTP webhooks and Slack webhooks for notifications.
 
-        #### Usage
+        #### Webhook Signature Verification
 
-        Include the token in the `Authorization` header:
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
 
         ```
-        Authorization: Bearer {your-api-token}
+        X-Vector-Signature: t=1234567890,v1=abc123...
         ```
-      title: 'Create API Key'
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Webhook'
       description: |-
-        Creates a new API key for the authenticated user. The plain text token is
-        returned ONLY in this response - store it securely as it cannot be
-        retrieved again.
+        Creates a new webhook for the current account. For HTTP webhooks, the secret
+        is returned ONLY in this response - store it securely as it cannot be
+        retrieved again (only rotated via the rotate-secret endpoint).
 
-        Use this token in the `Authorization` header for all API requests.
-
-        Token names are automatically prefixed with `vector-` for identification.
-
-        #### Abilities
-
-        Abilities control what operations the token can perform. Available abilities:
-
-        - `*` - Full access (default)
-        - `vector:mcp` - Full MCP access (for AI assistants like Claude)
-        - `vector:sites:read` - Read sites, environments, deployments, database operations
-        - `vector:sites:write` - Manage sites, environments, deployments, database import/export
-        - `vector:logs:read` - Read site logs
-        - `vector:cdn:read` - Read CDN settings
-        - `vector:cdn:write` - Manage CDN settings and cache
-        - `vector:webhooks:read` - Read webhooks
-        - `vector:webhooks:write` - Manage webhooks
-        - `vector:secrets:read` - Read API keys and global secrets
-        - `vector:secrets:write` - Manage API keys and global secrets
-        - `vector:ssh-keys:read` - Read SSH keys
-        - `vector:ssh-keys:write` - Manage SSH keys
+        Slack webhooks do not require secrets as they use URL-based authentication.
       authenticated: true
       deprecated: false
     headers:
@@ -792,35 +503,59 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      type:
         custom: []
-        name: name
-        description: 'A descriptive name for this API key.'
-        required: true
-        example: 'Production API Key'
+        name: type
+        description: 'The webhook type. Options: `http`, `slack`. Default: http.'
+        required: false
+        example: http
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      abilities:
+      url:
         custom: []
-        name: abilities
-        description: 'Optional array of abilities. Defaults to ["*"] for full access.'
-        required: false
+        name: url
+        description: 'The webhook URL. For HTTP: must use HTTPS. For Slack: must be a Slack webhook URL.'
+        required: true
+        example: 'https://example.com/webhook'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      events:
+        custom: []
+        name: events
+        description: 'Array of events to subscribe to. See available events below.'
+        required: true
         example:
-          - 'vector:sites:read'
-          - 'vector:sites:write'
+          - vector.site.created
+          - vector.deployment.completed
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the webhook is enabled. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: 'Production API Key'
-      abilities:
-        - 'vector:sites:read'
-        - 'vector:sites:write'
+      type: http
+      url: 'https://example.com/webhook'
+      events:
+        - vector.site.created
+        - vector.deployment.completed
+      enabled: true
     fileParameters: []
     responses:
       -
@@ -829,235 +564,41 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": 1,
-                  "name": "vector-Production API Key",
-                  "token": "1|a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
-                  "abilities": ["*"],
-                  "expires_at": null,
-                  "created_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "API key created successfully. Store this token securely - it will not be shown again.",
-              "http_status": 201
-          }
-        headers: []
-        description: Created
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"name": ["The name field is required."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/vector/api-keys/{token}'
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: |-
-
-        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
-      subgroup: 'API Keys'
-      subgroupDescription: |-
-        Manage API access tokens for authentication. Tokens provide Bearer token
-        authentication for all API requests.
-
-        The plain text token is returned only once when created - store it securely
-        as it cannot be retrieved again. Tokens can be revoked at any time.
-
-        #### Usage
-
-        Include the token in the `Authorization` header:
-
-        ```
-        Authorization: Bearer {your-api-token}
-        ```
-      title: 'Delete API Key'
-      description: |-
-        Deletes an API key. You cannot delete the token currently being used
-        for authentication. This operation is irreversible.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      token:
-        custom: []
-        name: token
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      tokenId:
-        custom: []
-        name: tokenId
-        description: 'The API key ID.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      token: architecto
-      tokenId: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": 1,
-                  "name": "Production API Key",
-                  "last_used_at": "2025-05-27T10:30:00+00:00",
-                  "expires_at": null,
-                  "created_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "API key deleted successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Cannot delete the token currently in use", "http_status": 403}'
-        headers: []
-        description: 'Cannot Delete Current Token'
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "API key not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/vector/global-secrets
-    metadata:
-      custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
-
-        Global secrets apply to all environments across all sites in your account. For
-        environment-specific secrets, use the Environment Secrets API instead.
-
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Create Secret'
-      description: |-
-        Creates a new global secret for your account. The secret will be available
-        to all sites within your account during deployment.
-
-        The following keys are reserved and cannot be used:
-        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      key:
-        custom: []
-        name: key
-        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
-        required: true
-        example: STRIPE_SECRET_KEY
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      value:
-        custom: []
-        name: value
-        description: 'The secret value.'
-        required: true
-        example: sk_live_xxxx
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      key: STRIPE_SECRET_KEY
-      value: sk_live_xxxx
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created", "vector.deployment.completed"],
+                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
+                  "enabled": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Global secret created successfully",
+              "message": "Webhook created successfully. Store the secret securely - it will not be shown again.",
               "http_status": 201
           }
         headers: []
-        description: Created
+        description: 'HTTP Webhook Created'
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "slack",
+                  "url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
+                  "events": ["vector.deployment.completed", "vector.deployment.failed"],
+                  "enabled": true,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Slack webhook created successfully.",
+              "http_status": 201
+          }
+        headers: []
+        description: 'Slack Webhook Created'
       -
         custom: []
         status: 401
@@ -1076,7 +617,7 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key is required."]},
+              "errors": {"events": ["At least one event must be specified."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -1094,27 +635,61 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/vector/global-secrets/{secret}'
+    uri: 'api/v1/vector/webhooks/{webhook}'
     metadata:
       custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+      groupName: Webhooks
+      groupDescription: |-
 
-        Global secrets apply to all environments across all sites in your account. For
-        environment-specific secrets, use the Environment Secrets API instead.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Update Secret'
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Webhook'
       description: |-
-        Updates an existing global secret. You can update the key, value, or both.
+        Updates an existing webhook configuration. The secret cannot be updated
+        through this endpoint - use the rotate-secret endpoint instead.
 
-        The following keys are reserved and cannot be used:
-        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+        The webhook type cannot be changed after creation.
       authenticated: true
       deprecated: false
     headers:
@@ -1122,59 +697,63 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      secret:
+      webhook:
         custom: []
-        name: secret
-        description: ''
+        name: webhook
+        description: 'The webhook ID.'
         required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      key:
+      url:
         custom: []
-        name: key
-        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        name: url
+        description: 'The webhook URL. Must use HTTPS for HTTP webhooks.'
         required: false
-        example: STRIPE_API_KEY
+        example: 'https://example.com/new-webhook'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      value:
+      events:
         custom: []
-        name: value
-        description: 'The new secret value.'
+        name: events
+        description: 'Array of events to subscribe to.'
         required: false
-        example: sk_live_yyyy
-        type: string
+        example:
+          - vector.site.created
+          - vector.site.updated
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the webhook is enabled.'
+        required: false
+        example: false
+        type: boolean
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      key: STRIPE_API_KEY
-      value: sk_live_yyyy
+      url: 'https://example.com/new-webhook'
+      events:
+        - vector.site.created
+        - vector.site.updated
+      enabled: false
     fileParameters: []
     responses:
       -
@@ -1183,12 +762,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_API_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/new-webhook",
+                  "events": ["vector.site.created", "vector.site.updated"],
+                  "enabled": false,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
-              "message": "Global secret updated successfully",
+              "message": "Webhook updated successfully",
               "http_status": 200
           }
         headers: []
@@ -1208,7 +791,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
       -
@@ -1217,7 +800,7 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "errors": {"events": ["At least one event must be specified."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -1235,23 +818,59 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/vector/global-secrets/{secret}'
+    uri: 'api/v1/vector/webhooks/{webhook}'
     metadata:
       custom: []
-      groupName: Account
-      groupDescription: ''
-      subgroup: Secrets
-      subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+      groupName: Webhooks
+      groupDescription: |-
 
-        Global secrets apply to all environments across all sites in your account. For
-        environment-specific secrets, use the Environment Secrets API instead.
+        Manage webhooks that receive site event notifications. Webhooks are called when
+        events occur on your sites (deployments, status changes, etc.).
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
-      title: 'Delete Secret'
-      description: 'Deletes a global secret from your account.'
+        Supports both HTTP webhooks and Slack webhooks for notifications.
+
+        #### Webhook Signature Verification
+
+        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
+        authenticity. The header format is:
+
+        ```
+        X-Vector-Signature: t=1234567890,v1=abc123...
+        ```
+
+        To verify a webhook:
+
+        1. Parse the timestamp (`t`) and signature (`v1`) from the header
+        2. Construct the signed message: `{timestamp}.{raw_request_body}`
+        3. Compute HMAC-SHA256 using your webhook secret as the key
+        4. Compare with the provided signature using constant-time comparison
+        5. Validate timestamp is within tolerance (recommended: 5 minutes)
+
+        Example verification (PHP):
+
+        ```php
+        $header = $request->header('X-Vector-Signature');
+        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
+        $timestamp = $matches[1];
+        $signature = $matches[2];
+
+        $message = $timestamp . '.' . $request->getContent();
+        $expected = hash_hmac('sha256', $message, $webhookSecret);
+
+        if (!hash_equals($expected, $signature)) {
+            throw new Exception('Invalid signature');
+        }
+
+        if (abs(time() - (int)$timestamp) > 300) {
+            throw new Exception('Timestamp too old');
+        }
+        ```
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Webhook'
+      description: |-
+        Deletes a webhook. All associated delivery logs will also be deleted.
+        This operation is irreversible.
       authenticated: true
       deprecated: false
     headers:
@@ -1259,31 +878,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      secret:
+      webhook:
         custom: []
-        name: secret
-        description: ''
+        name: webhook
+        description: 'The webhook ID.'
         required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1296,12 +903,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "key": "STRIPE_SECRET_KEY",
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "account_id": 1,
+                  "type": "http",
+                  "url": "https://example.com/webhook",
+                  "events": ["vector.site.created"],
+                  "enabled": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
-              "message": "Global secret deleted successfully",
+              "message": "Webhook deleted successfully",
               "http_status": 200
           }
         headers: []
@@ -1321,7 +932,93 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Global secret not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/webhooks/{webhook}/rotate-secret'
+    metadata:
+      custom: []
+      groupName: Webhooks
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Rotate Secret'
+      description: |-
+        Generates a new secret for the webhook. The old secret is immediately
+        invalidated and any pending deliveries will use the new secret.
+
+        The new secret is returned ONLY in this response - store it securely
+        as it cannot be retrieved again.
+
+        This endpoint is only available for HTTP webhooks. Slack webhooks do not
+        use secrets.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      webhook:
+        custom: []
+        name: webhook
+        description: 'The webhook ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd"
+              },
+              "message": "Webhook secret rotated successfully. Store the new secret securely - it will not be shown again.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []

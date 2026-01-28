@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "26f4c80c-2a94-4fd0-9ac6-547a1e6ab37e",
+        "_postman_id": "fbb77460-fda1-4872-8a3e-0c997ff26606",
         "description": "Vector Pro by BuiltFast",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -263,7 +263,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.2\",\"tags\":[\"wordpress\",\"production\"]}"
+                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.3\",\"tags\":[\"wordpress\",\"production\"]}"
                         },
                         "description": "Creates a new site for the authenticated account. The site is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nA development container is automatically provisioned for the site, accessible\nvia the `dev_domain` in the response."
                     },
@@ -1259,8 +1259,8 @@
                     ]
                 },
                 {
-                    "name": "WAF",
-                    "description": "Configure Web Application Firewall rules for your site's CDN to protect against\nabuse and unwanted traffic.\n\n##### IP Blocking\n\nBlock specific IP addresses or CIDR ranges from accessing your site. Blocked IPs receive\na `403 Forbidden` response.\n\n- Single IPs: `192.168.1.1`\n- CIDR ranges: `10.0.0.0\/8`, `192.168.0.0\/16`\n\n##### Referrer Filtering\n\nControl which sites can link to your content using referrer-based rules.\n\n| Type | Use Case |\n|------|----------|\n| **Blocked Referrers** | Block hotlinking from specific domains |\n| **Allowed Referrers** | Restrict access to requests from approved domains only |\n\nSupports wildcards: `*.example.com` matches all subdomains.\n\n##### Rate Limiting <span class=\"badge badge-info\">Advanced<\/span>\n\nProtect against DDoS, brute force, and API abuse by limiting request frequency.\n\nEach rule defines:\n- **Threshold**: Requests allowed within a time window\n- **Block Duration**: How long to block offending clients (30s to 1 hour)\n- **Matching Criteria**: Target specific paths, methods, or request patterns\n\nMaximum **25 rate limit rules** per site.",
+                    "name": "WAF: Referrers",
+                    "description": "Control which sites can link to your content using referrer-based rules.\n\n- **Blocked Referrers**: Block hotlinking from specific domains\n- **Allowed Referrers**: Restrict access to requests from approved domains only\n\nSupports wildcards: `*.example.com` matches all subdomains.",
                     "item": [
                         {
                             "name": "List Allowed Referrers",
@@ -1339,144 +1339,6 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": [\n        {\"hostname\": \"spam.com\"},\n        {\"hostname\": \"*.malicious.net\"}\n    ],\n    \"message\": \"Blocked referrers retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "List Blocked IPs",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/blocked-ips",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/blocked-ips",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves all blocked IP addresses for a site."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\"ip\": \"192.168.1.100\"},\n        {\"ip\": \"10.0.0.0\"}\n    ],\n    \"message\": \"Blocked IPs retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "List Rate Limits",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/rate-limits",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/rate-limits",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\n            \"id\": 12345,\n            \"name\": \"API Rate Limit\",\n            \"description\": \"Limit API requests to 100\/second\",\n            \"shield_zone_id\": 67890,\n            \"configuration\": {\n                \"request_count\": 100,\n                \"timeframe\": 1,\n                \"block_time\": 60,\n                \"value\": \"\/api\/*\",\n                \"action\": \"rate-limit\",\n                \"operator\": \"begins-with\",\n                \"variables\": [\"request-uri\"],\n                \"transformations\": [\"lowercase\"]\n            }\n        }\n    ],\n    \"message\": \"Rate limits retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Get Rate Limit",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/rate-limits\/:rule",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/rate-limits\/:rule",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "rule",
-                                            "key": "rule",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "ruleId",
-                                            "key": "ruleId",
-                                            "value": "12345",
-                                            "description": "The rate limit rule ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves a specific rate limit rule by ID."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": 12345,\n        \"name\": \"API Rate Limit\",\n        \"description\": \"Limit API requests to 100\/second\",\n        \"shield_zone_id\": 67890,\n        \"configuration\": {\n            \"request_count\": 100,\n            \"timeframe\": 1,\n            \"block_time\": 60,\n            \"value\": \"\/api\/*\",\n            \"action\": \"rate-limit\",\n            \"operator\": \"begins-with\",\n            \"variables\": [\"request-uri\"],\n            \"transformations\": [\"lowercase\"]\n        }\n    },\n    \"message\": \"Rate limit retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\n    \"data\": {},\n    \"message\": \"Rate limit not found\",\n    \"http_status\": 404\n}",
-                                    "name": "Not Found"
                                 }
                             ]
                         },
@@ -1657,6 +1519,52 @@
                                     "name": "Success"
                                 }
                             ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Blocked IPs",
+                    "description": "Block specific IP addresses or CIDR ranges from accessing your site.\nBlocked IPs receive a `403 Forbidden` response.\n\n- Single IPs: `192.168.1.1`\n- CIDR ranges: `10.0.0.0\/8`, `192.168.0.0\/16`",
+                    "item": [
+                        {
+                            "name": "List Blocked IPs",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/blocked-ips",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/blocked-ips",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves all blocked IP addresses for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\"ip\": \"192.168.1.100\"},\n        {\"ip\": \"10.0.0.0\"}\n    ],\n    \"message\": \"Blocked IPs retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                }
+                            ]
                         },
                         {
                             "name": "Add Blocked IP",
@@ -1744,6 +1652,110 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\"ip\": \"192.168.1.100\"},\n    \"message\": \"Blocked IP removed successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Rate Limits",
+                    "description": "Protect against DDoS, brute force, and API abuse by limiting request frequency.\n\nEach rule defines:\n- **Threshold**: Requests allowed within a time window\n- **Block Duration**: How long to block offending clients (30s to 1 hour)\n- **Matching Criteria**: Target specific paths, methods, or request patterns\n\nMaximum **25 rate limit rules** per site.",
+                    "item": [
+                        {
+                            "name": "List Rate Limits",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/rate-limits",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/rate-limits",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": 12345,\n            \"name\": \"API Rate Limit\",\n            \"description\": \"Limit API requests to 100\/second\",\n            \"shield_zone_id\": 67890,\n            \"configuration\": {\n                \"request_count\": 100,\n                \"timeframe\": 1,\n                \"block_time\": 60,\n                \"value\": \"\/api\/*\",\n                \"action\": \"rate-limit\",\n                \"operator\": \"begins-with\",\n                \"variables\": [\"request-uri\"],\n                \"transformations\": [\"lowercase\"]\n            }\n        }\n    ],\n    \"message\": \"Rate limits retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Rate Limit",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/rate-limits\/:rule",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/rate-limits\/:rule",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "rule",
+                                            "key": "rule",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "ruleId",
+                                            "key": "ruleId",
+                                            "value": "12345",
+                                            "description": "The rate limit rule ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a specific rate limit rule by ID."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": 12345,\n        \"name\": \"API Rate Limit\",\n        \"description\": \"Limit API requests to 100\/second\",\n        \"shield_zone_id\": 67890,\n        \"configuration\": {\n            \"request_count\": 100,\n            \"timeframe\": 1,\n            \"block_time\": 60,\n            \"value\": \"\/api\/*\",\n            \"action\": \"rate-limit\",\n            \"operator\": \"begins-with\",\n            \"variables\": [\"request-uri\"],\n            \"transformations\": [\"lowercase\"]\n        }\n    },\n    \"message\": \"Rate limit retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Rate limit not found\",\n    \"http_status\": 404\n}",
+                                    "name": "Not Found"
                                 }
                             ]
                         },
@@ -3536,7 +3548,7 @@
                 },
                 {
                     "name": "API Keys",
-                    "description": "Manage API access tokens for authentication. Tokens provide Bearer token\nauthentication for all API requests.\n\nThe plain text token is returned only once when created - store it securely\nas it cannot be retrieved again. Tokens can be revoked at any time.\n\n#### Usage\n\nInclude the token in the `Authorization` header:\n\n```\nAuthorization: Bearer {your-api-token}\n```",
+                    "description": "Manage API access tokens for authentication. Tokens provide Bearer token\nauthentication for all API requests.\n\nThe plain text token is returned only once when created - store it securely\nas it cannot be retrieved again. Tokens can be revoked at any time.",
                     "item": [
                         {
                             "name": "List API Keys",
@@ -3613,7 +3625,7 @@
                                     "mode": "raw",
                                     "raw": "{\"name\":\"Production API Key\",\"abilities\":[\"vector:sites:read\",\"vector:sites:write\"]}"
                                 },
-                                "description": "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n#### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments, database operations\n- `vector:sites:write` - Manage sites, environments, deployments, database import\/export\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
+                                "description": "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments, database operations\n- `vector:sites:write` - Manage sites, environments, deployments, database import\/export\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
                             },
                             "response": [
                                 {
@@ -4016,6 +4028,56 @@
                                     "name": "Not Found"
                                 }
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Account Summary",
+            "description": "\nGet a quick summary of your Vector Pro account including owner details,\ncluster DNS endpoints, domains, and site\/environment counts by status.",
+            "item": [
+                {
+                    "name": "Get Account Summary",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/account",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/account"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains, and\nsite\/environment counts grouped by status."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-west-2.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"mysite.com\", \"another.org\"],\n        \"sites\": {\n            \"total\": 5,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0,\n                \"termination_requested\": 0,\n                \"terminated\": 1,\n                \"canceled\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 8,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"terminating\": 0,\n                \"terminated\": 1,\n                \"failed\": 0\n            }\n        }\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
                         }
                     ]
                 }
