@@ -10,8 +10,8 @@ tags:
   - phpunit
   - pest
 languages:
-  - name: Bash
-    icon: bash
+  - name: PHP
+    icon: php
 tagline: Code coverage annotations for GitHub Actions
 excerpt: |
   A GitHub CLI extension to annotate GitHub Actions runs with code coverage
