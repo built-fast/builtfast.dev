@@ -10,10 +10,8 @@
   <!-- Theme: prevent flash of wrong theme -->
   <script>
     (function() {
-      const saved = localStorage.getItem('theme') || 'dark';
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const isLight = saved === 'light' || (saved === 'auto' && !prefersDark);
-      if (isLight) document.documentElement.classList.add('light');
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.classList.add('light');
     })();
   </script>
 
@@ -35,13 +33,10 @@
   <!-- Theme toggle store -->
   <script>
     document.addEventListener('alpine:init', () => {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
       Alpine.store('theme', {
-        value: localStorage.getItem('theme') || 'dark',
+        value: localStorage.getItem('theme') === 'light' ? 'light' : 'dark',
 
         init() {
-          mediaQuery.addEventListener('change', () => this.apply());
           this.apply();
         },
 
@@ -52,9 +47,7 @@
         },
 
         apply() {
-          const prefersDark = mediaQuery.matches;
-          const isLight = this.value === 'light' || (this.value === 'auto' && !prefersDark);
-          document.documentElement.classList.toggle('light', isLight);
+          document.documentElement.classList.toggle('light', this.value === 'light');
         }
       });
     });
