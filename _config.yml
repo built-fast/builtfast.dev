@@ -1,10 +1,15 @@
 # Site settings
 url: https://builtfast.dev
+
 title: BuiltFast Developers
 description: >
   Open source tools, technical writing, and API documentation
   from BuiltFast.
 timezone: 'America/New_York'
+
+# GitHub metadata (explicit for GHA builds)
+github:
+  default_branch: main
 
 analytics:
   google: G-4WXX1X23X3
