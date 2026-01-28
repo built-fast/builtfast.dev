@@ -1102,17 +1102,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      is_production:
-        custom: []
-        name: is_production
-        description: ''
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       custom_domain:
         custom: []
         name: custom_domain
@@ -1139,7 +1128,6 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: production
-      is_production: true
       custom_domain: newshop.com
       tags:
         - live

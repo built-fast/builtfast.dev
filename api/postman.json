@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "ecfc1bcd-f896-4a6e-8591-d2124d5ec93d",
+        "_postman_id": "764de6b8-3f6b-4312-a472-05c6f3467ac0",
         "description": "Vector Pro by BuiltFast",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -263,7 +263,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"7.3\",\"tags\":[\"wordpress\",\"production\"]}"
+                            "raw": "{\"partner_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.3\",\"tags\":[\"wordpress\",\"production\"]}"
                         },
                         "description": "Creates a new site for the authenticated account. The site is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nA development container is automatically provisioned for the site, accessible\nvia the `dev_domain` in the response."
                     },
@@ -698,7 +698,7 @@
                 },
                 {
                     "name": "Databases",
-                    "description": "",
+                    "description": "Manage database credentials for the site's development container. Each site has\na dedicated MySQL database for local development with credentials that can be reset for security.",
                     "item": [
                         {
                             "name": "Reset Password",
@@ -3119,7 +3119,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"production\",\"is_production\":true,\"custom_domain\":\"newshop.com\",\"tags\":[\"live\",\"updated\"]}"
+                            "raw": "{\"name\":\"production\",\"custom_domain\":\"newshop.com\",\"tags\":[\"live\",\"updated\"]}"
                         },
                         "description": "Updates an existing environment. Only the fields provided will be updated."
                     },

@@ -426,21 +426,12 @@ endpoints:
       dev_php_version:
         custom: []
         name: dev_php_version
-        description: ''
+        description: 'The PHP version for the development container. Must be one of: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5.'
         required: true
-        example: '7.3'
+        example: '8.3'
         type: string
-        enumValues:
-          - '7.2'
-          - '7.3'
-          - '7.4'
-          - '8.0'
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
-          - '8.5'
-        exampleWasSpecified: false
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       tags:
@@ -458,7 +449,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       partner_customer_id: cust_12345
-      dev_php_version: '7.3'
+      dev_php_version: '8.3'
       tags:
         - wordpress
         - production
@@ -1291,11 +1282,11 @@ endpoints:
     metadata:
       custom: []
       groupName: Sites
-      groupDescription: |-
-
-        Reset the database password for a Vector Pro site's development container.
+      groupDescription: ''
       subgroup: Databases
-      subgroupDescription: ''
+      subgroupDescription: |-
+        Manage database credentials for the site's development container. Each site has
+        a dedicated MySQL database for local development with credentials that can be reset for security.
       title: 'Reset Password'
       description: |-
         Generates a new database password for the site's development container.
