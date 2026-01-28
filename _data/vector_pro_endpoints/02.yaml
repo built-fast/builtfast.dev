@@ -428,7 +428,7 @@ endpoints:
         name: dev_php_version
         description: ''
         required: true
-        example: '8.5'
+        example: '7.3'
         type: string
         enumValues:
           - '7.2'
@@ -458,7 +458,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       partner_customer_id: cust_12345
-      dev_php_version: '8.5'
+      dev_php_version: '7.3'
       tags:
         - wordpress
         - production

@@ -1,8 +1,7 @@
 name: Account
 description: |-
 
-  Get a quick summary of your Vector Pro account including owner details,
-  cluster DNS endpoints, domains, and site/environment counts by status.
+  Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
 endpoints:
   -
     custom: []
@@ -14,8 +13,7 @@ endpoints:
       groupName: Account
       groupDescription: |-
 
-        Get a quick summary of your Vector Pro account including owner details,
-        cluster DNS endpoints, domains, and site/environment counts by status.
+        Manage your Vector Pro account settings including API keys, SSH keys, and global secrets.
       subgroup: ''
       subgroupDescription: ''
       title: 'Get Account Summary'
