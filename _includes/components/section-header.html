@@ -22,7 +22,7 @@ Parameters:
 - link_text: Text for the optional link (optional)
 {% endcomment %}
 
-<div class="{% if include.link_url %}flex items-center justify-between {% endif %}mb-{% if include.link_url %}8{% else %}10{% endif %}">
+<div class="{% if include.link_url %}flex items-center justify-between mb-8{% else %}mb-10{% endif %}">
   <div>
     <span class="section-label">{{ include.label }}</span>
     <h2 class="text-2xl text-primary font-semibold mt-2">{{ include.title }}</h2>
