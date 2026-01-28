@@ -1,5 +1,4 @@
 ---
-published: false
 layout: post
 title: "Using ShellCheck to write better Bash scripts"
 date: "Thu Jan 23 12:00:00 -0500 2026"

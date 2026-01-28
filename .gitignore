@@ -1,6 +1,6 @@
 # Jekyll
 _site/
-_drafts/
+# _drafts/
 _dump/
 .jekyll-cache/
 .jekyll-metadata

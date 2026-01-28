@@ -1,5 +1,4 @@
 ---
-published: false
 layout: post
 title: "How we test our Laravel monolith with Bash scripts"
 date: "Sat Jan 24 00:00:00 -0500 2026"

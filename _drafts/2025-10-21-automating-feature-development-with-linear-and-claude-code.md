@@ -1,5 +1,4 @@
 ---
-published: false
 layout: post
 title: "Automating feature development with Linear and Claude Code"
 date: "Tue Oct 21 10:00:00 -0400 2025"

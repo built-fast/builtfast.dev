@@ -1,5 +1,4 @@
 ---
-published: false
 title: "Domains vs Hosting: What's the Difference?"
 date: "Mon Dec 15 12:00:00 -0500 2025"
 author: Josh Priddle
