@@ -1,0 +1,14 @@
+{% comment %}
+Logo with terminal prompt component.
+
+Parameters:
+  - text: The text to display (default: "developers")
+{% endcomment %}
+
+{% assign prompt_text = include.text | default: "developers" %}
+
+<span class="terminal-prompt text-sm dimmed" x-data="terminalPrompt('{{ prompt_text }}')">
+  <span class="prompt-symbol mr-1">❯</span>
+  <span class="prompt-text" x-ref="text"></span>
+  <span class="prompt-cursor" x-ref="cursor"></span>
+</span>

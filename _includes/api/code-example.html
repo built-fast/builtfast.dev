@@ -1,0 +1,25 @@
+{% comment %}
+  Code example component with language tabs
+  Usage: {% include api/code-example.html endpoint=endpoint %}
+{% endcomment %}
+
+{% assign e = include.endpoint %}
+
+<h5 class="text-sm font-semibold text-primary mb-3">Request</h5>
+<div class="code-block mb-6">
+  <div class="code-block-header">
+    <div class="code-tabs">
+      <button class="code-tab" :class="{ 'active': codeTab === 'curl' }" @click="codeTab = 'curl'">cURL</button>
+      <button class="code-tab" :class="{ 'active': codeTab === 'php' }" @click="codeTab = 'php'">PHP</button>
+      <button class="code-tab" :class="{ 'active': codeTab === 'js' }" @click="codeTab = 'js'">JavaScript</button>
+    </div>
+    <button class="copy-btn" aria-label="Copy code" @click="$dispatch('copy-code', { target: $el.closest('.code-block').querySelector('.code-block-body pre:not([style*=\'display: none\'])') })">
+      {% include icons/copy.html size=4 %}
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre x-show="codeTab === 'curl'">{{ e.examples.curl | escape }}</pre>
+    <pre x-show="codeTab === 'php'" x-cloak>{{ e.examples.php | escape }}</pre>
+    <pre x-show="codeTab === 'js'" x-cloak>{{ e.examples.js | escape }}</pre>
+  </div>
+</div>

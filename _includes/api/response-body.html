@@ -1,0 +1,23 @@
+{% comment %}
+  Response body display component
+  Usage: {% include api/response-body.html responses=endpoint.responses %}
+{% endcomment %}
+
+{% assign responses = include.responses %}
+
+{% if responses.size > 0 %}
+<h5 class="text-sm font-semibold text-primary mb-3">Response</h5>
+<div class="code-block">
+  <div class="code-block-header">
+    <span class="text-xs text-muted">application/json</span>
+    <button class="copy-btn" aria-label="Copy response" @click="$dispatch('copy-code', { target: $el.closest('.code-block').querySelector('.code-block-body pre:not([style*=\'display: none\'])') })">
+      {% include icons/copy.html size=4 %}
+    </button>
+  </div>
+  <div class="code-block-body text-sm">
+    {% for response in responses %}
+      <pre x-show="responseTab === '{{ response.slug }}'"{% unless forloop.first %} x-cloak{% endunless %}>{{ response.content | escape }}</pre>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

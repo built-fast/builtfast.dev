@@ -1,23 +1,74 @@
-<footer class="border-t border-slate-200 dark:border-slate-800">
-  <div class="py-8">
-    <div class="text-center md:flex md:items-center md:justify-between">
+<footer class="py-8 md:py-10 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-6 mb-8">
+      <!-- Brand column -->
+      <div class="col-span-2 md:col-span-4">
+        <a href="/" class="flex items-center gap-3 mb-4 group">
+          <span class="flex items-center">
+            {% include logos/full.html class="h-5 logo-dark" %}
+            {% include logos/full-dark.html class="h-5 logo-light" %}
+          </span>
+          {% include components/logo-prompt.html text="developers" %}
+        </a>
+        <p class="text-sm text-muted leading-relaxed">Open source tools, technical writing, and API documentation from BuiltFast.</p>
+      </div>
 
-      <!-- Social links -->
-      <ul class="inline-flex mb-4 md:order-1 md:ml-4 md:mb-0 space-x-2">
-        <li>
-          <a class="flex justify-center items-center text-slate-400 dark:text-slate-500 hover:text-cyan-500 dark:hover:text-cyan-500 transition duration-150 ease-in-out" href="https://github.com/built-fast" aria-label="GitHub">
-            {% include icons/github.svg %}
-          </a>
-        </li>
-        <li>
-          <a class="flex justify-center items-center text-slate-400 dark:text-slate-500 hover:text-cyan-500 dark:hover:text-cyan-500 transition duration-150 ease-in-out" href="https://www.linkedin.com/company/builtfast/posts/?feedView=all" aria-label="LinkedIn">
-            {% include icons/linkedin.svg %}
-          </a>
-        </li>
-      </ul>
+      <!-- Vector Pro -->
+      <div class="col-span-1 md:col-span-2">
+        <h4 class="text-xs text-muted uppercase tracking-wider mb-4">Vector Pro</h4>
+        <ul class="space-y-2">
+          <li><a href="/docs/vector-pro/overview/what-is-vector-pro/" class="footer-link">Overview</a></li>
+          <li><a href="/docs/vector-pro/architecture/dev-vs-production/" class="footer-link">Architecture</a></li>
+          <li><a href="/docs/vector-pro/getting-started/authentication/" class="footer-link">Getting Started</a></li>
+          <li><a href="/api/" class="footer-link">API Reference</a></li>
+        </ul>
+      </div>
 
-      <!-- Copyright -->
-      <div class="text-sm text-slate-500 dark:text-slate-400">Copyright &copy; {{ site.time | date: '%Y' }} BuiltFast</div>
+      <!-- Developers -->
+      <div class="col-span-1 md:col-span-2">
+        <h4 class="text-xs text-muted uppercase tracking-wider mb-4">Developers</h4>
+        <ul class="space-y-2">
+          <li><a href="/oss/" class="footer-link">Open Source</a></li>
+          <li><a href="/blog/" class="footer-link">Blog</a></li>
+          <li><a href="/security/" class="footer-link">Security</a></li>
+          <li><a href="/conduct/" class="footer-link">Code of Conduct</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="col-span-1 md:col-span-2">
+        <h4 class="text-xs text-muted uppercase tracking-wider mb-4">Resources</h4>
+        <ul class="space-y-2">
+          <li><a href="/docs/" class="footer-link">Docs</a></li>
+          <li><a href="https://builtast.com/support" class="footer-link">Support</a></li>
+          <li><a href="https://feedback.builtfast.com" class="footer-link">Feedback</a></li>
+          <li><a href="https://go.builtfast.com" class="footer-link">My Account</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="col-span-1 md:col-span-2">
+        <h4 class="text-xs text-muted uppercase tracking-wider mb-4">Company</h4>
+        <ul class="space-y-2">
+          <li><a href="/team/" class="footer-link">Team</a></li>
+          <li><a href="/contact/" class="footer-link">Contact</a></li>
+          <li><a href="https://builtfast.com/legal/tos" class="footer-link">Terms of Service</a></li>
+          <li><a href="https://builtfast.com/legal/privacy-policy" class="footer-link">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-subtle">
+      <p class="text-xs text-muted mb-4 md:mb-0">&copy; {{ 'now' | date: '%Y' }} <a href="https://builtfast.com" class="text-muted hover:text-primary transition-colors">BuiltFast</a>. All rights reserved.</p>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/built-fast" class="text-muted hover:text-primary transition-colors" aria-label="GitHub">
+          {% include icons/github.html size=5 %}
+        </a>
+        <a href="https://www.linkedin.com/company/builtfast/posts/?feedView=all" class="text-muted hover:text-primary transition-colors" aria-label="LinkedIn">
+          {% include icons/linkedin.html size=5 %}
+        </a>
+      </div>
     </div>
   </div>
 </footer>

@@ -1,8 +1,0 @@
----
-layout: page
-title: Open Source Projects
-permalink: /oss/
----
-
-{% assign collection = site.oss | where_exp: "item", "item.hidden != true" %}
-{% include projects/list.html collection=collection %}

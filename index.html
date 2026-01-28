@@ -1,9 +1,197 @@
 ---
 layout: default
-homepage: true
-permalink: /
+title: Open Source Tools & API Documentation
+description: Open source tools, technical writing, and API documentation from BuiltFast.
+hero: home
 ---
 
-{% include latest-articles/list.html %}
-{% assign oss = site.oss | where_exp: "item", "item.hidden != true" %}
-{% include projects/list.html title="Open Source Projects" collection=oss %}
+<!-- Quick Links Row -->
+<section class="py-8 border-y border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Open Source -->
+      <a href="/oss/" class="card p-5 hover:border-emphasis group">
+        <div class="flex items-start gap-3">
+          {% include icons/box.html size=5 class="text-cyan shrink-0 mt-0.5" %}
+          <div>
+            <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Open Source</h3>
+            <p class="text-sm text-muted">Tools and libraries we build and maintain.</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Blog -->
+      <a href="/blog/" class="card p-5 hover:border-emphasis group">
+        <div class="flex items-start gap-3">
+          {% include icons/pen-line.html size=5 class="text-orange shrink-0 mt-0.5" %}
+          <div>
+            <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Blog</h3>
+            <p class="text-sm text-muted">Technical writing on hosting, infrastructure, and PHP.</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Vector Pro -->
+      <a href="/docs/vector-pro/" class="card p-5 hover:border-emphasis group">
+        <div class="flex items-start gap-3">
+          {% include icons/terminal.html size=5 class="text-green-500 shrink-0 mt-0.5" %}
+          <div>
+            <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Vector Pro</h3>
+            <p class="text-sm text-muted">API docs for our serverless WordPress platform.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Open Source Section -->
+<section id="open-source" class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// open source"
+       title="Tools we've built and use in production."
+       link_url="/oss/"
+       link_text="View all"
+    %}
+
+    {% assign projects = site.oss | sort: "date" | reverse %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% assign count = 0 %}
+      {% for project in projects %}
+        {% unless project.tags contains 'vector-pro' %}
+          {% if count < 4 %}
+            {% include components/project-card.html project=project %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog" class="py-16 md:py-20 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// blog"
+       title="From the Blog"
+       link_url="/blog/"
+       link_text="View all posts"
+    %}
+
+    {% assign recent_posts = site.posts | slice: 0, 5 %}
+    {% if recent_posts.size > 0 %}
+    <div>
+      {% for post in recent_posts %}
+      <a href="{{ post.url }}" class="blog-row">
+        <div class="blog-row-date">
+          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %d" }}</time>
+          <span class="blog-row-year">{{ post.date | date: "%Y" }}</span>
+        </div>
+        <span class="text-primary blog-title transition-colors">{{ post.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted py-8">No posts yet. Check back soon.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Vector Pro Callout -->
+<section id="vector-pro" class="py-16 md:py-20 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// api"
+       title="Vector Pro"
+       link_url="/api/"
+       link_text="API Reference"
+    %}
+
+    <!-- Hero card with dot grid -->
+    <div class="vp-hero-card">
+      <div class="vp-hero-bg"></div>
+      <div class="vp-hero-content">
+        <p class="text-secondary mb-5 max-w-xl">Serverless WordPress hosting on AWS Lambda. Provision sites, manage deployments, and configure infrastructure through a REST API.</p>
+        <div class="vp-base-url">
+          <span class="vp-base-url-label">Base URL</span>
+          <code class="vp-base-url-value">api.builtfast.com/api/v1/vector</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border-subtle)] border border-[var(--border-subtle)] rounded-lg overflow-hidden mt-6">
+      <!-- Quick Start -->
+      <div class="bg-base p-5">
+        <div class="mb-3">
+          <span class="text-sm font-semibold text-primary">Quick Start</span>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center gap-2">
+            <span class="api-step-num">1</span>
+            <span class="text-muted">Create site</span>
+            <code class="vp-method-badge post">POST</code>
+            <code class="vp-endpoint">/sites</code>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="api-step-num">2</span>
+            <span class="text-muted">Upload via SFTP</span>
+            <code class="vp-sftp">ssh.myvectorsite.com</code>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="api-step-num">3</span>
+            <span class="text-muted">Deploy</span>
+            <code class="vp-method-badge post">POST</code>
+            <code class="vp-endpoint">/deployments</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Developer Tools -->
+      <div class="bg-base p-5">
+        <div class="mb-3">
+          <span class="text-sm font-semibold text-primary">Developer Tools</span>
+        </div>
+        <div class="space-y-2">
+          <a href="/oss/vector-cli/" class="vp-tool-link">
+            {% include icons/terminal.html size=4 %}
+            <span>Vector CLI</span>
+          </a>
+          <a href="/api/openapi/" class="vp-tool-link">
+            {% include icons/file-json.html size=4 %}
+            <span>OpenAPI Spec</span>
+          </a>
+          <a href="/api/postman/" class="vp-tool-link">
+            {% include icons/rocket.html size=4 %}
+            <span>Postman Collection</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- SDKs -->
+      <div class="bg-base p-5">
+        <div class="mb-3">
+          <span class="text-sm font-semibold text-primary">SDKs</span>
+        </div>
+        <div class="space-y-2">
+          <div class="vp-sdk-row">
+            <span class="vp-sdk-label">PHP</span>
+            <code class="vp-sdk-cmd">composer r built-fast/vector-pro-sdk</code>
+            <button class="copy-btn" data-copy="composer require built-fast/vector-pro-sdk" aria-label="Copy PHP install command">
+              {% include icons/copy.html size=3.5 %}
+            </button>
+          </div>
+          <div class="vp-sdk-row">
+            <span class="vp-sdk-label">Node</span>
+            <code class="vp-sdk-cmd">npm i @built-fast/vector-pro-sdk</code>
+            <button class="copy-btn" data-copy="npm install @built-fast/vector-pro-sdk" aria-label="Copy Node install command">
+              {% include icons/copy.html size=3.5 %}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

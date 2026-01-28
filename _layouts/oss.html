@@ -1,0 +1,114 @@
+---
+layout: base
+---
+
+{% include nav.html %}
+
+<main class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="lg:grid lg:grid-cols-[1fr_240px] lg:gap-12">
+      <!-- Main Content -->
+      <article class="min-w-0">
+        <!-- Project Header -->
+        <header class="oss-header">
+          <!-- Back link -->
+          <a href="/oss/" class="oss-back-link">
+            {% include icons/arrow-left.html size=4 %}
+            All Projects
+          </a>
+
+          <h1 class="oss-title">{{ page.title }}</h1>
+
+          {% if page.tagline %}
+          <p class="oss-tagline">{{ page.tagline }}</p>
+          {% endif %}
+
+          <!-- Project Meta -->
+          <div class="oss-meta">
+            {% if page.github %}
+            <a href="{{ page.github }}" class="oss-meta-link" target="_blank" rel="noopener">
+              {% include icons/github.html size=4 %}
+              {{ page.github | remove: "https://github.com/" }}
+            </a>
+            {% endif %}
+
+            {% if page.license %}
+            <span class="oss-meta-item">
+              {% include icons/scale.html size=4 %}
+              {{ page.license }}
+            </span>
+            {% endif %}
+
+            {% if page.archived %}
+            <span class="oss-archived-badge">
+              {% include icons/archive.html size=3 %}
+              Archived
+            </span>
+            {% endif %}
+          </div>
+
+          <!-- Tags -->
+          {% if page.tags and page.tags.size > 0 %}
+          {% assign sorted_tags = page.tags | sort %}
+          <div class="oss-tags">
+            {% for tag in sorted_tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </header>
+
+        <!-- Project Content -->
+        <div class="prose oss-content">
+          {{ content }}
+        </div>
+
+        <!-- Project Footer -->
+        <footer class="oss-footer">
+          <!-- Contribute CTA -->
+          {% if page.github %}
+          <div class="oss-contribute">
+            <div class="oss-contribute-content">
+              <h3 class="oss-contribute-title">Want to contribute?</h3>
+              <p class="oss-contribute-text">Issues, pull requests, and feature suggestions are welcome.</p>
+            </div>
+            <a href="{{ page.github }}/issues" class="btn-secondary" target="_blank" rel="noopener">
+              {% include icons/github.html size=4 %}
+              Open an Issue
+            </a>
+          </div>
+          {% endif %}
+
+          <!-- Related Projects -->
+          {% assign related = site.oss | where_exp: "item", "item.url != page.url" | sample: 2 %}
+          {% if related.size > 0 %}
+          <div class="oss-related">
+            <h3 class="oss-related-title">More Projects</h3>
+            <div class="oss-related-grid">
+              {% for project in related %}
+              <a href="{{ project.url }}" class="oss-related-card group">
+                <div class="oss-related-card-header">
+                  <p class="oss-related-card-name group-hover:text-cyan transition-colors">{{ project.title }}</p>
+                  {% if project.languages and project.languages.size > 0 %}
+                  {% assign first_lang = project.languages[0].name %}
+                  {% include components/lang-badge.html name=first_lang size="sm" %}
+                  {% endif %}
+                </div>
+                <p class="oss-related-card-tagline">{{ project.tagline }}</p>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </footer>
+      </article>
+
+      <!-- TOC Sidebar (desktop only) -->
+      <aside class="hidden lg:block">
+        {% include components/toc.html %}
+      </aside>
+    </div>
+  </div>
+</main>
+
+{% include footer.html %}

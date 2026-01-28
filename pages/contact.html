@@ -1,0 +1,140 @@
+---
+layout: default
+title: Contact
+description: Get in touch with the BuiltFast Developers team. We manage our community on GitHub—questions, ideas, bugs, and collaborations all happen in the open.
+permalink: /contact/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// contact"
+   title="Let's talk."
+   accent="We build in public."
+   description="We manage our community and developer relations on GitHub. By keeping conversations public, the whole community benefits—and you'll often get answers faster."
+%}
+
+<!-- Contact Cards -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {% include components/link-card.html
+         url="https://github.com/orgs/built-fast/discussions"
+         icon="message-circle"
+         icon_color="cyan"
+         title="Start a Discussion"
+         description="Questions, ideas, feedback, or just want to chat? GitHub Discussions is the best place for open conversations."
+         link_text="Open Discussions"
+      %}
+
+      {% capture gh_icon %}
+      <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      {% endcapture %}
+      {% include components/link-card.html
+         url="https://github.com/built-fast"
+         icon_html=gh_icon
+         title="GitHub Organization"
+         description="Browse our repositories, report issues, or contribute to our open source projects."
+         link_text="View on GitHub"
+      %}
+    </div>
+
+    <!-- Security Alert Card -->
+    {% capture tc_content %}
+    <div class="p-5">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-lg bg-orange/15 flex items-center justify-center shrink-0">
+          {% include icons/shield-alert.html size=5 class="text-orange" %}
+        </div>
+        <div>
+          <h3 class="text-primary font-medium mb-1">Security Vulnerabilities</h3>
+          <p class="text-sm text-muted leading-relaxed mb-3">
+            Found a security issue? Please report it privately—not in public GitHub issues. We respond within 24 hours and credit researchers who help keep our users safe.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="mailto:security@builtfast.com" class="link-arrow text-sm">
+              {% include icons/mail.html size=4 %}
+              security@builtfast.com
+            </a>
+            <a href="/security/" class="text-sm text-muted hover:text-secondary transition-colors">
+              View security policy →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endcapture %}
+    {% include components/terminal-card.html filename="security_contact.sh" content=tc_content %}
+  </div>
+</section>
+
+<!-- Other Ways to Reach Us -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// other channels"
+       title="Need something specific?"
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% capture vp_links %}
+      <div class="space-y-2">
+        <a href="https://builtfast.com/support" class="text-sm text-secondary hover:text-cyan transition-colors block">
+          → Support Portal
+        </a>
+        <a href="/docs/vector-pro/" class="text-sm text-secondary hover:text-cyan transition-colors block">
+          → API Documentation
+        </a>
+      </div>
+      {% endcapture %}
+      {% include components/info-card.html
+         icon="terminal"
+         icon_color="green-500"
+         title="Vector Pro Support"
+         description="API questions, account issues, or platform support for Vector Pro customers."
+         content=vp_links
+      %}
+
+      {% include components/info-card.html
+         icon="handshake"
+         icon_color="cyan"
+         title="Partnerships"
+         description="White-label hosting, API partnerships, enterprise agreements, or integration opportunities."
+         link_url="mailto:partnerships@builtfast.com"
+         link_text="partnerships@builtfast.com"
+      %}
+
+      {% include components/info-card.html
+         icon="mail"
+         icon_color="orange"
+         title="General Inquiries"
+         description="For everything else that doesn't fit the categories above—we're happy to help."
+         link_url="mailto:developers@builtfast.com"
+         link_text="developers@builtfast.com"
+      %}
+    </div>
+  </div>
+</section>
+
+<!-- Social Links -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <span class="section-label">// follow along</span>
+        <h2 class="text-xl text-primary font-semibold mt-2">Stay connected</h2>
+        <p class="text-sm text-muted mt-1">Updates on new projects, releases, and technical writing.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/built-fast" class="icon-link border border-subtle rounded-lg hover:border-emphasis hover:bg-elevated transition-all" aria-label="GitHub">
+          {% include icons/github.html size=5 %}
+        </a>
+        <a href="https://linkedin.com/company/builtfast" class="icon-link border border-subtle rounded-lg hover:border-emphasis hover:bg-elevated transition-all" aria-label="LinkedIn">
+          {% include icons/linkedin.html size=5 %}
+        </a>
+        <a href="https://bsky.app/profile/builtfast.dev" class="icon-link border border-subtle rounded-lg hover:border-emphasis hover:bg-elevated transition-all" aria-label="Bluesky">
+          {% include icons/bluesky.html size=5 %}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

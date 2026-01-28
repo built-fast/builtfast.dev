@@ -1,0 +1,350 @@
+---
+layout: default
+prose: false
+title: Postman Collection
+description: Pre-built API collection for Postman. Import and start testing the Vector Pro API in seconds.
+permalink: /api/postman/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// postman"
+   title="Postman Collection"
+   description="Skip the setup. Import our ready-to-use collection and start exploring the Vector Pro API immediately."
+%}
+
+<!-- Quick Actions -->
+<section class="border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="/api/postman.json" download class="btn-primary inline-flex items-center gap-2">
+        {% include icons/rocket.html size=4 %}
+        Download Collection
+      </a>
+      <a href="https://www.postman.com/downloads/" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2">
+        Get Postman
+        {% include icons/external-link.html size=4 %}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- What is Postman -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <!-- Left column: explanation -->
+      <div class="lg:col-span-7">
+        <span class="section-label">// about</span>
+        <h2 class="text-2xl text-primary font-semibold mt-2 mb-5">What is Postman?</h2>
+        <div class="space-y-4 text-secondary leading-relaxed">
+          <p>
+            Postman is a popular API development tool that makes it easy to build, test, and document APIs. It provides a visual interface for making HTTP requests, organizing them into collections, and sharing with your team.
+          </p>
+          <p>
+            Our collection includes every Vector Pro endpoint with pre-configured authentication, request bodies, and environment variables. Just import and start making requests.
+          </p>
+          <p>
+            New to Postman? <a href="https://www.postman.com/downloads/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">Download the app {% include icons/external-link.html size=3 %}</a> or use the <a href="https://web.postman.co/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">web version {% include icons/external-link.html size=3 %}</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right column: collection details card -->
+      <div class="lg:col-span-5">
+        <div class="card p-6">
+          <h3 class="text-sm font-semibold text-primary uppercase tracking-wide mb-4">Collection Details</h3>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Format</dt>
+              <dd class="text-primary font-mono">Postman v2.1</dd>
+            </div>
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Endpoints</dt>
+              <dd class="text-primary font-mono">All Vector Pro APIs</dd>
+            </div>
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Auth</dt>
+              <dd class="text-primary font-mono">Bearer token (variable)</dd>
+            </div>
+            <div class="flex justify-between py-2">
+              <dt class="text-muted">Variables</dt>
+              <dd class="text-cyan font-mono">Pre-configured</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Getting Started Steps -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// setup"
+       title="Get started in 3 steps"
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Step 1 -->
+      <div class="card p-6 relative overflow-hidden">
+        <span class="postman-step-num">1</span>
+        <h3 class="text-primary font-semibold mb-3">Import the collection</h3>
+        <p class="text-sm text-secondary mb-4">
+          Download the JSON file and import it into Postman via <strong class="text-primary">File &rarr; Import</strong> or drag and drop.
+        </p>
+        <div class="text-xs text-muted font-mono">
+          postman.json &rarr; Postman
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="card p-6 relative overflow-hidden">
+        <span class="postman-step-num">2</span>
+        <h3 class="text-primary font-semibold mb-3">Set your API token</h3>
+        <p class="text-sm text-secondary mb-4">
+          Create an environment and set the <code class="text-cyan text-xs">api_token</code> variable to your Vector Pro API key.
+        </p>
+        <div class="text-xs text-muted font-mono">
+          Environments &rarr; Add Variable
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="card p-6 relative overflow-hidden">
+        <span class="postman-step-num">3</span>
+        <h3 class="text-primary font-semibold mb-3">Send your first request</h3>
+        <p class="text-sm text-secondary mb-4">
+          Open any endpoint in the collection and hit <strong class="text-primary">Send</strong>. All requests are pre-configured.
+        </p>
+        <div class="text-xs text-muted font-mono">
+          Sites &rarr; List Sites &rarr; Send
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Environment Variables -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <span class="section-label">// configuration</span>
+    <h2 class="text-2xl text-primary font-semibold mt-2 mb-6">Environment Variables</h2>
+    <p class="text-secondary mb-6 max-w-2xl">
+      Create a Postman environment with these variables. The collection references them automatically.
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="postman-var-table">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="text-cyan">base_url</code></td>
+            <td>API base URL</td>
+            <td><code>https://api.builtfast.com/api/v1/vector</code></td>
+          </tr>
+          <tr>
+            <td><code class="text-cyan">api_token</code></td>
+            <td>Your API bearer token</td>
+            <td><code>your-api-token-here</code></td>
+          </tr>
+          <tr>
+            <td><code class="text-cyan">site_id</code></td>
+            <td>Site ID for testing</td>
+            <td><code>01JFGXK4NQRST5VWX9YZ0ABCDE</code></td>
+          </tr>
+          <tr>
+            <td><code class="text-cyan">environment_id</code></td>
+            <td>Environment ID for testing</td>
+            <td><code>01JFGXK4NQRST5VWX9YZ0ABCDG</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Collection Structure -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// endpoints"
+       title="What's in the collection"
+    %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/box.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Sites</h3>
+          <p class="text-xs text-muted mt-1">Create, list, update, delete, suspend sites</p>
+        </div>
+      </div>
+
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/terminal.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Environments</h3>
+          <p class="text-xs text-muted mt-1">Manage deployment environments</p>
+        </div>
+      </div>
+
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/rocket.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Deployments</h3>
+          <p class="text-xs text-muted mt-1">Trigger deployments and rollbacks</p>
+        </div>
+      </div>
+
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/external-link.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Domains</h3>
+          <p class="text-xs text-muted mt-1">Custom domains and SSL certificates</p>
+        </div>
+      </div>
+
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/archive.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Backups</h3>
+          <p class="text-xs text-muted mt-1">Create and restore backups</p>
+        </div>
+      </div>
+
+      <div class="postman-folder-card">
+        <div class="postman-folder-icon">{% include icons/file-code-2.html size=4 %}</div>
+        <div>
+          <h3 class="text-primary font-medium text-sm">Logs</h3>
+          <p class="text-xs text-muted mt-1">Retrieve site and environment logs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tips -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl">
+      <span class="section-label">// tips</span>
+      <h2 class="text-2xl text-primary font-semibold mt-2 mb-5">Working with Postman</h2>
+      <ul class="space-y-4 text-secondary">
+        <li class="flex gap-3">
+          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size=4 %}</span>
+          <span><strong class="text-primary">Use the Console</strong> &mdash; View &rarr; Show Postman Console displays raw HTTP traffic. Essential for debugging.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size=4 %}</span>
+          <span><strong class="text-primary">Save examples</strong> &mdash; After a successful request, save it as an example for future reference.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size=4 %}</span>
+          <span><strong class="text-primary">Collection Runner</strong> &mdash; Run multiple requests in sequence to test complete workflows.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size=4 %}</span>
+          <span><strong class="text-primary">Pre-request scripts</strong> &mdash; Variables like <code class="text-cyan text-sm">{% raw %}{{site_id}}{% endraw %}</code> are populated automatically from your environment.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% include ctas/footer.html
+   title="Need the full API reference?"
+   description="Browse all endpoints, parameters, and response schemas."
+   primary_url="/api/"
+   primary_text="API Reference"
+   primary_icon_include="icons/book-open.html"
+   secondary_url="/api/openapi/"
+   secondary_text="OpenAPI Spec"
+   secondary_icon_include="icons/file-json.html"
+%}
+
+<style>
+/* Postman page specific styles */
+.postman-step-num {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  line-height: 1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.postman-var-table {
+  width: 100%;
+  font-size: 0.8125rem;
+  border-collapse: collapse;
+}
+
+.postman-var-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.postman-var-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+.postman-var-table tr:last-child td {
+  border-bottom: none;
+}
+
+.postman-var-table code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.125rem 0.375rem;
+  background-color: var(--bg-surface);
+  border-radius: 3px;
+}
+
+.postman-folder-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.15s ease;
+}
+
+.postman-folder-card:hover {
+  border-color: var(--border-default);
+}
+
+.postman-folder-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+</style>

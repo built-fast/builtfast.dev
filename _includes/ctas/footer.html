@@ -1,0 +1,51 @@
+{% comment %}
+CTA footer component - displays a call-to-action section with title, description, and buttons.
+
+Usage:
+{% include ctas/footer.html
+   title="Questions about security?"
+   description="We're happy to discuss our practices in more detail."
+   primary_url="mailto:security@builtfast.com"
+   primary_text="security@builtfast.com"
+   primary_icon="mail"
+   secondary_url="/contact/"
+   secondary_text="General Contact"
+   secondary_icon="message-square"
+%}
+
+Parameters:
+- title: Section heading
+- description: Section description text
+- primary_url: URL for primary button
+- primary_text: Text for primary button
+- primary_icon: Lucide icon name for primary button (optional)
+- primary_icon_include: Path to icon include file (optional, e.g., "icons/github.html")
+- secondary_url: URL for secondary button (optional)
+- secondary_text: Text for secondary button (optional)
+- secondary_icon: Lucide icon name for secondary button (optional)
+- secondary_icon_include: Path to icon include file (optional)
+- bg: Background class (optional, e.g., "bg-elevated")
+{% endcomment %}
+
+<section class="py-12 md:py-16 border-t border-subtle{% if include.bg %} {{ include.bg }}{% endif %}">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <h2 class="text-xl text-primary font-semibold mb-2">{{ include.title }}</h2>
+        <p class="text-secondary">{{ include.description }}</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="{{ include.primary_url }}" class="btn-primary">
+          {% if include.primary_icon_include %}{% include {{ include.primary_icon_include }} size=4 %}{% elsif include.primary_icon %}{% include icon.html name=include.primary_icon size=4 %}{% endif %}
+          {{ include.primary_text }}
+        </a>
+        {% if include.secondary_url %}
+        <a href="{{ include.secondary_url }}" class="btn-secondary">
+          {% if include.secondary_icon_include %}{% include {{ include.secondary_icon_include }} size=4 %}{% elsif include.secondary_icon %}{% include icon.html name=include.secondary_icon size=4 %}{% endif %}
+          {{ include.secondary_text }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

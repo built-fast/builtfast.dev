@@ -1,0 +1,42 @@
+{% comment %}
+Empty state component - displays a centered message when there's no content.
+
+Usage:
+{% include components/empty-state.html
+   icon="box"
+   title="No projects yet"
+   description="We're working on some exciting open source tools. Follow us on GitHub to get notified when we release them."
+   cta_url="https://github.com/built-fast"
+   cta_text="Follow on GitHub"
+   cta_icon_include="icons/github.html"
+%}
+
+Parameters:
+- icon: Lucide icon name
+- title: Empty state heading
+- description: Empty state description text
+- cta_url: URL for call-to-action button (optional)
+- cta_text: Text for call-to-action button (optional)
+- cta_icon: Lucide icon name for button (optional)
+- cta_icon_include: Path to icon include file (optional, e.g., "icons/github.html")
+{% endcomment %}
+
+<section class="py-16 md:py-24 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center py-16">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elevated border border-subtle mb-6">
+        {% include icon.html name=include.icon size=7 class="text-muted" %}
+      </div>
+      <h2 class="text-xl text-primary font-semibold mb-3">{{ include.title }}</h2>
+      <p class="text-secondary max-w-md mx-auto{% if include.cta_url %} mb-6{% endif %}">
+        {{ include.description }}
+      </p>
+      {% if include.cta_url %}
+      <a href="{{ include.cta_url }}" class="btn-primary">
+        {% if include.cta_icon_include %}{% include {{ include.cta_icon_include }} size=4 %}{% elsif include.cta_icon %}{% include icon.html name=include.cta_icon %}{% endif %}
+        {{ include.cta_text }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

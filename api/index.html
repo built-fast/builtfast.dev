@@ -1,0 +1,103 @@
+---
+layout: base
+title: API Reference
+description: Complete API reference for Vector Pro serverless WordPress hosting platform.
+---
+
+<div x-data="{ sidebarOpen: false, activeEndpoint: '' }">
+
+  <!-- Navigation Header -->
+  <header class="bg-base border-b border-subtle sticky top-0 z-50">
+    <div class="px-4 lg:px-6">
+      <div class="flex items-center justify-between h-14">
+
+        <!-- Mobile: Sidebar toggle (hidden when sidebar is always visible at lg+) -->
+        <div class="lg:hidden w-10">
+          <button
+            @click="sidebarOpen = !sidebarOpen"
+            class="icon-link"
+            aria-label="Toggle sidebar"
+            :aria-expanded="sidebarOpen"
+          >
+            {% include icons/menu.html size=5 %}
+          </button>
+        </div>
+
+        <!-- Logo + Developers prompt -->
+        <a href="/" class="flex items-center gap-3 group">
+          <span class="flex items-center">
+            <img src="/assets/images/logo-full.svg" alt="BuiltFast" class="h-6 logo-dark">
+            <img src="/assets/images/logo-full-dark.svg" alt="BuiltFast" class="h-6 logo-light">
+          </span>
+          <span class="hidden md:inline">
+            {% include components/logo-prompt.html text="developers" %}
+          </span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-6 h-full" aria-label="Main navigation">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/docs/" class="nav-link">Docs</a>
+          <a href="/api/" class="nav-link active" aria-current="page">API</a>
+          <a href="/blog/" class="nav-link">Blog</a>
+          <a href="/oss/" class="nav-link">Open Source</a>
+
+          {% include components/theme-toggle.html %}
+        </nav>
+
+        <!-- Mobile: Empty spacer for layout balance (hidden when nav shows) -->
+        <div class="md:hidden w-10"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile sidebar overlay -->
+  <div
+    x-show="sidebarOpen"
+    @click="sidebarOpen = false"
+    class="api-sidebar-overlay lg:hidden"
+    x-cloak
+  ></div>
+
+  {% include api/sidebar.html %}
+
+  <!-- Main content -->
+  <main class="api-content" id="main-content">
+    {% include api/intro.html %}
+
+    {% for group in site.data.api_groups %}
+      <!-- Group Description -->
+      <div id="{{ group.slug }}" data-scroll-spy class="px-6 lg:px-10 py-6 border-b border-subtle bg-elevated scroll-mt-16">
+        <div class="max-w-3xl">
+          <h2 class="text-xl font-semibold text-primary mb-3">{{ group.name }}</h2>
+          {% if group.description != '' %}
+            <div class="api-prose">
+              {{ group.description | markdownify }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% for subgroup in group.subgroups %}
+        {% if subgroup.name != '' %}
+          <!-- Subgroup Header -->
+          <div id="{{ group.slug }}-{{ subgroup.slug }}" class="px-6 lg:px-10 py-4 border-b border-subtle scroll-mt-16">
+            <h3 class="text-lg font-semibold text-primary">{{ subgroup.name }}</h3>
+            {% if subgroup.description != '' %}
+              <div class="api-prose text-sm mt-1">
+                {{ subgroup.description | markdownify }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% for endpoint in subgroup.endpoints %}
+          {% include api/endpoint.html endpoint=endpoint %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}
+  </main>
+</div>
+
+<script src="/assets/js/copy.js?v={{ site.time | date: '%s' }}"></script>
+<script src="/assets/js/api-docs.js?v={{ site.time | date: '%s' }}"></script>

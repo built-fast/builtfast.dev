@@ -1,0 +1,38 @@
+{% comment %}
+Page hero component - used for standard page headers with label, title, accent, and description.
+
+Usage:
+{% include heroes/page.html
+   label="// security"
+   title="Security isn't a feature."
+   accent="It's how we build."
+   description="We're a small team that takes security seriously..."
+   max_width="max-w-3xl"
+%}
+
+Parameters:
+- label: The section label (e.g., "// security")
+- title: Main heading text (can include <br> for line breaks)
+- accent: Highlighted text after title (optional, renders in cyan)
+- description: Paragraph text below heading
+- max_width: Container max-width class (default: "max-w-3xl")
+- extra_content: Additional HTML content after description (optional)
+{% endcomment %}
+
+{% assign max_width = include.max_width | default: "max-w-3xl" %}
+
+<section class="relative py-16 md:py-24 dot-grid">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="{{ max_width }}">
+      <span class="section-label">{{ include.label }}</span>
+      <h1 class="text-3xl md:text-4xl font-semibold text-primary leading-tight mt-3 mb-5">
+        {{ include.title }}{% if include.accent %}<br>
+        <span class="text-cyan">{{ include.accent }}</span>{% endif %}
+      </h1>
+      <p class="text-lg text-secondary leading-relaxed{% if include.extra_content %} mb-6{% endif %}">
+        {{ include.description }}
+      </p>
+      {{ include.extra_content }}
+    </div>
+  </div>
+</section>

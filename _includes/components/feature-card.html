@@ -1,0 +1,27 @@
+{% comment %}
+Feature card component - displays a card with title and checkmark list items.
+
+Usage:
+{% include components/feature-card.html
+   title="Infrastructure"
+   items="TLS 1.3 everywhere, AES-256 at rest|DDoS protection and WAF on all endpoints|Regular third-party pen testing|Automated vulnerability scanning"
+%}
+
+Parameters:
+- title: Card heading
+- items: Pipe-separated list of feature items (use | as delimiter)
+{% endcomment %}
+
+{% assign items_array = include.items | split: "|" %}
+
+<div class="card p-6">
+  <h3 class="text-primary font-medium mb-4">{{ include.title }}</h3>
+  <ul class="space-y-3 text-sm">
+    {% for item in items_array %}
+    <li class="flex items-start gap-2">
+      {% include icons/check.html size=4 class="text-green-500 mt-0.5 shrink-0" %}
+      <span class="text-secondary">{{ item | strip }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

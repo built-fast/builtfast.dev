@@ -1,0 +1,32 @@
+{% comment %}
+  Response tabs component
+  Usage: {% include api/response.html responses=endpoint.responses %}
+{% endcomment %}
+
+{% assign responses = include.responses %}
+
+{% if responses.size > 0 %}
+  {% comment %} Response code tabs {% endcomment %}
+  <div class="mb-4">
+    <h5 class="text-sm font-semibold text-primary mb-3">Response Codes</h5>
+    <div class="response-tabs">
+      {% for response in responses %}
+        {% assign status_class = 'status-2xx' %}
+        {% if response.status >= 400 and response.status < 500 %}
+          {% assign status_class = 'status-4xx' %}
+        {% elsif response.status >= 500 %}
+          {% assign status_class = 'status-5xx' %}
+        {% endif %}
+
+        <button
+          class="response-tab"
+          :class="{ 'active': responseTab === '{{ response.slug }}' }"
+          @click="responseTab = '{{ response.slug }}'"
+        >
+          <span class="status-dot {{ status_class }}"></span>
+          <span>{{ response.status }} {{ response.description }}</span>
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

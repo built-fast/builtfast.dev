@@ -1,0 +1,37 @@
+{% comment %}
+  Table of Contents component (Alpine.js powered)
+
+  Usage in layouts:
+    {% include components/toc.html %}
+
+  Parameters:
+    - title: Optional title (default: "On this page")
+    - class: Additional CSS classes
+    - levels: Which heading levels to include (default: "h2,h3")
+
+  This component:
+  - Auto-generates TOC from headings in .prose content
+  - Highlights current section on scroll (scroll-spy)
+  - Smooth scrolls to sections on click
+{% endcomment %}
+
+{% assign toc_title = include.title | default: "On this page" %}
+{% assign heading_levels = include.levels | default: "h2,h3" %}
+
+<nav
+  class="toc {{ include.class }}"
+  x-data="tocComponent()"
+  x-init="init()"
+  data-levels="{{ heading_levels }}"
+  aria-label="Table of contents"
+>
+  <div class="toc-header">
+    <span class="toc-label">{{ toc_title }}</span>
+  </div>
+  <div class="toc-track">
+    <div class="toc-indicator" x-ref="indicator"></div>
+    <ul class="toc-list" x-ref="tocList">
+      <!-- Populated by JavaScript -->
+    </ul>
+  </div>
+</nav>

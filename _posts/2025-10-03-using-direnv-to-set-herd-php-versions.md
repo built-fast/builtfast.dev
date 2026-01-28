@@ -5,6 +5,7 @@ date: "Fri Oct 03 18:56:19 -0400 2025"
 categories: [devops]
 tags: [php, herd, direnv]
 author: Josh Priddle
+tagline: "Use Direnv to automatically switch PHP versions when you cd into a Herd project directory."
 ---
 
 I love the simplicity of [Herd][1] for using PHP on my Macs. One thing that

@@ -3,12 +3,16 @@ title:  gh-clover-annotate
 period: Jul 2025
 date:   2025-07-04
 github: https://github.com/built-fast/gh-clover-annotate
+license: MIT
 tags:
-  - GitHub
-  - PHP
-  - PHPUnit
-  - Pest
-project_type: oss
+  - github-actions
+  - php
+  - phpunit
+  - pest
+languages:
+  - name: Bash
+    icon: bash
+tagline: Code coverage annotations for GitHub Actions
 excerpt: |
   A GitHub CLI extension to annotate GitHub Actions runs with code coverage
   statistics for projects using Clover style XML reports.
@@ -109,7 +113,3 @@ jobs:
 That allows us to go to the Actions tab on one of our repos and then click
 the "Run workflow" button to run the test suite with coverage for a specific
 branch.
-
-## License
-
-MIT License.

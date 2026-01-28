@@ -1,0 +1,27 @@
+/* ============================================================================
+   Hero Scramble - Text Effect
+   ============================================================================ */
+
+.hero-scramble {
+  display: inline-flex;
+  color: var(--accent-cyan);
+  cursor: default;
+}
+
+.hero-scramble .hero-char {
+  display: inline-block;
+  min-width: 0.55em;
+  text-align: center;
+  transition: text-shadow 0.15s ease;
+}
+
+.hero-scramble .hero-char.scrambling {
+  text-shadow: 0 0 8px rgba(29, 201, 216, 0.8);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-scramble .hero-char {
+    transition: none !important;
+  }
+}

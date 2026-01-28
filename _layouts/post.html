@@ -1,32 +1,175 @@
 ---
-layout: default
+layout: base
 ---
 
-<!-- Back -->
-<div class="mb-3">
-  <a class="inline-flex text-cyan-500 rounded-full border border-slate-200 dark:border-slate-800 dark:bg-linear-to-t dark:from-slate-800 dark:to-slate-800/30" href="/">
-    <span class="sr-only">Back</span>
-    {% include icons/chevron-left.svg %}
-  </a>
+{% include nav.html %}
+
+<!-- Reading Progress Bar -->
+<div class="reading-progress" x-data="{ progress: 0 }" x-init="
+  const article = document.querySelector('.post-content');
+  const updateProgress = () => {
+    const rect = article.getBoundingClientRect();
+    const articleTop = rect.top + window.scrollY;
+    const articleHeight = rect.height;
+    const windowHeight = window.innerHeight;
+    const scrolled = window.scrollY - articleTop + windowHeight * 0.3;
+    progress = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+  };
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+">
+  <div class="reading-progress-bar" :style="{ width: progress + '%' }"></div>
 </div>
 
-<article>
-  <!-- Post header -->
-  <header>
-    <div class="flex items-center justify-between mb-1">
-      <!-- Post date -->
-      <div class="text-xs text-slate-500 uppercase">
-        <span class="text-cyan-500">—</span> {{ page.date | date: "%b %d, %Y" }}
-        {% if page.author %}<span class="text-slate-400 dark:text-slate-600">·</span> By {{ page.author }}{% endif %}
-        <span class="text-slate-400 dark:text-slate-600">·</span>
-        {% include read-time.html content=page.content %}
-      </div>
-    </div>
-    <h1 class="h1 font-outfit mb-4">{{ page.title }}</h1>
-  </header>
+<main class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="lg:grid lg:grid-cols-[1fr_240px] lg:gap-12">
+      <!-- Main Content -->
+      <article class="min-w-0">
+        <!-- Post Header -->
+        <header class="post-header">
+          <!-- Back link -->
+          <a href="/blog/" class="post-back-link">
+            {% include icons/arrow-left.html size=4 %}
+            Blog
+          </a>
 
-  <!-- Post content -->
-  <div class="text-slate-500 dark:text-slate-400 space-y-8">
-    {{ content }}
+          <div class="post-meta">
+            <time datetime="{{ page.date | date: '%Y-%m-%d' }}">
+              {{ page.date | date: "%B %d, %Y" }}
+            </time>
+            <span class="post-meta-sep"></span>
+            <span>{% include content/read-time.html content=content %}</span>
+          </div>
+
+          <h1 class="post-title">{{ page.title }}</h1>
+
+          {% if page.tagline %}
+          <p class="post-tagline">{{ page.tagline }}</p>
+          {% endif %}
+
+          {% if page.tags and page.tags.size > 0 %}
+          {% assign sorted_tags = page.tags | sort %}
+          <div class="post-tags">
+            {% for tag in sorted_tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </header>
+
+        <!-- Post Content -->
+        <div class="prose post-content">
+          {{ content }}
+        </div>
+
+        <!-- Post Footer -->
+        <footer class="post-footer">
+          <!-- Author + Share Row -->
+          <div class="post-footer-card">
+            {% if page.author %}
+            {% assign author = site.people | where: "name", page.author | first %}
+            <div class="post-author">
+              {% if author %}
+              <img src="/assets/images/avatars/{{ author.name | slugify }}.jpg" alt="{{ author.name }}" class="post-author-avatar" loading="lazy">
+              <div class="post-author-info">
+                <p class="post-author-name">{{ author.name }}</p>
+                <p class="post-author-role">{{ author.role }}</p>
+                <div class="post-author-links">
+                  {% if author.twitter %}
+                  <a href="https://x.com/{{ author.twitter }}" class="icon-link-sm" aria-label="Follow on X" target="_blank" rel="noopener">
+                    {% include icons/twitter.html size=4 %}
+                  </a>
+                  {% endif %}
+                  {% if author.bluesky %}
+                  <a href="https://bsky.app/profile/{{ author.bluesky }}" class="icon-link-sm" aria-label="Follow on Bluesky" target="_blank" rel="noopener">
+                    {% include icons/bluesky.html size=4 %}
+                  </a>
+                  {% endif %}
+                  {% if author.github %}
+                  <a href="https://github.com/{{ author.github }}" class="icon-link-sm" aria-label="GitHub profile" target="_blank" rel="noopener">
+                    {% include icons/github.html size=4 %}
+                  </a>
+                  {% endif %}
+                  {% if author.linkedin %}
+                  <a href="https://linkedin.com/in/{{ author.linkedin }}" class="icon-link-sm" aria-label="LinkedIn profile" target="_blank" rel="noopener">
+                    {% include icons/linkedin.html size=4 %}
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+              {% else %}
+              <div class="post-author-info">
+                <p class="post-author-name">{{ page.author }}</p>
+                {% if page.author_title %}
+                <p class="post-author-role">{{ page.author_title }}</p>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Share Buttons -->
+            <div class="post-share">
+              <span class="post-share-label">Share</span>
+              <div class="post-share-buttons">
+                <a href="https://x.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}"
+                   class="share-btn share-btn-twitter"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Share on X">
+                  {% include icons/twitter.html size=4 %}
+                </a>
+                <a href="https://bsky.app/intent/compose?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}"
+                   class="share-btn share-btn-bluesky"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Share on Bluesky">
+                  {% include icons/bluesky.html size=4 %}
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}"
+                   class="share-btn share-btn-linkedin"
+                   target="_blank"
+                   rel="noopener"
+                   aria-label="Share on LinkedIn">
+                  {% include icons/linkedin.html size=4 %}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post Navigation -->
+          <nav class="post-nav">
+            {% if page.previous.url %}
+            <a href="{{ page.previous.url }}" class="post-nav-link post-nav-prev group">
+              <span class="post-nav-label">
+                {% include icons/arrow-left.html size=3 %}
+                Previous
+              </span>
+              <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.previous.title }}</p>
+            </a>
+            {% else %}
+            <div></div>
+            {% endif %}
+            {% if page.next.url %}
+            <a href="{{ page.next.url }}" class="post-nav-link post-nav-next group">
+              <span class="post-nav-label">
+                Next
+                {% include icons/arrow-right.html size=3 %}
+              </span>
+              <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.next.title }}</p>
+            </a>
+            {% endif %}
+          </nav>
+        </footer>
+      </article>
+
+      <!-- TOC Sidebar (desktop only) -->
+      <aside class="hidden lg:block">
+        {% include components/toc.html %}
+      </aside>
+    </div>
   </div>
-</article>
+</main>
+
+{% include footer.html %}

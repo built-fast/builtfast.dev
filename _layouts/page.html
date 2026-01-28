@@ -2,14 +2,29 @@
 layout: default
 ---
 
-<article>
-  <!-- Post header -->
-  <header>
-    <h1 class="h1 font-outfit mb-4">{{ page.title }}</h1>
-  </header>
+{% comment %}
+  Page layout with optional prose styling.
 
-  <!-- Post content -->
-  <div class="text-slate-500 dark:text-slate-400 space-y-8">
+  Frontmatter options:
+    prose: true       # Wrap content in .prose container (default: true)
+    prose_wide: true  # Remove max-width constraint on prose
+{% endcomment %}
+
+{% if page.prose == false %}
+  {% assign use_prose = false %}
+{% else %}
+  {% assign use_prose = page.prose | default: true %}
+{% endif %}
+{% assign prose_wide = page.prose_wide | default: false %}
+
+<main class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    {% if use_prose %}
+    <article class="prose{% if prose_wide %} prose-wide{% endif %}">
+      {{ content }}
+    </article>
+    {% else %}
     {{ content }}
+    {% endif %}
   </div>
-</article>
+</main>

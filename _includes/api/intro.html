@@ -1,0 +1,250 @@
+<section id="introduction" class="endpoint-section" data-scroll-spy>
+  <!-- Hero Section -->
+  <div class="api-hero">
+    <div class="api-hero-bg"></div>
+    <div class="api-hero-content">
+      <h1 class="api-hero-title flex items-center gap-3">{% include icons/terminal.html size=12 class="text-green-500" %}Vector Pro</h1>
+      <p class="api-hero-desc">Provision, deploy, and manage serverless WordPress sites on AWS Lambda infrastructure with enterprise-grade CDN, WAF, and DNS services.</p>
+
+      <div class="api-hero-url">
+        <span class="api-hero-url-label">Base URL</span>
+        <code class="api-hero-url-value">https://api.builtfast.com/api/v1/vector</code>
+        <button class="copy-btn" data-copy="https://api.builtfast.com/api/v1/vector" aria-label="Copy base URL">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="api-beta-notice">
+        <span class="api-beta-tag">Private Beta</span>
+        <span class="api-beta-text">Vector Pro is currently in private beta. <a href="/contact/">Get in touch</a> to request access.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Reference Cards -->
+  <div class="api-cards">
+    <!-- Authentication Card -->
+    <div class="api-card api-card-auth">
+      <div class="api-card-header">
+        <h2 class="api-card-title">Authentication</h2>
+      </div>
+      <p class="api-card-desc">All requests require Bearer token authentication via the <code>Authorization</code> header.</p>
+      <div class="api-card-code">
+        <pre><span class="syn-keyword">Authorization:</span> <span class="syn-string">Bearer</span> <span class="syn-variable">{YOUR_API_TOKEN}</span></pre>
+      </div>
+      <div class="api-card-warning">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>Keep tokens secure. Never expose in client-side code.</span>
+      </div>
+    </div>
+
+    <!-- Quick Start Card -->
+    <div class="api-card api-card-quickstart">
+      <div class="api-card-header">
+        <h2 class="api-card-title">Quick Start</h2>
+      </div>
+      <div class="api-card-steps">
+        <div class="api-step">
+          <span class="api-step-num">1</span>
+          <span class="api-step-text">Create a site</span>
+          <code class="api-step-method method-post">POST</code>
+          <code class="api-step-endpoint">/sites</code>
+        </div>
+        <div class="api-step">
+          <span class="api-step-num">2</span>
+          <span class="api-step-text">Upload via SFTP</span>
+          <code class="api-step-sftp">ssh.myvectorsite.com</code>
+        </div>
+        <div class="api-step">
+          <span class="api-step-num">3</span>
+          <span class="api-step-text">Deploy</span>
+          <code class="api-step-method method-post">POST</code>
+          <code class="api-step-endpoint">/deployments</code>
+        </div>
+      </div>
+      <a href="https://builtfast.dev/vector-pro/getting-started/" class="api-card-link">
+        View full walkthrough
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Response Format Section -->
+  <div class="api-section">
+    <h2 class="api-section-title">Response Format</h2>
+
+    <div class="api-response-grid api-response-grid-3">
+      <div class="api-response-example">
+        <div class="api-response-label">
+          <span class="api-response-badge">200</span>
+          Single Resource
+        </div>
+        <div class="code-block">
+          <div class="code-block-body">
+<pre>{
+  <span class="syn-property">"data"</span>: {
+    <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7KXYZ..."</span>,
+    <span class="syn-property">"type"</span>: <span class="syn-string">"production"</span>,
+    <span class="syn-property">"status"</span>: <span class="syn-string">"active"</span>
+  },
+  <span class="syn-property">"message"</span>: <span class="syn-string">"Success"</span>,
+  <span class="syn-property">"http_status"</span>: <span class="syn-number">200</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-response-example">
+        <div class="api-response-label">
+          <span class="api-response-badge">200</span>
+          Collection
+        </div>
+        <div class="code-block">
+          <div class="code-block-body">
+<pre>{
+  <span class="syn-property">"data"</span>: [
+    { <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7K..."</span> },
+    { <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7L..."</span> }
+  ],
+  <span class="syn-property">"links"</span>: { <span class="syn-property">"next"</span>: <span class="syn-string">"..."</span> },
+  <span class="syn-property">"meta"</span>: { <span class="syn-property">"total"</span>: <span class="syn-number">42</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-response-example api-response-error">
+        <div class="api-response-label">
+          <span class="api-response-badge error">422</span>
+          Validation Error
+        </div>
+        <div class="code-block">
+          <div class="code-block-body">
+<pre>{
+  <span class="syn-property">"errors"</span>: {
+    <span class="syn-property">"type"</span>: [<span class="syn-string">"Required"</span>],
+    <span class="syn-property">"php_version"</span>: [<span class="syn-string">"Invalid"</span>]
+  },
+  <span class="syn-property">"message"</span>: <span class="syn-string">"Validation failed"</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reference Tables -->
+  <div class="api-ref-grid">
+    <!-- Status Codes -->
+    <div class="api-ref-card">
+      <h3 class="api-ref-title">Status Codes</h3>
+      <div class="api-ref-list">
+        <div class="api-ref-item"><code class="api-ref-code success">200</code><span>Success</span></div>
+        <div class="api-ref-item"><code class="api-ref-code success">201</code><span>Created</span></div>
+        <div class="api-ref-item"><code class="api-ref-code success">202</code><span>Accepted (async)</span></div>
+        <div class="api-ref-item"><code class="api-ref-code error">400</code><span>Bad request</span></div>
+        <div class="api-ref-item"><code class="api-ref-code error">401</code><span>Unauthorized</span></div>
+        <div class="api-ref-item"><code class="api-ref-code error">404</code><span>Not found</span></div>
+        <div class="api-ref-item"><code class="api-ref-code error">422</code><span>Validation error</span></div>
+        <div class="api-ref-item"><code class="api-ref-code error">429</code><span>Rate limited</span></div>
+      </div>
+    </div>
+
+    <!-- Rate Limits -->
+    <div class="api-ref-card">
+      <h3 class="api-ref-title">Rate Limits</h3>
+      <div class="api-ref-list">
+        <div class="api-ref-item"><span class="api-ref-label">Standard</span><code class="api-ref-value">1000/min</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Deployments</span><code class="api-ref-value">100/min</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Webhooks</span><code class="api-ref-value">10/min</code></div>
+      </div>
+      <div class="api-ref-note">
+        Headers: <code>X-RateLimit-Remaining</code>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="api-ref-card">
+      <h3 class="api-ref-title">Pagination</h3>
+      <div class="api-ref-list">
+        <div class="api-ref-item"><code class="api-ref-param">page</code><span>Page number (default: 1)</span></div>
+        <div class="api-ref-item"><code class="api-ref-param">per_page</code><span>Items per page (max: 100)</span></div>
+      </div>
+      <div class="api-ref-note">
+        Response includes <code>links</code> and <code>meta</code> objects
+      </div>
+    </div>
+
+    <!-- Async Operations -->
+    <div class="api-ref-card">
+      <h3 class="api-ref-title">Async Operations</h3>
+      <p class="api-ref-desc">Site creation, environments, and deployments return <code>202</code> and process asynchronously.</p>
+      <a href="https://builtfast.dev/vector-pro/webhooks/" class="api-ref-link">
+        Configure webhooks for notifications
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- SDKs Section -->
+  <div class="api-sdk-section">
+    <h2 class="api-section-title">SDKs & Tools</h2>
+
+    <div class="api-sdk-grid">
+      <div class="api-sdk-item">
+        <div class="api-sdk-icon php">PHP</div>
+        <code>composer require built-fast/vector-pro-sdk</code>
+      </div>
+      <div class="api-sdk-item">
+        <div class="api-sdk-icon node">Node</div>
+        <code>npm install @built-fast/vector-pro-sdk</code>
+      </div>
+      <div class="api-sdk-item">
+        <div class="api-sdk-icon cli">CLI</div>
+        <code>brew install built-fast/devtools/vector-cli</code>
+      </div>
+    </div>
+
+    <div class="api-tools-row">
+      <a href="/api/openapi/" class="api-tool-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"></path>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+          <path d="m5 12-3 3 3 3"></path>
+          <path d="m9 18 3-3-3-3"></path>
+        </svg>
+        <span>OpenAPI Spec</span>
+      </a>
+      <a href="/api/postman/" class="api-tool-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+          <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+          <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+        </svg>
+        <span>Postman Collection</span>
+      </a>
+    </div>
+
+    <a href="https://builtfast.dev/vector-pro/developer-tools/" class="api-card-link">
+      View all developer tools
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </a>
+  </div>
+</section>

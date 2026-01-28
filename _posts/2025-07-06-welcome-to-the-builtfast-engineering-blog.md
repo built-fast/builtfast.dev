@@ -2,6 +2,7 @@
 title: "Welcome to the BuiltFast Engineering blog!"
 date: "Sun Jul 06 12:05:54 -0400 2025"
 author: Josh Priddle
+tagline: "Sharing insights, tutorials, and updates from the BuiltFast engineering team."
 ---
 
 Welcome to the BuiltFast Engineering blog! This is where we share insights,

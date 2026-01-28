@@ -1,0 +1,59 @@
+<header x-data="{ mobileOpen: false }" class="bg-base border-b border-subtle sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-14">
+
+      <!-- Mobile: Sidebar toggle (left) - placeholder for docs pages -->
+      <div class="md:hidden w-10">
+        <!-- Sidebar toggle icon goes here -->
+      </div>
+
+      <!-- Logo + Developers prompt -->
+      <a href="/" class="flex items-center gap-3 group">
+        <span class="flex items-center">
+          {% include logos/full.html class="h-6 logo-dark" %}
+          {% include logos/full-dark.html class="h-6 logo-light" %}
+        </span>
+        <span class="hidden md:inline">
+          {% include components/logo-prompt.html text="developers" %}
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-6 h-full" aria-label="Main navigation">
+        <a href="/" class="nav-link{% if page.url == '/' %} active{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+        <a href="/docs/" class="nav-link{% if page.url contains '/docs' %} active{% endif %}"{% if page.url contains '/docs' %} aria-current="true"{% endif %}>Docs</a>
+        <a href="/api/" class="nav-link{% if page.url contains '/api' %} active{% endif %}"{% if page.url contains '/api' %} aria-current="true"{% endif %}>API</a>
+        <a href="/oss/" class="nav-link{% if page.url contains '/oss' %} active{% endif %}"{% if page.url contains '/oss' %} aria-current="true"{% endif %}>Open Source</a>
+        <a href="/blog/" class="nav-link{% if page.url contains '/blog' %} active{% endif %}"{% if page.url contains '/blog' %} aria-current="true"{% endif %}>Blog</a>
+
+        {% include components/theme-toggle.html %}
+      </nav>
+
+      <!-- Mobile menu button (right) -->
+      <div class="md:hidden w-10 flex justify-end">
+        <button
+          @click="mobileOpen = !mobileOpen"
+          class="icon-link"
+          :aria-expanded="mobileOpen"
+          aria-controls="mobile-nav"
+          aria-label="Toggle navigation menu"
+        >
+          <span x-show="!mobileOpen">{% include icons/menu.html size=6 %}</span>
+          <span x-show="mobileOpen" x-cloak>{% include icons/x.html size=6 %}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobile-nav" x-show="mobileOpen" x-collapse class="md:hidden pb-4" aria-label="Mobile navigation">
+      <div class="flex flex-col gap-2 pt-2">
+        <a href="/" class="text-sm{% if page.url == '/' %} text-primary{% else %} text-secondary hover:text-primary{% endif %} py-2"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+        <a href="/docs/" class="text-sm{% if page.url contains '/docs' %} text-primary{% else %} text-secondary hover:text-primary{% endif %} py-2"{% if page.url contains '/docs' %} aria-current="true"{% endif %}>Docs</a>
+        <a href="/api/" class="text-sm{% if page.url contains '/api' %} text-primary{% else %} text-secondary hover:text-primary{% endif %} py-2"{% if page.url contains '/api' %} aria-current="true"{% endif %}>API</a>
+        <a href="/oss/" class="text-sm{% if page.url contains '/oss' %} text-primary{% else %} text-secondary hover:text-primary{% endif %} py-2"{% if page.url contains '/oss' %} aria-current="true"{% endif %}>Open Source</a>
+        <a href="/blog/" class="text-sm{% if page.url contains '/blog' %} text-primary{% else %} text-secondary hover:text-primary{% endif %} py-2"{% if page.url contains '/blog' %} aria-current="true"{% endif %}>Blog</a>
+        <a href="https://github.com/built-fast" class="text-sm text-secondary hover:text-primary py-2">GitHub</a>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,109 +1,29 @@
-{%- assign asset_hash = site.time | date: "%s" -%}
-{%- if page.title and page.title != site.title -%}
-{%- assign page_title = page.title | append: " --- " | append: site.title | smartify -%}
-{%- else -%}
-{%- assign page_title = site.title | smartify -%}
-{%- endif -%}
-{%- assign page_url = page.url | remove_first: "index.html" | absolute_url -%}
-<!DOCTYPE html>
-<html lang="en">
+---
+layout: base
+---
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | markdownify | strip_html | normalize_whitespace | escape_once | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
-    <meta name="og:description" content="{% if page.excerpt %}{{ page.excerpt | markdownify | strip_html | normalize_whitespace | escape_once | truncate: 200 }}{% else %}{{ site.description }}{% endif %}">
+{% include nav.html %}
 
-    <meta property="og:locale" content="en" />
-    <meta property="og:url" content="{{ page_url }}" />
-    <meta property="og:site_name" content="{{ site.title | smartify }}" />
-    <meta property="og:title" content="{{ page_title }}" />
-    <meta name="author" content="{{ site.author.name }}" />
+{% if page.hero %}
+  {% include heroes/{{ page.hero }}.html %}
+{% endif %}
 
-    {%- if page.date %}
-    <meta property="og:type" content="article" />
-    <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
-    {%- else %}
-    <meta property="og:type" content="website" />
-    {%- endif %}
+<div id="main-content">
+{{ content }}
+</div>
 
-    {% if paginator.previous_page %}<link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">{%- endif %}
-    {% if paginator.next_page %}<link rel="next" href="{{ paginator.next_page_path | absolute_url }}">{%- endif %}
+{% comment %}
+  CTA section - controlled by frontmatter:
+    cta: default    # Use a specific CTA
+    cta: false      # Disable CTA
+    (no cta key)    # Uses default CTA
+{% endcomment %}
+{% if page.cta == false %}
+  {% comment %}CTA disabled{% endcomment %}
+{% elsif page.cta %}
+  {% include ctas/{{ page.cta }}.html %}
+{% else %}
+  {% include ctas/default.html %}
+{% endif %}
 
-    {% feed_meta %}
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ "/assets/css/app.css" | relative_url }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-
-    <link rel="canonical" href="{{ page_url }}">
-
-    <title>{{ page_title }}</title>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4WXX1X23X3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-4WXX1X23X3');
-    </script>
-
-    <script>
-        if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
-            document.querySelector('html').classList.remove('dark');
-        } else {
-            document.querySelector('html').classList.add('dark');
-        }
-    </script>
-</head>
-
-<body class="font-inter antialiased bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200 tracking-tight">
-
-    <div class="max-w-7xl mx-auto">
-        <div class="min-h-screen flex">
-
-            {% include sidebar.html %}
-
-            <!-- Main content -->
-            <main class="grow overflow-hidden px-6">
-                <div class="w-full h-full max-w-[1072px] mx-auto flex flex-col">
-
-                    <!-- Header -->
-                    {% include header.html %}
-
-                    <!-- Hero -->
-                    {% if page.homepage %}
-                      {% include hero.html %}
-                    {% endif %}
-
-                    <!-- Page content -->
-                    <div class="grow md:flex space-y-8 md:space-y-0 md:space-x-8 pb-16 md:pb-20">
-
-                        <!-- Middle area -->
-                        <div class="grow">
-                          <div class="max-w-[940px]{% unless page.homepage %} pt-12 md:pt-16{% endunless %}">
-                                <div class="space-y-10">
-                                    {{ content }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer -->
-                    {% include footer.html %}
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <script src="{{ "/assets/js/vendors/alpinejs.min.js" | relative_url }}" defer></script>
-    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
-</body>
-
-</html>
+{% include footer.html %}

@@ -1,0 +1,48 @@
+---
+layout: default
+title: Page Not Found
+description: The page you're looking for doesn't exist.
+permalink: /404.html
+sitemap: false
+---
+
+<main class="py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-2xl">
+      <!-- Error code -->
+      <div class="mb-6">
+        <span class="text-7xl md:text-9xl font-mono font-bold text-cyan/20">404</span>
+      </div>
+
+      <!-- Message -->
+      <h1 class="text-2xl md:text-3xl font-mono font-semibold text-primary mb-4">Page not found</h1>
+      <p class="text-secondary mb-8">The page you're looking for doesn't exist or has been moved. Check the URL or try one of the links below.</p>
+
+      <!-- Quick links -->
+      <div class="flex flex-wrap gap-4">
+        <a href="/" class="btn-primary">
+          {% include icons/home.html size=4 %}
+          Home
+        </a>
+        <a href="/docs/" class="btn-secondary">
+          {% include icons/book-open.html size=4 %}
+          Docs
+        </a>
+        <a href="/blog/" class="btn-secondary">
+          {% include icons/pen-line.html size=4 %}
+          Blog
+        </a>
+      </div>
+
+      <!-- Search hint -->
+      <div class="mt-12 p-4 rounded-lg border border-subtle bg-elevated">
+        <div class="flex items-start gap-3">
+          {% include icons/search.html size=5 class="text-muted shrink-0 mt-0.5" %}
+          <div>
+            <p class="text-sm text-secondary">Looking for something specific? Try browsing our <a href="/docs/" class="link-cyan">documentation</a> or check out our <a href="/oss/" class="link-cyan">open source projects</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

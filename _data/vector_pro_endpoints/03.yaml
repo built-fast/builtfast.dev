@@ -1107,7 +1107,7 @@ endpoints:
         name: is_production
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1139,7 +1139,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: production
-      is_production: true
+      is_production: false
       custom_domain: newshop.com
       tags:
         - live

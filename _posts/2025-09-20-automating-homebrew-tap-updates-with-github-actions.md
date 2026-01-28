@@ -6,6 +6,7 @@ date: "Sat Sep 20 18:00:00 -0400 2025"
 author: Josh Priddle
 categories: [homebrew, github-actions, automation, devops]
 tags: [macos, cli-tools, workflow, release-automation]
+tagline: "Maintaining a Homebrew tap manually is tedious. We automated the entire release workflow with GitHub Actions."
 ---
 
 Maintaining a Homebrew tap manually is tedious and error-prone. Every time you release a new version of your CLI tool, you need to update the formula with the new version number and SHA256 hash. Here's how we automated this entire process using GitHub Actions to create a seamless release workflow.

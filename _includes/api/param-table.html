@@ -1,0 +1,47 @@
+{% comment %}
+  Parameter table component
+  Usage: {% include api/param-table.html params=endpoint.query_parameters title="Query Parameters" %}
+{% endcomment %}
+
+{% if include.params.size > 0 %}
+<div class="mb-6">
+  <h5 class="text-sm font-semibold text-primary mb-3">{{ include.title }}</h5>
+  <div class="border border-subtle rounded-lg overflow-hidden">
+    <table class="param-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for param in include.params %}
+        <tr>
+          <td>
+            <div class="param-name">{{ param.name }}</div>
+            {% if param.required %}
+              <span class="param-badge param-badge-required">required</span>
+            {% else %}
+              <span class="param-badge param-badge-optional">optional</span>
+            {% endif %}
+          </td>
+          <td><span class="param-type">{{ param.type }}</span></td>
+          <td>
+            <span class="text-secondary font-sans">{{ param.description | markdownify }}</span>
+            {% if param.example %}
+              <div class="mt-1 text-muted text-xs">Example: <code class="text-xs">{{ param.example }}</code></div>
+            {% endif %}
+            {% if param.enum_values.size > 0 %}
+              <div class="mt-1 text-muted text-xs">
+                Enum: {% for val in param.enum_values %}<code class="text-xs">{{ val }}</code>{% unless forloop.last %} {% endunless %}{% endfor %}
+              </div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,100 @@
+/* ============================================================================
+   Terminal Prompt - Scramble Effect
+   ============================================================================ */
+
+.terminal-prompt {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+}
+
+.terminal-prompt .prompt-symbol {
+  color: var(--accent-cyan);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 4px rgba(29, 201, 216, 0.6));
+  position: relative;
+  top: -1px;
+  transform: translateZ(0);
+}
+
+.terminal-prompt .prompt-text {
+  display: inline-flex;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.terminal-prompt .prompt-char {
+  display: inline-block;
+  min-width: 0.6em;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.terminal-prompt .prompt-char.scrambling {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px rgba(29, 201, 216, 0.8);
+}
+
+.terminal-prompt .prompt-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent-cyan);
+  margin-left: 2px;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  transform: translateZ(0);
+}
+
+.terminal-prompt .prompt-cursor.visible {
+  filter: drop-shadow(0 0 6px rgba(29, 201, 216, 0.9));
+  animation: cursor-blink 530ms ease-in-out infinite;
+}
+
+.terminal-prompt .prompt-cursor.solid {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(29, 201, 216, 0.9));
+  animation: none;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Dimmed/idle state */
+.terminal-prompt.dimmed .prompt-symbol {
+  color: var(--text-faint);
+  filter: drop-shadow(0 0 0 transparent);
+}
+
+.terminal-prompt.dimmed .prompt-text {
+  color: var(--text-muted);
+}
+
+.terminal-prompt.dimmed .prompt-cursor {
+  opacity: 0 !important;
+  animation: none;
+  filter: none !important;
+}
+
+/* Glow pulse on completion */
+@keyframes glow-pulse {
+  0% { filter: drop-shadow(0 0 2px rgba(29, 201, 216, 0.4)); }
+  50% { filter: drop-shadow(0 0 12px rgba(29, 201, 216, 0.8)); }
+  100% { filter: drop-shadow(0 0 2px rgba(29, 201, 216, 0.4)); }
+}
+
+.terminal-prompt .prompt-text.glow {
+  animation: glow-pulse 0.4s ease-out;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .terminal-prompt .prompt-cursor,
+  .terminal-prompt .prompt-text,
+  .terminal-prompt .prompt-char {
+    animation: none !important;
+    transition: none !important;
+  }
+}

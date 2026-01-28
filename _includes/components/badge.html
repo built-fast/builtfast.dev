@@ -1,0 +1,11 @@
+{% comment %}
+  Badge/Tag component
+
+  Usage:
+    {% include components/badge.html text="New" %}
+    {% include components/badge.html text="Deprecated" type="warning" %}
+
+  Parameters:
+    - text: Badge text (required)
+    - type: default, info, success, warning, error (default: default)
+{% endcomment %}<span class="badge badge-{% if include.type %}{{ include.type }}{% else %}default{% endif %}">{{ include.text }}</span>

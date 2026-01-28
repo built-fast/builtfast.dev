@@ -5,6 +5,7 @@ date: "Fri Sep 26 21:44:00 -0400 2025"
 categories: [laravel, ci-cd, github-actions, devops]
 tags: [php, testing, automation, workflow]
 author: Josh Priddle
+tagline: "A deep dive into our production-ready CI pipeline for Laravel monoliths—balancing speed, quality, and maintainability."
 ---
 
 Setting up a comprehensive CI/CD pipeline for Laravel applications can be complex, but GitHub Actions provides the flexibility to create efficient, maintainable workflows. Here's how we built a production-ready CI pipeline for a [majestic monolith](https://signalvnoise.com/svn3/the-majestic-monolith/) that balances speed, quality, and maintainability.

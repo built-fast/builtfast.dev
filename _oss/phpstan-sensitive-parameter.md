@@ -3,10 +3,14 @@ title:  phpstan-sensitive-parameter
 period: Jul 2025
 date:   2025-07-04
 github: https://github.com/built-fast/phpstan-sensitive-parameter
+license: MIT
 tags:
-  - PHP
-  - PHPStan
-  - Security
+  - phpstan
+  - security
+languages:
+  - name: PHP
+    icon: php
+tagline: Detect sensitive parameters missing attributes
 excerpt: >
   A PHPStan extension that detects parameters that might contain sensitive
   information and should be marked with the SensitiveParameter attribute.
@@ -219,7 +223,3 @@ vendor/bin/pest             # Run tests
 vendor/bin/phpstan analyze  # Static analysis
 vendor/bin/pint --test      # Code style check
 ```
-
-## License
-
-MIT License.

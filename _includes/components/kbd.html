@@ -1,0 +1,17 @@
+{% comment %}
+  Keyboard shortcut component
+
+  Usage:
+    Press {% include components/kbd.html keys="Cmd+Shift+P" %} to open command palette.
+
+  Parameters:
+    - keys: Keyboard shortcut string (use + to separate keys)
+
+  Examples:
+    {% include components/kbd.html keys="Ctrl+C" %}
+    {% include components/kbd.html keys="Cmd+Shift+P" %}
+    {% include components/kbd.html keys="Enter" %}
+{% endcomment %}
+
+{% assign key_list = include.keys | split: "+" %}
+{% for key in key_list %}<kbd>{{ key }}</kbd>{% unless forloop.last %}<span class="kbd-separator">+</span>{% endunless %}{% endfor %}

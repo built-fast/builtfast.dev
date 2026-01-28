@@ -1,0 +1,60 @@
+{% comment %}
+  Full endpoint section component
+  Usage: {% include api/endpoint.html endpoint=endpoint %}
+{% endcomment %}
+
+{% assign e = include.endpoint %}
+{% assign method_lower = e.method | downcase %}
+
+{% comment %} Build the URI display with highlighted parameters {% endcomment %}
+{% assign uri_stripped = e.uri_display | remove: '/api/v1/vector' %}
+{% assign uri_html = uri_stripped | replace: '{', '<span class="uri-param">{' | replace: '}', '}</span>' %}
+
+{% comment %} Get the first response slug for default tab {% endcomment %}
+{% assign first_response_slug = e.responses.first.slug | default: '200-success' %}
+
+<section id="{{ e.id }}" class="endpoint-section" data-scroll-spy x-data="{ codeTab: 'curl', responseTab: '{{ first_response_slug }}' }">
+  <!-- Endpoint Header -->
+  <div class="endpoint-header">
+    <div class="px-6 lg:px-10 py-4">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="method-badge method-{{ method_lower }}">{{ e.method }}</span>
+        <span class="endpoint-uri">{{ uri_html }}</span>
+        <button class="copy-btn copy-btn-subtle" data-copy="https://api.builtfast.com{{ e.uri_display }}" aria-label="Copy endpoint URL">
+          {% include icons/copy.html size=3.5 %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-0">
+    <!-- Left: Description & Parameters -->
+    <div class="px-6 lg:px-10 py-6 lg:border-r border-subtle">
+      <h4 class="text-base font-semibold text-primary mb-2">{{ e.title }}</h4>
+
+      {% if e.description != '' %}
+      <div class="api-prose mb-6">
+        {{ e.description | markdownify }}
+      </div>
+      {% endif %}
+
+      {% comment %} URL Parameters {% endcomment %}
+      {% include api/param-table.html params=e.url_parameters title="URL Parameters" %}
+
+      {% comment %} Query Parameters {% endcomment %}
+      {% include api/param-table.html params=e.query_parameters title="Query Parameters" %}
+
+      {% comment %} Body Parameters {% endcomment %}
+      {% include api/param-table.html params=e.body_parameters title="Body Parameters" %}
+
+      {% comment %} Response codes {% endcomment %}
+      {% include api/response.html responses=e.responses %}
+    </div>
+
+    <!-- Right: Code Examples -->
+    <div class="px-6 lg:px-10 py-6 bg-elevated">
+      {% include api/code-example.html endpoint=e %}
+      {% include api/response-body.html responses=e.responses %}
+    </div>
+  </div>
+</section>

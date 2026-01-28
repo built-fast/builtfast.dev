@@ -1,0 +1,62 @@
+{% comment %}
+Info card component - simple card with icon, title, and description/content.
+
+Usage with description:
+{% include components/info-card.html
+   icon="terminal"
+   icon_color="green-500"
+   title="Vector Pro Support"
+   description="API questions, account issues, or platform support for Vector Pro customers."
+%}
+
+Usage with custom content (links, etc.):
+{% capture card_content %}
+<div class="space-y-2">
+  <a href="/support" class="text-sm text-secondary hover:text-cyan transition-colors block">→ Support Portal</a>
+  <a href="/docs/" class="text-sm text-secondary hover:text-cyan transition-colors block">→ Documentation</a>
+</div>
+{% endcapture %}
+{% include components/info-card.html
+   icon="terminal"
+   icon_color="green-500"
+   title="Vector Pro Support"
+   description="API questions, account issues."
+   content=card_content
+%}
+
+Usage with link:
+{% include components/info-card.html
+   icon="mail"
+   icon_color="orange"
+   title="General Inquiries"
+   description="For everything else."
+   link_url="mailto:hello@example.com"
+   link_text="hello@example.com"
+%}
+
+Parameters:
+- icon: Lucide icon name
+- icon_color: Color class for icon (e.g., "cyan", "orange", "green-500")
+- title: Card heading
+- description: Card description text
+- content: Additional HTML content after description (optional)
+- link_url: URL for link arrow (optional)
+- link_text: Text for link arrow (optional)
+{% endcomment %}
+
+<div class="card p-6">
+  <div class="flex items-center gap-3 mb-4">
+    {% capture icon_class %}text-{{ include.icon_color }}{% endcapture %}{% include icon.html name=include.icon size=5 class=icon_class %}
+    <h3 class="text-primary font-medium">{{ include.title }}</h3>
+  </div>
+  <p class="text-sm text-muted leading-relaxed{% if include.content or include.link_url %} mb-4{% endif %}">
+    {{ include.description }}
+  </p>
+  {{ include.content }}
+  {% if include.link_url %}
+  <a href="{{ include.link_url }}" class="link-arrow text-sm">
+    {{ include.link_text }}
+    {% include icons/arrow-right.html size=4 %}
+  </a>
+  {% endif %}
+</div>

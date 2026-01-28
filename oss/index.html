@@ -1,0 +1,174 @@
+---
+layout: default
+prose: false
+title: Open Source
+description: Tools and libraries we build and maintain. All open source, all production-tested.
+permalink: /oss/
+cta: false
+---
+
+{% capture hero_extra %}
+<a href="https://github.com/built-fast" class="btn-secondary">
+  {% include icons/github.html size=4 %}
+  View all on GitHub
+</a>
+{% endcapture %}
+{% include heroes/page.html
+   label="// open source"
+   title="Tools we build, use, and"
+   accent="maintain for everyone."
+   description="Everything here runs in production. SDKs for our APIs, GitHub Actions for better CI, development utilities, and more. All MIT licensed."
+   extra_content=hero_extra
+%}
+
+{% assign projects = site.oss | sort: "date" | reverse %}
+
+{% if projects.size > 0 %}
+
+<!-- Featured Projects (SDKs) -->
+{% assign sdks = projects | where_exp: "p", "p.tags contains 'sdk'" %}
+{% if sdks.size > 0 %}
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// sdks"
+       title="Official SDKs"
+    %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {% for project in sdks limit:2 %}
+      {% include components/project-card.html project=project link_text="View docs" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- All Projects -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// projects"
+       title="Tools & Libraries"
+    %}
+
+    <div class="oss-list">
+      {% for project in projects %}
+      {% unless project.tags contains 'sdk' %}
+      <a href="{{ project.url }}" class="oss-list-item group">
+        <div class="oss-list-content">
+          <div class="oss-list-header">
+            <h3 class="oss-list-name group-hover:text-cyan transition-colors">{{ project.title }}</h3>
+            {% if project.languages %}
+            <div class="oss-list-langs">
+              {% for lang in project.languages limit:1 %}
+              {% include components/lang-badge.html name=lang.name size="sm" %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <p class="oss-list-desc">
+            {% if project.tagline %}
+              {{ project.tagline }}
+            {% elsif project.excerpt %}
+              {{ project.excerpt | strip_html | truncatewords: 20 }}
+            {% endif %}
+          </p>
+          {% if project.tags and project.tags.size > 0 %}
+          {% assign sorted_tags = project.tags | sort %}
+          <div class="oss-list-tags">
+            {% for tag in sorted_tags limit:3 %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="oss-list-actions">
+          {% if project.github %}
+          <span class="icon-link-muted" onclick="event.preventDefault(); event.stopPropagation(); window.open('{{ project.github }}', '_blank');" aria-label="View on GitHub">
+            {% include icons/github.html size=4 %}
+          </span>
+          {% endif %}
+          <span class="oss-list-arrow">
+            {% include icons/chevron-right.html size=5 %}
+          </span>
+        </div>
+      </a>
+      {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% else %}
+{% include components/empty-state.html
+   icon="box"
+   title="No projects yet"
+   description="We're working on some exciting open source tools. Follow us on GitHub to get notified when we release them."
+   cta_url="https://github.com/built-fast"
+   cta_text="Follow on GitHub"
+   cta_icon_include="icons/github.html"
+%}
+{% endif %}
+
+<!-- Contributing Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <!-- Left: Contributing -->
+      <div>
+        <span class="section-label">// contributing</span>
+        <h2 class="text-2xl text-primary font-semibold mt-2 mb-4">Want to contribute?</h2>
+        <p class="text-secondary mb-6 leading-relaxed">
+          We welcome contributions to all our projects. Whether it's bug fixes, feature additions, or documentation improvements—every contribution helps.
+        </p>
+        <div class="space-y-4">
+          <div>
+            <span class="text-primary text-sm font-medium">Pull requests</span>
+            <p class="text-sm text-muted">Fork, branch, and submit a PR. We review everything.</p>
+          </div>
+          <div>
+            <span class="text-primary text-sm font-medium">Bug reports</span>
+            <p class="text-sm text-muted">Open an issue with steps to reproduce.</p>
+          </div>
+          <div>
+            <span class="text-primary text-sm font-medium">Feature ideas</span>
+            <p class="text-sm text-muted">Start a discussion or open an issue to propose new features.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: License & Philosophy -->
+      {% capture tc_content %}
+      <div class="space-y-4 font-mono text-sm p-5">
+        <div>
+          <span class="text-muted"># License</span>
+          <p class="mt-1 text-secondary">All projects are MIT licensed. Use them however you want.</p>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># Why open source?</span>
+          <p class="mt-1 text-secondary">We build tools we need. If they're useful to us, they're probably useful to others. Sharing is better than hoarding.</p>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># Support</span>
+          <p class="mt-1 text-secondary">Issues and discussions are the best way to reach us for project-specific help.</p>
+        </div>
+      </div>
+      {% endcapture %}
+      {% include components/terminal-card.html filename="philosophy.md" content=tc_content %}
+    </div>
+  </div>
+</section>
+
+{% include ctas/footer.html
+   title="Read the technical details"
+   description="Our blog covers how we build and maintain these tools."
+   primary_url="https://github.com/built-fast"
+   primary_text="GitHub"
+   primary_icon_include="icons/github.html"
+   secondary_url="/blog/"
+   secondary_text="Read the Blog"
+   bg="bg-elevated"
+%}

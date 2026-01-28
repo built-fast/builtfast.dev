@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  {% include head.html %}
+</head>
+<body class="min-h-screen">
+  <!-- Skip to main content link for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Theme: prevent flash of wrong theme -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isLight = saved === 'light' || (saved === 'auto' && !prefersDark);
+      if (isLight) document.documentElement.classList.add('light');
+    })();
+  </script>
+
+  {{ content }}
+
+{%- assign asset_hash = site.time | date: "%s" -%}
+  <!-- Terminal prompt effect -->
+  <script src="/assets/js/terminal-prompt.js?v={{ asset_hash }}"></script>
+
+  <!-- Hero scramble effect -->
+  <script src="/assets/js/hero-scramble.js?v={{ asset_hash }}"></script>
+
+  <!-- Prose heading anchors -->
+  <script src="/assets/js/prose-anchors.js?v={{ asset_hash }}"></script>
+
+  <!-- Alpine.js -->
+  <script defer src="/vendor/js/alpine.min.js?v={{ asset_hash }}"></script>
+
+  <!-- Theme toggle store -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+      Alpine.store('theme', {
+        value: localStorage.getItem('theme') || 'dark',
+
+        init() {
+          mediaQuery.addEventListener('change', () => this.apply());
+          this.apply();
+        },
+
+        set(mode) {
+          this.value = mode;
+          localStorage.setItem('theme', mode);
+          this.apply();
+        },
+
+        apply() {
+          const prefersDark = mediaQuery.matches;
+          const isLight = this.value === 'light' || (this.value === 'auto' && !prefersDark);
+          document.documentElement.classList.toggle('light', isLight);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

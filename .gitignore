@@ -1,7 +1,31 @@
-/_site/*
-/_drafts/
+# Jekyll
+_site/
+_drafts/
+_dump/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby
 /bin/*
-/.bundle
-/.sass-cache
-/.jekyll-metadata
-/.envrc
+.bundle
+vendor/bundle/
+.sass-cache
+
+# npm
+node_modules/
+npm-debug.log*
+
+# Environment
+.envrc
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.idea/
+.vscode/

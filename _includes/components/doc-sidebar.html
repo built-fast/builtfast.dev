@@ -1,0 +1,69 @@
+{% comment %}
+  Documentation Sidebar Navigation
+
+  Usage in layouts:
+    {% include components/doc-sidebar.html %}
+
+  Parameters:
+    - class: Additional CSS classes
+
+  Features:
+  - Groups docs by category (frontmatter)
+  - Highlights current page
+  - Collapsible sections (Alpine.js)
+{% endcomment %}
+
+{% assign docs = site.docs | sort: "order" %}
+{% assign categories = docs | map: "category" | uniq %}
+
+<nav class="doc-sidebar {{ include.class }}" x-data="{ expanded: {} }" aria-label="Documentation navigation">
+  <div class="doc-sidebar-header">
+    <a href="/docs/" class="flex items-center gap-2 text-sm font-medium text-primary hover:text-cyan transition-colors">
+      {% include icons/book-open.html size=4 %}
+      Documentation
+    </a>
+  </div>
+
+  <ul class="doc-sidebar-nav">
+    {% for category in categories %}
+    {% assign category_docs = docs | where: "category", category %}
+    {% if category and category != "" %}
+    <!-- Category Group -->
+    <li class="doc-sidebar-group" x-data="{ open: true }">
+      <button
+        @click="open = !open"
+        class="doc-sidebar-category"
+        :aria-expanded="open"
+      >
+        <span>{{ category }}</span>
+        {% include icons/chevron-down.html size=4 class="transition-transform" %}
+      </button>
+      <ul x-show="open" x-collapse class="doc-sidebar-items">
+        {% for doc in category_docs %}
+        <li>
+          <a
+            href="{{ doc.url }}"
+            class="doc-sidebar-link{% if page.url == doc.url %} active{% endif %}"
+          >
+            {{ doc.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <!-- Uncategorized docs at root level -->
+    {% for doc in category_docs %}
+    <li>
+      <a
+        href="{{ doc.url }}"
+        class="doc-sidebar-link{% if page.url == doc.url %} active{% endif %}"
+      >
+        {{ doc.title }}
+      </a>
+    </li>
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

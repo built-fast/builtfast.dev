@@ -1,0 +1,167 @@
+---
+layout: base
+---
+
+{% include nav.html %}
+
+<main class="py-10 md:py-16" x-data="{ sidebarOpen: false }">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Mobile sidebar toggle -->
+    <div class="lg:hidden mb-6">
+      <button
+        @click="sidebarOpen = true"
+        class="doc-sidebar-toggle"
+        aria-label="Open documentation menu"
+      >
+        {% include icons/menu.html size=5 %}
+      </button>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-[240px_1fr_200px] lg:gap-8 xl:gap-12">
+      <!-- Doc Sidebar (desktop) -->
+      <aside class="hidden lg:block">
+        {% include components/doc-sidebar.html %}
+      </aside>
+
+      <!-- Mobile sidebar overlay -->
+      <div
+        x-show="sidebarOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="sidebarOpen = false"
+        class="doc-sidebar-overlay lg:hidden"
+        x-cloak
+      ></div>
+
+      <!-- Mobile sidebar panel -->
+      <aside
+        x-show="sidebarOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="-translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="-translate-x-full"
+        class="doc-sidebar-mobile lg:hidden"
+        x-cloak
+      >
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-sm font-medium text-primary">Documentation</span>
+          <button @click="sidebarOpen = false" class="icon-link">
+            {% include icons/x.html size=5 %}
+          </button>
+        </div>
+        {% include components/doc-sidebar.html %}
+      </aside>
+
+      <!-- Main Content -->
+      <article class="min-w-0">
+        <!-- Doc Header -->
+        <header class="mb-8">
+          {% if page.category %}
+          <div class="flex items-center gap-2 mb-3">
+            <a href="/docs/" class="text-xs text-muted hover:text-secondary transition-colors">Docs</a>
+            <span class="text-faint">/</span>
+            <span class="text-xs text-muted">{{ page.category }}</span>
+          </div>
+          {% endif %}
+          <h1 class="text-2xl md:text-3xl font-semibold text-primary leading-tight font-mono">
+            {{ page.title }}
+          </h1>
+          {% if page.description %}
+          <p class="text-secondary mt-3 text-lg font-sans">
+            {{ page.description }}
+          </p>
+          {% endif %}
+        </header>
+
+        <!-- Doc Content -->
+        <div class="prose">
+          {{ content }}
+        </div>
+
+        <!-- Doc Footer -->
+        <footer class="mt-12 pt-8 border-t border-subtle">
+          <!-- Edit on GitHub link -->
+          {% if site.github.repository_url %}
+          <a href="{{ site.github.repository_url }}/blob/{{ site.github.default_branch }}/{{ page.path }}" class="text-sm text-muted hover:text-secondary transition-colors flex items-center gap-2 mb-6">
+            {% include icons/pencil.html size=4 %}
+            See a mistake? Edit this page on GitHub
+          </a>
+          {% endif %}
+
+          <!-- Doc Navigation (folder-scoped) -->
+          <nav class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% comment %}
+              Get current doc's folder by removing the filename from the path.
+              page.path is like "getting-started.md" or "vector-pro/overview.md"
+            {% endcomment %}
+            {% assign path_parts = page.path | split: "/" %}
+            {% if path_parts.size > 1 %}
+              {% assign current_folder = path_parts | pop | join: "/" | append: "/" %}
+            {% else %}
+              {% assign current_folder = "" %}
+            {% endif %}
+
+            {% comment %}Filter to docs in the same folder and sort by order{% endcomment %}
+            {% assign folder_docs = site.docs | sort: "order" | where_exp: "doc", "doc.path contains current_folder" %}
+            {% assign same_folder_docs = "" | split: "" %}
+            {% for doc in folder_docs %}
+              {% assign doc_parts = doc.path | split: "/" %}
+              {% if path_parts.size == doc_parts.size %}
+                {% assign same_folder_docs = same_folder_docs | push: doc %}
+              {% endif %}
+            {% endfor %}
+
+            {% assign doc_index = nil %}
+            {% for doc in same_folder_docs %}
+              {% if doc.url == page.url %}
+                {% assign doc_index = forloop.index0 %}
+              {% endif %}
+            {% endfor %}
+
+            {% if doc_index != nil %}
+              {% assign prev_index = doc_index | minus: 1 %}
+              {% assign next_index = doc_index | plus: 1 %}
+
+              {% if prev_index >= 0 %}
+              {% assign prev_doc = same_folder_docs[prev_index] %}
+              <a href="{{ prev_doc.url }}" class="card p-4 hover:border-emphasis group">
+                <span class="text-xs text-muted uppercase tracking-wide flex items-center gap-1">
+                  {% include icons/arrow-left.html size=3 %}
+                  Previous
+                </span>
+                <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ prev_doc.title }}</p>
+              </a>
+              {% else %}
+              <div></div>
+              {% endif %}
+
+              {% if next_index < same_folder_docs.size %}
+              {% assign next_doc = same_folder_docs[next_index] %}
+              <a href="{{ next_doc.url }}" class="card p-4 hover:border-emphasis group text-right">
+                <span class="text-xs text-muted uppercase tracking-wide flex items-center justify-end gap-1">
+                  Next
+                  {% include icons/arrow-right.html size=3 %}
+                </span>
+                <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ next_doc.title }}</p>
+              </a>
+              {% endif %}
+            {% endif %}
+          </nav>
+        </footer>
+      </article>
+
+      <!-- TOC Sidebar (desktop only) -->
+      <aside class="hidden lg:block">
+        {% include components/toc.html %}
+      </aside>
+    </div>
+  </div>
+</main>
+
+{% include footer.html %}

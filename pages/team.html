@@ -1,0 +1,126 @@
+---
+layout: default
+title: Team
+description: The founders behind BuiltFast - 20 years of hosting infrastructure experience, now building in the open.
+permalink: /team/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// team"
+   title="Two decades of infrastructure."
+   accent="Now on our own terms."
+   description="BuiltFast is founder-led by hosting veterans who've been building infrastructure together for 20 years—from Site5 to Pressed to A2 Hosting. After decades working within other companies, we started BuiltFast to do things our way."
+%}
+
+<!-- Founders Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// founders"
+       title="The people behind the code."
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% assign people = site.people | sort: "date" %}
+      {% for person in people %}
+      <div class="team-card">
+        <div class="team-card-avatar">
+          <img src="/assets/images/avatars/{{ person.name | slugify }}-thumb.jpg" alt="{{ person.name }}" loading="lazy">
+        </div>
+        <div class="team-card-content">
+          <div class="team-card-header">
+            <h3 class="team-card-name">{{ person.name }}</h3>
+            <p class="team-card-role">{{ person.role }}</p>
+          </div>
+          <div class="team-card-links">
+            {% if person.twitter %}
+            <a href="https://x.com/{{ person.twitter }}" class="icon-link-muted" aria-label="X profile" target="_blank" rel="noopener">
+              {% include icons/twitter.html size=4 %}
+            </a>
+            {% endif %}
+            {% if person.bluesky %}
+            <a href="https://bsky.app/profile/{{ person.bluesky }}" class="icon-link-muted" aria-label="Bluesky profile" target="_blank" rel="noopener">
+              {% include icons/bluesky.html size=4 %}
+            </a>
+            {% endif %}
+            {% if person.github %}
+            <a href="https://github.com/{{ person.github }}" class="icon-link-muted" aria-label="GitHub profile" target="_blank" rel="noopener">
+              {% include icons/github.html size=4 %}
+            </a>
+            {% endif %}
+            {% if person.linkedin %}
+            <a href="https://linkedin.com/in/{{ person.linkedin }}" class="icon-link-muted" aria-label="LinkedIn profile" target="_blank" rel="noopener">
+              {% include icons/linkedin.html size=4 %}
+            </a>
+            {% endif %}
+          </div>
+          <div class="team-card-bio">{{ person.content }}</div>
+          {% if person.skills %}
+          <div class="flex flex-wrap justify-center gap-2 mt-4">
+            {% for skill in person.skills %}
+            <span class="tag">{{ skill }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Philosophy Section -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// how we work"
+       title="The principles behind everything we ship."
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card p-6">
+        <h3 class="text-primary font-medium mb-3">Security-first</h3>
+        <p class="text-sm text-secondary leading-relaxed">
+          No shortcuts. We treat every user's data like it's our own. Security isn't a feature—it's the foundation everything else is built on.
+        </p>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-primary font-medium mb-3">Quality over speed</h3>
+        <p class="text-sm text-secondary leading-relaxed">
+          Get it right, not just done. We'd rather ship something solid next week than something brittle today. Technical debt compounds.
+        </p>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-primary font-medium mb-3">Hands-on leadership</h3>
+        <p class="text-sm text-secondary leading-relaxed">
+          Yes, the founders still review PRs. We stay close to the code because that's where the real decisions get made.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <h2 class="text-xl text-primary font-semibold mb-2">Hosting should just work</h2>
+        <p class="text-secondary">We're building in the open to make that happen.</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="/oss/" class="btn-secondary">Open Source</a>
+        <a href="/blog/" class="btn-secondary">Blog</a>
+        <a href="https://github.com/built-fast" class="btn-primary">
+          {% include icons/github.html size=4 %}
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include overdrive.html %}

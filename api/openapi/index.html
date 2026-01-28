@@ -1,0 +1,202 @@
+---
+layout: default
+prose: false
+title: OpenAPI Specification
+description: Machine-readable API spec for Vector Pro. Generate clients, build integrations, or import directly into your tools.
+permalink: /api/openapi/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// openapi"
+   title="OpenAPI Specification"
+   description="The Vector Pro API is documented using OpenAPI 3.1. Use the spec to generate clients, import into API tools, or build integrations."
+%}
+
+<!-- Quick Actions -->
+<section class="border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="/api/openapi.yaml" class="btn-primary inline-flex items-center gap-2">
+        {% include icons/file-json.html size=4 %}
+        Download openapi.yaml
+      </a>
+      <a href="/api/" class="btn-secondary inline-flex items-center gap-2">
+        {% include icons/book-open.html size=4 %}
+        API Reference
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- What is OpenAPI -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <!-- Left column: explanation -->
+      <div class="lg:col-span-7">
+        <span class="section-label">// about</span>
+        <h2 class="text-2xl text-primary font-semibold mt-2 mb-5">What is OpenAPI?</h2>
+        <div class="space-y-4 text-secondary leading-relaxed">
+          <p>
+            OpenAPI is a standard format for describing REST APIs. It's a YAML or JSON file that documents every endpoint, parameter, request body, and response shape in a structured, machine-readable format.
+          </p>
+          <p>
+            You can feed the spec to code generators to produce typed SDKs, import it into tools like Postman, or use it as context for AI coding assistants.
+          </p>
+          <p>
+            The Vector Pro spec follows <a href="https://spec.openapis.org/oas/v3.1.0" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">OpenAPI 3.1 {% include icons/external-link.html size=3 %}</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right column: spec details card -->
+      <div class="lg:col-span-5">
+        <div class="card p-6">
+          <h3 class="text-sm font-semibold text-primary uppercase tracking-wide mb-4">Spec Details</h3>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Version</dt>
+              <dd class="text-primary font-mono">OpenAPI 3.1</dd>
+            </div>
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Format</dt>
+              <dd class="text-primary font-mono">YAML</dd>
+            </div>
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Base URL</dt>
+              <dd class="text-cyan font-mono text-xs">api.builtfast.com/api/v1/vector</dd>
+            </div>
+            <div class="flex justify-between py-2 border-b border-subtle">
+              <dt class="text-muted">Auth</dt>
+              <dd class="text-primary font-mono">Bearer token</dd>
+            </div>
+            <div class="flex justify-between py-2">
+              <dt class="text-muted">Content-Type</dt>
+              <dd class="text-primary font-mono">application/json</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Use Cases -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// usage"
+       title="What you can do with it"
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Generate Clients -->
+      <div class="card p-6">
+        <h3 class="text-primary font-semibold mb-3">Generate typed clients</h3>
+        <p class="text-sm text-secondary mb-4">
+          Use OpenAPI Generator to produce SDKs in TypeScript, Python, Go, PHP, or 50+ other languages.
+        </p>
+        <div class="text-xs text-muted">
+          <code class="text-cyan">openapi-generator-cli generate -g typescript-fetch</code>
+        </div>
+      </div>
+
+      <!-- Import to Tools -->
+      <div class="card p-6">
+        <h3 class="text-primary font-semibold mb-3">Import into API tools</h3>
+        <p class="text-sm text-secondary mb-4">
+          Drop the spec into Postman, Insomnia, HTTPie, or VS Code extensions to get a working collection.
+        </p>
+        <div class="text-xs text-muted">
+          Postman: Import &rarr; OpenAPI &rarr; URL or File
+        </div>
+      </div>
+
+      <!-- AI Integrations -->
+      <div class="card p-6">
+        <h3 class="text-primary font-semibold mb-3">Use with AI assistants</h3>
+        <p class="text-sm text-secondary mb-4">
+          Attach the spec to Claude, ChatGPT, or Cursor. The structured format provides complete API context.
+        </p>
+        <div class="text-xs text-muted">
+          "Using this spec, write a service that..."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Code Example -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <span class="section-label">// client generation</span>
+    <h2 class="text-2xl text-primary font-semibold mt-2 mb-6">Generate a client</h2>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span class="code-block-lang">bash</span>
+      </div>
+      <div class="code-block-body">
+<pre><span class="text-comment"># Install the generator</span>
+<span class="text-cyan">npm</span> install @openapitools/openapi-generator-cli -g
+
+<span class="text-comment"># Generate a TypeScript client</span>
+<span class="text-cyan">openapi-generator-cli</span> generate \
+  -i https://builtfast.dev/api/openapi.yaml \
+  -g typescript-fetch \
+  -o ./vector-client
+
+<span class="text-comment"># Or Python</span>
+<span class="text-cyan">openapi-generator-cli</span> generate \
+  -i https://builtfast.dev/api/openapi.yaml \
+  -g python \
+  -o ./vector-client</pre>
+      </div>
+    </div>
+
+    <p class="text-sm text-muted mt-4">
+      See all <a href="https://openapi-generator.tech/docs/generators" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">available generators {% include icons/external-link.html size=3 %}</a>.
+    </p>
+  </div>
+</section>
+
+<!-- Staying Updated -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl">
+      <span class="section-label">// versioning</span>
+      <h2 class="text-2xl text-primary font-semibold mt-2 mb-5">Staying up to date</h2>
+      <p class="text-secondary mb-6">
+        The spec is updated when the API changes. For CI pipelines, fetch directly from the URL.
+      </p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-block-lang">bash</span>
+        </div>
+        <div class="code-block-body">
+<pre><span class="text-comment"># Fetch the latest spec</span>
+<span class="text-cyan">curl</span> -O https://builtfast.dev/api/openapi.yaml
+
+<span class="text-comment"># Or generate directly in CI</span>
+<span class="text-cyan">openapi-generator-cli</span> generate \
+  -i https://builtfast.dev/api/openapi.yaml \
+  -g typescript-fetch \
+  -o ./src/api-client</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include ctas/footer.html
+   title="Need the full API reference?"
+   description="Browse all endpoints, parameters, and response schemas."
+   primary_url="/api/"
+   primary_text="API Reference"
+   primary_icon_include="icons/book-open.html"
+   secondary_url="https://spec.openapis.org/oas/v3.1.0"
+   secondary_text="OpenAPI 3.1 Spec"
+   secondary_icon_include="icons/external-link.html"
+%}

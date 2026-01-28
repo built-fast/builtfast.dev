@@ -1,0 +1,72 @@
+{% comment %}
+Project card component - used for displaying OSS projects.
+
+Usage with a project object:
+{% include components/project-card.html project=project %}
+
+Usage with explicit params:
+{% include components/project-card.html
+   name="project-name"
+   description="Project description"
+   tags="tag1,tag2,tag3"
+   languages="PHP,JavaScript"
+   github="https://github.com/..."
+   url="/oss/project-name/"
+   link_text="View docs"
+%}
+{% endcomment %}
+
+{% if include.project %}
+  {% assign name = include.project.title %}
+  {% assign description = include.project.tagline | default: include.project.excerpt | strip_html | truncatewords: 25 %}
+  {% assign url = include.project.url %}
+  {% assign github = include.project.github %}
+  {% assign tags = include.project.tags %}
+  {% assign languages = include.project.languages %}
+{% else %}
+  {% assign name = include.name %}
+  {% assign description = include.description %}
+  {% assign url = include.url %}
+  {% assign github = include.github %}
+  {% if include.tags %}
+    {% assign tags = include.tags | split: "," %}
+  {% endif %}
+  {% if include.languages %}
+    {% assign languages = include.languages | split: "," %}
+  {% endif %}
+{% endif %}
+
+{% assign link_text = include.link_text | default: "View" %}
+
+<a href="{{ url }}" class="project-card group">
+  <div class="project-card-header">
+    <div class="project-card-name-wrap">
+      <h3 class="project-card-name group-hover:text-cyan transition-colors">{{ name }}</h3>
+      {% if languages %}
+      <div class="project-card-langs">
+        {% for lang in languages limit:2 %}
+        {% include components/lang-badge.html name=lang.name %}
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% if github %}
+    <span class="icon-link-muted shrink-0" onclick="event.preventDefault(); event.stopPropagation(); window.open('{{ github }}', '_blank');" aria-label="View on GitHub">
+      {% include icons/github.html size=5 %}
+    </span>
+    {% endif %}
+  </div>
+  <p class="project-card-description">{{ description }}</p>
+  <div class="project-card-footer">
+{% assign sorted_tags = tags | sort %}
+    <div class="project-card-tags">
+      {% for tag in sorted_tags limit:3 %}
+      <span class="tag">{{ tag | strip }}</span>
+      {% endfor %}
+    </div>
+    <span class="link-arrow text-sm">
+      {{ link_text }}
+      {% include icons/chevron-right.html size=4 %}
+    </span>
+  </div>
+</a>

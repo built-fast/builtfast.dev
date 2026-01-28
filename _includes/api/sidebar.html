@@ -1,0 +1,108 @@
+<aside class="api-sidebar" :class="{ 'open': sidebarOpen }">
+  <div class="p-3">
+    <!-- Search -->
+    <div class="api-search">
+      {% include icons/search.html size=4 class="api-search-icon" %}
+      <input type="text" placeholder="Search endpoints..." aria-label="Search endpoints">
+    </div>
+  </div>
+
+  <!-- Navigation groups -->
+  <nav aria-label="API endpoints">
+    <!-- Introduction -->
+    <div class="api-sidebar-group border-t border-subtle">
+      <a
+        href="#introduction"
+        class="api-sidebar-group-header"
+        @click="activeEndpoint = 'introduction'; sidebarOpen = false"
+      >
+        <span>Introduction</span>
+      </a>
+    </div>
+
+    {% for group in site.data.api_groups %}
+      <div class="api-sidebar-group" x-data="{ open: false }">
+        <button
+          class="api-sidebar-group-header w-full"
+          @click="open = !open"
+          :aria-expanded="open"
+          aria-controls="api-group-{{ group.slug }}"
+        >
+          <span>{{ group.name }}</span>
+          {% include icons/chevron-down.html size=4 class="transition-transform" %}
+        </button>
+
+        <div id="api-group-{{ group.slug }}" x-show="open" x-collapse x-cloak>
+          <a
+            href="#{{ group.slug }}"
+            class="api-sidebar-link"
+            :class="{ 'active': activeEndpoint === '{{ group.slug }}' }"
+            @click="activeEndpoint = '{{ group.slug }}'; sidebarOpen = false"
+          >
+            <span>Overview</span>
+          </a>
+          {% for subgroup in group.subgroups %}
+            {% if subgroup.name != '' %}
+              <a
+                href="#{{ group.slug }}-{{ subgroup.slug }}"
+                class="api-sidebar-subgroup mt-2"
+                :class="{ 'active': activeEndpoint === '{{ group.slug }}-{{ subgroup.slug }}' }"
+                @click="activeEndpoint = '{{ group.slug }}-{{ subgroup.slug }}'; sidebarOpen = false"
+              >{{ subgroup.name }}</a>
+            {% endif %}
+
+            {% for endpoint in subgroup.endpoints %}
+              {% assign method_lower = endpoint.method | downcase %}
+              {% assign method_display = endpoint.method %}
+              {% if method_display == 'DELETE' %}
+                {% assign method_display = 'DEL' %}
+              {% endif %}
+
+              <a
+                href="#{{ endpoint.id }}"
+                class="api-sidebar-link justify-between"
+                :class="{ 'active': activeEndpoint === '{{ endpoint.id }}' }"
+                @click="activeEndpoint = '{{ endpoint.id }}'; sidebarOpen = false"
+              >
+                <span>{{ endpoint.title }}</span>
+                <span class="method-badge method-badge-sm method-{{ method_lower }}">{{ method_display }}</span>
+              </a>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Resources -->
+    <div class="api-sidebar-group" x-data="{ open: true }">
+      <button
+        class="api-sidebar-group-header w-full"
+        @click="open = !open"
+        :aria-expanded="open"
+        aria-controls="api-group-resources"
+      >
+        <span>Resources</span>
+        {% include icons/chevron-down.html size=4 class="transition-transform" %}
+      </button>
+
+      <div id="api-group-resources" x-show="open" x-collapse>
+        <a href="/api/openapi/" class="api-sidebar-link">
+          {% include icons/file-code-2.html size=4 class="text-muted" %}
+          <span>OpenAPI Spec</span>
+        </a>
+        <a href="/api/postman/" class="api-sidebar-link">
+          {% include icons/rocket.html size=4 class="text-muted" %}
+          <span>Postman Collection</span>
+        </a>
+        <a href="https://builtfast.dev/docs/" class="api-sidebar-link" target="_blank" rel="noopener">
+          {% include icons/book.html size=4 class="text-muted" %}
+          <span>Documentation</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="api-sidebar-footer">
+    <span class="text-muted text-xs">Last updated {{ site.time | date: "%b %d, %Y" }}</span>
+  </div>
+</aside>

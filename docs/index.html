@@ -1,0 +1,112 @@
+---
+layout: default
+prose: false
+title: Documentation
+description: Technical documentation for web hosting, DNS, WordPress, and the Vector Pro platform. Written by engineers.
+permalink: /docs/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// docs"
+   title="Technical docs for"
+   accent="people who ship."
+   description="Hosting, DNS, WordPress, and infrastructure—written by engineers who actually run this stuff. No fluff, no upsells, just the details you need."
+%}
+
+<!-- Documentation by Category -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// guides"
+       title="Browse by Topic"
+    %}
+
+    {% assign docs = site.docs | sort: "order" %}
+    {% assign categories = docs | map: "category" | uniq %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for category in categories %}
+      {% if category and category != "" %}
+      {% assign category_docs = docs | where: "category", category %}
+      <div class="card p-6">
+        <h3 class="text-primary font-medium mb-4">{{ category }}</h3>
+        <ul class="space-y-2">
+          {% for doc in category_docs %}
+          <li>
+            <a href="{{ doc.url }}" class="text-sm text-secondary hover:text-cyan transition-colors">
+              {{ doc.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Vector Pro Section -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <!-- Left: Info -->
+      <div>
+        <span class="section-label">// vector pro</span>
+        <h2 class="text-2xl text-primary font-semibold mt-2 mb-4">Serverless PHP hosting</h2>
+        <p class="text-secondary mb-6 leading-relaxed">
+          Deploy WordPress and PHP applications to AWS Lambda with zero server management. Full API access, CLI tooling, and SDKs for automation.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/docs/getting-started/" class="btn-primary">
+            Get Started
+          </a>
+          <a href="/api/" class="btn-secondary">
+            API Reference
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Terminal -->
+      {% capture tc_content %}
+      <div class="space-y-3 font-mono text-sm p-5">
+        <div>
+          <span class="text-cyan">$</span>
+          <span class="text-secondary ml-2">vector init</span>
+        </div>
+        <div>
+          <span class="text-cyan">$</span>
+          <span class="text-secondary ml-2">vector deploy</span>
+        </div>
+        <div class="pt-2 border-t border-subtle/50 text-muted text-xs">
+          <span class="text-green-400">✓</span>
+          <span class="ml-2">Deployed to</span>
+          <span class="text-cyan ml-1">my-site.vectorpro.dev</span>
+        </div>
+      </div>
+      {% endcapture %}
+      {% include components/terminal-card.html filename="deploy.sh" content=tc_content %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <h2 class="text-xl text-primary font-semibold mb-2">Can't find what you need?</h2>
+        <p class="text-secondary">Check the blog for deeper dives, or reach out directly.</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="/blog/" class="btn-secondary">
+          Read the Blog
+        </a>
+        <a href="/contact/" class="btn-secondary">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

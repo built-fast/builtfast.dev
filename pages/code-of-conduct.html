@@ -1,0 +1,247 @@
+---
+layout: default
+title: Code of Conduct
+description: Guidelines for a safe, respectful, and productive community. Based on the Ruby Community Conduct Guideline.
+permalink: /conduct/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// community"
+   title="Code of Conduct"
+   description="We expect everyone contributing to the BuiltFast Developers community to follow these guidelines, whether on GitHub, in discussions, or anywhere we collaborate."
+%}
+
+<!-- Principles Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <!-- Left: Principles -->
+      <div class="lg:col-span-7">
+        <div class="space-y-1">
+          <!-- Principle 1 -->
+          <div class="conduct-principle group">
+            <div class="conduct-principle-marker">
+              <span class="conduct-principle-num">01</span>
+              <div class="conduct-principle-line"></div>
+            </div>
+            <div class="conduct-principle-content">
+              <h3 class="conduct-principle-title">Tolerance</h3>
+              <p class="conduct-principle-text">Participants will be tolerant of opposing views.</p>
+            </div>
+          </div>
+
+          <!-- Principle 2 -->
+          <div class="conduct-principle group">
+            <div class="conduct-principle-marker">
+              <span class="conduct-principle-num">02</span>
+              <div class="conduct-principle-line"></div>
+            </div>
+            <div class="conduct-principle-content">
+              <h3 class="conduct-principle-title">Respect</h3>
+              <p class="conduct-principle-text">Participants must ensure that their language and actions are free of personal attacks and disparaging personal remarks.</p>
+            </div>
+          </div>
+
+          <!-- Principle 3 -->
+          <div class="conduct-principle group">
+            <div class="conduct-principle-marker">
+              <span class="conduct-principle-num">03</span>
+              <div class="conduct-principle-line"></div>
+            </div>
+            <div class="conduct-principle-content">
+              <h3 class="conduct-principle-title">Good Faith</h3>
+              <p class="conduct-principle-text">When interpreting the words and actions of others, participants should always assume good intentions.</p>
+            </div>
+          </div>
+
+          <!-- Principle 4 -->
+          <div class="conduct-principle group">
+            <div class="conduct-principle-marker">
+              <span class="conduct-principle-num text-orange">04</span>
+              <div class="conduct-principle-line bg-orange/20"></div>
+            </div>
+            <div class="conduct-principle-content">
+              <h3 class="conduct-principle-title text-orange">Zero Tolerance</h3>
+              <p class="conduct-principle-text">Behaviour which can be reasonably considered harassment will not be tolerated.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Terminal Card -->
+      <div class="lg:col-span-5">
+        {% capture tc_content %}
+        <div class="space-y-4 font-mono text-sm p-5">
+          <div>
+            <span class="text-muted"># Report violations to</span>
+            <div class="mt-1">
+              <span class="text-cyan">$</span>
+              <span class="text-primary ml-2">mail</span>
+              <a href="mailto:conduct@builtfast.com" class="text-orange hover:underline ml-2">conduct@builtfast.com</a>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-subtle/50">
+            <span class="text-muted"># Include in your report</span>
+            <ul class="mt-2 space-y-1 text-secondary">
+              <li><span class="text-cyan">-</span> What happened</li>
+              <li><span class="text-cyan">-</span> When and where</li>
+              <li><span class="text-cyan">-</span> Who was involved</li>
+              <li><span class="text-cyan">-</span> Any supporting links or screenshots</li>
+            </ul>
+          </div>
+
+          <div class="pt-2 border-t border-subtle/50">
+            <span class="text-muted"># What to expect</span>
+            <ul class="mt-2 space-y-1 text-secondary">
+              <li><span class="text-green-500">✓</span> Acknowledgment within 24 hours</li>
+              <li><span class="text-green-500">✓</span> Confidential handling</li>
+              <li><span class="text-green-500">✓</span> Follow-up on resolution</li>
+            </ul>
+          </div>
+        </div>
+        {% endcapture %}
+        {% include components/terminal-card.html filename="report_violation.sh" content=tc_content sticky=true %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why This Matters Section -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl">
+      <span class="section-label">// why this matters</span>
+      <h2 class="text-2xl text-primary font-semibold mt-2 mb-6">Building software is a team sport.</h2>
+      <div class="space-y-4 text-secondary leading-relaxed">
+        <p>
+          Open source thrives when contributors feel safe to participate. A welcoming environment doesn't happen by accident—it requires intentional effort from everyone involved.
+        </p>
+        <p>
+          These guidelines aren't bureaucratic box-checking. They're the foundation that lets us focus on what matters: building useful tools, sharing knowledge, and helping each other improve.
+        </p>
+        <p>
+          Whether you're opening your first issue or maintaining a project, we're glad you're here.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Attribution Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <p class="text-sm text-muted">
+          Adapted from the <a href="https://www.ruby-lang.org/en/conduct/" class="link-cyan">Ruby Community Conduct Guideline</a>.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="mailto:conduct@builtfast.com" class="btn-primary">
+          {% include icons/mail.html size=4 %}
+          Report an Issue
+        </a>
+        <a href="/contact/" class="btn-secondary">
+          {% include icons/message-square.html size=4 %}
+          General Contact
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Conduct Principle Cards */
+.conduct-principle {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+}
+
+.conduct-principle:not(:last-child) {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.conduct-principle-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.conduct-principle-num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  background: rgba(29, 201, 216, 0.1);
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.02em;
+}
+
+.conduct-principle-num.text-orange {
+  color: var(--accent-orange);
+  background: rgba(255, 101, 66, 0.1);
+}
+
+.conduct-principle-line {
+  width: 2px;
+  flex: 1;
+  min-height: 1.5rem;
+  background: var(--border-subtle);
+  border-radius: 1px;
+}
+
+.conduct-principle-line.bg-orange\/20 {
+  background: rgba(255, 101, 66, 0.2);
+}
+
+.conduct-principle:last-child .conduct-principle-line {
+  display: none;
+}
+
+.conduct-principle-content {
+  flex: 1;
+  padding-top: 0.125rem;
+}
+
+.conduct-principle-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  transition: color 0.15s ease;
+}
+
+.conduct-principle-title.text-orange {
+  color: var(--accent-orange);
+}
+
+.group:hover .conduct-principle-title:not(.text-orange) {
+  color: var(--accent-cyan);
+}
+
+.conduct-principle-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .conduct-principle {
+    gap: 1rem;
+  }
+
+  .conduct-principle-num {
+    font-size: 0.625rem;
+    padding: 0.25rem 0.375rem;
+  }
+}
+</style>

@@ -1,0 +1,201 @@
+---
+layout: default
+title: Security
+description: How we think about security at BuiltFast. Practical approaches, responsible reporting, and our commitment to protecting your data.
+permalink: /security/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// security"
+   title="Security isn't a feature."
+   accent="It's how we build."
+   description="We're a small team that takes security seriously. Not because a compliance checklist told us to, but because we host real sites for real people who trust us with their work."
+%}
+
+<!-- Report a Vulnerability -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <!-- Left: Info -->
+      <div>
+        <h2 class="text-xl font-semibold text-primary mb-4">Found something?</h2>
+        <p class="text-secondary mb-6 leading-relaxed">
+          If you've discovered a security vulnerability, we want to hear about it. Skip the public GitHub issue and reach out directly. We respond fast and we'll credit you (unless you'd rather stay anonymous).
+        </p>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            {% include icons/clock.html size=4 class="text-muted mt-1 shrink-0" %}
+            <div>
+              <span class="text-primary text-sm font-medium">Response time</span>
+              <p class="text-sm text-muted">Initial acknowledgment within 24 hours</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            {% include icons/search.html size=4 class="text-muted mt-1 shrink-0" %}
+            <div>
+              <span class="text-primary text-sm font-medium">Assessment</span>
+              <p class="text-sm text-muted">Full triage within 72 hours</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            {% include icons/check-circle.html size=4 class="text-muted mt-1 shrink-0" %}
+            <div>
+              <span class="text-primary text-sm font-medium">Resolution</span>
+              <p class="text-sm text-muted">Depends on severity, usually 30-90 days</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Contact Card -->
+      {% capture tc_content %}
+      <div class="space-y-4 font-mono text-sm p-5">
+        <div>
+          <span class="text-muted"># Primary contact</span>
+          <div class="mt-1">
+            <span class="text-cyan">$</span>
+            <span class="text-primary ml-2">mail</span>
+            <a href="mailto:security@builtfast.com" class="text-orange hover:underline ml-2">security@builtfast.com</a>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># Include in your report</span>
+          <ul class="mt-2 space-y-1 text-secondary">
+            <li><span class="text-cyan">-</span> Description of the vulnerability</li>
+            <li><span class="text-cyan">-</span> Steps to reproduce</li>
+            <li><span class="text-cyan">-</span> Potential impact</li>
+            <li><span class="text-cyan">-</span> Suggested fix <span class="text-muted">(optional)</span></li>
+          </ul>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># Please don't</span>
+          <ul class="mt-2 space-y-1 text-secondary">
+            <li><span class="text-orange">!</span> Disclose publicly before we've patched</li>
+            <li><span class="text-orange">!</span> Access other users' data</li>
+            <li><span class="text-orange">!</span> Perform destructive testing</li>
+          </ul>
+        </div>
+      </div>
+      {% endcapture %}
+      {% include components/terminal-card.html filename="security_report.sh" content=tc_content %}
+    </div>
+  </div>
+</section>
+
+<!-- How We Build Section -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// how we build"
+       title="Security baked in, not bolted on."
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% include components/feature-card.html
+         title="Infrastructure"
+         items="TLS 1.3 everywhere, AES-256 at rest|DDoS protection and WAF on all endpoints|Regular third-party pen testing|Automated vulnerability scanning"
+      %}
+
+      {% include components/feature-card.html
+         title="Development"
+         items="Mandatory code review for every change|Static analysis and dependency scanning|Secrets never in code or logs|Automated dependency updates by default"
+      %}
+
+      {% include components/feature-card.html
+         title="Access Control"
+         items="Least-privilege by default|MFA required for all team members|Regular access reviews|Full audit logging on sensitive ops"
+      %}
+
+      {% include components/feature-card.html
+         title="API Security"
+         items="Rate limiting and abuse detection|API key rotation support|Request signing for sensitive operations|Comprehensive request logging"
+      %}
+
+      {% include components/feature-card.html
+         title="Data Protection"
+         items="Encrypted backups with tested restores|Data minimization by design|Clear data retention policies|Secure data deletion on request"
+      %}
+
+      {% include components/feature-card.html
+         title="Monitoring"
+         items="24/7 infrastructure monitoring|Anomaly detection on traffic patterns|Incident response procedures|Post-incident reviews and learning"
+      %}
+    </div>
+  </div>
+</section>
+
+{% comment %}
+<!-- Compliance Section - uncomment when formal certifications are in place -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    {% include components/section-header.html
+       label="// compliance"
+       title="Meeting the bar, not just checking boxes."
+    %}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="flex items-start gap-4 p-5 border border-subtle rounded-lg">
+        <div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center shrink-0">
+          <span class="text-cyan font-semibold text-sm">SOC 2</span>
+        </div>
+        <div>
+          <h3 class="text-primary font-medium mb-1">SOC 2 Type II</h3>
+          <p class="text-sm text-muted">Annual certification covering security, availability, and confidentiality controls.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-4 p-5 border border-subtle rounded-lg">
+        <div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center shrink-0">
+          <span class="text-cyan font-semibold text-sm">GDPR</span>
+        </div>
+        <div>
+          <h3 class="text-primary font-medium mb-1">GDPR Compliant</h3>
+          <p class="text-sm text-muted">Full compliance with European data protection regulations.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-4 p-5 border border-subtle rounded-lg">
+        <div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center shrink-0">
+          <span class="text-cyan font-semibold text-sm">CCPA</span>
+        </div>
+        <div>
+          <h3 class="text-primary font-medium mb-1">CCPA Compliant</h3>
+          <p class="text-sm text-muted">Honoring California Consumer Privacy Act requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+
+<!-- Advisories Section -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-2xl">
+      <span class="section-label">// staying informed</span>
+      <h2 class="text-2xl text-primary font-semibold mt-2 mb-4">Security advisories</h2>
+      <p class="text-secondary mb-6 leading-relaxed">
+        When something significant happens, we communicate. Security advisories go out through:
+      </p>
+      <ul class="list-disc ml-5 space-y-2 text-secondary">
+        <li>GitHub repository security advisories</li>
+        <li>Direct email to affected customers</li>
+        <li>Critical issues posted here</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% include ctas/footer.html
+   title="Questions about security?"
+   description="We're happy to discuss our practices in more detail."
+   primary_url="mailto:security@builtfast.com"
+   primary_text="security@builtfast.com"
+   primary_icon="mail"
+   secondary_url="/contact/"
+   secondary_text="General Contact"
+   secondary_icon="message-square"
+%}

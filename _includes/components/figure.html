@@ -1,0 +1,32 @@
+{% comment %}
+  Figure component for images with captions
+
+  Usage:
+    {% include components/figure.html
+       src="/assets/images/example.png"
+       alt="Description of image"
+       caption="This is the caption text"
+    %}
+
+  Parameters:
+    - src: Image source URL (required)
+    - alt: Alt text for accessibility (required)
+    - caption: Optional caption text (supports markdown)
+    - width: Optional width constraint (e.g., "600px", "100%")
+    - lazy: Set to "false" to disable lazy loading (default: true)
+    - class: Additional CSS classes for the figure
+{% endcomment %}
+
+{% assign lazy_load = include.lazy | default: "true" %}
+
+<figure class="figure {{ include.class }}">
+  <img
+    src="{{ include.src | relative_url }}"
+    alt="{{ include.alt }}"
+    {% if include.width %}style="max-width: {{ include.width }};"{% endif %}
+    {% if lazy_load != "false" %}loading="lazy"{% endif %}
+  >
+  {% if include.caption %}
+  <figcaption>{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' }}</figcaption>
+  {% endif %}
+</figure>

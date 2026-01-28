@@ -2,6 +2,10 @@
 title: "Building Better Tools Together: Our Open Source Commitment"
 date: "Fri Jul 11 19:58:35 -0400 2025"
 author: Josh Priddle
+tagline: "We believe the best tools come from developers who understand real problems. That's why we give back to the community."
+tags:
+- open-source
+- general
 excerpt: |
   At BuiltFast, we believe the best solutions come from developers who
   understand real-world problems. That's why we're committed to giving back to

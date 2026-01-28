@@ -1,0 +1,12 @@
+{
+  "name": "builtfast-dev",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "setup": "npm run copy:deps",
+    "copy:deps": "mkdir -p vendor/js && cp node_modules/alpinejs/dist/cdn.min.js vendor/js/alpine.min.js"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.8"
+  }
+}

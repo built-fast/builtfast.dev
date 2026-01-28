@@ -3,9 +3,14 @@ title:  LCARS
 period: Jun 2025
 date:   2025-06-01
 github: https://github.com/built-fast/lcars
+license: MIT
 tags:
-  - Bash
-  - Laravel
+  - laravel
+  - cli
+languages:
+  - name: Bash
+    icon: bash
+tagline: CLI toolkit for Laravel development
 excerpt: |
   LCARS (Laravel CLI and Reusable Scripts) is a command-line toolkit that
   enhances Laravel development workflows with convenient utilities and
@@ -148,7 +153,3 @@ ALIASES
   help:        cli:help
   test:types:  test:phpstan
 ```
-
-## License
-
-MIT License.

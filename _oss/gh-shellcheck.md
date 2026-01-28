@@ -3,10 +3,14 @@ title:  gh-shellcheck
 period: Apr 2025
 date:   2025-04-01
 github: https://github.com/built-fast/gh-shellcheck
+license: MIT
 tags:
-  - Bash
-  - GitHub
-  - Shellcheck
+  - github-actions
+  - shellcheck
+languages:
+  - name: Bash
+    icon: bash
+tagline: Run ShellCheck in GitHub Actions
 excerpt: |
   A simple script to run ShellCheck on all shell scripts in a git repository
 ---
@@ -129,7 +133,3 @@ In your workflow, do something like:
           gh extension install built-fast/gh-shellcheck
           gh shellcheck{% endraw %}
 ```
-
-## License
-
-MIT License.

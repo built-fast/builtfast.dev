@@ -1,0 +1,934 @@
+/* ============================================================================
+   Prose Styles - Markdown Content Rendering
+   ============================================================================
+
+   Usage: Wrap markdown content in a .prose container.
+   Content authors can write plain markdown - no classes needed.
+
+   Typography hierarchy:
+   - Headings: Outfit (display font) - technical but warm
+   - Body: Inter (sans) - optimized for long-form reading
+   - Code: JetBrains Mono - native to the developer aesthetic
+
+   ============================================================================ */
+
+.prose {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* ============================================================================
+   Headings
+   ============================================================================ */
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  scroll-margin-top: 5rem; /* Account for sticky nav */
+}
+
+/* Spacing: more space above, less below for visual grouping */
+.prose h1 {
+  font-size: var(--text-3xl);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.prose h2 {
+  font-size: var(--text-2xl);
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  font-size: var(--text-xl);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose h4 {
+  font-size: var(--text-lg);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h5 {
+  font-size: var(--text-base);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.prose h6 {
+  font-size: var(--text-sm);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* First heading after prose container - no top margin */
+.prose > h1:first-child,
+.prose > h2:first-child,
+.prose > h3:first-child,
+.prose > h4:first-child {
+  margin-top: 0;
+}
+
+/* Heading anchors (for linked headings) */
+.prose h2,
+.prose h3,
+.prose h4 {
+  position: relative;
+}
+
+.prose h2 a,
+.prose h3 a,
+.prose h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.prose h2 a:hover,
+.prose h3 a:hover,
+.prose h4 a:hover {
+  color: var(--accent-cyan);
+}
+
+/* Anchor link indicator */
+.prose h2 a::before,
+.prose h3 a::before,
+.prose h4 a::before {
+  content: "#";
+  position: absolute;
+  left: -1.25rem;
+  color: var(--text-faint);
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.prose h2:hover a::before,
+.prose h3:hover a::before,
+.prose h4:hover a::before,
+.prose h2 a:focus::before,
+.prose h3 a:focus::before,
+.prose h4 a:focus::before {
+  opacity: 1;
+}
+
+.prose h2 a:hover::before,
+.prose h3 a:hover::before,
+.prose h4 a:hover::before {
+  color: var(--accent-cyan);
+}
+
+/* ============================================================================
+   Paragraphs & Body Text
+   ============================================================================ */
+
+.prose p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Lead paragraph - larger intro text */
+.prose .lead,
+.prose > p:first-of-type {
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Reset lead styling for paragraphs after headings */
+.prose h2 + p,
+.prose h3 + p,
+.prose h4 + p {
+  font-size: var(--text-base);
+  line-height: 1.75;
+}
+
+/* ============================================================================
+   Links
+   ============================================================================ */
+
+.prose a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+/* External link indicator */
+.prose a[href^="http"]:not([href*="builtfast.com"])::after {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.25em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231dc9d8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15,3 21,3 21,9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: baseline;
+  opacity: 0.7;
+}
+
+.light .prose a[href^="http"]:not([href*="builtfast.com"])::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230891b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15,3 21,3 21,9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+}
+
+/* ============================================================================
+   Lists
+   ============================================================================ */
+
+.prose ul,
+.prose ol {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ul > li {
+  padding-left: 0.25rem;
+}
+
+.prose ul > li::marker {
+  color: var(--text-muted);
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose ol > li {
+  padding-left: 0.25rem;
+}
+
+.prose ol > li::marker {
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose li:last-child {
+  margin-bottom: 0;
+}
+
+/* Nested lists */
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Nested unordered - circle bullet */
+.prose li > ul {
+  list-style-type: circle;
+}
+
+.prose li > ul > li > ul {
+  list-style-type: square;
+}
+
+/* Nested ordered - letters */
+.prose li > ol {
+  list-style-type: lower-alpha;
+}
+
+.prose li > ol > li > ol {
+  list-style-type: lower-roman;
+}
+
+/* Task lists (GitHub-style checkboxes) */
+.prose ul.task-list,
+.prose ul.contains-task-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.prose ul.task-list > li,
+.prose ul.contains-task-list > li {
+  padding-left: 1.75rem;
+}
+
+.prose ul.task-list > li::before,
+.prose ul.contains-task-list > li::before {
+  content: none;
+}
+
+.prose input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent-cyan);
+}
+
+/* ============================================================================
+   Inline Code
+   ============================================================================ */
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Don't style code inside pre (code blocks) */
+.prose pre code {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ============================================================================
+   Code Blocks (fenced code)
+   ============================================================================
+
+   Jekyll/Rouge generates: <div class="language-X highlighter-rouge">
+                             <div class="highlight">
+                               <pre class="highlight"><code>...</code></pre>
+                             </div>
+                           </div>
+
+   JS enhances these by injecting a header with language label + copy button.
+
+   ============================================================================ */
+
+/* Rouge wrapper - the outer container */
+.prose div.highlighter-rouge {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  background-color: #151c24;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+}
+
+.prose div.highlighter-rouge .highlight {
+  overflow: hidden;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* Header injected by JS */
+.prose .code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.prose .code-lang {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #64748b;
+  text-transform: lowercase;
+}
+
+.prose .code-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #64748b;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.prose .code-copy:hover {
+  color: #f1f5f9;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.prose .code-copy.copied {
+  color: var(--color-success);
+}
+
+.prose .code-copy svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* The highlight wrapper */
+.prose .highlight {
+  margin: 0;
+}
+
+/* The actual pre/code */
+.prose div.highlighter-rouge pre.highlight {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: #94a3b8;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose div.highlighter-rouge pre.highlight code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Standalone pre (not from Rouge) */
+.prose pre:not(.highlight) {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  background-color: #151c24;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  color: #94a3b8;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Line numbers (if enabled) */
+.prose .lineno {
+  display: inline-block;
+  width: 2rem;
+  padding-right: 0.75rem;
+  margin-right: 0.75rem;
+  text-align: right;
+  color: #475569;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  user-select: none;
+}
+
+/* ============================================================================
+   Blockquotes
+   ============================================================================ */
+
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent-cyan);
+  background-color: var(--bg-elevated);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-style: italic;
+}
+
+.prose blockquote p {
+  margin-bottom: 0;
+}
+
+.prose blockquote p:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+/* Nested blockquotes */
+.prose blockquote blockquote {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+  border-left-color: var(--accent-orange);
+}
+
+/* Attribution (when using > — Author) */
+.prose blockquote footer,
+.prose blockquote cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: var(--text-sm);
+  font-style: normal;
+  color: var(--text-muted);
+}
+
+.prose blockquote footer::before,
+.prose blockquote cite::before {
+  content: "— ";
+}
+
+/* ============================================================================
+   Tables
+   ============================================================================ */
+
+.prose table {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: var(--text-sm);
+  border-collapse: collapse;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.prose thead {
+  background-color: var(--bg-elevated);
+}
+
+.prose th {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-default);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Zebra striping */
+.prose tbody tr:nth-child(even) {
+  background-color: var(--bg-elevated);
+}
+
+/* Hover state */
+.prose tbody tr:hover {
+  background-color: var(--bg-surface);
+}
+
+/* Responsive table wrapper */
+.prose .table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose .table-wrapper table {
+  margin-bottom: 0;
+}
+
+/* ============================================================================
+   Images & Figures
+   ============================================================================ */
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.prose figure {
+  margin: 2rem 0;
+}
+
+.prose figure img {
+  margin: 0;
+}
+
+.prose figcaption {
+  margin-top: 0.75rem;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ============================================================================
+   Horizontal Rules
+   ============================================================================ */
+
+.prose hr {
+  margin: 3rem 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-default) 20%,
+    var(--border-default) 80%,
+    transparent
+  );
+}
+
+/* Section break variant - more prominent */
+.prose hr.section-break {
+  margin: 4rem 0;
+  height: auto;
+  background: none;
+  text-align: center;
+}
+
+.prose hr.section-break::before {
+  content: "• • •";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  letter-spacing: 0.5em;
+}
+
+/* ============================================================================
+   Definition Lists
+   ============================================================================ */
+
+.prose dl {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.prose dt {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 1rem;
+}
+
+.prose dt:first-child {
+  margin-top: 0;
+}
+
+.prose dd {
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border-subtle);
+}
+
+/* ============================================================================
+   Abbreviations
+   ============================================================================ */
+
+.prose abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+/* ============================================================================
+   Keyboard Input
+   ============================================================================ */
+
+.prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 0 var(--border-default);
+  color: var(--text-primary);
+}
+
+/* ============================================================================
+   Mark (highlighted text)
+   ============================================================================ */
+
+.prose mark {
+  background-color: rgba(250, 204, 21, 0.25);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+.light .prose mark {
+  background-color: rgba(250, 204, 21, 0.4);
+}
+
+/* ============================================================================
+   Superscript & Subscript
+   ============================================================================ */
+
+.prose sup,
+.prose sub {
+  font-family: var(--font-sans);
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.prose sup {
+  top: -0.5em;
+}
+
+.prose sub {
+  bottom: -0.25em;
+}
+
+/* Footnote references */
+.prose sup a {
+  text-decoration: none;
+  color: var(--accent-cyan);
+}
+
+.prose sup a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   Footnotes
+   ============================================================================ */
+
+.prose .footnotes {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+}
+
+.prose .footnotes ol {
+  padding-left: 1.25rem;
+}
+
+.prose .footnotes li {
+  margin-bottom: 0.75rem;
+}
+
+.prose .footnotes p {
+  margin-bottom: 0.5rem;
+}
+
+/* Back-reference link */
+.prose .footnotes .reversefootnote {
+  font-size: var(--text-xs);
+  margin-left: 0.25rem;
+}
+
+/* ============================================================================
+   Callouts / Admonitions
+   ============================================================================
+
+   Usage in markdown (with includes):
+   {% include callout.html type="info" content="Your message here" %}
+
+   Or with direct HTML:
+   <div class="callout callout-info">...</div>
+
+   ============================================================================ */
+
+.prose .callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border-left: 3px solid;
+  background-color: var(--bg-elevated);
+}
+
+.prose .callout-content > *:first-child {
+  margin-top: 0;
+}
+
+.prose .callout-content > *:last-child,
+.prose .callout p:last-child {
+  margin-bottom: 0;
+}
+
+.prose .callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Info callout */
+.prose .callout-info {
+  border-left-color: var(--accent-cyan);
+}
+
+.prose .callout-info .callout-title {
+  color: var(--accent-cyan);
+}
+
+/* Warning callout */
+.prose .callout-warning {
+  border-left-color: var(--color-warning);
+}
+
+.prose .callout-warning .callout-title {
+  color: var(--color-warning);
+}
+
+/* Error/Danger callout */
+.prose .callout-error,
+.prose .callout-danger {
+  border-left-color: var(--color-error);
+}
+
+.prose .callout-error .callout-title,
+.prose .callout-danger .callout-title {
+  color: var(--color-error);
+}
+
+/* Success callout */
+.prose .callout-success {
+  border-left-color: var(--color-success);
+}
+
+.prose .callout-success .callout-title {
+  color: var(--color-success);
+}
+
+/* Note callout - neutral */
+.prose .callout-note {
+  border-left-color: var(--text-muted);
+}
+
+.prose .callout-note .callout-title {
+  color: var(--text-muted);
+}
+
+/* ============================================================================
+   Table of Contents - See app.css for enhanced TOC styles
+   ============================================================================ */
+
+/* ============================================================================
+   Badges
+   ============================================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.badge-default {
+  background-color: var(--bg-surface);
+  color: var(--text-muted);
+}
+
+.badge-info {
+  background-color: rgba(29, 201, 216, 0.15);
+  color: var(--accent-cyan);
+}
+
+.badge-success {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success);
+}
+
+.badge-warning {
+  background-color: rgba(234, 179, 8, 0.15);
+  color: var(--color-warning);
+}
+
+.badge-error {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error);
+}
+
+/* ============================================================================
+   Spacing Adjustments
+   ============================================================================ */
+
+/* Tighten spacing when elements follow headings */
+.prose h2 + p,
+.prose h3 + p,
+.prose h4 + p,
+.prose h2 + ul,
+.prose h3 + ul,
+.prose h4 + ul,
+.prose h2 + ol,
+.prose h3 + ol,
+.prose h4 + ol {
+  margin-top: 0;
+}
+
+/* Remove bottom margin from last child */
+.prose > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================================
+   Compact Prose Variant
+   ============================================================================
+
+   Use .prose-compact for tighter spacing (sidebars, smaller contexts)
+
+   ============================================================================ */
+
+.prose-compact {
+  font-size: var(--text-sm);
+  line-height: 1.65;
+}
+
+.prose-compact h1 { font-size: var(--text-2xl); }
+.prose-compact h2 { font-size: var(--text-xl); margin-top: 2rem; }
+.prose-compact h3 { font-size: var(--text-lg); margin-top: 1.5rem; }
+.prose-compact h4 { font-size: var(--text-base); margin-top: 1.25rem; }
+
+.prose-compact p,
+.prose-compact ul,
+.prose-compact ol {
+  margin-bottom: 1rem;
+}
+
+.prose-compact pre {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+}
