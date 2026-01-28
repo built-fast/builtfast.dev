@@ -657,24 +657,50 @@
       flex-direction: column;
       align-items: flex-end;
       font-family: 'JetBrains Mono', monospace;
-      opacity: 0.08;
-      pointer-events: none;
+      opacity: 0.12;
       user-select: none;
       z-index: 1;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease-out;
+      cursor: help;
     }
-    .vo-hint:hover { opacity: 0.15; }
+    .vo-hint:hover {
+      opacity: 0.8;
+      animation: vo-hint-flicker 6s linear infinite;
+    }
+    .vo-hint:hover .vo-hint-label {
+      text-shadow: 0 0 4px var(--accent-cyan, #1dc9d8), 0 0 8px rgba(29, 201, 216, 0.4);
+    }
+    .vo-hint:hover .vo-hint-code {
+      text-shadow: 0 0 4px var(--accent-orange, #ff6542), 0 0 8px rgba(255, 101, 66, 0.4);
+    }
+    @keyframes vo-hint-flicker {
+      0%, 100% { filter: brightness(1); }
+      8% { filter: brightness(0.5); }
+      8.5% { filter: brightness(1.05); }
+      9% { filter: brightness(0.25); }
+      9.5% { filter: brightness(0.9); }
+      10% { filter: brightness(0.4); }
+      10.5% { filter: brightness(1); }
+      25%, 45%, 70%, 95% { filter: brightness(1); }
+      46% { filter: brightness(0.6); }
+      46.3% { filter: brightness(1); }
+      47% { filter: brightness(0.2); }
+      47.4% { filter: brightness(0.85); }
+      48% { filter: brightness(1); }
+    }
     .vo-hint.hidden { opacity: 0; }
     .vo-hint-label {
       font-size: 8px;
       letter-spacing: 0.15em;
       color: var(--accent-cyan, #1dc9d8);
       text-transform: uppercase;
+      transition: text-shadow 0.3s ease;
     }
     .vo-hint-code {
       font-size: 11px;
       color: var(--accent-orange, #ff6542);
       letter-spacing: 0.05em;
+      transition: text-shadow 0.3s ease;
     }
     @media (max-width: 640px) {
       .vo-hint { display: none; }
