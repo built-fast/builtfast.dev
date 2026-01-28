@@ -1,4 +1,5 @@
 ---
+published: false
 layout: post
 title: "Real-time Slack threading for long-running Laravel jobs"
 date: "Thu Jan 23 17:00:00 -0500 2026"

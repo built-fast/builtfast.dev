@@ -1,4 +1,5 @@
 ---
+published: false
 title: "Why the MIT License?"
 date: "Mon Jan 12 12:00:00 -0500 2026"
 author: Josh Priddle

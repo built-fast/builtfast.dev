@@ -1,4 +1,5 @@
 ---
+published: false
 layout: post
 title: "Automating API Documentation with Scribe and GitHub Actions"
 date: "Thu Jan 23 18:00:00 -0500 2026"
