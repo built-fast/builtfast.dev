@@ -577,10 +577,12 @@
 
 /* Tables in API prose */
 .api-prose table {
+  display: block;
   width: 100%;
   margin: 1rem 0;
   border-collapse: collapse;
   font-size: 0.8125rem;
+  overflow-x: auto;
 }
 
 .api-prose thead th {

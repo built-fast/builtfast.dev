@@ -6,7 +6,7 @@
 {% if include.params.size > 0 %}
 <div class="mb-6">
   <h5 class="text-sm font-semibold text-primary mb-3">{{ include.title }}</h5>
-  <div class="border border-subtle rounded-lg overflow-hidden">
+  <div class="border border-subtle rounded-lg overflow-x-auto">
     <table class="param-table">
       <thead>
         <tr>
@@ -30,11 +30,11 @@
           <td>
             <span class="text-secondary font-sans">{{ param.description | markdownify }}</span>
             {% if param.example %}
-              <div class="mt-1 text-muted text-xs">Example: <code class="text-xs">{{ param.example }}</code></div>
+              <div class="mt-1 text-muted text-xs">Example: <code class="text-xs">{{ param.example | jsonify }}</code></div>
             {% endif %}
             {% if param.enum_values.size > 0 %}
               <div class="mt-1 text-muted text-xs">
-                Enum: {% for val in param.enum_values %}<code class="text-xs">{{ val }}</code>{% unless forloop.last %} {% endunless %}{% endfor %}
+                Enum: {% for val in param.enum_values %}<code class="text-xs">{{ val }}</code>{% unless forloop.last %}, {% endunless %}{% endfor %}
               </div>
             {% endif %}
           </td>
