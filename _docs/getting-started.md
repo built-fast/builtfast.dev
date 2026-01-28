@@ -1,90 +1,89 @@
 ---
 title: Getting Started
-description: Get up and running with Vector Pro in under 5 minutes.
+description: Get started with the Vector Pro serverless WordPress hosting API.
 category: Introduction
 order: 1
 ---
 
-Vector Pro is a serverless hosting platform for PHP applications. This guide walks you through your first deployment.
+Vector Pro is a serverless WordPress hosting API that enables hosting companies, agencies, and WordPress product companies to offer scalable, white-label WordPress hosting without managing infrastructure.
+
+This guide covers the core concepts and walks you through creating your first site.
+
+## How Vector Pro Works
+
+Vector Pro uses a two-environment architecture:
+
+**Development environments** run on AWS ECS containers with full WordPress functionality—WP Admin access, plugin installation, SFTP file management, and database writes. Build your sites here just like traditional WordPress hosting.
+
+**Production environments** run on AWS Lambda with a read-only filesystem. This constraint enables automatic scaling without the database write contention that limits traditional hosting. Deploy code and assets from development to production when ready.
+
+Each environment has its own independent Aurora MySQL database. Changes in development don't affect production until you deploy.
 
 ## Prerequisites
 
-Before you begin, make sure you have:
+- **Vector Pro partner account** — Contact BuiltFast to become a partner
+- **API key** — Generate from your partner dashboard at [builtfast.com](https://builtfast.com)
 
-- **Node.js 18+** for the CLI
-- **A Vector Pro account** ([sign up here](https://builtfast.com/signup))
-- **Your API key** from the dashboard
+## Quick Start
 
-## Install the CLI
+### 1. Authenticate
 
-Install the Vector CLI globally via npm:
-
-```bash
-npm install -g @builtfast/vector-cli
-```
-
-Verify the installation:
+All API requests require a Bearer token:
 
 ```bash
-vector --version
-# vector-cli/2.1.0
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.builtfast.com/api/v1/vector/sites
 ```
 
-## Authenticate
-
-Log in to your Vector Pro account:
+### 2. Create a Site
 
 ```bash
-vector login
+curl -X POST https://api.builtfast.com/api/v1/vector/sites \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"partner_customer_id": "customer-123", "dev_php_version": "8.3"}'
 ```
 
-This opens a browser window for authentication. Once complete, your credentials are stored locally.
+The site starts with `status: "pending"` while provisioning. Poll until `status: "active"` to get SFTP and database credentials.
 
-## Initialize Your Project
+### 3. Build in Development
 
-Navigate to your PHP project and initialize Vector Pro:
+Once active, you have:
+
+- **WordPress Admin** at `https://your-site.vector.app/wp-admin`
+- **SFTP access** for file uploads
+- **Database access** for direct queries
+
+Configure themes, install plugins, and create content in the development environment.
+
+### 4. Deploy to Production
+
+Create a production environment and deploy:
 
 ```bash
-cd my-project
-vector init
+# Create production environment
+curl -X POST https://api.builtfast.com/api/v1/vector/sites/456/environments \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "production", "php_version": "8.3", "is_production": true}'
+
+# Deploy from development
+curl -X POST https://api.builtfast.com/api/v1/vector/sites/456/environments/789/deployments \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"source": "development"}'
 ```
 
-This creates a `vector.yml` configuration file:
+## Integration Options
 
-```yaml
-name: my-project
-runtime: php-8.2
-build:
-  install: composer install --no-dev
-```
-
-## Deploy
-
-Deploy your application:
-
-```bash
-vector deploy
-```
-
-The CLI will:
-
-1. Build your application
-2. Upload the artifacts
-3. Deploy to our global network
-4. Return your live URL
-
-```
-✓ Building application...
-✓ Uploading artifacts (2.3 MB)...
-✓ Deploying to 12 regions...
-✓ Live at https://my-project.vectorpro.dev
-
-Deployment complete in 34s
-```
+- **REST API** — Direct HTTP integration for maximum control
+- **CLI** — Terminal-based management via `vector` command
+- **PHP SDK** — Native PHP client for Laravel and WordPress integrations
+- **Node SDK** — JavaScript/TypeScript client for Node.js applications
 
 ## Next Steps
 
-- [Configure your domain](/docs/custom-domains/)
-- [Set up environment variables](/docs/environment-variables/)
-- [Enable preview deployments](/docs/preview-deployments/)
-- [Explore the API reference](/docs/api-reference/)
+- [What is Vector Pro?](/docs/vector-pro/overview/what-is-vector-pro/) — Platform overview and architecture
+- [Authentication](/docs/vector-pro/getting-started/authentication/) — API key management
+- [Create Your First Site](/docs/vector-pro/getting-started/create-first-site/) — Detailed walkthrough
+- [Development vs Production](/docs/vector-pro/architecture/dev-vs-production/) — Understand the two-environment model

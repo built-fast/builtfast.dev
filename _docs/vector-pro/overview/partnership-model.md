@@ -74,13 +74,6 @@ No BuiltFast branding, dashboards, or customer-facing interfaces.
 
 ## Pricing Model
 
-**Transparent Pricing**
-
-- Simple per-site pricing
-- No surprise fees
-- No usage overages for typical WordPress traffic patterns
-- Predictable costs that scale with your customer base
-
 **White-Label Flexibility**
 
 You set your own prices. Common models:
