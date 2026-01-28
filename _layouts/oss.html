@@ -13,7 +13,7 @@ layout: base
         <header class="oss-header">
           <!-- Back link -->
           <a href="/oss/" class="oss-back-link">
-            {% include icons/arrow-left.html size=4 %}
+            {% include icons/arrow-left.html size="sm" %}
             All Projects
           </a>
 
@@ -27,21 +27,21 @@ layout: base
           <div class="oss-meta">
             {% if page.github %}
             <a href="{{ page.github }}" class="oss-meta-link" target="_blank" rel="noopener">
-              {% include icons/github.html size=4 %}
+              {% include icons/github.html size="sm" %}
               {{ page.github | remove: "https://github.com/" }}
             </a>
             {% endif %}
 
             {% if page.license %}
             <span class="oss-meta-item">
-              {% include icons/scale.html size=4 %}
+              {% include icons/scale.html size="sm" %}
               {{ page.license }}
             </span>
             {% endif %}
 
             {% if page.archived %}
             <span class="oss-archived-badge">
-              {% include icons/archive.html size=3 %}
+              {% include icons/archive.html size="xs" %}
               Archived
             </span>
             {% endif %}
@@ -73,7 +73,7 @@ layout: base
               <p class="oss-contribute-text">Issues, pull requests, and feature suggestions are welcome.</p>
             </div>
             <a href="{{ page.github }}/issues" class="btn-secondary" target="_blank" rel="noopener">
-              {% include icons/github.html size=4 %}
+              {% include icons/github.html size="sm" %}
               Open an Issue
             </a>
           </div>

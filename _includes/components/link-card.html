@@ -39,7 +39,7 @@ Parameters:
       {% if include.icon_html %}
         {{ include.icon_html }}
       {% else %}
-        {% capture icon_class %}text-{{ include.icon_color }}{% endcapture %}{% include icon.html name=include.icon size=6 class=icon_class %}
+        {% capture icon_class %}text-{{ include.icon_color }}{% endcapture %}{% include icon.html name=include.icon size="lg" class=icon_class %}
       {% endif %}
     </div>
     <div class="flex-1 min-w-0">
@@ -49,7 +49,7 @@ Parameters:
       </p>
       <span class="link-arrow text-sm">
         {{ include.link_text }}
-        {% include icons/arrow-right.html size=4 %}
+        {% include icons/arrow-right.html size="sm" %}
       </span>
     </div>
   </div>

@@ -52,7 +52,7 @@ Usage with explicit params:
     </div>
     {% if github %}
     <span class="icon-link-muted shrink-0" onclick="event.preventDefault(); event.stopPropagation(); window.open('{{ github }}', '_blank');" aria-label="View on GitHub">
-      {% include icons/github.html size=5 %}
+      {% include icons/github.html size="md" %}
     </span>
     {% endif %}
   </div>
@@ -66,7 +66,7 @@ Usage with explicit params:
     </div>
     <span class="link-arrow text-sm">
       {{ link_text }}
-      {% include icons/chevron-right.html size=4 %}
+      {% include icons/chevron-right.html size="sm" %}
     </span>
   </div>
 </a>

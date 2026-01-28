@@ -30,7 +30,7 @@ layout: base
         <header class="post-header">
           <!-- Back link -->
           <a href="/blog/" class="post-back-link">
-            {% include icons/arrow-left.html size=4 %}
+            {% include icons/arrow-left.html size="sm" %}
             Blog
           </a>
 
@@ -78,22 +78,22 @@ layout: base
                 <div class="post-author-links">
                   {% if author.twitter %}
                   <a href="https://x.com/{{ author.twitter }}" class="icon-link-sm" aria-label="Follow on X" target="_blank" rel="noopener">
-                    {% include icons/twitter.html size=4 %}
+                    {% include icons/twitter.html size="sm" %}
                   </a>
                   {% endif %}
                   {% if author.bluesky %}
                   <a href="https://bsky.app/profile/{{ author.bluesky }}" class="icon-link-sm" aria-label="Follow on Bluesky" target="_blank" rel="noopener">
-                    {% include icons/bluesky.html size=4 %}
+                    {% include icons/bluesky.html size="sm" %}
                   </a>
                   {% endif %}
                   {% if author.github %}
                   <a href="https://github.com/{{ author.github }}" class="icon-link-sm" aria-label="GitHub profile" target="_blank" rel="noopener">
-                    {% include icons/github.html size=4 %}
+                    {% include icons/github.html size="sm" %}
                   </a>
                   {% endif %}
                   {% if author.linkedin %}
                   <a href="https://linkedin.com/in/{{ author.linkedin }}" class="icon-link-sm" aria-label="LinkedIn profile" target="_blank" rel="noopener">
-                    {% include icons/linkedin.html size=4 %}
+                    {% include icons/linkedin.html size="sm" %}
                   </a>
                   {% endif %}
                 </div>
@@ -118,21 +118,21 @@ layout: base
                    target="_blank"
                    rel="noopener"
                    aria-label="Share on X">
-                  {% include icons/twitter.html size=4 %}
+                  {% include icons/twitter.html size="sm" %}
                 </a>
                 <a href="https://bsky.app/intent/compose?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}"
                    class="share-btn share-btn-bluesky"
                    target="_blank"
                    rel="noopener"
                    aria-label="Share on Bluesky">
-                  {% include icons/bluesky.html size=4 %}
+                  {% include icons/bluesky.html size="sm" %}
                 </a>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}"
                    class="share-btn share-btn-linkedin"
                    target="_blank"
                    rel="noopener"
                    aria-label="Share on LinkedIn">
-                  {% include icons/linkedin.html size=4 %}
+                  {% include icons/linkedin.html size="sm" %}
                 </a>
               </div>
             </div>
@@ -143,7 +143,7 @@ layout: base
             {% if page.previous.url %}
             <a href="{{ page.previous.url }}" class="post-nav-link post-nav-prev group">
               <span class="post-nav-label">
-                {% include icons/arrow-left.html size=3 %}
+                {% include icons/arrow-left.html size="xs" %}
                 Previous
               </span>
               <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.previous.title }}</p>
@@ -155,7 +155,7 @@ layout: base
             <a href="{{ page.next.url }}" class="post-nav-link post-nav-next group">
               <span class="post-nav-label">
                 Next
-                {% include icons/arrow-right.html size=3 %}
+                {% include icons/arrow-right.html size="xs" %}
               </span>
               <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.next.title }}</p>
             </a>

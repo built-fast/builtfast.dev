@@ -19,7 +19,7 @@
 <nav class="doc-sidebar {{ include.class }}" x-data="{ expanded: {} }" aria-label="Documentation navigation">
   <div class="doc-sidebar-header">
     <a href="/docs/" class="flex items-center gap-2 text-sm font-medium text-primary hover:text-cyan transition-colors">
-      {% include icons/book-open.html size=4 %}
+      {% include icons/book-open.html size="sm" %}
       Documentation
     </a>
   </div>
@@ -36,7 +36,7 @@
         :aria-expanded="open"
       >
         <span>{{ category }}</span>
-        {% include icons/chevron-down.html size=4 class="transition-transform" %}
+        {% include icons/chevron-down.html size="sm" class="transition-transform" %}
       </button>
       <ul x-show="open" x-collapse class="doc-sidebar-items">
         {% for doc in category_docs %}

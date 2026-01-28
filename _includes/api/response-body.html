@@ -11,7 +11,7 @@
   <div class="code-block-header">
     <span class="text-xs text-muted">application/json</span>
     <button class="copy-btn" aria-label="Copy response" @click="$dispatch('copy-code', { target: $el.closest('.code-block').querySelector('.code-block-body pre:not([style*=\'display: none\'])') })">
-      {% include icons/copy.html size=4 %}
+      {% include icons/copy.html size="sm" %}
     </button>
   </div>
   <div class="code-block-body text-sm">

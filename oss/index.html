@@ -9,7 +9,7 @@ cta: false
 
 {% capture hero_extra %}
 <a href="https://github.com/built-fast" class="btn-secondary">
-  {% include icons/github.html size=4 %}
+  {% include icons/github.html size="sm" %}
   View all on GitHub
 </a>
 {% endcapture %}
@@ -86,11 +86,11 @@ cta: false
         <div class="oss-list-actions">
           {% if project.github %}
           <span class="icon-link-muted" onclick="event.preventDefault(); event.stopPropagation(); window.open('{{ project.github }}', '_blank');" aria-label="View on GitHub">
-            {% include icons/github.html size=4 %}
+            {% include icons/github.html size="sm" %}
           </span>
           {% endif %}
           <span class="oss-list-arrow">
-            {% include icons/chevron-right.html size=5 %}
+            {% include icons/chevron-right.html size="md" %}
           </span>
         </div>
       </a>

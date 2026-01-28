@@ -12,7 +12,7 @@ hero: home
       <!-- Open Source -->
       <a href="/oss/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/box.html size=5 class="text-cyan shrink-0 mt-0.5" %}
+          {% include icons/box.html size="md" class="text-cyan shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Open Source</h3>
             <p class="text-sm text-muted">Tools and libraries we build and maintain.</p>
@@ -23,7 +23,7 @@ hero: home
       <!-- Blog -->
       <a href="/blog/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/pen-line.html size=5 class="text-orange shrink-0 mt-0.5" %}
+          {% include icons/pen-line.html size="md" class="text-orange shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Blog</h3>
             <p class="text-sm text-muted">Technical writing on hosting, infrastructure, and PHP.</p>
@@ -34,7 +34,7 @@ hero: home
       <!-- Vector Pro -->
       <a href="/docs/vector-pro/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/terminal.html size=5 class="text-green-500 shrink-0 mt-0.5" %}
+          {% include icons/terminal.html size="md" class="text-green-500 shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Vector Pro</h3>
             <p class="text-sm text-muted">API docs for our serverless WordPress platform.</p>
@@ -156,15 +156,15 @@ hero: home
         </div>
         <div class="space-y-2">
           <a href="/oss/vector-cli/" class="vp-tool-link">
-            {% include icons/terminal.html size=4 %}
+            {% include icons/terminal.html size="sm" %}
             <span>Vector CLI</span>
           </a>
           <a href="/api/openapi/" class="vp-tool-link">
-            {% include icons/file-json.html size=4 %}
+            {% include icons/file-json.html size="sm" %}
             <span>OpenAPI Spec</span>
           </a>
           <a href="/api/postman/" class="vp-tool-link">
-            {% include icons/rocket.html size=4 %}
+            {% include icons/rocket.html size="sm" %}
             <span>Postman Collection</span>
           </a>
         </div>
@@ -180,14 +180,14 @@ hero: home
             <span class="vp-sdk-label">PHP</span>
             <code class="vp-sdk-cmd">composer r built-fast/vector-pro-sdk</code>
             <button class="copy-btn" data-copy="composer require built-fast/vector-pro-sdk" aria-label="Copy PHP install command">
-              {% include icons/copy.html size=3.5 %}
+              {% include icons/copy.html size="sm" %}
             </button>
           </div>
           <div class="vp-sdk-row">
             <span class="vp-sdk-label">Node</span>
             <code class="vp-sdk-cmd">npm i @built-fast/vector-pro-sdk</code>
             <button class="copy-btn" data-copy="npm install @built-fast/vector-pro-sdk" aria-label="Copy Node install command">
-              {% include icons/copy.html size=3.5 %}
+              {% include icons/copy.html size="sm" %}
             </button>
           </div>
         </div>

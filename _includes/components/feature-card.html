@@ -19,7 +19,7 @@ Parameters:
   <ul class="space-y-3 text-sm">
     {% for item in items_array %}
     <li class="flex items-start gap-2">
-      {% include icons/check.html size=4 class="text-green-500 mt-0.5 shrink-0" %}
+      {% include icons/check.html size="sm" class="text-green-500 mt-0.5 shrink-0" %}
       <span class="text-secondary">{{ item | strip }}</span>
     </li>
     {% endfor %}
