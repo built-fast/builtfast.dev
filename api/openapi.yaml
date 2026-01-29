@@ -1013,7 +1013,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/ssl':
     get:
       summary: 'Get Status'
-      operationId: getStatus
+      operationId: sitesSSLGetStatus
       description: 'Get the current SSL provisioning status for an environment.'
       parameters: []
       responses:
@@ -1690,7 +1690,7 @@ paths:
   '/api/v1/vector/sites/{site}/sftp/reset-password':
     post:
       summary: 'Reset Password'
-      operationId: resetPassword
+      operationId: sitesSFTPResetPassword
       description: "Generates a new SFTP password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\nSFTP connection details:\n- hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)\n- port: 22\n- username: site subdomain (e.g., my-site)\n- password: the generated password"
       parameters: []
       responses:
@@ -1844,7 +1844,7 @@ paths:
   '/api/v1/vector/sites/{site}/database/reset-password':
     post:
       summary: 'Reset Password'
-      operationId: resetPassword
+      operationId: sitesDatabasesResetPassword
       description: "Generates a new database password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again."
       parameters: []
       responses:
@@ -1990,7 +1990,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/import':
     post:
       summary: 'Import Directly'
-      operationId: importDirectly
+      operationId: sitesDatabasesImportDirectly
       description: "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application/sql.\n\nThis is a synchronous operation that blocks until the import completes."
       parameters:
         -
@@ -2164,7 +2164,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/imports':
     post:
       summary: 'Create Import Session'
-      operationId: createImportSession
+      operationId: sitesDatabasesCreateImportSession
       description: "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
       parameters: []
       responses:
@@ -2390,7 +2390,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/imports/{import}/run':
     post:
       summary: 'Run Import'
-      operationId: runImport
+      operationId: sitesDatabasesRunImport
       description: "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
       parameters: []
       responses:
@@ -2628,7 +2628,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/imports/{import}':
     get:
       summary: 'Get Import Status'
-      operationId: getImportStatus
+      operationId: sitesDatabasesGetImportStatus
       description: "Get the current status of a database import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
       parameters: []
       responses:
@@ -2798,7 +2798,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/export':
     post:
       summary: 'Create Export'
-      operationId: createExport
+      operationId: sitesDatabasesCreateExport
       description: "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
       parameters: []
       responses:
@@ -2933,7 +2933,7 @@ paths:
   '/api/v1/vector/sites/{site}/db/exports/{export}':
     get:
       summary: 'Get Export Status'
-      operationId: getExportStatus
+      operationId: sitesDatabasesGetExportStatus
       description: "Get the current status of a database export operation. If complete and not\nexpired, includes a presigned download URL valid for 1 hour."
       parameters: []
       responses:
@@ -3151,7 +3151,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/ssl/nudge':
     post:
       summary: Nudge
-      operationId: nudge
+      operationId: sitesSSLNudge
       description: "Manually nudge SSL provisioning for an environment. Use this when SSL\nprovisioning appears to be stuck or to retry after a failure."
       parameters: []
       responses:
@@ -3348,7 +3348,7 @@ paths:
   '/api/v1/vector/sites/{site}/logs':
     get:
       summary: 'Get Logs'
-      operationId: getLogs
+      operationId: sitesLogsGetLogs
       description: "Retrieves logs for the specified Vector site. Logs are returned in reverse\nchronological order (newest first).\n\nUse the `environment` and `deployment_id` filters to narrow down results."
       parameters:
         -
@@ -3592,7 +3592,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/allowed-referrers':
     get:
       summary: 'List Allowed Referrers'
-      operationId: listAllowedReferrers
+      operationId: 'sitesWAF:ReferrersListAllowedReferrers'
       description: 'Retrieves all allowed referrer hostnames for a site.'
       parameters: []
       responses:
@@ -3634,7 +3634,7 @@ paths:
         - Sites
     post:
       summary: 'Add Allowed Referrer'
-      operationId: addAllowedReferrer
+      operationId: 'sitesWAF:ReferrersAddAllowedReferrer'
       description: "Adds a hostname to the allowed referrers list.\nWildcards are supported (e.g., *.example.com)."
       parameters: []
       responses:
@@ -3689,7 +3689,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/blocked-referrers':
     get:
       summary: 'List Blocked Referrers'
-      operationId: listBlockedReferrers
+      operationId: 'sitesWAF:ReferrersListBlockedReferrers'
       description: 'Retrieves all blocked referrer hostnames for a site.'
       parameters: []
       responses:
@@ -3731,7 +3731,7 @@ paths:
         - Sites
     post:
       summary: 'Add Blocked Referrer'
-      operationId: addBlockedReferrer
+      operationId: 'sitesWAF:ReferrersAddBlockedReferrer'
       description: "Adds a hostname to the blocked referrers list.\nWildcards are supported (e.g., *.spam.com)."
       parameters: []
       responses:
@@ -3786,7 +3786,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/blocked-ips':
     get:
       summary: 'List Blocked IPs'
-      operationId: listBlockedIPs
+      operationId: 'sitesWAF:BlockedIPsListBlockedIPs'
       description: 'Retrieves all blocked IP addresses for a site.'
       parameters: []
       responses:
@@ -3828,7 +3828,7 @@ paths:
         - Sites
     post:
       summary: 'Add Blocked IP'
-      operationId: addBlockedIP
+      operationId: 'sitesWAF:BlockedIPsAddBlockedIP'
       description: "Adds an IP address to the blocked list.\nSupports both IPv4 and IPv6 addresses."
       parameters: []
       responses:
@@ -3883,7 +3883,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/rate-limits':
     get:
       summary: 'List Rate Limits'
-      operationId: listRateLimits
+      operationId: 'sitesWAF:RateLimitsListRateLimits'
       description: 'Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone.'
       parameters: []
       responses:
@@ -3991,7 +3991,7 @@ paths:
         - Sites
     post:
       summary: 'Create Rate Limit'
-      operationId: createRateLimit
+      operationId: 'sitesWAF:RateLimitsCreateRateLimit'
       description: 'Creates a new rate limit rule for a site. Maximum 25 rate limit rules per zone.'
       parameters: []
       responses:
@@ -4212,7 +4212,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/rate-limits/{rule}':
     get:
       summary: 'Get Rate Limit'
-      operationId: getRateLimit
+      operationId: 'sitesWAF:RateLimitsGetRateLimit'
       description: 'Retrieves a specific rate limit rule by ID.'
       parameters: []
       responses:
@@ -4320,7 +4320,7 @@ paths:
         - Sites
     put:
       summary: 'Update Rate Limit'
-      operationId: updateRateLimit
+      operationId: 'sitesWAF:RateLimitsUpdateRateLimit'
       description: "Updates an existing rate limit rule. All fields are optional - only include fields you want\nto change. Omitted fields retain their current values."
       parameters: []
       responses:
@@ -4498,7 +4498,7 @@ paths:
                     type: string
     delete:
       summary: 'Delete Rate Limit'
-      operationId: deleteRateLimit
+      operationId: 'sitesWAF:RateLimitsDeleteRateLimit'
       description: 'Permanently deletes a rate limit rule. This action cannot be undone.'
       parameters: []
       responses:
@@ -4552,7 +4552,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/allowed-referrers/{hostname}':
     delete:
       summary: 'Remove Allowed Referrer'
-      operationId: removeAllowedReferrer
+      operationId: 'sitesWAF:ReferrersRemoveAllowedReferrer'
       description: 'Removes a hostname from the allowed referrers list.'
       parameters: []
       responses:
@@ -4602,7 +4602,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/blocked-referrers/{hostname}':
     delete:
       summary: 'Remove Blocked Referrer'
-      operationId: removeBlockedReferrer
+      operationId: 'sitesWAF:ReferrersRemoveBlockedReferrer'
       description: 'Removes a hostname from the blocked referrers list.'
       parameters: []
       responses:
@@ -4652,7 +4652,7 @@ paths:
   '/api/v1/vector/sites/{site}/waf/blocked-ips/{ip}':
     delete:
       summary: 'Remove Blocked IP'
-      operationId: removeBlockedIP
+      operationId: 'sitesWAF:BlockedIPsRemoveBlockedIP'
       description: 'Removes an IP address from the blocked list.'
       parameters: []
       responses:
@@ -4702,7 +4702,7 @@ paths:
   '/api/v1/vector/sites/{site}/purge-cache':
     post:
       summary: 'Purge Cache'
-      operationId: purgeCache
+      operationId: sitesCDNPurgeCache
       description: "Purges the CDN cache for a site.\nCan purge the entire cache, by cache tag, or a specific URL."
       parameters: []
       responses:
@@ -4804,7 +4804,7 @@ paths:
   '/api/v1/vector/sites/{site}/ssh-keys':
     get:
       summary: 'List SSH Keys'
-      operationId: listSSHKeys
+      operationId: sitesSSHKeysListSSHKeys
       description: 'Retrieves all SSH keys installed on a specific dev site.'
       parameters:
         -
@@ -4970,7 +4970,7 @@ paths:
         - Sites
     post:
       summary: 'Add SSH Key'
-      operationId: addSSHKey
+      operationId: sitesSSHKeysAddSSHKey
       description: "Adds a new SSH key to a specific dev site. The key will be deployed to the\nsite's container and grant SSH access."
       parameters: []
       responses:
@@ -5186,7 +5186,7 @@ paths:
   '/api/v1/vector/sites/{site}/ssh-keys/{key}':
     delete:
       summary: 'Remove SSH Key'
-      operationId: removeSSHKey
+      operationId: sitesSSHKeysRemoveSSHKey
       description: "Removes an SSH key from a specific dev site. The key will be removed from\nthe site's container and SSH access will be revoked."
       parameters: []
       responses:
@@ -6316,7 +6316,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/secrets':
     get:
       summary: 'List Secrets'
-      operationId: listSecrets
+      operationId: environmentsSecretsListSecrets
       description: "Retrieves a paginated list of all secrets for a specific environment.\nSecret values are not included in the response for security."
       parameters:
         -
@@ -6457,7 +6457,7 @@ paths:
         - Environments
     post:
       summary: 'Create Secret'
-      operationId: createSecret
+      operationId: environmentsSecretsCreateSecret
       description: "Creates a new secret for a specific environment. The secret will be available\nto this environment during deployment.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
@@ -6629,7 +6629,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}':
     get:
       summary: 'Get Secret'
-      operationId: getSecret
+      operationId: environmentsSecretsGetSecret
       description: "Retrieves details of a specific environment secret.\nThe secret value is not included in the response for security."
       parameters: []
       responses:
@@ -6733,7 +6733,7 @@ paths:
         - Environments
     put:
       summary: 'Update Secret'
-      operationId: updateSecret
+      operationId: environmentsSecretsUpdateSecret
       description: "Updates an existing environment secret. You can update the key, value, or both.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
@@ -6884,7 +6884,7 @@ paths:
                   example: sk_live_yyyy
     delete:
       summary: 'Delete Secret'
-      operationId: deleteSecret
+      operationId: environmentsSecretsDeleteSecret
       description: 'Deletes an environment secret.'
       parameters: []
       responses:
@@ -7014,7 +7014,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/deployments':
     get:
       summary: 'List Deployments'
-      operationId: listDeployments
+      operationId: environmentsDeploymentsListDeployments
       description: "Retrieves a paginated list of all deployments for a specific environment,\nordered by most recent first."
       parameters:
         -
@@ -7250,7 +7250,7 @@ paths:
         - Environments
     post:
       summary: 'Create Deployment'
-      operationId: createDeployment
+      operationId: environmentsDeploymentsCreateDeployment
       description: "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
       parameters: []
       responses:
@@ -7448,7 +7448,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/deployments/{deployment}':
     get:
       summary: 'Get Deployment'
-      operationId: getDeployment
+      operationId: environmentsDeploymentsGetDeployment
       description: 'Retrieves details of a specific deployment including output logs and actor information.'
       parameters: []
       responses:
@@ -7654,7 +7654,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/database/reset-password':
     post:
       summary: 'Reset Password'
-      operationId: resetPassword
+      operationId: environmentsDatabasesResetPassword
       description: "Rotates the database password for a production environment via Ymir.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\n**Important:** After rotating the password, you must redeploy the environment\nfor your application to pick up the new credentials."
       parameters: []
       responses:
@@ -7868,7 +7868,7 @@ paths:
   '/api/v1/vector/sites/{site}/environments/{env}/rollback':
     post:
       summary: 'Rollback Deployment'
-      operationId: rollbackDeployment
+      operationId: environmentsDeploymentsRollbackDeployment
       description: "Triggers a rollback for the environment. By default, rolls back to the last\nsuccessful deployment. Optionally, you can specify a target_deployment_id to\nrollback to a specific previous deployment.\n\nThe rollback creates a new deployment record with `pending` status that progresses\nthrough `running` to either `completed` or `failed`."
       parameters: []
       responses:
@@ -8282,7 +8282,7 @@ paths:
   /api/v1/vector/ssh-keys:
     get:
       summary: 'List SSH Keys'
-      operationId: listSSHKeys
+      operationId: accountSSHKeysListSSHKeys
       description: "Retrieves a paginated list of account-level default SSH keys. These are\ntemplate keys that will be installed on new dev sites."
       parameters:
         -
@@ -8428,7 +8428,7 @@ paths:
         - Account
     post:
       summary: 'Create SSH Key'
-      operationId: createSSHKey
+      operationId: accountSSHKeysCreateSSHKey
       description: "Creates a new account-level default SSH key. This key will be automatically\ninstalled on any new dev sites created after this point.\n\n**Note**: This does not affect existing sites. To add a key to an existing\nsite, use the site-specific SSH key endpoint."
       parameters: []
       responses:
@@ -8615,7 +8615,7 @@ paths:
   '/api/v1/vector/ssh-keys/{key}':
     get:
       summary: 'Get SSH Key'
-      operationId: getSSHKey
+      operationId: accountSSHKeysGetSSHKey
       description: 'Retrieves details of a specific account-level SSH key.'
       parameters: []
       responses:
@@ -8739,7 +8739,7 @@ paths:
         - Account
     delete:
       summary: 'Delete SSH Key'
-      operationId: deleteSSHKey
+      operationId: accountSSHKeysDeleteSSHKey
       description: "Deletes an account-level default SSH key. This does not remove the key\nfrom any existing sites where it has already been installed."
       parameters: []
       responses:
@@ -8873,7 +8873,7 @@ paths:
   /api/v1/vector/api-keys:
     get:
       summary: 'List API Keys'
-      operationId: listAPIKeys
+      operationId: accountAPIKeysListAPIKeys
       description: "Retrieves a paginated list of API keys for the authenticated user.\nToken values are never returned - only metadata like name, creation date,\nand last used timestamp."
       parameters:
         -
@@ -8979,7 +8979,7 @@ paths:
         - Account
     post:
       summary: 'Create API Key'
-      operationId: createAPIKey
+      operationId: accountAPIKeysCreateAPIKey
       description: "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\nToken names are automatically prefixed with `vector-` for identification.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `vector:mcp` - Full MCP access (for AI assistants like Claude)\n- `vector:sites:read` - Read sites, environments, deployments, database operations\n- `vector:sites:write` - Manage sites, environments, deployments, database import/export\n- `vector:logs:read` - Read site logs\n- `vector:cdn:read` - Read CDN settings\n- `vector:cdn:write` - Manage CDN settings and cache\n- `vector:webhooks:read` - Read webhooks\n- `vector:webhooks:write` - Manage webhooks\n- `vector:secrets:read` - Read API keys and global secrets\n- `vector:secrets:write` - Manage API keys and global secrets\n- `vector:ssh-keys:read` - Read SSH keys\n- `vector:ssh-keys:write` - Manage SSH keys"
       parameters: []
       responses:
@@ -9109,7 +9109,7 @@ paths:
   /api/v1/vector/global-secrets:
     get:
       summary: 'List Secrets'
-      operationId: listSecrets
+      operationId: accountSecretsListSecrets
       description: "Retrieves a paginated list of all global secrets for your account.\nSecret values are not included in the response for security."
       parameters:
         -
@@ -9230,7 +9230,7 @@ paths:
         - Account
     post:
       summary: 'Create Secret'
-      operationId: createSecret
+      operationId: accountSecretsCreateSecret
       description: "Creates a new global secret for your account. The secret will be available\nto all sites within your account during deployment.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
@@ -9365,7 +9365,7 @@ paths:
   '/api/v1/vector/global-secrets/{secret}':
     get:
       summary: 'Get Secret'
-      operationId: getSecret
+      operationId: accountSecretsGetSecret
       description: "Retrieves details of a specific global secret.\nThe secret value is not included in the response for security."
       parameters: []
       responses:
@@ -9469,7 +9469,7 @@ paths:
         - Account
     put:
       summary: 'Update Secret'
-      operationId: updateSecret
+      operationId: accountSecretsUpdateSecret
       description: "Updates an existing global secret. You can update the key, value, or both.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
@@ -9620,7 +9620,7 @@ paths:
                   example: sk_live_yyyy
     delete:
       summary: 'Delete Secret'
-      operationId: deleteSecret
+      operationId: accountSecretsDeleteSecret
       description: 'Deletes a global secret from your account.'
       parameters: []
       responses:
@@ -9742,7 +9742,7 @@ paths:
   '/api/v1/vector/api-keys/{token}':
     delete:
       summary: 'Delete API Key'
-      operationId: deleteAPIKey
+      operationId: accountAPIKeysDeleteAPIKey
       description: "Deletes an API key. You cannot delete the token currently being used\nfor authentication. This operation is irreversible."
       parameters: []
       responses:
