@@ -27,6 +27,9 @@
   <!-- Prose heading anchors -->
   <script src="/assets/js/prose-anchors.js?v={{ asset_hash }}"></script>
 
+  <!-- Command palette -->
+  <script src="/assets/js/command-palette.js?v={{ asset_hash }}"></script>
+
   <!-- Alpine.js -->
   <script defer src="/vendor/js/alpine.min.js?v={{ asset_hash }}"></script>
 
@@ -52,5 +55,11 @@
       });
     });
   </script>
+
+  <!-- Command palette components -->
+  <div x-data>
+    {% include components/command-palette.html %}
+    {% include components/keyboard-shortcuts.html %}
+  </div>
 </body>
 </html>

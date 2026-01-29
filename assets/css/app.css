@@ -3,6 +3,7 @@
 @import "./_api.css";
 @import "./_terminal-prompt.css";
 @import "./_hero-scramble.css";
+@import "./_command-palette.css";
 
 /* ============================================================================
    Design Tokens - Tailwind 4 Theme Layer
