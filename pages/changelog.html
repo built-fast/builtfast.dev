@@ -61,7 +61,8 @@ cta: false
         {% endif %}
 
         <!-- Entry: {{ entry.title }} -->
-        <article class="changelog-entry" data-tags="{{ entry.tags | join: ' ' }}">
+        {% assign entry_slug = entry.url | split: '/' | last %}
+        <article id="{{ entry_slug }}" class="changelog-entry" data-tags="{{ entry.tags | join: ' ' }}">
           <div class="changelog-entry-marker">
             <div class="changelog-date-badge">
               <span class="changelog-date-month">{{ entry.date | date: "%b" }}</span>
@@ -77,7 +78,7 @@ cta: false
                 </time>
               </div>
               <h2 class="changelog-entry-title">
-                <a href="{{ entry.url }}">{{ entry.title }}</a>
+                <a href="#{{ entry_slug }}">{{ entry.title }}</a>
               </h2>
               <div class="changelog-tags">
                 {% for tag in entry.tags %}
