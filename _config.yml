@@ -80,7 +80,6 @@ defaults:
       path: ""
       type: "changelog"
     values:
-      image: /assets/images/opengraph-changelog.png
       layout: "changelog-entry"
   - scope:
       path: ""
