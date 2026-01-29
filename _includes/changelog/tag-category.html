@@ -1,4 +1,4 @@
 {% comment %}
 Normalizes a changelog tag for display.
 Usage: {% include changelog/tag-category.html tag="vector-pro" %}
-{% endcomment %}{% case include.tag %}{% when "api" %}API{% when "cli" %}CLI{% when "sdk" %}SDK{% when "php" %}PHP{% when "vector-pro" %}Vector Pro{% when "vector-cli" %}Vector CLI{% when "gh-shellcheck" %}gh-shellcheck{% when "gh-clover-annotate" %}gh-clover-annotate{% else %}{{ include.tag | replace: "-", " " | capitalize }}{% endcase %}
+{% endcomment %}{% case include.tag %}{% when "api" %}API{% when "cli" %}CLI{% when "sdk" %}SDK{% when "php" %}PHP{% when "vector-pro" %}Vector Pro{% when "vector-cli" %}Vector CLI{% when "gh-shellcheck" %}gh-shellcheck{% when "gh-clover-annotate" %}gh-clover-annotate{% when "openapi" %}OpenAPI{% else %}{{ include.tag | replace: "-", " " | capitalize }}{% endcase %}
