@@ -1670,6 +1670,21 @@ body {
    ============================================================================ */
 
 /* Filter Controls */
+.changelog-filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .changelog-filters-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
 .changelog-filters {
   display: flex;
   gap: 0.25rem;
@@ -1677,7 +1692,23 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 0.25rem;
-  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .changelog-filters {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+
+  .changelog-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .changelog-filter {
+    flex-shrink: 0;
+  }
 }
 
 .changelog-filter {
