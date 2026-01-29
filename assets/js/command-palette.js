@@ -13,8 +13,7 @@ document.addEventListener('alpine:init', () => {
     { id: 'blog', title: 'Blog', url: '/blog/', shortcut: 'gb', category: 'Navigation', keywords: ['posts', 'articles', 'news'] },
     { id: 'oss', title: 'Open Source', url: '/oss/', shortcut: 'go', category: 'Navigation', keywords: ['projects', 'github'] },
     { id: 'team', title: 'Team', url: '/team/', shortcut: 'gt', category: 'Navigation', keywords: ['about', 'people', 'us'] },
-    { id: 'contact', title: 'Contact', url: '/contact/', shortcut: 'gc', category: 'Navigation', keywords: ['support', 'email', 'help'] },
-    { id: 'security', title: 'Security', url: '/security/', shortcut: 'gs', category: 'Navigation', keywords: ['vulnerabilities', 'disclosure'] },
+    { id: 'changelog', title: 'Changelog', url: '/changelog/', shortcut: 'gc', category: 'Navigation', keywords: ['releases', 'updates', 'history'] },
 
     // API Endpoints
     { id: 'api-account', title: 'Account API', url: '/api/#account', category: 'API Endpoints', keywords: ['api', 'user', 'profile', 'keys'] },
@@ -42,8 +41,7 @@ document.addEventListener('alpine:init', () => {
     'b': 'blog',
     'o': 'oss',
     't': 'team',
-    'c': 'contact',
-    's': 'security',
+    'c': 'changelog',
     '?': 'shortcuts',
   };
 

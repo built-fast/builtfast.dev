@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-3xl mx-auto px-6">
+    <!-- Header -->
+    <header class="changelog-show-header">
+      <a href="/changelog/" class="changelog-show-back">
+        {% include icons/chevron-left.html size="sm" %}
+        Back to changelog
+      </a>
+      <div class="changelog-show-meta">
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}" class="changelog-show-date">
+          {{ page.date | date: "%B %-d, %Y" }}
+        </time>
+        <div class="changelog-show-tags">
+          {% for tag in page.tags %}
+          {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
+          {% include components/lang-badge.html name=tag_label size="sm" %}
+          {% endfor %}
+        </div>
+      </div>
+      <h1 class="changelog-show-title">{{ page.title }}</h1>
+    </header>
+
+    <!-- Content -->
+    <div class="prose changelog-show-content">
+      {{ content }}
+    </div>
+
+    <!-- Footer -->
+    <footer class="changelog-show-footer">
+      <div class="changelog-show-nav">
+        <a href="/changelog/" class="btn-secondary">
+          {% include icons/chevron-left.html size="sm" %}
+          All releases
+        </a>
+      </div>
+    </footer>
+  </div>
+</section>

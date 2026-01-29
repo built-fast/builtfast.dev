@@ -54,6 +54,9 @@ pagination:
 
 # Collections
 collections:
+  changelog:
+    output: true
+    permalink: /changelog/:path/
   docs:
     output: true
     permalink: /docs/:path/
@@ -73,6 +76,11 @@ defaults:
       height: 100
       width: 100
       alt: BuiltFast Developers Logo
+  - scope:
+      path: ""
+      type: "changelog"
+    values:
+      layout: "changelog-entry"
   - scope:
       path: ""
       type: "docs"

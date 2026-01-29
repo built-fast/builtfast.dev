@@ -1,0 +1,219 @@
+---
+layout: default
+title: Changelog
+description: A detailed history of releases, improvements, and fixes across our products and tools.
+permalink: /changelog/
+cta: false
+---
+
+{% include heroes/page.html
+   label="// changelog"
+   title="What we've shipped,"
+   accent="date by date."
+   description="A chronological record of releases across all our tools. Filter by category to find updates for the products you use."
+%}
+
+{% comment %}Collect all unique tags from changelog entries{% endcomment %}
+{% assign all_tags = "" %}
+{% for entry in site.changelog %}
+  {% for tag in entry.tags %}
+    {% unless all_tags contains tag %}
+      {% if all_tags != "" %}{% assign all_tags = all_tags | append: "|" %}{% endif %}
+      {% assign all_tags = all_tags | append: tag %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+{% assign tag_array = all_tags | split: "|" | sort %}
+
+<!-- Filter Controls -->
+<section class="py-8 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-center gap-4">
+      <span class="text-sm text-muted">Filter by:</span>
+      <div class="changelog-filters">
+        <button class="changelog-filter active" data-filter="all">All</button>
+        {% for tag in tag_array %}
+        <button class="changelog-filter" data-filter="{{ tag }}">{% include changelog/tag-category.html tag=tag %}</button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Changelog Timeline -->
+<section class="py-12 md:py-16 border-t border-subtle bg-elevated">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="changelog-timeline">
+
+      {% assign sorted_entries = site.changelog | sort: 'date' | reverse %}
+      {% assign current_year = nil %}
+
+      {% for entry in sorted_entries %}
+        {% assign entry_year = entry.date | date: "%Y" %}
+
+        {% if entry_year != current_year %}
+          {% assign current_year = entry_year %}
+          <!-- Year Marker -->
+          <div class="changelog-year">
+            <span class="changelog-year-label">{{ current_year }}</span>
+          </div>
+        {% endif %}
+
+        <!-- Entry: {{ entry.title }} -->
+        <article class="changelog-entry" data-tags="{{ entry.tags | join: ' ' }}">
+          <div class="changelog-entry-marker">
+            <div class="changelog-date-badge">
+              <span class="changelog-date-month">{{ entry.date | date: "%b" }}</span>
+              <span class="changelog-date-day">{{ entry.date | date: "%-d" }}</span>
+            </div>
+            <div class="changelog-entry-line"></div>
+          </div>
+          <div class="changelog-entry-content">
+            <header class="changelog-entry-header">
+              <div class="changelog-entry-meta">
+                <time datetime="{{ entry.date | date: '%Y-%m-%d' }}" class="changelog-entry-date">
+                  {{ entry.date | date: "%B %-d, %Y" }}
+                </time>
+              </div>
+              <h2 class="changelog-entry-title">
+                <a href="{{ entry.url }}">{{ entry.title }}</a>
+              </h2>
+              <div class="changelog-tags">
+                {% for tag in entry.tags %}
+                {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
+                {% include components/lang-badge.html name=tag_label size="sm" %}
+                {% endfor %}
+              </div>
+            </header>
+
+            <div class="changelog-entry-body prose prose-compact">
+              {{ entry.content | markdownify }}
+            </div>
+
+            <footer class="changelog-entry-footer">
+              <a href="{{ entry.url }}" class="link-arrow text-sm">
+                Full release notes
+                {% include icons/chevron-right.html size="sm" %}
+              </a>
+            </footer>
+          </div>
+        </article>
+
+      {% endfor %}
+
+      <!-- End marker -->
+      <div class="changelog-end">
+        <span class="changelog-end-label">Beginning of changelog</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Subscribe Section -->
+<section class="py-12 md:py-16 border-t border-subtle">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <!-- Left: Info -->
+      <div>
+        <span class="section-label">// stay updated</span>
+        <h2 class="text-2xl text-primary font-semibold mt-2 mb-4">Never miss a release</h2>
+        <p class="text-secondary mb-6 leading-relaxed">
+          Follow along as we ship new features, improvements, and fixes. Subscribe via RSS or watch us on GitHub.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="https://github.com/built-fast" class="btn-secondary" target="_blank" rel="noopener">
+            {% include icons/github.html size="sm" %}
+            Watch on GitHub
+          </a>
+          <a href="/blog/" class="btn-secondary">
+            {% include icons/pen-line.html size="sm" %}
+            Read the blog
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: RSS/Feed Card -->
+      {% capture tc_content %}
+      <div class="space-y-4 font-mono text-sm p-5">
+        <div>
+          <span class="text-muted"># Subscribe via RSS</span>
+          <div class="mt-2">
+            <span class="text-cyan">$</span>
+            <span class="text-secondary ml-2">curl</span>
+            <span class="text-orange ml-2">builtfast.dev/changelog/feed.xml</span>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># Or use your favorite reader</span>
+          <ul class="mt-2 space-y-1 text-secondary">
+            <li><span class="text-cyan">-</span> Feedly, Inoreader, NetNewsWire</li>
+            <li><span class="text-cyan">-</span> Any RSS-compatible app</li>
+          </ul>
+        </div>
+
+        <div class="pt-2 border-t border-subtle/50">
+          <span class="text-muted"># What you'll get</span>
+          <ul class="mt-2 space-y-1 text-secondary">
+            <li><span class="text-green-500">+</span> New feature announcements</li>
+            <li><span class="text-green-500">+</span> Breaking change warnings</li>
+            <li><span class="text-green-500">+</span> Security advisories</li>
+          </ul>
+        </div>
+      </div>
+      {% endcapture %}
+      {% include components/terminal-card.html filename="subscribe.sh" content=tc_content %}
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filters = document.querySelectorAll('.changelog-filter');
+  const entries = document.querySelectorAll('.changelog-entry');
+  const yearMarkers = document.querySelectorAll('.changelog-year');
+
+  function updateYearVisibility() {
+    // Hide year markers that have no visible entries following them
+    yearMarkers.forEach((marker, index) => {
+      const nextMarker = yearMarkers[index + 1];
+      let hasVisibleEntries = false;
+
+      // Find entries between this year marker and the next (or end)
+      let sibling = marker.nextElementSibling;
+      while (sibling && sibling !== nextMarker && !sibling.classList.contains('changelog-end')) {
+        if (sibling.classList.contains('changelog-entry') && sibling.getAttribute('data-filtered') !== 'true') {
+          hasVisibleEntries = true;
+          break;
+        }
+        sibling = sibling.nextElementSibling;
+      }
+
+      marker.style.display = hasVisibleEntries ? '' : 'none';
+    });
+  }
+
+  filters.forEach(filter => {
+    filter.addEventListener('click', function() {
+      const filterCategory = this.dataset.filter;
+
+      // Update active state
+      filters.forEach(f => f.classList.remove('active'));
+      this.classList.add('active');
+
+      // Filter entries by tag
+      entries.forEach(entry => {
+        const tags = entry.dataset.tags.split(' ');
+        if (filterCategory === 'all' || tags.includes(filterCategory)) {
+          entry.removeAttribute('data-filtered');
+        } else {
+          entry.setAttribute('data-filtered', 'true');
+        }
+      });
+
+      updateYearVisibility();
+    });
+  });
+});
+</script>
