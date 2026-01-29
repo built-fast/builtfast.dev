@@ -6,86 +6,140 @@ description: |-
 
   Event logs provide an audit trail of all activity in your account.
 
+  #### Event Naming Convention
+
+  Events follow a consistent dot-notation pattern:
+  - Simple actions: `{entity}.{action}` (e.g., `site.created`, `site.updated`)
+  - Lifecycle operations: `{entity}.{operation}.{phase}` (e.g., `site.provisioning.started`)
+
   #### Available Event Types
 
   ##### Site Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.site.pending` | Site provisioning has been queued |
-  | `vector.site.created` | Site has been fully provisioned |
-  | `vector.site.updated` | Site settings have been modified |
-  | `vector.site.deleted` | Site has been terminated |
-  | `vector.site.suspended` | Site has been suspended |
-  | `vector.site.unsuspended` | Site has been unsuspended |
-
-  ##### Dev Site Events
-
-  | Event | Description |
-  |-------|-------------|
-  | `vector.dev-site.created` | Development container has been provisioned |
-  | `vector.dev-site.suspended` | Development container has been suspended |
-  | `vector.dev-site.unsuspended` | Development container has been unsuspended |
-  | `vector.dev-site.terminated` | Development container has been terminated |
-  | `vector.dev-site.sftp-password-reset` | SFTP password has been reset |
-  | `vector.dev-site.database-password-reset` | Database password has been reset |
-  | `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |
-  | `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |
-  | `vector.dev-site.db-import-started` | Database import has started |
-  | `vector.dev-site.db-import-completed` | Database import completed successfully |
-  | `vector.dev-site.db-import-failed` | Database import failed |
-  | `vector.dev-site.db-export-started` | Database export has started |
-  | `vector.dev-site.db-export-completed` | Database export completed successfully |
-  | `vector.dev-site.db-export-failed` | Database export failed |
+  | `site.created` | Site record has been created |
+  | `site.updated` | Site settings have been modified |
+  | `site.cloned` | Site has been cloned from another site |
+  | `site.provisioning.started` | Container provisioning has started |
+  | `site.provisioning.completed` | Site is fully provisioned and running |
+  | `site.provisioning.failed` | Site provisioning failed |
+  | `site.suspension.started` | Site suspension has started |
+  | `site.suspension.completed` | Site has been suspended |
+  | `site.unsuspension.started` | Site unsuspension has started |
+  | `site.unsuspension.completed` | Site has been unsuspended |
+  | `site.termination.started` | Site termination has started |
+  | `site.termination.completed` | Site has been terminated |
+  | `site.sftp.password.reset` | SFTP password has been reset |
+  | `site.database.password.reset` | Database password has been reset |
+  | `site.sshkey.added` | SSH key has been added to site |
+  | `site.sshkey.removed` | SSH key has been removed from site |
+  | `site.database.import.started` | Database import has started |
+  | `site.database.import.completed` | Database import completed successfully |
+  | `site.database.import.failed` | Database import failed |
+  | `site.database.export.started` | Database export has started |
+  | `site.database.export.completed` | Database export completed successfully |
+  | `site.database.export.failed` | Database export failed |
 
   ##### SSH Key Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.ssh-key.created` | SSH key has been created |
-  | `vector.ssh-key.deleted` | SSH key has been deleted |
+  | `sshkey.created` | SSH key has been created |
+  | `sshkey.deleted` | SSH key has been deleted |
 
   ##### Environment Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.environment.created` | Production environment has been created |
-  | `vector.environment.updated` | Environment settings have been modified |
-  | `vector.environment.deleted` | Environment has been deleted |
-  | `vector.environment.suspended` | Environment has been suspended |
-  | `vector.environment.unsuspended` | Environment has been unsuspended |
-  | `vector.environment.database-password-reset` | Database password has been reset |
+  | `environment.created` | Production environment has been created |
+  | `environment.updated` | Environment settings have been modified |
+  | `environment.provisioning.started` | Environment provisioning has started |
+  | `environment.provisioning.completed` | Environment is fully provisioned |
+  | `environment.provisioning.failed` | Environment provisioning failed |
+  | `environment.suspension.started` | Environment suspension has started |
+  | `environment.suspension.completed` | Environment has been suspended |
+  | `environment.unsuspension.started` | Environment unsuspension has started |
+  | `environment.unsuspension.completed` | Environment has been unsuspended |
+  | `environment.termination.started` | Environment termination has started |
+  | `environment.termination.completed` | Environment has been terminated |
+  | `environment.database.password.reset` | Database password has been reset |
 
   ##### Deployment Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.deployment.started` | Deployment to production has started |
-  | `vector.deployment.completed` | Deployment completed successfully |
-  | `vector.deployment.failed` | Deployment failed |
+  | `deployment.started` | Deployment to production has started |
+  | `deployment.completed` | Deployment completed successfully |
+  | `deployment.failed` | Deployment failed |
+  | `deployment.rollback.started` | Deployment rollback has started |
+  | `deployment.rollback.completed` | Deployment rollback completed |
+  | `deployment.rollback.failed` | Deployment rollback failed |
 
   ##### CDN Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.cdn.setup-started` | CDN configuration has started |
-  | `vector.cdn.setup-completed` | CDN setup completed successfully |
-  | `vector.cdn.setup-failed` | CDN setup failed |
+  | `cdn.setup.started` | CDN configuration has started |
+  | `cdn.setup.completed` | CDN setup completed successfully |
+  | `cdn.setup.failed` | CDN setup failed |
 
   ##### DNS Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.dns.record-created` | DNS record has been created |
-  | `vector.dns.record-deleted` | DNS record has been deleted |
+  | `dns.record.created` | DNS record has been created |
+  | `dns.record.deleted` | DNS record has been deleted |
+
+  ##### WAF Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `waf.ratelimit.created` | Rate limit rule has been created |
+  | `waf.ratelimit.updated` | Rate limit rule has been updated |
+  | `waf.ratelimit.deleted` | Rate limit rule has been deleted |
+  | `waf.blockedip.created` | IP block has been created |
+  | `waf.blockedip.deleted` | IP block has been removed |
+  | `waf.blockedreferrer.created` | Referrer block has been created |
+  | `waf.blockedreferrer.deleted` | Referrer block has been removed |
+  | `waf.allowedreferrer.created` | Allowed referrer has been added |
+  | `waf.allowedreferrer.deleted` | Allowed referrer has been removed |
+
+  ##### Secret Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `secret.created` | Secret has been created |
+  | `secret.updated` | Secret has been updated |
+  | `secret.deleted` | Secret has been deleted |
+
+  ##### Domain Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `domain.created` | Domain has been registered |
+  | `domain.deleted` | Domain has been deleted |
+
+  ##### API Key Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `apikey.created` | API key has been created |
+  | `apikey.deleted` | API key has been deleted |
 
   ##### Webhook Events
 
   | Event | Description |
   |-------|-------------|
-  | `vector.webhook.created` | Webhook endpoint has been registered |
-  | `vector.webhook.updated` | Webhook configuration has been modified |
-  | `vector.webhook.deleted` | Webhook endpoint has been removed |
+  | `webhook.created` | Webhook endpoint has been registered |
+  | `webhook.updated` | Webhook configuration has been modified |
+  | `webhook.deleted` | Webhook endpoint has been removed |
+
+  ##### Cache Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `cache.purged` | Cache has been purged |
 endpoints:
   -
     custom: []
@@ -102,86 +156,140 @@ endpoints:
 
         Event logs provide an audit trail of all activity in your account.
 
+        #### Event Naming Convention
+
+        Events follow a consistent dot-notation pattern:
+        - Simple actions: `{entity}.{action}` (e.g., `site.created`, `site.updated`)
+        - Lifecycle operations: `{entity}.{operation}.{phase}` (e.g., `site.provisioning.started`)
+
         #### Available Event Types
 
         ##### Site Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.site.pending` | Site provisioning has been queued |
-        | `vector.site.created` | Site has been fully provisioned |
-        | `vector.site.updated` | Site settings have been modified |
-        | `vector.site.deleted` | Site has been terminated |
-        | `vector.site.suspended` | Site has been suspended |
-        | `vector.site.unsuspended` | Site has been unsuspended |
-
-        ##### Dev Site Events
-
-        | Event | Description |
-        |-------|-------------|
-        | `vector.dev-site.created` | Development container has been provisioned |
-        | `vector.dev-site.suspended` | Development container has been suspended |
-        | `vector.dev-site.unsuspended` | Development container has been unsuspended |
-        | `vector.dev-site.terminated` | Development container has been terminated |
-        | `vector.dev-site.sftp-password-reset` | SFTP password has been reset |
-        | `vector.dev-site.database-password-reset` | Database password has been reset |
-        | `vector.dev-site.ssh-key-added` | SSH key has been added to dev container |
-        | `vector.dev-site.ssh-key-removed` | SSH key has been removed from dev container |
-        | `vector.dev-site.db-import-started` | Database import has started |
-        | `vector.dev-site.db-import-completed` | Database import completed successfully |
-        | `vector.dev-site.db-import-failed` | Database import failed |
-        | `vector.dev-site.db-export-started` | Database export has started |
-        | `vector.dev-site.db-export-completed` | Database export completed successfully |
-        | `vector.dev-site.db-export-failed` | Database export failed |
+        | `site.created` | Site record has been created |
+        | `site.updated` | Site settings have been modified |
+        | `site.cloned` | Site has been cloned from another site |
+        | `site.provisioning.started` | Container provisioning has started |
+        | `site.provisioning.completed` | Site is fully provisioned and running |
+        | `site.provisioning.failed` | Site provisioning failed |
+        | `site.suspension.started` | Site suspension has started |
+        | `site.suspension.completed` | Site has been suspended |
+        | `site.unsuspension.started` | Site unsuspension has started |
+        | `site.unsuspension.completed` | Site has been unsuspended |
+        | `site.termination.started` | Site termination has started |
+        | `site.termination.completed` | Site has been terminated |
+        | `site.sftp.password.reset` | SFTP password has been reset |
+        | `site.database.password.reset` | Database password has been reset |
+        | `site.sshkey.added` | SSH key has been added to site |
+        | `site.sshkey.removed` | SSH key has been removed from site |
+        | `site.database.import.started` | Database import has started |
+        | `site.database.import.completed` | Database import completed successfully |
+        | `site.database.import.failed` | Database import failed |
+        | `site.database.export.started` | Database export has started |
+        | `site.database.export.completed` | Database export completed successfully |
+        | `site.database.export.failed` | Database export failed |
 
         ##### SSH Key Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.ssh-key.created` | SSH key has been created |
-        | `vector.ssh-key.deleted` | SSH key has been deleted |
+        | `sshkey.created` | SSH key has been created |
+        | `sshkey.deleted` | SSH key has been deleted |
 
         ##### Environment Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.environment.created` | Production environment has been created |
-        | `vector.environment.updated` | Environment settings have been modified |
-        | `vector.environment.deleted` | Environment has been deleted |
-        | `vector.environment.suspended` | Environment has been suspended |
-        | `vector.environment.unsuspended` | Environment has been unsuspended |
-        | `vector.environment.database-password-reset` | Database password has been reset |
+        | `environment.created` | Production environment has been created |
+        | `environment.updated` | Environment settings have been modified |
+        | `environment.provisioning.started` | Environment provisioning has started |
+        | `environment.provisioning.completed` | Environment is fully provisioned |
+        | `environment.provisioning.failed` | Environment provisioning failed |
+        | `environment.suspension.started` | Environment suspension has started |
+        | `environment.suspension.completed` | Environment has been suspended |
+        | `environment.unsuspension.started` | Environment unsuspension has started |
+        | `environment.unsuspension.completed` | Environment has been unsuspended |
+        | `environment.termination.started` | Environment termination has started |
+        | `environment.termination.completed` | Environment has been terminated |
+        | `environment.database.password.reset` | Database password has been reset |
 
         ##### Deployment Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.deployment.started` | Deployment to production has started |
-        | `vector.deployment.completed` | Deployment completed successfully |
-        | `vector.deployment.failed` | Deployment failed |
+        | `deployment.started` | Deployment to production has started |
+        | `deployment.completed` | Deployment completed successfully |
+        | `deployment.failed` | Deployment failed |
+        | `deployment.rollback.started` | Deployment rollback has started |
+        | `deployment.rollback.completed` | Deployment rollback completed |
+        | `deployment.rollback.failed` | Deployment rollback failed |
 
         ##### CDN Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.cdn.setup-started` | CDN configuration has started |
-        | `vector.cdn.setup-completed` | CDN setup completed successfully |
-        | `vector.cdn.setup-failed` | CDN setup failed |
+        | `cdn.setup.started` | CDN configuration has started |
+        | `cdn.setup.completed` | CDN setup completed successfully |
+        | `cdn.setup.failed` | CDN setup failed |
 
         ##### DNS Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.dns.record-created` | DNS record has been created |
-        | `vector.dns.record-deleted` | DNS record has been deleted |
+        | `dns.record.created` | DNS record has been created |
+        | `dns.record.deleted` | DNS record has been deleted |
+
+        ##### WAF Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `waf.ratelimit.created` | Rate limit rule has been created |
+        | `waf.ratelimit.updated` | Rate limit rule has been updated |
+        | `waf.ratelimit.deleted` | Rate limit rule has been deleted |
+        | `waf.blockedip.created` | IP block has been created |
+        | `waf.blockedip.deleted` | IP block has been removed |
+        | `waf.blockedreferrer.created` | Referrer block has been created |
+        | `waf.blockedreferrer.deleted` | Referrer block has been removed |
+        | `waf.allowedreferrer.created` | Allowed referrer has been added |
+        | `waf.allowedreferrer.deleted` | Allowed referrer has been removed |
+
+        ##### Secret Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `secret.created` | Secret has been created |
+        | `secret.updated` | Secret has been updated |
+        | `secret.deleted` | Secret has been deleted |
+
+        ##### Domain Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `domain.created` | Domain has been registered |
+        | `domain.deleted` | Domain has been deleted |
+
+        ##### API Key Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `apikey.created` | API key has been created |
+        | `apikey.deleted` | API key has been deleted |
 
         ##### Webhook Events
 
         | Event | Description |
         |-------|-------------|
-        | `vector.webhook.created` | Webhook endpoint has been registered |
-        | `vector.webhook.updated` | Webhook configuration has been modified |
-        | `vector.webhook.deleted` | Webhook endpoint has been removed |
+        | `webhook.created` | Webhook endpoint has been registered |
+        | `webhook.updated` | Webhook configuration has been modified |
+        | `webhook.deleted` | Webhook endpoint has been removed |
+
+        ##### Cache Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `cache.purged` | Cache has been purged |
       subgroup: ''
       subgroupDescription: ''
       title: 'List Events'
@@ -226,7 +334,7 @@ endpoints:
         name: event
         description: 'Filter by event type(s). Accepts a single event or comma-separated list.'
         required: false
-        example: 'vector.site.created,vector.deployment.completed'
+        example: 'site.provisioning.completed,deployment.completed'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -257,7 +365,7 @@ endpoints:
     cleanQueryParameters:
       from: '2025-01-01T00:00:00Z'
       to: '2025-01-31T23:59:59Z'
-      event: 'vector.site.created,vector.deployment.completed'
+      event: 'site.provisioning.completed,deployment.completed'
       per_page: 25
       page: 1
     bodyParameters: []
@@ -273,7 +381,7 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDL",
                       "account_id": 1,
-                      "event": "vector.site.created",
+                      "event": "site.provisioning.completed",
                       "model_type": "VectorSite",
                       "model_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                       "context": null,
