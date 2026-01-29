@@ -68,11 +68,7 @@ document.addEventListener('alpine:init', () => {
         filtered = commands;
       } else {
         const q = this.query.toLowerCase();
-        filtered = commands.filter(cmd => {
-          if (cmd.title.toLowerCase().includes(q)) return true;
-          if (cmd.keywords?.some(k => k.toLowerCase().includes(q))) return true;
-          return false;
-        });
+        filtered = commands.filter(cmd => cmd.title.toLowerCase().includes(q));
       }
 
       this._cachedQuery = this.query;
