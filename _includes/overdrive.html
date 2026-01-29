@@ -646,7 +646,12 @@
   const hint = document.createElement('div');
   hint.className = 'vo-hint';
   hint.setAttribute('aria-hidden', 'true');
-  hint.innerHTML = '<span class="vo-hint-label">HI-SCORE</span><span class="vo-hint-code">↑↑↓↓←→←→BA</span>';
+  hint.innerHTML = '<span class="vo-hint-label">❯ OVERDRIVE ❮</span><span class="vo-hint-code">↑↑↓↓←→←→BA</span>';
+  hint.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    activateEasterEgg();
+  });
   const hintStyle = document.createElement('style');
   hintStyle.textContent = `
     .vo-hint {
@@ -655,9 +660,9 @@
       right: 12px;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: center;
       font-family: 'JetBrains Mono', monospace;
-      opacity: 0.12;
+      opacity: 0.16;
       user-select: none;
       z-index: 1;
       transition: opacity 0.4s ease-out;
@@ -1742,6 +1747,9 @@
     stopGameplayMusic();
     sfx.gameOver();
 
+    // Capture score NOW before any async operations or restarts can reset it
+    const finalScore = game.score;
+
     // Stop the main game loop
     if (animationId) {
       cancelAnimationFrame(animationId);
@@ -1807,8 +1815,8 @@
       if (game.particles.length > 0) {
         requestAnimationFrame(deathLoop);
       } else {
-        // Show game over screen
-        if (finalScoreEl) finalScoreEl.textContent = game.score;
+        // Show game over screen with captured score
+        if (finalScoreEl) finalScoreEl.textContent = finalScore;
         if (gameOverScreen) gameOverScreen.classList.add('visible');
       }
     }
