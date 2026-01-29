@@ -15,6 +15,7 @@
   #vector-overdrive.active {
     opacity: 1;
     pointer-events: all;
+    touch-action: none; /* Prevent scrolling/zooming during gameplay */
   }
 
   #vector-overdrive canvas {
@@ -464,18 +465,10 @@
     z-index: 20;
   }
 
-  @media (max-width: 768px) {
+  /* Base mobile: just show controls indicator, actual layout in landscape query */
+  @media (max-width: 900px) {
     .vo-mobile-controls {
       display: flex;
-    }
-    .vo-hud {
-      font-size: 11px;
-    }
-    .vo-hud .value {
-      font-size: 16px;
-    }
-    .vo-boot-title {
-      font-size: 28px;
     }
   }
 
@@ -511,22 +504,201 @@
     background: rgba(255, 101, 66, 0.3);
   }
 
-  .vo-dpad {
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
-    gap: 4px;
-  }
-
-  .vo-dpad .vo-mobile-btn {
+  .vo-mobile-btn.pause {
     width: 50px;
     height: 50px;
-    border-radius: 8px;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-color: #64748b;
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.1);
   }
 
-  .vo-dpad .center {
-    background: transparent;
-    border: none;
+  .vo-mobile-btn.pause:active {
+    background: rgba(100, 116, 139, 0.3);
+  }
+
+  /* Virtual joystick */
+  .vo-joystick-zone {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(29, 201, 216, 0.08);
+    border: 2px solid rgba(29, 201, 216, 0.3);
+    touch-action: none;
+  }
+
+  .vo-joystick-base {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(29, 201, 216, 0.15);
+    border: 2px solid rgba(29, 201, 216, 0.5);
+    pointer-events: none;
+  }
+
+  .vo-joystick-stick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(29, 201, 216, 0.4);
+    border: 2px solid #1dc9d8;
+    box-shadow: 0 0 10px rgba(29, 201, 216, 0.5);
+    pointer-events: none;
+    transition: transform 0.05s ease-out;
+  }
+
+  .vo-joystick-zone.active .vo-joystick-stick {
+    background: rgba(29, 201, 216, 0.6);
+    box-shadow: 0 0 15px rgba(29, 201, 216, 0.8);
+  }
+
+  /* Portrait mode overlay - rotate device prompt */
+  .vo-rotate-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    color: #1dc9d8;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .vo-rotate-overlay svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 30px;
+    animation: vo-rotate-phone 2s ease-in-out infinite;
+  }
+
+  @keyframes vo-rotate-phone {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(90deg); }
+  }
+
+  .vo-rotate-overlay h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #ff6542;
+    text-shadow: 0 0 10px #ff6542;
+  }
+
+  .vo-rotate-overlay p {
+    font-size: 14px;
+    color: #94a3b8;
+    max-width: 280px;
+  }
+
+  /* Show rotate overlay on mobile portrait */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .vo-rotate-overlay {
+      display: flex;
+    }
+    .vo-mobile-controls,
+    .vo-hud,
+    .vo-boot,
+    .vo-story,
+    #vo-canvas {
+      display: none !important;
+    }
+  }
+
+  /* Mobile landscape adjustments */
+  @media (max-width: 900px) and (orientation: landscape) {
+    .vo-mobile-controls {
+      display: flex;
+      bottom: max(8px, env(safe-area-inset-bottom));
+      left: max(10px, env(safe-area-inset-left));
+      right: max(10px, env(safe-area-inset-right));
+    }
+    .vo-hud {
+      top: max(8px, env(safe-area-inset-top));
+      left: max(10px, env(safe-area-inset-left));
+      right: max(10px, env(safe-area-inset-right));
+      font-size: 10px;
+    }
+    .vo-close {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      top: max(8px, env(safe-area-inset-top));
+      right: max(10px, env(safe-area-inset-right));
+    }
+    .vo-hud .value {
+      font-size: 14px;
+    }
+    .vo-boot {
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+    .vo-boot-title {
+      font-size: 24px;
+    }
+    .vo-boot-instructions {
+      font-size: 10px;
+    }
+    .vo-boot-instructions kbd {
+      padding: 1px 4px;
+      font-size: 9px;
+    }
+    .vo-story {
+      padding-left: max(30px, env(safe-area-inset-left));
+      padding-right: max(30px, env(safe-area-inset-right));
+    }
+    .vo-story-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .vo-story-title {
+      font-size: 18px;
+    }
+    .vo-joystick-zone {
+      width: 100px;
+      height: 100px;
+    }
+    .vo-joystick-base {
+      width: 50px;
+      height: 50px;
+    }
+    .vo-joystick-stick {
+      width: 34px;
+      height: 34px;
+    }
+    .vo-mobile-btn.fire {
+      width: 80px;
+      height: 80px;
+      font-size: 12px;
+    }
+    .vo-mobile-btn.pause {
+      width: 44px;
+      height: 44px;
+      font-size: 14px;
+    }
+    .vo-logo {
+      display: none;
+    }
+    /* Tap anywhere prompt for mobile */
+    .vo-start-prompt::after {
+      content: ' (TAP TO START)';
+    }
   }
 </style>
 
@@ -535,6 +707,15 @@
 
 <!-- Easter Egg Container -->
 <div id="vector-overdrive">
+  <!-- Rotate device overlay for portrait mode -->
+  <div class="vo-rotate-overlay">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="4" y="2" width="16" height="20" rx="2" />
+      <line x1="12" y1="18" x2="12" y2="18.01" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <h3>ROTATE DEVICE</h3>
+    <p>Vector Overdrive requires landscape mode for optimal combat operations.</p>
+  </div>
   <div class="vo-scanline"></div>
   <canvas id="vo-canvas"></canvas>
   <img src="/assets/images/logo-dark-mode.svg" alt="" class="vo-logo">
@@ -617,23 +798,17 @@
 
   <div class="vo-overlay-screen" id="vo-paused">
     <h2 style="color: #1dc9d8; text-shadow: 0 0 20px #1dc9d8;">PAUSED</h2>
-    <p>Press <kbd style="padding: 2px 8px; background: rgba(29, 201, 216, 0.2); border: 1px solid #1dc9d8; border-radius: 4px; color: #1dc9d8;">P</kbd> to resume</p>
+    <p>Press <kbd style="padding: 2px 8px; background: rgba(29, 201, 216, 0.2); border: 1px solid #1dc9d8; border-radius: 4px; color: #1dc9d8;">P</kbd> or tap <kbd style="padding: 2px 8px; background: rgba(100, 116, 139, 0.2); border: 1px solid #64748b; border-radius: 4px; color: #94a3b8;">❚❚</kbd> to resume</p>
   </div>
 
   <button class="vo-close" id="vo-close" title="Exit (ESC)">&times;</button>
 
   <div class="vo-mobile-controls">
-    <div class="vo-dpad">
-      <div></div>
-      <button class="vo-mobile-btn" data-dir="up">&#9650;</button>
-      <div></div>
-      <button class="vo-mobile-btn" data-dir="left">&#9664;</button>
-      <div class="center"></div>
-      <button class="vo-mobile-btn" data-dir="right">&#9654;</button>
-      <div></div>
-      <button class="vo-mobile-btn" data-dir="down">&#9660;</button>
-      <div></div>
+    <div class="vo-joystick-zone" id="vo-joystick">
+      <div class="vo-joystick-base"></div>
+      <div class="vo-joystick-stick" id="vo-joystick-stick"></div>
     </div>
+    <button class="vo-mobile-btn pause" id="vo-pause-btn">❚❚</button>
     <button class="vo-mobile-btn fire" id="vo-fire-btn">FIRE</button>
   </div>
 </div>
@@ -745,8 +920,18 @@
     touch: { left: false, right: false, up: false, down: false, fire: false },
     waveTransition: false,
     powerupSpawned: false,
-    waveStartTime: 0
+    waveStartTime: 0,
+    scale: 1 // Render scale for mobile
   };
+
+  function isMobile() {
+    return window.innerWidth <= 900 && window.innerHeight < window.innerWidth;
+  }
+
+  function updateGameScale() {
+    // Scale down elements on mobile for less cramped feel
+    game.scale = isMobile() ? 0.7 : 1;
+  }
 
   // DOM elements
   const container = document.getElementById('vector-overdrive');
@@ -1016,6 +1201,7 @@
     // Resize canvas
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', handleOrientationChange);
 
     // Show container with glitch effect
     const overlayBg = document.getElementById('vo-overlay-bg');
@@ -1036,6 +1222,7 @@
     if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    updateGameScale();
     initStars();
   }
 
@@ -1096,28 +1283,177 @@
       closeBtn.addEventListener('click', deactivateEasterEgg);
     }
 
-    // Mobile controls
-    const mobileButtons = document.querySelectorAll('.vo-mobile-btn[data-dir]');
-    mobileButtons.forEach(btn => {
-      const dir = btn.dataset.dir;
-      btn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        game.touch[dir] = true;
-      });
-      btn.addEventListener('touchend', () => {
-        game.touch[dir] = false;
-      });
-    });
+    // Touch/click to start game and advance story
+    if (bootScreen) {
+      bootScreen.addEventListener('click', handleScreenTap);
+      bootScreen.addEventListener('touchend', handleScreenTap);
+    }
+    if (storyScreen) {
+      storyScreen.addEventListener('click', handleScreenTap);
+      storyScreen.addEventListener('touchend', handleScreenTap);
+    }
+    if (gameOverScreen) {
+      gameOverScreen.addEventListener('click', handleRestartTap);
+      gameOverScreen.addEventListener('touchend', handleRestartTap);
+    }
+    if (victoryScreen) {
+      victoryScreen.addEventListener('click', handleRestartTap);
+      victoryScreen.addEventListener('touchend', handleRestartTap);
+    }
 
+    // Virtual joystick
+    const joystick = document.getElementById('vo-joystick');
+    const joystickStick = document.getElementById('vo-joystick-stick');
+
+    if (joystick && joystickStick) {
+      let joystickActive = false;
+      let joystickCenter = { x: 0, y: 0 };
+      const deadZone = 0.35; // 35% dead zone in center - less sensitive
+      const maxDist = 45; // Max stick travel distance
+
+      joystick.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        joystickActive = true;
+        joystick.classList.add('active');
+
+        const rect = joystick.getBoundingClientRect();
+        joystickCenter.x = rect.left + rect.width / 2;
+        joystickCenter.y = rect.top + rect.height / 2;
+
+        handleJoystickMove(e.touches[0]);
+      });
+
+      joystick.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (joystickActive) {
+          handleJoystickMove(e.touches[0]);
+        }
+      });
+
+      joystick.addEventListener('touchend', (e) => {
+        e.stopPropagation();
+        joystickActive = false;
+        joystick.classList.remove('active');
+        game.touch.left = false;
+        game.touch.right = false;
+        game.touch.up = false;
+        game.touch.down = false;
+        joystickStick.style.transform = 'translate(-50%, -50%)';
+      });
+
+      joystick.addEventListener('touchcancel', (e) => {
+        joystickActive = false;
+        joystick.classList.remove('active');
+        game.touch.left = false;
+        game.touch.right = false;
+        game.touch.up = false;
+        game.touch.down = false;
+        joystickStick.style.transform = 'translate(-50%, -50%)';
+      });
+
+      function handleJoystickMove(touch) {
+        const dx = touch.clientX - joystickCenter.x;
+        const dy = touch.clientY - joystickCenter.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const normalizedDist = Math.min(dist / maxDist, 1);
+
+        // Clamp stick position
+        const clampedDist = Math.min(dist, maxDist);
+        const angle = Math.atan2(dy, dx);
+        const stickX = Math.cos(angle) * clampedDist;
+        const stickY = Math.sin(angle) * clampedDist;
+
+        joystickStick.style.transform = `translate(calc(-50% + ${stickX}px), calc(-50% + ${stickY}px))`;
+
+        // Set directional inputs (with dead zone)
+        if (normalizedDist > deadZone) {
+          const normX = dx / dist;
+          const normY = dy / dist;
+
+          // Use thresholds for cardinal directions
+          game.touch.left = normX < -0.4;
+          game.touch.right = normX > 0.4;
+          game.touch.up = normY < -0.4;
+          game.touch.down = normY > 0.4;
+        } else {
+          game.touch.left = false;
+          game.touch.right = false;
+          game.touch.up = false;
+          game.touch.down = false;
+        }
+      }
+    }
+
+    // Fire button
     const fireBtn = document.getElementById('vo-fire-btn');
     if (fireBtn) {
       fireBtn.addEventListener('touchstart', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         game.touch.fire = true;
       });
-      fireBtn.addEventListener('touchend', () => {
+      fireBtn.addEventListener('touchend', (e) => {
+        e.stopPropagation();
         game.touch.fire = false;
       });
+    }
+
+    // Pause button
+    const pauseBtn = document.getElementById('vo-pause-btn');
+    if (pauseBtn) {
+      pauseBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      pauseBtn.addEventListener('touchend', (e) => {
+        e.stopPropagation();
+        if (gameStarted && !gameOver) {
+          if (gamePaused) {
+            unpauseGame();
+          } else {
+            pauseGame();
+          }
+        }
+      });
+      pauseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (gameStarted && !gameOver) {
+          if (gamePaused) {
+            unpauseGame();
+          } else {
+            pauseGame();
+          }
+        }
+      });
+    }
+  }
+
+  function handleScreenTap(e) {
+    // Don't process if clicking close button
+    if (e.target.closest('.vo-close')) return;
+
+    e.preventDefault();
+
+    if (!bootComplete) return;
+    if (gamePaused) return;
+
+    initAudio();
+
+    if (!gameStarted && !gameOver) {
+      if (!inStory) {
+        showStory();
+      } else {
+        advanceStory();
+      }
+    }
+  }
+
+  function handleRestartTap(e) {
+    if (e.target.closest('.vo-close')) return;
+    e.preventDefault();
+    if (gameOver) {
+      restartGame();
     }
   }
 
@@ -1228,6 +1564,15 @@
     gameLoop();
   }
 
+  function handleOrientationChange() {
+    // Pause game during rotation if playing
+    if (gameStarted && !gameOver && !gamePaused && !demoMode) {
+      pauseGame();
+    }
+    // Delay resize to let browser finish orientation change
+    setTimeout(resizeCanvas, 100);
+  }
+
   function handleVisibilityChange() {
     if (document.hidden && gameStarted && !gameOver && !gamePaused && !demoMode) {
       pauseGame();
@@ -1254,13 +1599,15 @@
     gameStarted = true;
     hud.style.display = 'flex';
 
-    // Initialize player
+    // Initialize player - position relative to screen size
+    const mobile = isMobile();
+    const playerStartY = mobile ? canvas.height - 80 : canvas.height - 100;
     game.player = {
       x: canvas.width / 2,
-      y: canvas.height - 100,
-      width: 30,
-      height: 40,
-      speed: 6,
+      y: playerStartY,
+      width: 30 * game.scale,
+      height: 40 * game.scale,
+      speed: mobile ? 5 : 6, // Slightly slower on mobile
       angle: 0,
       shields: 3,
       invincible: 0,
@@ -1324,19 +1671,28 @@
   function spawnWave() {
     game.waveStartTime = Date.now();
     const enemyCount = 5 + game.wave * 2;
-    const rows = Math.ceil(enemyCount / 8);
+    const mobile = isMobile();
+    const s = game.scale;
+
+    // Adjust layout for mobile - fewer columns, tighter spacing
+    const maxCols = mobile ? 7 : 8;
+    const spacing = mobile ? 45 * s + 15 : 60;
+    const rowSpacing = mobile ? 50 * s + 10 : 60;
+    const startY = mobile ? 60 : 140;
+
+    const rows = Math.ceil(enemyCount / maxCols);
 
     for (let row = 0; row < rows; row++) {
-      const cols = Math.min(8, enemyCount - row * 8);
-      const startX = (canvas.width - cols * 60) / 2 + 30;
+      const cols = Math.min(maxCols, enemyCount - row * maxCols);
+      const startX = (canvas.width - cols * spacing) / 2 + spacing / 2;
 
       for (let col = 0; col < cols; col++) {
         game.enemies.push({
-          x: startX + col * 60,
+          x: startX + col * spacing,
           y: -50 - row * 50,
-          targetY: 140 + row * 60,
-          width: 35,
-          height: 35,
+          targetY: startY + row * rowSpacing,
+          width: 35 * s,
+          height: 35 * s,
           speed: 1 + game.wave * 0.2,
           phase: Math.random() * Math.PI * 2,
           type: Math.random() < 0.2 ? 'big' : 'normal',
@@ -1398,9 +1754,12 @@
       if (moveUp) game.player.y -= game.player.speed;
       if (moveDown) game.player.y += game.player.speed;
 
-      // Bounds
-      game.player.x = Math.max(20, Math.min(canvas.width - 20, game.player.x));
-      game.player.y = Math.max(100, Math.min(canvas.height - 50, game.player.y));
+      // Bounds - account for mobile controls at bottom
+      const mobile = isMobile();
+      const bottomPadding = mobile ? 60 : 50; // Tighter bottom bound on mobile
+      const sidePadding = mobile ? 15 : 20;
+      game.player.x = Math.max(sidePadding, Math.min(canvas.width - sidePadding, game.player.x));
+      game.player.y = Math.max(60, Math.min(canvas.height - bottomPadding, game.player.y));
 
       // Shooting
       const shooting = game.keys['Space'] || game.keys['Enter'] || game.touch.fire || demoMode;
@@ -1415,18 +1774,19 @@
           sfx.shoot();
         }
 
+        const s = game.scale;
         if (hasSpread) {
           // Spread shot pattern
           const spread = Math.sin(now * 0.003) * 0.3;
           game.bullets.push(
-            { x: game.player.x - 8, y: game.player.y - 20, speed: 12, vx: -1 + spread, isPlayer: true },
-            { x: game.player.x, y: game.player.y - 25, speed: 13, vx: 0, isPlayer: true },
-            { x: game.player.x + 8, y: game.player.y - 20, speed: 12, vx: 1 - spread, isPlayer: true }
+            { x: game.player.x - 8 * s, y: game.player.y - 20 * s, speed: 12, vx: -1 + spread, isPlayer: true },
+            { x: game.player.x, y: game.player.y - 25 * s, speed: 13, vx: 0, isPlayer: true },
+            { x: game.player.x + 8 * s, y: game.player.y - 20 * s, speed: 12, vx: 1 - spread, isPlayer: true }
           );
         } else {
           game.bullets.push({
             x: game.player.x,
-            y: game.player.y - 20,
+            y: game.player.y - 20 * s,
             speed: 12,
             vx: 0,
             isPlayer: true
@@ -1439,7 +1799,7 @@
         for (let i = 0; i < 3; i++) {
           game.particles.push({
             x: game.player.x,
-            y: game.player.y - 25,
+            y: game.player.y - 25 * s,
             vx: (Math.random() - 0.5) * 4,
             vy: -Math.random() * 3 - 2,
             life: 10,
@@ -1471,7 +1831,7 @@
       if (Math.random() < 0.002 * game.wave) {
         game.bullets.push({
           x: enemy.x,
-          y: enemy.y + 20,
+          y: enemy.y + 20 * game.scale,
           speed: 4 + game.wave * 0.5,
           isPlayer: false
         });
@@ -1488,7 +1848,7 @@
         const dy = bullet.y - enemy.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 25) {
+        if (dist < 25 * game.scale) {
           enemy.health--;
 
           // Hit particles
@@ -1545,7 +1905,7 @@
         const dy = bullet.y - game.player.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 18) {
+        if (dist < 18 * game.scale) {
           playerHit();
           return false;
         }
@@ -1559,9 +1919,9 @@
       for (const enemy of game.enemies) {
         // Account for cat's body extending below center
         const dx = enemy.x - game.player.x;
-        const dy = (enemy.y + 10) - game.player.y; // Offset for cat body center
+        const dy = (enemy.y + 10 * game.scale) - game.player.y; // Offset for cat body center
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const hitRadius = enemy.type === 'big' ? 55 : 40;
+        const hitRadius = (enemy.type === 'big' ? 55 : 40) * game.scale;
 
         if (dist < hitRadius) {
           playerHit();
@@ -1604,7 +1964,7 @@
         const dy = p.y - game.player.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 35) {
+        if (dist < 35 * game.scale) {
           sfx.powerup();
           game.player.powerup = 300; // ~5 seconds of spread shot
           game.score += 50;
@@ -1855,23 +2215,25 @@
     }
 
     // Draw particles
+    const particleSize = 2 * game.scale;
     game.particles.forEach(p => {
       const alpha = p.life / 50;
       ctx.fillStyle = p.color;
       ctx.globalAlpha = alpha;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, particleSize, 0, Math.PI * 2);
       ctx.fill();
     });
     ctx.globalAlpha = 1;
 
     // Draw bullets (no shadow for performance)
+    const bulletLen = 15 * game.scale;
     game.bullets.forEach(b => {
       ctx.strokeStyle = b.isPlayer ? ORANGE : PURPLE;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(b.x, b.y);
-      ctx.lineTo(b.x, b.y + (b.isPlayer ? -15 : 15));
+      ctx.lineTo(b.x, b.y + (b.isPlayer ? -bulletLen : bulletLen));
       ctx.stroke();
     });
 
@@ -1880,6 +2242,7 @@
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rotation);
+      ctx.scale(game.scale, game.scale);
       ctx.strokeStyle = CYAN;
       ctx.fillStyle = 'rgba(29, 201, 216, 0.2)';
       ctx.lineWidth = 2;
@@ -1916,6 +2279,7 @@
     game.enemies.forEach(enemy => {
       ctx.save();
       ctx.translate(enemy.x, enemy.y);
+      ctx.scale(game.scale, game.scale);
       ctx.strokeStyle = PURPLE;
       ctx.lineWidth = 2;
 
@@ -1993,6 +2357,8 @@
 
     // Draw player (Starflight-style ship)
     if (game.player) {
+      const s = game.scale;
+
       // Flash when invincible
       if (game.player.invincible > 0 && Math.floor(game.player.invincible / 5) % 2 === 0) {
         ctx.globalAlpha = 0.3;
@@ -2001,6 +2367,7 @@
       ctx.save();
       ctx.translate(game.player.x, game.player.y);
       ctx.rotate(game.player.angle);
+      ctx.scale(s, s);
 
       const playerColor = game.player.invincible > 0 ? ORANGE : CYAN;
       ctx.lineWidth = 2;
@@ -2158,6 +2525,7 @@
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     window.removeEventListener('blur', handleWindowBlur);
     window.removeEventListener('resize', resizeCanvas);
+    window.removeEventListener('orientationchange', handleOrientationChange);
   }
 })();
 </script>
