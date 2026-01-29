@@ -73,13 +73,14 @@ defaults:
       path: ""
     values:
       image: /assets/images/opengraph.png
-      height: 100
-      width: 100
+      height: 1200
+      width: 630
       alt: BuiltFast Developers Logo
   - scope:
       path: ""
       type: "changelog"
     values:
+      image: /assets/images/opengraph-changelog.png
       layout: "changelog-entry"
   - scope:
       path: ""
