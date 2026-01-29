@@ -51,32 +51,50 @@ document.addEventListener('alpine:init', () => {
   Alpine.store('commandPalette', {
     open: false,
     query: '',
-    selectedIndex: 0,
+    selectedId: null,
     gPrefixActive: false,
     gPrefixTimeout: null,
     shortcutsOpen: false,
+    _cachedQuery: null,
+    _cachedFiltered: null,
 
-    get commands() {
-      return commands;
-    },
-
-    get filteredCommands() {
-      if (!this.query) {
-        return commands;
+    getFilteredCommands() {
+      if (this._cachedQuery === this.query) {
+        return this._cachedFiltered;
       }
 
-      const q = this.query.toLowerCase();
-      return commands.filter(cmd => {
-        const titleMatch = cmd.title.toLowerCase().includes(q);
-        const categoryMatch = cmd.category.toLowerCase().includes(q);
-        const keywordMatch = cmd.keywords?.some(k => k.toLowerCase().includes(q));
-        return titleMatch || categoryMatch || keywordMatch;
-      });
+      let filtered;
+      if (!this.query) {
+        filtered = commands;
+      } else {
+        const q = this.query.toLowerCase();
+        filtered = commands.filter(cmd => {
+          if (cmd.title.toLowerCase().includes(q)) return true;
+          if (cmd.keywords?.some(k => k.toLowerCase().includes(q))) return true;
+          return false;
+        });
+      }
+
+      this._cachedQuery = this.query;
+      this._cachedFiltered = filtered;
+      return filtered;
     },
 
-    get groupedCommands() {
+    getSelectedIndex() {
+      const filtered = this.getFilteredCommands();
+      const idx = filtered.findIndex(cmd => cmd.id === this.selectedId);
+      return idx >= 0 ? idx : 0;
+    },
+
+    selectFirst() {
+      const filtered = this.getFilteredCommands();
+      this.selectedId = filtered.length > 0 ? filtered[0].id : null;
+    },
+
+    getGroupedCommands() {
+      const filtered = this.getFilteredCommands();
       const groups = {};
-      this.filteredCommands.forEach(cmd => {
+      filtered.forEach(cmd => {
         if (!groups[cmd.category]) {
           groups[cmd.category] = [];
         }
@@ -85,41 +103,53 @@ document.addEventListener('alpine:init', () => {
       return groups;
     },
 
-    get flatFilteredCommands() {
-      return this.filteredCommands;
-    },
-
     toggle() {
       this.open = !this.open;
       if (this.open) {
         this.query = '';
-        this.selectedIndex = 0;
+        this.selectFirst();
       }
     },
 
     show() {
       this.open = true;
       this.query = '';
-      this.selectedIndex = 0;
+      this.selectFirst();
     },
 
     hide() {
+      document.activeElement?.blur();
       this.open = false;
       this.query = '';
     },
 
     selectNext() {
-      const max = this.flatFilteredCommands.length - 1;
-      this.selectedIndex = this.selectedIndex >= max ? 0 : this.selectedIndex + 1;
+      const filtered = this.getFilteredCommands();
+      const currentIdx = this.getSelectedIndex();
+      const nextIdx = currentIdx >= filtered.length - 1 ? 0 : currentIdx + 1;
+      this.selectedId = filtered[nextIdx]?.id;
+      this.scrollToSelected();
     },
 
     selectPrev() {
-      const max = this.flatFilteredCommands.length - 1;
-      this.selectedIndex = this.selectedIndex <= 0 ? max : this.selectedIndex - 1;
+      const filtered = this.getFilteredCommands();
+      const currentIdx = this.getSelectedIndex();
+      const prevIdx = currentIdx <= 0 ? filtered.length - 1 : currentIdx - 1;
+      this.selectedId = filtered[prevIdx]?.id;
+      this.scrollToSelected();
+    },
+
+    scrollToSelected() {
+      requestAnimationFrame(() => {
+        const el = document.querySelector(`[data-cmd-id="${this.selectedId}"]`);
+        if (el) {
+          el.scrollIntoView({ block: 'nearest' });
+        }
+      });
     },
 
     executeSelected() {
-      const cmd = this.flatFilteredCommands[this.selectedIndex];
+      const cmd = this.getFilteredCommands().find(c => c.id === this.selectedId);
       if (cmd) {
         this.execute(cmd);
       }
@@ -186,6 +216,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     hideShortcuts() {
+      document.activeElement?.blur();
       this.shortcutsOpen = false;
     },
   });
@@ -194,9 +225,8 @@ document.addEventListener('alpine:init', () => {
   document.addEventListener('keydown', (e) => {
     const store = Alpine.store('commandPalette');
 
-    // Ignore when typing in inputs (except our palette input)
+    // Ignore when typing in inputs
     const isInput = e.target.matches('input, textarea, select, [contenteditable]');
-    const isPaletteInput = e.target.matches('.cmd-palette-input');
 
     // Cmd/Ctrl+K to open palette
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {

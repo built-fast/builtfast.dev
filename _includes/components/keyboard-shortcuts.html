@@ -13,7 +13,7 @@
 <!-- Keyboard Shortcuts Modal -->
 <template x-if="$store.commandPalette.shortcutsOpen">
   <div
-    x-data="{ init() { document.body.style.overflow = 'hidden'; }, destroy() { document.body.style.overflow = ''; } }"
+    x-data
     @keydown.escape.window="$store.commandPalette.hideShortcuts()"
   >
     <!-- Backdrop -->

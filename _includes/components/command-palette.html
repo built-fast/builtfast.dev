@@ -3,8 +3,8 @@
 
   A power-user focused command palette with:
   - Cmd+K or / to open
-  - Fuzzy search with keyword matching
-  - j/k vim navigation within results
+  - Keyword matching search
+  - Arrow key navigation within results
   - g-prefix sequences for direct navigation (gt→team, ga→api, etc.)
   - Grouped results by category
 
@@ -17,7 +17,7 @@
 <!-- Command Palette -->
 <template x-if="$store.commandPalette.open">
   <div
-    x-data="{ init() { document.body.style.overflow = 'hidden'; }, destroy() { document.body.style.overflow = ''; } }"
+    x-data
     @keydown.escape.window="$store.commandPalette.hide()"
   >
     <!-- Backdrop -->
@@ -47,7 +47,7 @@
             placeholder="Search commands..."
             x-model="$store.commandPalette.query"
             x-ref="searchInput"
-            @input="$store.commandPalette.selectedIndex = 0"
+            @input="$store.commandPalette.selectFirst()"
             x-init="$nextTick(() => $refs.searchInput.focus())"
             autocomplete="off"
             spellcheck="false"
@@ -58,23 +58,22 @@
 
       <!-- Results -->
       <div class="cmd-palette-results">
-        <template x-if="$store.commandPalette.flatFilteredCommands.length === 0">
-          <div class="cmd-palette-empty">
+        <template x-if="$store.commandPalette.getFilteredCommands().length === 0">
+          <div class="cmd-palette-empty" role="status" aria-live="polite">
             No commands found
           </div>
         </template>
 
-        <template x-for="(commands, category) in $store.commandPalette.groupedCommands" :key="category">
+        <template x-for="(commands, category) in $store.commandPalette.getGroupedCommands()" :key="category">
           <div class="cmd-palette-group">
             <div class="cmd-palette-group-label" x-text="category"></div>
-            <template x-for="(cmd, cmdIndex) in commands" :key="cmd.id">
+            <template x-for="cmd in commands" :key="cmd.id">
               <div
                 class="cmd-palette-item"
-                :class="{ 'selected': $store.commandPalette.flatFilteredCommands.indexOf(cmd) === $store.commandPalette.selectedIndex }"
-                :data-index="$store.commandPalette.flatFilteredCommands.indexOf(cmd)"
-                x-effect="if ($store.commandPalette.flatFilteredCommands.indexOf(cmd) === $store.commandPalette.selectedIndex) $el.scrollIntoView({ block: 'nearest' })"
+                :class="{ 'selected': cmd.id === $store.commandPalette.selectedId }"
+                :data-cmd-id="cmd.id"
                 @click="$store.commandPalette.execute(cmd)"
-                @mouseenter="$store.commandPalette.selectedIndex = $store.commandPalette.flatFilteredCommands.indexOf(cmd)"
+                @mouseenter="$store.commandPalette.selectedId = cmd.id"
               >
                 <div class="cmd-palette-item-left">
                   <!-- External link icon -->
