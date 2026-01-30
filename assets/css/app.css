@@ -474,6 +474,11 @@ body {
   border-radius: 3px;
 }
 
+.lang-badge-red {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
 .project-card-name {
   font-size: var(--text-sm);
   font-weight: 500;

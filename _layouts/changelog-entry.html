@@ -17,7 +17,11 @@ layout: default
         <div class="changelog-show-tags">
           {% for tag in page.tags %}
           {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
+          {% if tag == "bug" %}
+          {% include components/lang-badge.html name=tag_label size="sm" variant="red" %}
+          {% else %}
           {% include components/lang-badge.html name=tag_label size="sm" %}
+          {% endif %}
           {% endfor %}
         </div>
       </div>
