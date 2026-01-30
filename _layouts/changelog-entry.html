@@ -1,6 +1,26 @@
 ---
 layout: default
+cta: changelog
 ---
+
+{% assign sorted_entries = site.changelog | sort: "date" | reverse %}
+{% assign entry_index = nil %}
+{% for entry in sorted_entries %}
+  {% if entry.url == page.url %}
+    {% assign entry_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if entry_index != nil %}
+  {% assign prev_index = entry_index | minus: 1 %}
+  {% assign next_index = entry_index | plus: 1 %}
+  {% if prev_index >= 0 %}
+    {% assign newer_entry = sorted_entries[prev_index] %}
+  {% endif %}
+  {% if next_index < sorted_entries.size %}
+    {% assign older_entry = sorted_entries[next_index] %}
+  {% endif %}
+{% endif %}
 
 <section class="py-12 md:py-16 border-t border-subtle">
   <div class="max-w-3xl mx-auto px-6">
@@ -33,14 +53,31 @@ layout: default
       {{ content }}
     </div>
 
-    <!-- Footer -->
-    <footer class="changelog-show-footer">
-      <div class="changelog-show-nav">
-        <a href="/changelog/" class="btn-secondary">
-          {% include icons/chevron-left.html size="sm" %}
-          All releases
+    <!-- Footer Navigation -->
+    <footer class="mt-12 pt-8 border-t border-subtle">
+      <nav class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {% if older_entry %}
+        <a href="{{ older_entry.url }}" class="card p-4 hover:border-emphasis group">
+          <span class="text-xs text-muted uppercase tracking-wide flex items-center gap-1">
+            {% include icons/arrow-left.html size="xs" %}
+            Older
+          </span>
+          <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ older_entry.title }}</p>
         </a>
-      </div>
+        {% else %}
+        <div></div>
+        {% endif %}
+
+        {% if newer_entry %}
+        <a href="{{ newer_entry.url }}" class="card p-4 hover:border-emphasis group text-right">
+          <span class="text-xs text-muted uppercase tracking-wide flex items-center justify-end gap-1">
+            Newer
+            {% include icons/arrow-right.html size="xs" %}
+          </span>
+          <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ newer_entry.title }}</p>
+        </a>
+        {% endif %}
+      </nav>
     </footer>
   </div>
 </section>

@@ -13,15 +13,16 @@ layout: base
 </div>
 
 {% comment %}
-  CTA section - controlled by frontmatter:
+  CTA section - controlled by frontmatter (page or layout):
     cta: default    # Use a specific CTA
     cta: false      # Disable CTA
     (no cta key)    # Uses default CTA
 {% endcomment %}
-{% if page.cta == false %}
+{% assign cta_value = page.cta | default: layout.cta %}
+{% if cta_value == false %}
   {% comment %}CTA disabled{% endcomment %}
-{% elsif page.cta %}
-  {% include ctas/{{ page.cta }}.html %}
+{% elsif cta_value %}
+  {% include ctas/{{ cta_value }}.html %}
 {% else %}
   {% include ctas/default.html %}
 {% endif %}
