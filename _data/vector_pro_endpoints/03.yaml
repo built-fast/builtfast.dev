@@ -115,7 +115,7 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                       "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "customer-123",
+                      "your_customer_id": "customer-123",
                       "name": "production",
                       "is_production": true,
                       "status": "active",
@@ -244,7 +244,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -638,7 +638,7 @@ endpoints:
                       "environment": {
                           "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                           "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                          "partner_customer_id": "cust_123456",
+                          "your_customer_id": "cust_123456",
                           "name": "production",
                           "is_production": true,
                           "status": "active",
@@ -778,7 +778,7 @@ endpoints:
                   "environment": {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                       "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
+                      "your_customer_id": "cust_123456",
                       "name": "production",
                       "is_production": true,
                       "status": "active",
@@ -964,7 +964,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "pending",
@@ -1142,7 +1142,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -1285,7 +1285,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "terminating",
@@ -1400,7 +1400,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -1945,7 +1945,7 @@ endpoints:
                   "environment": {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                       "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "partner_customer_id": "cust_123456",
+                      "your_customer_id": "cust_123456",
                       "name": "production",
                       "is_production": true,
                       "status": "active",

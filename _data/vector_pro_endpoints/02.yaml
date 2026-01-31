@@ -1,7 +1,7 @@
 name: Sites
 description: |-
 
-  Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+  Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
   the primary resource representing customer applications, each with associated
   environments (staging/production), deployments, and CDN configurations.
 
@@ -26,7 +26,7 @@ endpoints:
       groupName: Sites
       groupDescription: |-
 
-        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
         the primary resource representing customer applications, each with associated
         environments (staging/production), deployments, and CDN configurations.
 
@@ -93,7 +93,7 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                       "account_id": 1,
-                      "partner_customer_id": "cust_12345",
+                      "your_customer_id": "cust_12345",
                       "status": "active",
                       "tags": ["wordpress", "production"],
                       "dev_domain": "site-abc123.dev.example.com",
@@ -151,7 +151,7 @@ endpoints:
       groupName: Sites
       groupDescription: |-
 
-        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
         the primary resource representing customer applications, each with associated
         environments (staging/production), deployments, and CDN configurations.
 
@@ -203,7 +203,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": 1,
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "active",
                   "tags": ["wordpress", "production"],
                   "dev_domain": "site-abc123.dev.example.com",
@@ -341,7 +341,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -378,7 +378,7 @@ endpoints:
       groupName: Sites
       groupDescription: |-
 
-        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
         the primary resource representing customer applications, each with associated
         environments (staging/production), deployments, and CDN configurations.
 
@@ -412,9 +412,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      partner_customer_id:
+      your_customer_id:
         custom: []
-        name: partner_customer_id
+        name: your_customer_id
         description: 'Your internal customer identifier. Used to correlate sites with your billing or CRM system.'
         required: true
         example: cust_12345
@@ -448,7 +448,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      partner_customer_id: cust_12345
+      your_customer_id: cust_12345
       dev_php_version: '8.3'
       tags:
         - wordpress
@@ -462,7 +462,7 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "pending",
                   "dev_php_version": "8.3",
                   "tags": ["wordpress", "production"],
@@ -502,7 +502,7 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"partner_customer_id": ["The partner customer id field is required."]},
+              "errors": {"your_customer_id": ["The partner customer id field is required."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -538,7 +538,7 @@ endpoints:
       groupName: Sites
       groupDescription: |-
 
-        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
         the primary resource representing customer applications, each with associated
         environments (staging/production), deployments, and CDN configurations.
 
@@ -579,9 +579,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      partner_customer_id:
+      your_customer_id:
         custom: []
-        name: partner_customer_id
+        name: your_customer_id
         description: 'Your internal customer identifier.'
         required: false
         example: cust_67890
@@ -604,7 +604,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      partner_customer_id: cust_67890
+      your_customer_id: cust_67890
       tags:
         - wordpress
         - staging
@@ -618,7 +618,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": 1,
-                  "partner_customer_id": "cust_67890",
+                  "your_customer_id": "cust_67890",
                   "status": "active",
                   "tags": ["wordpress", "staging"],
                   "dev_domain": "site-abc123.dev.example.com",
@@ -679,7 +679,7 @@ endpoints:
       groupName: Sites
       groupDescription: |-
 
-        Manage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are
+        Manage serverless WordPress sites deployed on Vector infrastructure. Sites are
         the primary resource representing customer applications, each with associated
         environments (staging/production), deployments, and CDN configurations.
 
@@ -740,7 +740,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": 1,
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "terminating",
                   "tags": [],
                   "dev_domain": "site-abc123.dev.example.com",
@@ -841,9 +841,9 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      partner_customer_id:
+      your_customer_id:
         custom: []
-        name: partner_customer_id
+        name: your_customer_id
         description: 'Optional customer identifier. Inherits from source if not provided.'
         required: false
         example: cust_67890
@@ -877,7 +877,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      partner_customer_id: cust_67890
+      your_customer_id: cust_67890
       dev_php_version: '8.3'
       tags:
         - wordpress
@@ -892,7 +892,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
                   "account_id": 1,
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "pending",
                   "tags": ["wordpress", "clone"],
                   "dev_domain": "site-xyz789.dev.example.com",
@@ -1013,7 +1013,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": 1,
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "suspended",
                   "tags": [],
                   "dev_domain": "site-abc123.dev.example.com",
@@ -1118,7 +1118,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": 1,
-                  "partner_customer_id": "cust_12345",
+                  "your_customer_id": "cust_12345",
                   "status": "active",
                   "tags": [],
                   "dev_domain": "site-abc123.dev.example.com",
@@ -1228,7 +1228,7 @@ endpoints:
           {
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": null,
+                  "your_customer_id": null,
                   "status": "active",
                   "dev_php_version": "8.3",
                   "tags": [],
@@ -1328,7 +1328,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "account_id": "01JFGXK4NQRST5VWX9YZ0ABCDA",
-                  "partner_customer_id": null,
+                  "your_customer_id": null,
                   "status": "active",
                   "dev_php_version": "8.3",
                   "tags": [],
@@ -2188,7 +2188,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "provisioning",
@@ -2215,7 +2215,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                   "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "partner_customer_id": "customer-123",
+                  "your_customer_id": "customer-123",
                   "name": "production",
                   "is_production": true,
                   "status": "provisioning",

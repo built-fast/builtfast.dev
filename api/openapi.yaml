@@ -14,7 +14,7 @@ servers:
 tags:
   -
     name: Sites
-    description: "\nManage serverless WordPress sites deployed on Vector Pro infrastructure. Sites are\nthe primary resource representing customer applications, each with associated\nenvironments (staging/production), deployments, and CDN configurations.\n\nSites are created with a `pending` status and transition to `active` once provisioning\ncompletes. You can suspend sites to reduce costs during low-traffic periods.\n\n#### Site Status Lifecycle\n\n- `pending` - Site creation initiated, provisioning in progress\n- `active` - Site is fully operational and serving traffic\n- `suspended` - Site is paused to reduce costs (can be unsuspended)\n- `terminating` - Site deletion in progress\n- `terminated` - Site has been fully removed"
+    description: "\nManage serverless WordPress sites deployed on Vector infrastructure. Sites are\nthe primary resource representing customer applications, each with associated\nenvironments (staging/production), deployments, and CDN configurations.\n\nSites are created with a `pending` status and transition to `active` once provisioning\ncompletes. You can suspend sites to reduce costs during low-traffic periods.\n\n#### Site Status Lifecycle\n\n- `pending` - Site creation initiated, provisioning in progress\n- `active` - Site is fully operational and serving traffic\n- `suspended` - Site is paused to reduce costs (can be unsuspended)\n- `terminating` - Site deletion in progress\n- `terminated` - Site has been fully removed"
   -
     name: Environments
     description: "\nManage deployment environments for sites. Each site can have multiple environments\nwith their own domains, PHP versions, and secrets. Environment names use a slug format\n(lowercase letters, numbers, and hyphens).\n\nEnvironments are created with a `pending` status and transition to `active` once\ncontainer provisioning completes. Each environment gets a unique subdomain under\nyour registered domain.\n\n#### Environment Status Lifecycle\n\n- `pending` - Environment creation initiated, provisioning in progress\n- `active` - Environment is fully operational\n- `suspended` - Environment is paused\n- `terminating` - Environment deletion in progress\n- `terminated` - Environment has been fully removed\n\n#### Production Environment\n\nEach site can have at most one production environment (`is_production: true`).\nThe production environment receives CDN integration via Bunny.net."
@@ -78,7 +78,7 @@ paths:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                       account_id: 1
-                      partner_customer_id: cust_12345
+                      your_customer_id: cust_12345
                       status: active
                       tags:
                         - wordpress
@@ -108,7 +108,7 @@ paths:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                         account_id: 1
-                        partner_customer_id: cust_12345
+                        your_customer_id: cust_12345
                         status: active
                         tags:
                           - wordpress
@@ -136,7 +136,7 @@ paths:
                         account_id:
                           type: integer
                           example: 1
-                        partner_customer_id:
+                        your_customer_id:
                           type: string
                           example: cust_12345
                         status:
@@ -270,7 +270,7 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: pending
                     dev_php_version: '8.3'
                     tags:
@@ -296,7 +296,7 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -403,7 +403,7 @@ paths:
                     example:
                       data: {  }
                       errors:
-                        partner_customer_id:
+                        your_customer_id:
                           - 'The partner customer id field is required.'
                       message: 'Validation failed'
                       http_status: 422
@@ -414,7 +414,7 @@ paths:
                       errors:
                         type: object
                         properties:
-                          partner_customer_id:
+                          your_customer_id:
                             type: array
                             example:
                               - 'The partner customer id field is required.'
@@ -464,7 +464,7 @@ paths:
             schema:
               type: object
               properties:
-                partner_customer_id:
+                your_customer_id:
                   type: string
                   description: 'Your internal customer identifier. Used to correlate sites with your billing or CRM system.'
                   example: cust_12345
@@ -481,7 +481,7 @@ paths:
                   items:
                     type: string
               required:
-                - partner_customer_id
+                - your_customer_id
                 - dev_php_version
   '/api/v1/vector/sites/{site}':
     get:
@@ -500,7 +500,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 1
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: active
                     tags:
                       - wordpress
@@ -531,7 +531,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -680,7 +680,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 1
-                    partner_customer_id: cust_67890
+                    your_customer_id: cust_67890
                     status: active
                     tags:
                       - wordpress
@@ -701,7 +701,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_67890
                       status:
@@ -833,7 +833,7 @@ paths:
             schema:
               type: object
               properties:
-                partner_customer_id:
+                your_customer_id:
                   type: string
                   description: 'Your internal customer identifier.'
                   example: cust_67890
@@ -861,7 +861,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 1
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: terminating
                     tags: []
                     dev_domain: site-abc123.dev.example.com
@@ -880,7 +880,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -1027,7 +1027,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: active
@@ -1052,7 +1052,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
@@ -1133,7 +1133,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDF
                     account_id: 1
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: pending
                     tags:
                       - wordpress
@@ -1156,7 +1156,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -1326,7 +1326,7 @@ paths:
             schema:
               type: object
               properties:
-                partner_customer_id:
+                your_customer_id:
                   type:
                     - string
                     - 'null'
@@ -1372,7 +1372,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 1
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: suspended
                     tags: []
                     dev_domain: site-abc123.dev.example.com
@@ -1391,7 +1391,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -1538,7 +1538,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 1
-                    partner_customer_id: cust_12345
+                    your_customer_id: cust_12345
                     status: active
                     tags: []
                     dev_domain: site-abc123.dev.example.com
@@ -1557,7 +1557,7 @@ paths:
                       account_id:
                         type: integer
                         example: 1
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: cust_12345
                       status:
@@ -1703,7 +1703,7 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: null
+                    your_customer_id: null
                     status: active
                     dev_php_version: '8.3'
                     tags: []
@@ -1725,7 +1725,7 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: null
                       status:
@@ -1858,7 +1858,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     account_id: 01JFGXK4NQRST5VWX9YZ0ABCDA
-                    partner_customer_id: null
+                    your_customer_id: null
                     status: active
                     dev_php_version: '8.3'
                     tags: []
@@ -1880,7 +1880,7 @@ paths:
                       account_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDA
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: null
                       status:
@@ -3168,7 +3168,7 @@ paths:
                       data:
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                         vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        partner_customer_id: customer-123
+                        your_customer_id: customer-123
                         name: production
                         is_production: true
                         status: provisioning
@@ -3193,7 +3193,7 @@ paths:
                           vector_site_id:
                             type: string
                             example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          partner_customer_id:
+                          your_customer_id:
                             type: string
                             example: customer-123
                           name:
@@ -3245,7 +3245,7 @@ paths:
                       data:
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                         vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        partner_customer_id: customer-123
+                        your_customer_id: customer-123
                         name: production
                         is_production: true
                         status: provisioning
@@ -3270,7 +3270,7 @@ paths:
                           vector_site_id:
                             type: string
                             example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          partner_customer_id:
+                          your_customer_id:
                             type: string
                             example: customer-123
                           name:
@@ -5383,7 +5383,7 @@ paths:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                       vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id: customer-123
+                      your_customer_id: customer-123
                       name: production
                       is_production: true
                       status: active
@@ -5409,7 +5409,7 @@ paths:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                         vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        partner_customer_id: customer-123
+                        your_customer_id: customer-123
                         name: production
                         is_production: true
                         status: active
@@ -5433,7 +5433,7 @@ paths:
                         vector_site_id:
                           type: string
                           example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        partner_customer_id:
+                        your_customer_id:
                           type: string
                           example: customer-123
                         name:
@@ -5566,7 +5566,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: pending
@@ -5593,7 +5593,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
@@ -5799,7 +5799,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: active
@@ -5826,7 +5826,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
@@ -5953,7 +5953,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: active
@@ -5980,7 +5980,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
@@ -6164,7 +6164,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: terminating
@@ -6189,7 +6189,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
@@ -7056,7 +7056,7 @@ paths:
                       environment:
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                         vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        partner_customer_id: cust_123456
+                        your_customer_id: cust_123456
                         name: production
                         is_production: true
                         status: active
@@ -7088,7 +7088,7 @@ paths:
                         environment:
                           id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                           vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          partner_customer_id: cust_123456
+                          your_customer_id: cust_123456
                           name: production
                           is_production: true
                           status: active
@@ -7132,7 +7132,7 @@ paths:
                             vector_site_id:
                               type: string
                               example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                            partner_customer_id:
+                            your_customer_id:
                               type: string
                               example: cust_123456
                             name:
@@ -7271,7 +7271,7 @@ paths:
                     environment:
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                       vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id: cust_123456
+                      your_customer_id: cust_123456
                       name: production
                       is_production: true
                       status: active
@@ -7318,7 +7318,7 @@ paths:
                           vector_site_id:
                             type: string
                             example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          partner_customer_id:
+                          your_customer_id:
                             type: string
                             example: cust_123456
                           name:
@@ -7469,7 +7469,7 @@ paths:
                     environment:
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                       vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id: cust_123456
+                      your_customer_id: cust_123456
                       name: production
                       is_production: true
                       status: active
@@ -7516,7 +7516,7 @@ paths:
                           vector_site_id:
                             type: string
                             example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          partner_customer_id:
+                          your_customer_id:
                             type: string
                             example: cust_123456
                           name:
@@ -7668,7 +7668,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDG
                     vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    partner_customer_id: customer-123
+                    your_customer_id: customer-123
                     name: production
                     is_production: true
                     status: active
@@ -7695,7 +7695,7 @@ paths:
                       vector_site_id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      partner_customer_id:
+                      your_customer_id:
                         type: string
                         example: customer-123
                       name:
