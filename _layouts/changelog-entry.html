@@ -35,7 +35,8 @@ cta: changelog
           {{ page.date | date: "%B %-d, %Y" }}
         </time>
         <div class="changelog-show-tags">
-          {% for tag in page.tags %}
+          {% assign sorted_tags = page.tags | sort %}
+          {% for tag in sorted_tags %}
           {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
           {% if tag == "bug" %}
           {% include components/lang-badge.html name=tag_label size="sm" variant="red" %}

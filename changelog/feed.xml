@@ -23,7 +23,8 @@ layout: null
     <id>{{ entry.url | absolute_url }}</id>
     <content type="html" xml:base="{{ entry.url | absolute_url }}"><![CDATA[{{ entry.content }}]]></content>
     {% if entry.tags %}
-    {% for tag in entry.tags %}
+    {% assign sorted_tags = entry.tags | sort %}
+    {% for tag in sorted_tags %}
     <category term="{{ tag | xml_escape }}"/>
     {% endfor %}
     {% endif %}

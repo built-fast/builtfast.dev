@@ -81,7 +81,8 @@ cta: false
                 <a href="#{{ entry_slug }}">{{ entry.title }}</a>
               </h2>
               <div class="changelog-tags">
-                {% for tag in entry.tags %}
+                {% assign entry_tags = entry.tags | sort %}
+                {% for tag in entry_tags %}
                 {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
                 {% if tag == "bug" %}
                 {% include components/lang-badge.html name=tag_label size="sm" variant="red" %}
