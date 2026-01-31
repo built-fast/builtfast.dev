@@ -13,16 +13,18 @@ languages:
     icon: php
 tagline: PHP SDK for the Vector Pro API
 excerpt: |
-  A PHP SDK for the Vector Pro REST API. Built for modern PHP applications,
-  fully typed, and PSR-18 compliant.
+  Official PHP SDK for the Vector Pro API. Fully typed response objects,
+  resource-based API design, and PSR-18 HTTP client support.
 ---
 
-A PHP SDK for the Vector Pro REST API by [BuiltFast](https://builtfast.com).
+The official PHP SDK for the [Vector Pro](https://builtfast.com) API. Designed
+for modern PHP applications with typed response objects, IDE autocomplete
+support, and flexibility to use any PSR-18 HTTP client.
 
 ## Requirements
 
 - PHP 8.3+
-- A PSR-18 HTTP client (e.g., Guzzle, Symfony HTTP Client)
+- A PSR-18 HTTP client (e.g., Guzzle)
 
 ## Installation
 
@@ -30,335 +32,228 @@ A PHP SDK for the Vector Pro REST API by [BuiltFast](https://builtfast.com).
 composer require built-fast/vector-pro-sdk
 ```
 
-If you don't already have a PSR-18 HTTP client installed:
+You'll also need a PSR-18 HTTP client if you don't have one:
 
 ```bash
 composer require guzzlehttp/guzzle
 ```
 
-## Usage
-
-### Basic Setup
+## Quick Start
 
 ```php
-use VectorPro\Sdk\Client;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\HttpFactory;
+use VectorPro\VectorProClient;
+use VectorPro\VectorProClientConfig;
 
-$client = new Client('your-api-key');
+$config = new VectorProClientConfig(
+    apiKey: 'your-api-key',
+);
+
+$factory = new HttpFactory();
+$client = new VectorProClient(
+    $config,
+    new Client(),
+    $factory,
+    $factory,
+);
+
+// List all sites
+$response = $client->sites->list();
+foreach ($response->data as $site) {
+    echo $site->id . ': ' . $site->partner_customer_id . "\n";
+}
+
+// Get a specific site
+$site = $client->sites->get('site-id');
+echo $site->dev_php_version; // '8.3'
 ```
+
+## Typed Response Objects
+
+All API methods return typed response objects for IDE autocomplete and type safety:
+
+```php
+use VectorPro\Response\Site;
+use VectorPro\Response\Environment;
+use VectorPro\Response\Deployment;
+use VectorPro\Response\PaginatedResponse;
+
+// Site properties
+$site = $client->sites->get('site-id');
+$site->id;                  // string
+$site->partner_customer_id; // string
+$site->dev_php_version;     // string
+$site->tags;                // string[]
+$site->status;              // ?string
+
+// Paginated responses
+$response = $client->sites->list(['per_page' => 10, 'page' => 2]);
+$response->data;         // Site[]
+$response->current_page; // int
+$response->per_page;     // int
+$response->total;        // int
+$response->last_page;    // int
+```
+
+## API Reference
 
 ### Sites
 
 ```php
-// List all sites
-$sites = $client->getSites();
-
-// Get a single site
-$site = $client->getSite('site_abc123');
-
-// Create a site
-$site = $client->createSite([
-    'partner_customer_id' => 'cust_123',
-    'dev_php_version' => '8.3',
-]);
-
-// Update a site
-$site = $client->updateSite('site_abc123', [
-    'dev_php_version' => '8.4',
-]);
-
-// Delete a site
-$client->deleteSite('site_abc123');
-
-// Suspend/unsuspend
-$client->suspendSite('site_abc123');
-$client->unsuspendSite('site_abc123');
-
-// Reset credentials
-$client->resetSiteSftpPassword('site_abc123');
-$client->resetSiteDatabasePassword('site_abc123');
-
-// Purge CDN cache
-$client->purgeSiteCache('site_abc123', ['paths' => ['/css/*', '/js/*']]);
+$client->sites->list(['per_page' => 10, 'page' => 1]);
+$client->sites->get('site-id');
+$client->sites->create(['partner_customer_id' => 'cust-123', 'dev_php_version' => '8.3']);
+$client->sites->update('site-id', ['tags' => ['production']]);
+$client->sites->clone('site-id');
+$client->sites->delete('site-id');
+$client->sites->suspend('site-id');
+$client->sites->unsuspend('site-id');
+$client->sites->resetSftpPassword('site-id');
+$client->sites->getLogs('site-id', ['type' => 'error', 'lines' => 100]);
+$client->sites->purgeCache('site-id', ['paths' => ['/wp-content/*']]);
 ```
 
 ### Environments
 
 ```php
-// List environments for a site
-$environments = $client->getEnvironments('site_abc123');
-
-// Get a single environment
-$environment = $client->getEnvironment('site_abc123', 'env_xyz789');
-
-// Create an environment
-$environment = $client->createEnvironment('site_abc123', [
+$client->environments->list('site-id');
+$client->environments->get('site-id', 'env-id');
+$client->environments->create('site-id', [
     'name' => 'staging',
-]);
-
-// Update an environment
-$environment = $client->updateEnvironment('site_abc123', 'env_xyz789', [
     'php_version' => '8.3',
+    'is_production' => false,
 ]);
-
-// Delete an environment
-$client->deleteEnvironment('site_abc123', 'env_xyz789');
+$client->environments->update('site-id', 'env-id', ['php_version' => '8.2']);
+$client->environments->delete('site-id', 'env-id');
+$client->environments->resetDatabasePassword('site-id', 'env-id');
 ```
 
 ### Deployments
 
 ```php
-// List deployments
-$deployments = $client->getDeployments('site_abc123', 'env_xyz789');
+$client->environments->deployments->list('site-id', 'env-id');
+$client->environments->deployments->create('site-id', 'env-id', ['description' => 'Release v1.0']);
+$client->environments->deployments->get('site-id', 'env-id', 'deployment-id');
+$client->environments->deployments->rollback('site-id', 'env-id', ['deployment_id' => 'prev-id']);
+```
 
-// Get a single deployment
-$deployment = $client->getDeployment('site_abc123', 'env_xyz789', 'deploy_456');
+### Database
 
-// Create a deployment
-$deployment = $client->createDeployment('site_abc123', 'env_xyz789');
+```php
+$client->sites->db->import('site-id', [
+    'url' => 'https://example.com/backup.sql.gz',
+    'search_replace' => [
+        ['search' => 'old-domain.com', 'replace' => 'new-domain.com'],
+    ],
+]);
+$client->sites->db->createImportSession('site-id', ['filename' => 'backup.sql']);
+$client->sites->db->runImport('site-id', 'import-id');
+$client->sites->db->getImportStatus('site-id', 'import-id');
+$client->sites->db->createExport('site-id', ['format' => 'sql']);
+$client->sites->db->getExportStatus('site-id', 'export-id');
+$client->sites->db->resetPassword('site-id');
+```
 
-// Rollback to a previous deployment
-$deployment = $client->rollbackDeployment('site_abc123', 'env_xyz789', 'deploy_456');
+### WAF (Web Application Firewall)
+
+```php
+// Allowed/blocked referrers
+$client->sites->waf->listAllowedReferrers('site-id');
+$client->sites->waf->addAllowedReferrer('site-id', ['hostname' => 'trusted.com']);
+$client->sites->waf->removeAllowedReferrer('site-id', 'trusted.com');
+$client->sites->waf->listBlockedReferrers('site-id');
+$client->sites->waf->addBlockedReferrer('site-id', ['hostname' => 'spam.com']);
+$client->sites->waf->removeBlockedReferrer('site-id', 'spam.com');
+
+// Blocked IPs
+$client->sites->waf->listBlockedIPs('site-id');
+$client->sites->waf->addBlockedIP('site-id', ['ip' => '192.168.1.1']);
+$client->sites->waf->removeBlockedIP('site-id', '192.168.1.1');
+
+// Rate limiting
+$client->sites->waf->listRateLimits('site-id');
+$client->sites->waf->createRateLimit('site-id', [
+    'path' => '/wp-login.php',
+    'requests_per_second' => 5,
+    'block_duration' => 300,
+]);
+$client->sites->waf->getRateLimit('site-id', 'rule-id');
+$client->sites->waf->updateRateLimit('site-id', 'rule-id', ['requests_per_second' => 10]);
+$client->sites->waf->deleteRateLimit('site-id', 'rule-id');
 ```
 
 ### SSL
 
 ```php
-// Get SSL status
-$ssl = $client->getSslStatus('site_abc123', 'env_xyz789');
-
-// Nudge SSL certificate renewal
-$client->nudgeSsl('site_abc123', 'env_xyz789');
-```
-
-### Secrets
-
-```php
-// Environment secrets
-$secrets = $client->getEnvironmentSecrets('site_abc123', 'env_xyz789');
-$secret = $client->createEnvironmentSecret('site_abc123', 'env_xyz789', [
-    'key' => 'API_KEY',
-    'value' => 'secret-value',
-]);
-$client->updateEnvironmentSecret('site_abc123', 'env_xyz789', 'secret_123', [
-    'value' => 'new-value',
-]);
-$client->deleteEnvironmentSecret('site_abc123', 'env_xyz789', 'secret_123');
-
-// Global secrets
-$secrets = $client->getGlobalSecrets();
-$secret = $client->createGlobalSecret(['key' => 'GLOBAL_KEY', 'value' => 'value']);
-$client->updateGlobalSecret('secret_123', ['value' => 'new-value']);
-$client->deleteGlobalSecret('secret_123');
+$client->sites->ssl->getStatus('site-id', 'env-id');
+$client->sites->ssl->nudge('site-id', 'env-id');
 ```
 
 ### SSH Keys
 
 ```php
-// Account SSH keys
-$keys = $client->getSshKeys();
-$key = $client->getSshKey('key_123');
-$key = $client->createSshKey(['name' => 'My Key', 'public_key' => 'ssh-ed25519 ...']);
-$client->deleteSshKey('key_123');
+// Account-level
+$client->account->sshKeys->list();
+$client->account->sshKeys->create(['name' => 'My Key', 'public_key' => 'ssh-ed25519 ...']);
+$client->account->sshKeys->get('key-id');
+$client->account->sshKeys->delete('key-id');
 
-// Site SSH keys
-$keys = $client->getSiteSshKeys('site_abc123');
-$client->addSiteSshKey('site_abc123', 'key_123');
-$client->removeSiteSshKey('site_abc123', 'key_123');
+// Site-level
+$client->sites->sshKeys->list('site-id');
+$client->sites->sshKeys->attach('site-id', ['ssh_key_id' => 'key-id']);
+$client->sites->sshKeys->detach('site-id', 'key-id');
 ```
 
-### API Keys
+### Secrets
 
 ```php
-$keys = $client->getApiKeys();
-$key = $client->createApiKey(['name' => 'CI/CD Key']);
-$client->deleteApiKey('key_123');
+// Global secrets
+$client->account->secrets->list();
+$client->account->secrets->create(['name' => 'API_KEY', 'value' => 'secret']);
+$client->account->secrets->get('secret-id');
+$client->account->secrets->update('secret-id', ['value' => 'new-secret']);
+$client->account->secrets->delete('secret-id');
+
+// Environment secrets
+$client->environments->secrets->list('site-id', 'env-id');
+$client->environments->secrets->create('site-id', 'env-id', ['name' => 'DB_HOST', 'value' => 'localhost']);
+$client->environments->secrets->get('site-id', 'env-id', 'secret-id');
+$client->environments->secrets->update('site-id', 'env-id', 'secret-id', ['value' => 'newhost']);
+$client->environments->secrets->delete('site-id', 'env-id', 'secret-id');
 ```
 
 ### Webhooks
 
 ```php
-$webhooks = $client->getWebhooks();
-$webhook = $client->getWebhook('webhook_123');
-$webhook = $client->createWebhook([
+$client->webhooks->list();
+$client->webhooks->get('webhook-id');
+$client->webhooks->create([
     'url' => 'https://example.com/webhook',
-    'events' => ['deployment.completed'],
+    'events' => ['site.created', 'deployment.completed'],
 ]);
-$client->updateWebhook('webhook_123', ['url' => 'https://example.com/new-webhook']);
-$client->deleteWebhook('webhook_123');
-$client->rotateWebhookSecret('webhook_123');
-
-// Webhook logs
-$logs = $client->getWebhookLogs('webhook_123');
+$client->webhooks->update('webhook-id', ['enabled' => false]);
+$client->webhooks->rotateSecret('webhook-id');
+$client->webhooks->delete('webhook-id');
+$client->webhooks->listLogs('webhook-id');
 ```
 
-### WAF
+### API Keys
 
 ```php
-// Blocked IPs
-$ips = $client->getWafBlockedIps('site_abc123');
-$client->addWafBlockedIp('site_abc123', ['ip' => '192.168.1.1']);
-$client->removeWafBlockedIp('site_abc123', 'ip_123');
-
-// Blocked referrers
-$referrers = $client->getWafBlockedReferrers('site_abc123');
-$client->addWafBlockedReferrer('site_abc123', ['referrer' => 'spam.example.com']);
-$client->removeWafBlockedReferrer('site_abc123', 'ref_123');
-
-// Allowed referrers
-$referrers = $client->getWafAllowedReferrers('site_abc123');
-$client->addWafAllowedReferrer('site_abc123', ['referrer' => 'trusted.example.com']);
-$client->removeWafAllowedReferrer('site_abc123', 'ref_123');
-
-// Rate limits
-$limits = $client->getWafRateLimits('site_abc123');
-$client->setWafRateLimits('site_abc123', ['requests_per_minute' => 100]);
-$client->deleteWafRateLimit('site_abc123', 'limit_123');
+$client->account->apiKeys->list();
+$client->account->apiKeys->create(['name' => 'CI/CD Key']);
+$client->account->apiKeys->delete('key-id');
 ```
 
-### Other
+### Events & PHP Versions
 
 ```php
-// Available PHP versions
-$versions = $client->getPhpVersions();
-
-// Event log
-$events = $client->getEvents();
-
-// Site logs
-$logs = $client->getSiteLogs('site_abc123', ['type' => 'error', 'lines' => 100]);
-```
-
-## Error Handling
-
-All API errors throw a `ClientException`:
-
-```php
-use VectorPro\Sdk\Exceptions\ClientException;
-
-try {
-    $client->createSite([]);
-} catch (ClientException $e) {
-    // Get the HTTP status code
-    $statusCode = $e->getStatusCode();
-
-    // Check error type
-    if ($e->isValidationError()) {
-        // Get validation errors
-        $errors = $e->getValidationErrors();  // ['name' => ['The name field is required']]
-        $first = $e->firstError();            // "The name field is required"
-        $nameErrors = $e->errorsFor('name');  // ["The name field is required"]
-
-        if ($e->hasErrorFor('name')) {
-            // Handle name field error
-        }
-    }
-
-    if ($e->isAuthenticationError()) {
-        // 401 - Invalid API key
-    }
-
-    if ($e->isAuthorizationError()) {
-        // 403 - Not authorized
-    }
-
-    if ($e->isNotFoundError()) {
-        // 404 - Resource not found
-    }
-
-    if ($e->isServerError()) {
-        // 5xx - Server error
-    }
-
-    // Get the full response body
-    $response = $e->getResponseBody();
-}
-```
-
-## Pagination
-
-Methods that return lists support pagination:
-
-```php
-// Default: page 1, 15 items per page
-$sites = $client->getSites();
-
-// Custom pagination
-$sites = $client->getSites(page: 2, perPage: 50);
-```
-
-## Dependency Injection
-
-The SDK provides a `ClientInterface` for type hinting and mocking:
-
-```php
-use VectorPro\Sdk\ClientInterface;
-
-class DeploymentService
-{
-    public function __construct(
-        private readonly ClientInterface $client
-    ) {}
-
-    public function deploy(string $siteId, string $environmentId): array
-    {
-        return $this->client->createDeployment($siteId, $environmentId);
-    }
-}
-```
-
-## Laravel
-
-```php
-use VectorPro\Sdk\Client;
-
-// Create a client using config
-$client = new Client(config('services.vector.api_key'));
-
-// Make API calls
-$sites = $client->getSites();
-$site = $client->createSite(['partner_customer_id' => 'cust_123']);
-$deployment = $client->createDeployment($siteId, $environmentId);
-```
-
-Add to `config/services.php`:
-
-```php
-'vector' => [
-    'api_key' => env('VECTOR_API_KEY'),
-],
-```
-
-## Custom HTTP Client
-
-You can provide your own PSR-18 HTTP client:
-
-```php
-use GuzzleHttp\Client as GuzzleClient;
-use VectorPro\Sdk\Client;
-
-$httpClient = new GuzzleClient([
-    'timeout' => 30,
-    'connect_timeout' => 10,
+$client->events->list([
+    'site_id' => 'site-id',
+    'type' => 'deployment',
+    'per_page' => 50,
 ]);
 
-$client = new Client(
-    apiKey: 'your-api-key',
-    httpClient: $httpClient
-);
-```
-
-## Development
-
-```bash
-# Install dependencies
-composer install
-
-# Run tests
-composer test
-
-# Code style (Pint)
-composer fix
-
-# Static analysis (PHPStan)
-composer stan
+$client->phpVersions->list();
 ```
