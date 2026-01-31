@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "816a9dd7-118c-4a77-b3c1-98d2d44fe396",
+        "_postman_id": "7bb338ef-4590-475f-b15a-a109168827d8",
         "description": "Vector Pro by BuiltFast",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -401,9 +401,9 @@
                     "response": [
                         {
                             "header": [],
-                            "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"partner_customer_id\": \"cust_12345\",\n        \"status\": \"terminating\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
+                            "code": 202,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"partner_customer_id\": \"cust_12345\",\n        \"status\": \"terminating\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 202\n}",
+                            "name": "Accepted"
                         },
                         {
                             "header": [],
@@ -3196,9 +3196,9 @@
                     "response": [
                         {
                             "header": [],
-                            "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"partner_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
+                            "code": 202,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"partner_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 202\n}",
+                            "name": "Accepted"
                         },
                         {
                             "header": [],

@@ -1279,7 +1279,7 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
+        status: 202
         content: |-
           {
               "data": {
@@ -1301,10 +1301,10 @@ endpoints:
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
               "message": "Environment deletion initiated",
-              "http_status": 200
+              "http_status": 202
           }
         headers: []
-        description: Success
+        description: Accepted
       -
         custom: []
         status: 401

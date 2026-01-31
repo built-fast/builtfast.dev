@@ -851,8 +851,8 @@ paths:
       description: "Initiates deletion of a site. This terminates the site's development container\nand CDN resources. The site status transitions to `terminating` and eventually\n`terminated`.\n\n**Important:** All environments must be terminated before the site can be deleted.\nUse the environment delete endpoint to terminate each environment first.\n\nThis operation is irreversible. All site data and configurations will be\npermanently removed."
       parameters: []
       responses:
-        200:
-          description: Success
+        202:
+          description: Accepted
           content:
             application/json:
               schema:
@@ -869,7 +869,7 @@ paths:
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T10:30:45+00:00'
                   message: 'Vector site deletion initiated'
-                  http_status: 200
+                  http_status: 202
                 properties:
                   data:
                     type: object
@@ -906,7 +906,7 @@ paths:
                     example: 'Vector site deletion initiated'
                   http_status:
                     type: integer
-                    example: 200
+                    example: 202
         401:
           description: Unauthenticated
           content:
@@ -6154,8 +6154,8 @@ paths:
       description: "Initiates deletion of an environment. This terminates all associated\ncontainers, deployments, and CDN resources. The environment status\ntransitions to `terminating` and eventually `terminated`.\n\nThis operation is irreversible. All environment data will be permanently removed."
       parameters: []
       responses:
-        200:
-          description: Success
+        202:
+          description: Accepted
           content:
             application/json:
               schema:
@@ -6178,7 +6178,7 @@ paths:
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T10:30:45+00:00'
                   message: 'Environment deletion initiated'
-                  http_status: 200
+                  http_status: 202
                 properties:
                   data:
                     type: object
@@ -6233,7 +6233,7 @@ paths:
                     example: 'Environment deletion initiated'
                   http_status:
                     type: integer
-                    example: 200
+                    example: 202
         401:
           description: Unauthenticated
           content:
