@@ -18,11 +18,12 @@ layout: base
     cta: false      # Disable CTA
     (no cta key)    # Uses default CTA
 {% endcomment %}
-{% assign cta_value = page.cta | default: layout.cta %}
-{% if cta_value == false %}
+{% if page.cta == false or layout.cta == false %}
   {% comment %}CTA disabled{% endcomment %}
-{% elsif cta_value %}
-  {% include ctas/{{ cta_value }}.html %}
+{% elsif page.cta %}
+  {% include ctas/{{ page.cta }}.html %}
+{% elsif layout.cta %}
+  {% include ctas/{{ layout.cta }}.html %}
 {% else %}
   {% include ctas/default.html %}
 {% endif %}
