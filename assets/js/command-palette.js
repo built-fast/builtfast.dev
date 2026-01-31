@@ -12,6 +12,7 @@ document.addEventListener('alpine:init', () => {
     { id: 'api', title: 'API Reference', url: '/api/', shortcut: 'ga', category: 'Navigation', keywords: ['endpoints', 'rest'] },
     { id: 'blog', title: 'Blog', url: '/blog/', shortcut: 'gb', category: 'Navigation', keywords: ['posts', 'articles', 'news'] },
     { id: 'oss', title: 'Open Source', url: '/oss/', shortcut: 'go', category: 'Navigation', keywords: ['projects', 'github'] },
+    { id: 'github', title: 'View on GitHub', url: 'https://github.com/built-fast/builtfast.dev', shortcut: 'gg', category: 'Navigation', keywords: ['source', 'code', 'repo'], external: true },
     { id: 'team', title: 'Team', url: '/team/', shortcut: 'gt', category: 'Navigation', keywords: ['about', 'people', 'us'] },
     { id: 'changelog', title: 'Changelog', url: '/changelog/', shortcut: 'gc', category: 'Navigation', keywords: ['releases', 'updates', 'history'] },
 
@@ -40,6 +41,7 @@ document.addEventListener('alpine:init', () => {
     'a': 'api',
     'b': 'blog',
     'o': 'oss',
+    'g': 'github',
     't': 'team',
     'c': 'changelog',
     '?': 'shortcuts',
