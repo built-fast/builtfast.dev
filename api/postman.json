@@ -10,9 +10,10 @@
     ],
     "info": {
         "name": "Vector Pro by BuiltFast",
-        "_postman_id": "1a8d4fc6-0fbb-4860-8b6f-a457a81a6d0e",
+        "_postman_id": "7542cf45-c0b7-493d-bc0a-23e97ac25861",
         "description": "Vector Pro by BuiltFast",
-        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
+        "version": "1.0.0"
     },
     "item": [
         {
