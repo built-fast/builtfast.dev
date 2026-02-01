@@ -1,0 +1,61 @@
+---
+layout: null
+permalink: /docs/llms.txt
+---
+# BuiltFast Documentation Index
+# https://builtfast.dev
+#
+# This file provides an index of all documentation and API endpoints
+# for use by AI assistants and language models.
+#
+# Base URL: https://builtfast.dev
+
+## Documentation Pages
+
+{% assign docs = site.docs | sort: "order" %}
+{% assign categories = docs | map: "category" | uniq %}
+{% for category in categories %}
+{% if category and category != "" %}
+
+### {{ category }}
+{% assign category_docs = docs | where: "category", category %}
+{% for doc in category_docs %}
+- {{ doc.title }}: https://builtfast.dev{{ doc.url }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+## API Reference
+
+Base URL: https://api.builtfast.com
+API Documentation: https://builtfast.dev/api/
+OpenAPI Spec: https://builtfast.dev/api/openapi.yaml
+
+{% for group in site.data.api_groups %}
+
+### {{ group.name }}
+{% if group.description != '' %}
+{{ group.description | strip_html | strip_newlines | truncate: 200 }}
+{% endif %}
+
+{% for subgroup in group.subgroups %}
+{% if subgroup.name != '' %}
+#### {{ subgroup.name }}
+{% endif %}
+{% for endpoint in subgroup.endpoints %}
+- {{ endpoint.method }} {{ endpoint.uri_display }} - {{ endpoint.title }}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+
+## SDK Documentation
+
+- PHP SDK: https://builtfast.dev/docs/tools/php-sdk/
+- Node.js SDK: https://builtfast.dev/docs/tools/node-sdk/
+- CLI: https://builtfast.dev/docs/tools/cli/
+
+## Additional Resources
+
+- Blog: https://builtfast.dev/blog/
+- Open Source Projects: https://builtfast.dev/oss/
+- Changelog: https://builtfast.dev/changelog/
