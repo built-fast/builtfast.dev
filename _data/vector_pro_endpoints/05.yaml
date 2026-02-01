@@ -6,6 +6,15 @@ description: |-
 
   Event logs provide an audit trail of all activity in your account.
 
+  #### Actor Tracking
+
+  Each event includes an `actor` object when the action was triggered via the API:
+  - `ip` - The IP address of the request
+  - `token_name` - The name of the API token used
+
+  The `actor` field is omitted for events triggered by system processes (scheduled tasks,
+  queue workers processing internal jobs, etc.) where no user context exists.
+
   #### Event Naming Convention
 
   Events follow a consistent dot-notation pattern:
@@ -155,6 +164,15 @@ endpoints:
         actions occur (site creation, deployments, etc.) and are retained for 90 days.
 
         Event logs provide an audit trail of all activity in your account.
+
+        #### Actor Tracking
+
+        Each event includes an `actor` object when the action was triggered via the API:
+        - `ip` - The IP address of the request
+        - `token_name` - The name of the API token used
+
+        The `actor` field is omitted for events triggered by system processes (scheduled tasks,
+        queue workers processing internal jobs, etc.) where no user context exists.
 
         #### Event Naming Convention
 
@@ -380,13 +398,16 @@ endpoints:
               "data": [
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDL",
-                      "account_id": 1,
                       "event": "site.provisioning.completed",
                       "model_type": "VectorSite",
                       "model_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                       "context": null,
-                      "occurred_at": "2025-05-27T09:50:21+00:00",
-                      "created_at": "2025-05-27T09:50:21+00:00"
+                      "actor": {
+                          "ip": "203.0.113.50",
+                          "token_name": "Production API Key"
+                      },
+                      "occurred_at": "2026-02-01T09:50:21+00:00",
+                      "created_at": "2026-02-01T09:50:21+00:00"
                   }
               ],
               "links": {},
