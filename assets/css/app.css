@@ -927,6 +927,15 @@ body {
   text-overflow: ellipsis;
 }
 
+.vp-sdk-link {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.vp-sdk-link:hover {
+  color: var(--accent-cyan);
+}
+
 /* ============================================================================
    Team Page
    ============================================================================ */
