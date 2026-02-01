@@ -144,21 +144,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/ssl",
+                                    "path": "api\/v1\/vector\/environments\/:env\/ssl",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/ssl",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/ssl",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                                             "description": "The environment ID."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -190,21 +190,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/ssl\/nudge",
+                                    "path": "api\/v1\/vector\/environments\/:env\/ssl\/nudge",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/ssl\/nudge",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/ssl\/nudge",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "01JFGXK4NQRST5VWX9YZ0ABCDG",
                                             "description": "The environment ID."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -2293,21 +2293,21 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "path": "api\/v1\/vector\/environments\/:env",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env",
                             "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                    "description": "The site ID."
-                                },
                                 {
                                     "id": "env",
                                     "key": "env",
                                     "value": "production",
                                     "description": "The environment name."
+                                },
+                                {
+                                    "id": "site",
+                                    "key": "site",
+                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                    "description": "The site ID."
                                 }
                             ]
                         },
@@ -2361,7 +2361,7 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets",
+                                    "path": "api\/v1\/vector\/environments\/:env\/secrets",
                                     "query": [
                                         {
                                             "key": "per_page",
@@ -2376,19 +2376,19 @@
                                             "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets?per_page=10&page=1",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/secrets?per_page=10&page=1",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -2438,10 +2438,16 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "path": "api\/v1\/vector\/secrets\/:secret",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/secrets\/:secret",
                                     "variable": [
+                                        {
+                                            "id": "secret",
+                                            "key": "secret",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The secret ID."
+                                        },
                                         {
                                             "id": "site",
                                             "key": "site",
@@ -2453,12 +2459,6 @@
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
-                                        },
-                                        {
-                                            "id": "secret",
-                                            "key": "secret",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The secret ID."
                                         }
                                     ]
                                 },
@@ -2508,21 +2508,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets",
+                                    "path": "api\/v1\/vector\/environments\/:env\/secrets",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/secrets",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -2581,10 +2581,16 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "path": "api\/v1\/vector\/secrets\/:secret",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/secrets\/:secret",
                                     "variable": [
+                                        {
+                                            "id": "secret",
+                                            "key": "secret",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The secret ID."
+                                        },
                                         {
                                             "id": "site",
                                             "key": "site",
@@ -2596,12 +2602,6 @@
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
-                                        },
-                                        {
-                                            "id": "secret",
-                                            "key": "secret",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The secret ID."
                                         }
                                     ]
                                 },
@@ -2660,10 +2660,16 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "path": "api\/v1\/vector\/secrets\/:secret",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/secrets\/:secret",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/secrets\/:secret",
                                     "variable": [
+                                        {
+                                            "id": "secret",
+                                            "key": "secret",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The secret ID."
+                                        },
                                         {
                                             "id": "site",
                                             "key": "site",
@@ -2675,12 +2681,6 @@
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
-                                        },
-                                        {
-                                            "id": "secret",
-                                            "key": "secret",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The secret ID."
                                         }
                                     ]
                                 },
@@ -2736,7 +2736,7 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments",
+                                    "path": "api\/v1\/vector\/environments\/:env\/deployments",
                                     "query": [
                                         {
                                             "key": "per_page",
@@ -2751,19 +2751,19 @@
                                             "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments?per_page=25&page=1",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/deployments?per_page=25&page=1",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -2813,10 +2813,16 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments\/:deployment",
+                                    "path": "api\/v1\/vector\/deployments\/:deployment",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments\/:deployment",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/deployments\/:deployment",
                                     "variable": [
+                                        {
+                                            "id": "deployment",
+                                            "key": "deployment",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                                            "description": "The deployment ID."
+                                        },
                                         {
                                             "id": "site",
                                             "key": "site",
@@ -2828,12 +2834,6 @@
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
-                                        },
-                                        {
-                                            "id": "deployment",
-                                            "key": "deployment",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                                            "description": "The deployment ID."
                                         }
                                     ]
                                 },
@@ -2883,21 +2883,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments",
+                                    "path": "api\/v1\/vector\/environments\/:env\/deployments",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/deployments",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/deployments",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -2947,21 +2947,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/rollback",
+                                    "path": "api\/v1\/vector\/environments\/:env\/rollback",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/rollback",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/rollback",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },
@@ -3089,21 +3089,21 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "path": "api\/v1\/vector\/environments\/:env",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env",
                             "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                    "description": "The site ID."
-                                },
                                 {
                                     "id": "env",
                                     "key": "env",
                                     "value": "production",
                                     "description": "The environment name."
+                                },
+                                {
+                                    "id": "site",
+                                    "key": "site",
+                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                    "description": "The site ID."
                                 }
                             ]
                         },
@@ -3162,21 +3162,21 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "path": "api\/v1\/vector\/environments\/:env",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env",
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env",
                             "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                    "description": "The site ID."
-                                },
                                 {
                                     "id": "env",
                                     "key": "env",
                                     "value": "production",
                                     "description": "The environment name."
+                                },
+                                {
+                                    "id": "site",
+                                    "key": "site",
+                                    "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                    "description": "The site ID."
                                 }
                             ]
                         },
@@ -3230,21 +3230,21 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/environments\/:env\/database\/reset-password",
+                                    "path": "api\/v1\/vector\/environments\/:env\/database\/reset-password",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments\/:env\/database\/reset-password",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/database\/reset-password",
                                     "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                                            "description": "The site ID."
-                                        },
                                         {
                                             "id": "env",
                                             "key": "env",
                                             "value": "production",
                                             "description": "The environment name."
+                                        },
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                                            "description": "The site ID."
                                         }
                                     ]
                                 },

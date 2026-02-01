@@ -168,7 +168,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    uri: 'api/v1/vector/environments/{env}'
     metadata:
       custom: []
       groupName: Environments
@@ -205,17 +205,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -227,9 +216,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -294,7 +294,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    uri: 'api/v1/vector/environments/{env}/secrets'
     metadata:
       custom: []
       groupName: Environments
@@ -318,17 +318,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -340,9 +329,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters:
       per_page:
         custom: []
@@ -423,7 +423,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/secrets/{secret}'
     metadata:
       custom: []
       groupName: Environments
@@ -447,6 +447,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       site:
         custom: []
         name: site
@@ -469,21 +480,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -536,7 +536,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    uri: 'api/v1/vector/environments/{env}/deployments'
     metadata:
       custom: []
       groupName: Environments
@@ -567,17 +567,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -589,9 +578,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters:
       per_page:
         custom: []
@@ -691,7 +691,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments/{deployment}'
+    uri: 'api/v1/vector/deployments/{deployment}'
     metadata:
       custom: []
       groupName: Environments
@@ -720,6 +720,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      deployment:
+        custom: []
+        name: deployment
+        description: 'The deployment ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       site:
         custom: []
         name: site
@@ -742,21 +753,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      deployment:
-        custom: []
-        name: deployment
-        description: 'The deployment ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
+      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
-      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1026,7 +1026,7 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    uri: 'api/v1/vector/environments/{env}'
     metadata:
       custom: []
       groupName: Environments
@@ -1063,17 +1063,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -1085,9 +1074,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1204,7 +1204,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/vector/sites/{site}/environments/{env}'
+    uri: 'api/v1/vector/environments/{env}'
     metadata:
       custom: []
       groupName: Environments
@@ -1246,17 +1246,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -1268,9 +1257,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1335,7 +1335,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/database/reset-password'
+    uri: 'api/v1/vector/environments/{env}/database/reset-password'
     metadata:
       custom: []
       groupName: Environments
@@ -1361,17 +1361,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -1383,9 +1372,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1463,7 +1463,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets'
+    uri: 'api/v1/vector/environments/{env}/secrets'
     metadata:
       custom: []
       groupName: Environments
@@ -1490,17 +1490,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -1512,9 +1501,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1603,7 +1603,7 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/secrets/{secret}'
     metadata:
       custom: []
       groupName: Environments
@@ -1629,6 +1629,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       site:
         custom: []
         name: site
@@ -1651,21 +1662,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1754,7 +1754,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/secrets/{secret}'
+    uri: 'api/v1/vector/secrets/{secret}'
     metadata:
       custom: []
       groupName: Environments
@@ -1776,6 +1776,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       site:
         custom: []
         name: site
@@ -1798,21 +1809,10 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      secret:
-        custom: []
-        name: secret
-        description: 'The secret ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
+      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
       site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1865,7 +1865,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/deployments'
+    uri: 'api/v1/vector/environments/{env}/deployments'
     metadata:
       custom: []
       groupName: Environments
@@ -1899,17 +1899,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -1921,9 +1910,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1995,7 +1995,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/rollback'
+    uri: 'api/v1/vector/environments/{env}/rollback'
     metadata:
       custom: []
       groupName: Environments
@@ -2017,17 +2017,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -2039,9 +2028,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: production
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:

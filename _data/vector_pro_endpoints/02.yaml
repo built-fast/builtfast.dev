@@ -258,7 +258,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl'
+    uri: 'api/v1/vector/environments/{env}/ssl'
     metadata:
       custom: []
       groupName: Sites
@@ -302,17 +302,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -324,9 +313,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: 01JFGXK4NQRST5VWX9YZ0ABCDG
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2119,7 +2119,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/environments/{env}/ssl/nudge'
+    uri: 'api/v1/vector/environments/{env}/ssl/nudge'
     metadata:
       custom: []
       groupName: Sites
@@ -2137,17 +2137,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       env:
         custom: []
         name: env
@@ -2159,9 +2148,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
       env: 01JFGXK4NQRST5VWX9YZ0ABCDG
+      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
