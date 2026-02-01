@@ -249,11 +249,23 @@ $client->account->apiKeys->delete('key-id');
 ### Events & PHP Versions
 
 ```php
-$client->events->list([
+// Returns PaginatedResponse<Event>
+$response = $client->events->list([
     'site_id' => 'site-id',
     'type' => 'deployment',
     'per_page' => 50,
 ]);
+
+// Event properties
+$event = $response->data[0];
+$event->id;          // string
+$event->event;       // string (e.g., 'site.created', 'deployment.completed')
+$event->model_type;  // ?string
+$event->model_id;    // ?string
+$event->context;     // mixed
+$event->actor;       // ?Actor (ip, token_name)
+$event->occurred_at; // ?string
+$event->created_at;  // ?string
 
 $client->phpVersions->list();
 ```
