@@ -30,7 +30,7 @@ layout: base
         <header class="post-header">
           <!-- Back link -->
           <a href="/blog/" class="post-back-link">
-            {% include icons/arrow-left.html size="sm" %}
+            {% lucide_icon "arrow-left" class="icon-sm" %}
             Blog
           </a>
 
@@ -143,7 +143,7 @@ layout: base
             {% if page.previous.url %}
             <a href="{{ page.previous.url }}" class="post-nav-link post-nav-prev group">
               <span class="post-nav-label">
-                {% include icons/arrow-left.html size="xs" %}
+                {% lucide_icon "arrow-left" class="icon-xs" %}
                 Previous
               </span>
               <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.previous.title }}</p>
@@ -155,7 +155,7 @@ layout: base
             <a href="{{ page.next.url }}" class="post-nav-link post-nav-next group">
               <span class="post-nav-label">
                 Next
-                {% include icons/arrow-right.html size="xs" %}
+                {% lucide_icon "arrow-right" class="icon-xs" %}
               </span>
               <p class="post-nav-title group-hover:text-cyan transition-colors">{{ page.next.title }}</p>
             </a>

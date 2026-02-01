@@ -47,7 +47,7 @@ cta: false
         {% endif %}
         <span class="link-arrow text-sm mt-6 inline-flex">
           Read article
-          {% include icons/chevron-right.html size="sm" %}
+          {% lucide_icon "chevron-right" class="icon-sm" %}
         </span>
       </div>
     </a>
@@ -94,7 +94,7 @@ cta: false
           {% endif %}
         </div>
         <div class="post-list-arrow">
-          {% include icons/chevron-right.html size="md" %}
+          {% lucide_icon "chevron-right" class="icon-md" %}
         </div>
       </a>
       {% endfor %}
@@ -106,7 +106,7 @@ cta: false
       <div class="flex-1">
         {% if paginator.previous_page %}
         <a href="{{ paginator.previous_page_path }}" class="btn-secondary">
-          {% include icons/chevron-left.html size="sm" %}
+          {% lucide_icon "chevron-left" class="icon-sm" %}
           Previous
         </a>
         {% endif %}
@@ -120,7 +120,7 @@ cta: false
         {% if paginator.next_page %}
         <a href="{{ paginator.next_page_path }}" class="btn-secondary">
           Next
-          {% include icons/chevron-right.html size="sm" %}
+          {% lucide_icon "chevron-right" class="icon-sm" %}
         </a>
         {% endif %}
       </div>

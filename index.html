@@ -12,7 +12,7 @@ hero: home
       <!-- Open Source -->
       <a href="/oss/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/box.html size="md" class="text-cyan shrink-0 mt-0.5" %}
+          {% lucide_icon "box" class="icon-md text-cyan shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Open Source</h3>
             <p class="text-sm text-muted">Tools and libraries we build and maintain.</p>
@@ -23,7 +23,7 @@ hero: home
       <!-- Blog -->
       <a href="/blog/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/pen-line.html size="md" class="text-orange shrink-0 mt-0.5" %}
+          {% lucide_icon "pen-line" class="icon-md text-orange shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Blog</h3>
             <p class="text-sm text-muted">Technical writing on hosting, infrastructure, and PHP.</p>
@@ -34,7 +34,7 @@ hero: home
       <!-- Vector Pro -->
       <a href="/docs/getting-started/" class="card p-5 hover:border-emphasis group">
         <div class="flex items-start gap-3">
-          {% include icons/terminal.html size="md" class="text-green-500 shrink-0 mt-0.5" %}
+          {% lucide_icon "terminal" class="icon-md text-green-500 shrink-0 mt-0.5" %}
           <div>
             <h3 class="text-primary font-medium mb-1 group-hover:text-cyan transition-colors">Vector Pro</h3>
             <p class="text-sm text-muted">API docs for our serverless WordPress platform.</p>
@@ -156,15 +156,15 @@ hero: home
         </div>
         <div class="space-y-2">
           <a href="/oss/vector-cli/" class="vp-tool-link">
-            {% include icons/terminal.html size="sm" %}
+            {% lucide_icon "terminal" class="icon-sm" %}
             <span>Vector CLI</span>
           </a>
           <a href="/api/openapi/" class="vp-tool-link">
-            {% include icons/file-json.html size="sm" %}
+            {% lucide_icon "file-json" class="icon-sm" %}
             <span>OpenAPI Spec</span>
           </a>
           <a href="/api/postman/" class="vp-tool-link">
-            {% include icons/rocket.html size="sm" %}
+            {% lucide_icon "rocket" class="icon-sm" %}
             <span>Postman Collection</span>
           </a>
         </div>
@@ -180,20 +180,20 @@ hero: home
             <span class="vp-sdk-label">PHP</span>
             <code class="vp-sdk-cmd">composer r built-fast/vector-pro-sdk</code>
             <a href="/oss/vector-pro-sdk-php/" class="vp-sdk-link" aria-label="PHP SDK documentation">
-              {% include icons/link.html size="sm" %}
+              {% lucide_icon "link" class="icon-sm" %}
             </a>
             <button class="copy-btn" data-copy="composer require built-fast/vector-pro-sdk" aria-label="Copy PHP install command">
-              {% include icons/copy.html size="sm" %}
+              {% lucide_icon "copy" class="icon-sm" %}
             </button>
           </div>
           <div class="vp-sdk-row">
             <span class="vp-sdk-label">Node</span>
             <code class="vp-sdk-cmd">npm i @built-fast/vector-pro-sdk</code>
             <a href="/oss/vector-pro-sdk-node/" class="vp-sdk-link" aria-label="Node SDK documentation">
-              {% include icons/link.html size="sm" %}
+              {% lucide_icon "link" class="icon-sm" %}
             </a>
             <button class="copy-btn" data-copy="npm install @built-fast/vector-pro-sdk" aria-label="Copy Node install command">
-              {% include icons/copy.html size="sm" %}
+              {% lucide_icon "copy" class="icon-sm" %}
             </button>
           </div>
         </div>

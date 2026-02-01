@@ -21,7 +21,7 @@
         <span class="method-badge method-{{ method_lower }}">{{ e.method }}</span>
         <span class="endpoint-uri">{{ uri_html }}</span>
         <button class="copy-btn copy-btn-subtle" data-copy="https://api.builtfast.com{{ e.uri_display }}" aria-label="Copy endpoint URL">
-          {% include icons/copy.html size="sm" %}
+          {% lucide_icon "copy" class="icon-sm" %}
         </button>
         <button
           class="copy-btn copy-btn-subtle copy-btn-ai"
@@ -32,7 +32,7 @@
           data-endpoint-uri="{{ e.uri_display }}"
           aria-label="Copy for AI"
         >
-          {% include icons/sparkles.html size="sm" %}
+          {% lucide_icon "sparkles" class="icon-sm" %}
         </button>
       </div>
 

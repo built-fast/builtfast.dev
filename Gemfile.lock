@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/built-fast/jekyll-lucide.git
+  revision: 9276ff25891fb385c1bc824fcb25848f889a7b49
+  branch: main
+  specs:
+    jekyll-lucide (0.1.0)
+      jekyll (>= 3.7, < 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -201,6 +209,7 @@ DEPENDENCIES
   jekyll (~> 4.4.1)
   jekyll-feed
   jekyll-github-metadata
+  jekyll-lucide!
   jekyll-paginate-v2
   jekyll-redirect-from
   jekyll-seo-tag

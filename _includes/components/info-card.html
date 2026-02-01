@@ -46,7 +46,7 @@ Parameters:
 
 <div class="card p-6">
   <div class="flex items-center gap-3 mb-4">
-    {% capture icon_class %}text-{{ include.icon_color }}{% endcapture %}{% include icon.html name=include.icon size="md" class=icon_class %}
+    {% capture icon_class %}icon-md text-{{ include.icon_color }}{% endcapture %}{% lucide_icon include.icon class=icon_class %}
     <h3 class="text-primary font-medium">{{ include.title }}</h3>
   </div>
   <p class="text-sm text-muted leading-relaxed{% if include.content or include.link_url %} mb-4{% endif %}">
@@ -56,7 +56,7 @@ Parameters:
   {% if include.link_url %}
   <a href="{{ include.link_url }}" class="link-arrow text-sm">
     {{ include.link_text }}
-    {% include icons/arrow-right.html size="sm" %}
+    {% lucide_icon "arrow-right" class="icon-sm" %}
   </a>
   {% endif %}
 </div>

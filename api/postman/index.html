@@ -19,12 +19,12 @@ cta: false
   <div class="max-w-7xl mx-auto px-6 py-8">
     <div class="flex flex-col sm:flex-row gap-4">
       <a href="/api/postman.json" download class="btn-primary inline-flex items-center gap-2">
-        {% include icons/rocket.html size="sm" %}
+        {% lucide_icon "rocket" class="icon-sm" %}
         Download Collection
       </a>
       <a href="https://www.postman.com/downloads/" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2">
         Get Postman
-        {% include icons/external-link.html size="sm" %}
+        {% lucide_icon "external-link" class="icon-sm" %}
       </a>
     </div>
   </div>
@@ -46,7 +46,7 @@ cta: false
             Our collection includes every Vector Pro endpoint with pre-configured authentication, request bodies, and environment variables. Just import and start making requests.
           </p>
           <p>
-            New to Postman? <a href="https://www.postman.com/downloads/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">Download the app {% include icons/external-link.html size="xs" %}</a> or use the <a href="https://web.postman.co/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">web version {% include icons/external-link.html size="xs" %}</a>.
+            New to Postman? <a href="https://www.postman.com/downloads/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">Download the app {% lucide_icon "external-link" class="icon-xs" %}</a> or use the <a href="https://web.postman.co/" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">web version {% lucide_icon "external-link" class="icon-xs" %}</a>.
           </p>
         </div>
       </div>
@@ -182,7 +182,7 @@ cta: false
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/box.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "box" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Sites</h3>
           <p class="text-xs text-muted mt-1">Create, list, update, delete, suspend sites</p>
@@ -190,7 +190,7 @@ cta: false
       </div>
 
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/terminal.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "terminal" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Environments</h3>
           <p class="text-xs text-muted mt-1">Manage deployment environments</p>
@@ -198,7 +198,7 @@ cta: false
       </div>
 
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/rocket.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "rocket" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Deployments</h3>
           <p class="text-xs text-muted mt-1">Trigger deployments and rollbacks</p>
@@ -206,7 +206,7 @@ cta: false
       </div>
 
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/external-link.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "external-link" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Domains</h3>
           <p class="text-xs text-muted mt-1">Custom domains and SSL certificates</p>
@@ -214,7 +214,7 @@ cta: false
       </div>
 
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/archive.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "archive" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Backups</h3>
           <p class="text-xs text-muted mt-1">Create and restore backups</p>
@@ -222,7 +222,7 @@ cta: false
       </div>
 
       <div class="postman-folder-card">
-        <div class="postman-folder-icon">{% include icons/file-code-2.html size="sm" %}</div>
+        <div class="postman-folder-icon">{% lucide_icon "file-code-2" class="icon-sm" %}</div>
         <div>
           <h3 class="text-primary font-medium text-sm">Logs</h3>
           <p class="text-xs text-muted mt-1">Retrieve site and environment logs</p>
@@ -240,19 +240,19 @@ cta: false
       <h2 class="text-2xl text-primary font-semibold mt-2 mb-5">Working with Postman</h2>
       <ul class="space-y-4 text-secondary">
         <li class="flex gap-3">
-          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size="sm" %}</span>
+          <span class="text-cyan shrink-0 mt-1">{% lucide_icon "check" class="icon-sm" %}</span>
           <span><strong class="text-primary">Use the Console</strong> &mdash; View &rarr; Show Postman Console displays raw HTTP traffic. Essential for debugging.</span>
         </li>
         <li class="flex gap-3">
-          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size="sm" %}</span>
+          <span class="text-cyan shrink-0 mt-1">{% lucide_icon "check" class="icon-sm" %}</span>
           <span><strong class="text-primary">Save examples</strong> &mdash; After a successful request, save it as an example for future reference.</span>
         </li>
         <li class="flex gap-3">
-          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size="sm" %}</span>
+          <span class="text-cyan shrink-0 mt-1">{% lucide_icon "check" class="icon-sm" %}</span>
           <span><strong class="text-primary">Collection Runner</strong> &mdash; Run multiple requests in sequence to test complete workflows.</span>
         </li>
         <li class="flex gap-3">
-          <span class="text-cyan shrink-0 mt-1">{% include icons/check.html size="sm" %}</span>
+          <span class="text-cyan shrink-0 mt-1">{% lucide_icon "check" class="icon-sm" %}</span>
           <span><strong class="text-primary">Pre-request scripts</strong> &mdash; Variables like <code class="text-cyan text-sm">{% raw %}{{site_id}}{% endraw %}</code> are populated automatically from your environment.</span>
         </li>
       </ul>
@@ -265,10 +265,10 @@ cta: false
    description="Browse all endpoints, parameters, and response schemas."
    primary_url="/api/"
    primary_text="API Reference"
-   primary_icon_include="icons/book-open.html"
+   primary_icon="book-open"
    secondary_url="/api/openapi/"
    secondary_text="OpenAPI Spec"
-   secondary_icon_include="icons/file-json.html"
+   secondary_icon="file-json"
 %}
 
 <style>

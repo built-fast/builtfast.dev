@@ -27,7 +27,7 @@ cta: changelog
     <!-- Header -->
     <header class="changelog-show-header">
       <a href="/changelog/" class="changelog-show-back">
-        {% include icons/chevron-left.html size="sm" %}
+        {% lucide_icon "chevron-left" class="icon-sm" %}
         Back to changelog
       </a>
       <div class="changelog-show-meta">
@@ -60,7 +60,7 @@ cta: changelog
         {% if older_entry %}
         <a href="{{ older_entry.url }}" class="card p-4 hover:border-emphasis group">
           <span class="text-xs text-muted uppercase tracking-wide flex items-center gap-1">
-            {% include icons/arrow-left.html size="xs" %}
+            {% lucide_icon "arrow-left" class="icon-xs" %}
             Older
           </span>
           <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ older_entry.title }}</p>
@@ -73,7 +73,7 @@ cta: changelog
         <a href="{{ newer_entry.url }}" class="card p-4 hover:border-emphasis group text-right">
           <span class="text-xs text-muted uppercase tracking-wide flex items-center justify-end gap-1">
             Newer
-            {% include icons/arrow-right.html size="xs" %}
+            {% lucide_icon "arrow-right" class="icon-xs" %}
           </span>
           <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ newer_entry.title }}</p>
         </a>

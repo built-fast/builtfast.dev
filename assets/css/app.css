@@ -670,6 +670,16 @@ body {
 .icon-3xl { width: 3rem; height: 3rem; }
 .icon-4xl { width: 4rem; height: 4rem; }
 
+/* Lucide icon size overrides (override inline width/height) */
+.lucide-icon.icon-xs { width: 0.75rem; height: 0.75rem; }
+.lucide-icon.icon-sm { width: 1rem; height: 1rem; }
+.lucide-icon.icon-md { width: 1.25rem; height: 1.25rem; }
+.lucide-icon.icon-lg { width: 1.5rem; height: 1.5rem; }
+.lucide-icon.icon-xl { width: 2rem; height: 2rem; }
+.lucide-icon.icon-2xl { width: 2.5rem; height: 2.5rem; }
+.lucide-icon.icon-3xl { width: 3rem; height: 3rem; }
+.lucide-icon.icon-4xl { width: 4rem; height: 4rem; }
+
 /* ============================================================================
    Doc Sidebar
    ============================================================================ */

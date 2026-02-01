@@ -13,7 +13,7 @@ layout: base
         <header class="oss-header">
           <!-- Back link -->
           <a href="/oss/" class="oss-back-link">
-            {% include icons/arrow-left.html size="sm" %}
+            {% lucide_icon "arrow-left" class="icon-sm" %}
             All Projects
           </a>
 
@@ -34,14 +34,14 @@ layout: base
 
             {% if page.license %}
             <span class="oss-meta-item">
-              {% include icons/scale.html size="sm" %}
+              {% lucide_icon "scale" class="icon-sm" %}
               {{ page.license }}
             </span>
             {% endif %}
 
             {% if page.archived %}
             <span class="oss-archived-badge">
-              {% include icons/archive.html size="xs" %}
+              {% lucide_icon "archive" class="icon-xs" %}
               Archived
             </span>
             {% endif %}

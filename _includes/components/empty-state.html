@@ -25,7 +25,7 @@ Parameters:
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center py-16">
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elevated border border-subtle mb-6">
-        {% include icon.html name=include.icon size="xl" class="text-muted" %}
+        {% lucide_icon include.icon class="icon-xl text-muted" %}
       </div>
       <h2 class="text-xl text-primary font-semibold mb-3">{{ include.title }}</h2>
       <p class="text-secondary max-w-md mx-auto{% if include.cta_url %} mb-6{% endif %}">
@@ -33,7 +33,7 @@ Parameters:
       </p>
       {% if include.cta_url %}
       <a href="{{ include.cta_url }}" class="btn-primary">
-        {% if include.cta_icon_include %}{% include {{ include.cta_icon_include }} size="sm" %}{% elsif include.cta_icon %}{% include icon.html name=include.cta_icon %}{% endif %}
+        {% if include.cta_icon_include %}{% include {{ include.cta_icon_include }} size="sm" %}{% elsif include.cta_icon %}{% lucide_icon include.cta_icon class="icon-sm" %}{% endif %}
         {{ include.cta_text }}
       </a>
       {% endif %}

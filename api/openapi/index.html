@@ -19,11 +19,11 @@ cta: false
   <div class="max-w-7xl mx-auto px-6 py-8">
     <div class="flex flex-col sm:flex-row gap-4">
       <a href="/api/openapi.yaml" download="openapi.yaml" class="btn-primary inline-flex items-center gap-2">
-        {% include icons/file-json.html size="sm" %}
+        {% lucide_icon "file-json" class="icon-sm" %}
         Download openapi.yaml
       </a>
       <a href="/api/" class="btn-secondary inline-flex items-center gap-2">
-        {% include icons/book-open.html size="sm" %}
+        {% lucide_icon "book-open" class="icon-sm" %}
         API Reference
       </a>
     </div>
@@ -46,7 +46,7 @@ cta: false
             You can feed the spec to code generators to produce typed SDKs, import it into tools like Postman, or use it as context for AI coding assistants.
           </p>
           <p>
-            The Vector Pro spec follows <a href="https://spec.openapis.org/oas/v3.1.0" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">OpenAPI 3.1 {% include icons/external-link.html size="xs" %}</a>.
+            The Vector Pro spec follows <a href="https://spec.openapis.org/oas/v3.1.0" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">OpenAPI 3.1 {% lucide_icon "external-link" class="icon-xs" %}</a>.
           </p>
         </div>
       </div>
@@ -157,7 +157,7 @@ cta: false
     </div>
 
     <p class="text-sm text-muted mt-4">
-      See all <a href="https://openapi-generator.tech/docs/generators" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">available generators {% include icons/external-link.html size="xs" %}</a>.
+      See all <a href="https://openapi-generator.tech/docs/generators" class="text-cyan hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">available generators {% lucide_icon "external-link" class="icon-xs" %}</a>.
     </p>
   </div>
 </section>
@@ -196,8 +196,8 @@ cta: false
    description="Browse all endpoints, parameters, and response schemas."
    primary_url="/api/"
    primary_text="API Reference"
-   primary_icon_include="icons/book-open.html"
+   primary_icon="book-open"
    secondary_url="https://spec.openapis.org/oas/v3.1.0"
    secondary_text="OpenAPI 3.1 Spec"
-   secondary_icon_include="icons/external-link.html"
+   secondary_icon="external-link"
 %}

@@ -123,11 +123,17 @@ redirect_from:
 plugins:
   - jekyll-feed
   - jekyll-github-metadata
+  - jekyll-lucide
   - jekyll-paginate-v2
   - jekyll-redirect-from
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-tailwind
+
+# Lucide icons
+lucide:
+  defaults:
+    class: "lucide-icon"
 
 # Tailwind configuration
 tailwind:

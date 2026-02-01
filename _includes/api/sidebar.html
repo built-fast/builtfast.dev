@@ -2,7 +2,7 @@
   <div class="p-3">
     <!-- Search -->
     <div class="api-search">
-      {% include icons/search.html size="sm" class="api-search-icon" %}
+      {% lucide_icon "search" class="icon-sm api-search-icon" %}
       <input type="text" placeholder="Search endpoints..." aria-label="Search endpoints">
     </div>
   </div>
@@ -29,7 +29,7 @@
           aria-controls="api-group-{{ group.slug }}"
         >
           <span>{{ group.name }}</span>
-          {% include icons/chevron-down.html size="sm" class="transition-transform" %}
+          {% lucide_icon "chevron-down" class="icon-sm transition-transform" %}
         </button>
 
         <div id="api-group-{{ group.slug }}" x-show="open" x-collapse x-cloak>
@@ -82,20 +82,20 @@
         aria-controls="api-group-resources"
       >
         <span>Resources</span>
-        {% include icons/chevron-down.html size="sm" class="transition-transform" %}
+        {% lucide_icon "chevron-down" class="icon-sm transition-transform" %}
       </button>
 
       <div id="api-group-resources" x-show="open" x-collapse>
         <a href="/api/openapi/" class="api-sidebar-link">
-          {% include icons/file-code-2.html size="sm" class="text-muted" %}
+          {% lucide_icon "file-code-2" class="icon-sm text-muted" %}
           <span>OpenAPI Spec</span>
         </a>
         <a href="/api/postman/" class="api-sidebar-link">
-          {% include icons/rocket.html size="sm" class="text-muted" %}
+          {% lucide_icon "rocket" class="icon-sm text-muted" %}
           <span>Postman Collection</span>
         </a>
         <a href="https://builtfast.dev/docs/" class="api-sidebar-link" target="_blank" rel="noopener">
-          {% include icons/book.html size="sm" class="text-muted" %}
+          {% lucide_icon "book" class="icon-sm text-muted" %}
           <span>Documentation</span>
         </a>
       </div>

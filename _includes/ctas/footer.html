@@ -36,12 +36,12 @@ Parameters:
       </div>
       <div class="flex flex-wrap gap-4">
         <a href="{{ include.primary_url }}" class="btn-primary">
-          {% if include.primary_icon_include %}{% include {{ include.primary_icon_include }} size="sm" %}{% elsif include.primary_icon %}{% include icon.html name=include.primary_icon size="sm" %}{% endif %}
+          {% if include.primary_icon_include %}{% include {{ include.primary_icon_include }} size="sm" %}{% elsif include.primary_icon %}{% lucide_icon include.primary_icon class="icon-sm" %}{% endif %}
           {{ include.primary_text }}
         </a>
         {% if include.secondary_url %}
         <a href="{{ include.secondary_url }}" class="btn-secondary">
-          {% if include.secondary_icon_include %}{% include {{ include.secondary_icon_include }} size="sm" %}{% elsif include.secondary_icon %}{% include icon.html name=include.secondary_icon size="sm" %}{% endif %}
+          {% if include.secondary_icon_include %}{% include {{ include.secondary_icon_include }} size="sm" %}{% elsif include.secondary_icon %}{% lucide_icon include.secondary_icon class="icon-sm" %}{% endif %}
           {{ include.secondary_text }}
         </a>
         {% endif %}

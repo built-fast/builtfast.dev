@@ -13,7 +13,7 @@ layout: base
         class="doc-sidebar-toggle"
         aria-label="Open documentation menu"
       >
-        {% include icons/menu.html size="md" %}
+        {% lucide_icon "menu" class="icon-md" %}
       </button>
     </div>
 
@@ -52,7 +52,7 @@ layout: base
         <div class="flex items-center justify-between mb-4">
           <span class="text-sm font-medium text-primary">Documentation</span>
           <button @click="sidebarOpen = false" class="icon-link">
-            {% include icons/x.html size="md" %}
+            {% lucide_icon "x" class="icon-md" %}
           </button>
         </div>
         {% include components/doc-sidebar.html %}
@@ -89,7 +89,7 @@ layout: base
           <!-- Edit on GitHub link -->
           {% if site.github.repository_url %}
           <a href="{{ site.github.repository_url }}/blob/{{ site.github.default_branch }}/{{ page.path }}" class="text-sm text-muted hover:text-secondary transition-colors flex items-center gap-2 mb-6">
-            {% include icons/pencil.html size="sm" %}
+            {% lucide_icon "pencil" class="icon-sm" %}
             See a mistake? Edit this page on GitHub
           </a>
           {% endif %}
@@ -132,7 +132,7 @@ layout: base
               {% assign prev_doc = same_folder_docs[prev_index] %}
               <a href="{{ prev_doc.url }}" class="card p-4 hover:border-emphasis group">
                 <span class="text-xs text-muted uppercase tracking-wide flex items-center gap-1">
-                  {% include icons/arrow-left.html size="xs" %}
+                  {% lucide_icon "arrow-left" class="icon-xs" %}
                   Previous
                 </span>
                 <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ prev_doc.title }}</p>
@@ -146,7 +146,7 @@ layout: base
               <a href="{{ next_doc.url }}" class="card p-4 hover:border-emphasis group text-right">
                 <span class="text-xs text-muted uppercase tracking-wide flex items-center justify-end gap-1">
                   Next
-                  {% include icons/arrow-right.html size="xs" %}
+                  {% lucide_icon "arrow-right" class="icon-xs" %}
                 </span>
                 <p class="text-sm text-primary group-hover:text-cyan transition-colors mt-1">{{ next_doc.title }}</p>
               </a>

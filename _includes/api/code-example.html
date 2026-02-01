@@ -14,7 +14,7 @@
       <button class="code-tab" :class="{ 'active': codeTab === 'js' }" @click="codeTab = 'js'">JavaScript</button>
     </div>
     <button class="copy-btn" aria-label="Copy code" @click="$dispatch('copy-code', { target: $el.closest('.code-block').querySelector('.code-block-body pre:not([style*=\'display: none\'])') })">
-      {% include icons/copy.html size="sm" %}
+      {% lucide_icon "copy" class="icon-sm" %}
     </button>
   </div>
   <div class="code-block-body">
