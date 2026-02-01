@@ -56,6 +56,18 @@ function heroScramble(text = 'Developers.', options = {}) {
       }
     },
 
+    destroy() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+      }
+      if (this.cycleTimeoutId) {
+        clearInterval(this.cycleTimeoutId);
+        clearTimeout(this.cycleTimeoutId);
+        this.cycleTimeoutId = null;
+      }
+    },
+
     showStatic() {
       const text = this.targetText;
       const frag = document.createDocumentFragment();

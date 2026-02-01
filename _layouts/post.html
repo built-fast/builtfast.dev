@@ -5,19 +5,38 @@ layout: base
 {% include nav.html %}
 
 <!-- Reading Progress Bar -->
-<div class="reading-progress" x-data="{ progress: 0 }" x-init="
-  const article = document.querySelector('.post-content');
-  const updateProgress = () => {
+<div class="reading-progress" x-data="{
+  progress: 0,
+  _scrollHandler: null,
+
+  init() {
+    this._scrollHandler = () => {
+      requestAnimationFrame(() => this.updateProgress());
+    };
+    window.addEventListener('scroll', this._scrollHandler, { passive: true });
+    this.updateProgress();
+  },
+
+  destroy() {
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler);
+    }
+  },
+
+  updateProgress() {
+    const article = document.querySelector('.post-content');
+    if (!article) return;
+
     const rect = article.getBoundingClientRect();
     const articleTop = rect.top + window.scrollY;
     const articleHeight = rect.height;
+    if (articleHeight <= 0) return;
+
     const windowHeight = window.innerHeight;
     const scrolled = window.scrollY - articleTop + windowHeight * 0.3;
-    progress = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
-  };
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-">
+    this.progress = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+  }
+}">
   <div class="reading-progress-bar" :style="{ width: progress + '%' }"></div>
 </div>
 

@@ -17,10 +17,6 @@ function terminalPrompt(text = 'dev') {
     explosionCount: 0,
     isExploding: false,
 
-    // Bound event handlers (for cleanup)
-    _onHover: null,
-    _onLeave: null,
-
     // Timing config (ms)
     timing: {
       hoverScrambleDuration: 350,
@@ -42,30 +38,24 @@ function terminalPrompt(text = 'dev') {
       // Show text immediately in dimmed state
       this.showStatic();
       this.dim();
+    },
 
-      // Skip hover animations for reduced motion preference
-      if (this.prefersReducedMotion()) {
-        return;
-      }
-
-      // Bind handlers for proper cleanup
-      this._onHover = this.onHover.bind(this);
-      this._onLeave = this.onLeave.bind(this);
-      this.$el.addEventListener('mouseenter', this._onHover);
-      this.$el.addEventListener('mouseleave', this._onLeave);
-
-      // Register Alpine cleanup (if available)
-      if (this.$cleanup) {
-        this.$cleanup(() => this.destroy());
+    destroy() {
+      this.cancelAnimation();
+      if (this.dimTimeout) {
+        clearTimeout(this.dimTimeout);
+        this.dimTimeout = null;
       }
     },
 
     getSpans() {
-      return this.$refs.text.querySelectorAll('.prompt-char');
+      return this.$refs.text ? this.$refs.text.querySelectorAll('.prompt-char') : [];
     },
 
     showStatic() {
       const textEl = this.$refs.text;
+      if (!textEl) return;
+
       textEl.innerHTML = '';
       for (const char of this.targetText) {
         const span = document.createElement('span');
@@ -78,22 +68,32 @@ function terminalPrompt(text = 'dev') {
     dim() {
       this.isDimmed = true;
       this.$el.classList.add('dimmed');
-      this.$refs.cursor.classList.remove('visible', 'solid');
-      this.$refs.cursor.style.filter = 'none';
+      if (this.$refs.cursor) {
+        this.$refs.cursor.classList.remove('visible', 'solid');
+        this.$refs.cursor.style.filter = 'none';
+      }
     },
 
     undim() {
       this.isDimmed = false;
       this.$el.classList.remove('dimmed');
-      this.$refs.cursor.style.filter = '';
+      if (this.$refs.cursor) {
+        this.$refs.cursor.style.filter = '';
+      }
     },
 
     onHover() {
       if (this.isExploding) return;
+      if (this.prefersReducedMotion()) {
+        this.undim();
+        return;
+      }
 
       this.isHovering = true;
-      clearTimeout(this.dimTimeout);
-      this.dimTimeout = null;
+      if (this.dimTimeout) {
+        clearTimeout(this.dimTimeout);
+        this.dimTimeout = null;
+      }
 
       if (this.isDimmed) {
         this.hoverCount++;
@@ -108,15 +108,35 @@ function terminalPrompt(text = 'dev') {
       }
     },
 
+    onLeave() {
+      if (this.isExploding) return;
+
+      this.isHovering = false;
+      if (this.dimTimeout) {
+        clearTimeout(this.dimTimeout);
+      }
+
+      this.dimTimeout = setTimeout(() => {
+        this.dimTimeout = null;
+        if (!this.isHovering && !this.isExploding) {
+          this.dim();
+        }
+      }, this.timing.leaveDelay);
+    },
+
     playHoverScramble() {
       this.cancelAnimation();
 
       const spans = this.getSpans();
+      if (!spans.length) return;
+
       const startTime = performance.now();
       const duration = this.timing.hoverScrambleDuration;
       const totalChars = spans.length;
 
       const animate = (now) => {
+        if (!this.$el.isConnected) return;
+
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
@@ -138,7 +158,9 @@ function terminalPrompt(text = 'dev') {
           this.animationId = requestAnimationFrame(animate);
         } else {
           this.animationId = null;
-          this.$refs.cursor.classList.add('visible');
+          if (this.$refs.cursor) {
+            this.$refs.cursor.classList.add('visible');
+          }
         }
       };
 
@@ -160,6 +182,11 @@ function terminalPrompt(text = 'dev') {
       const spans = this.getSpans();
       const textEl = this.$refs.text;
       const cursorEl = this.$refs.cursor;
+      if (!textEl || !cursorEl || !spans.length) {
+        this.isExploding = false;
+        return;
+      }
+
       const containerRect = this.$el.getBoundingClientRect();
 
       // Hide cursor during explosion
@@ -228,6 +255,8 @@ function terminalPrompt(text = 'dev') {
       let restingPositionsCaptured = false;
 
       const animate = (now) => {
+        if (!this.$el.isConnected) return;
+
         const elapsed = now - startTime;
         const dt = Math.min((now - lastTime) / 16.67, 2); // normalize to ~60fps, cap at 2x
         lastTime = now;
@@ -415,6 +444,11 @@ function terminalPrompt(text = 'dev') {
       const symbolEl = this.$el.querySelector('.prompt-symbol');
       const textEl = this.$refs.text;
       const cursorEl = this.$refs.cursor;
+      if (!symbolEl || !textEl || !cursorEl) {
+        this.isExploding = false;
+        return;
+      }
+
       const containerRect = this.$el.getBoundingClientRect();
 
       // Hide cursor and text
@@ -452,6 +486,8 @@ function terminalPrompt(text = 'dev') {
       let lastFaceChange = 0;
 
       const animate = (now) => {
+        if (!this.$el.isConnected) return;
+
         const elapsed = now - startTime;
 
         // Light mode uses darker colors for visibility
@@ -590,38 +626,10 @@ function terminalPrompt(text = 'dev') {
       this.animationId = requestAnimationFrame(animate);
     },
 
-    onLeave() {
-      if (this.isExploding) return;
-
-      this.isHovering = false;
-      clearTimeout(this.dimTimeout);
-
-      this.dimTimeout = setTimeout(() => {
-        this.dimTimeout = null;
-        if (!this.isHovering && !this.isExploding) {
-          this.dim();
-        }
-      }, this.timing.leaveDelay);
-    },
-
     cancelAnimation() {
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
         this.animationId = null;
-      }
-    },
-
-    destroy() {
-      this.cancelAnimation();
-      clearTimeout(this.dimTimeout);
-      this.dimTimeout = null;
-
-      // Remove event listeners
-      if (this._onHover) {
-        this.$el.removeEventListener('mouseenter', this._onHover);
-        this.$el.removeEventListener('mouseleave', this._onLeave);
-        this._onHover = null;
-        this._onLeave = null;
       }
     }
   };

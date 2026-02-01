@@ -15,6 +15,7 @@ function tocComponent() {
   return {
     headings: [],
     activeId: null,
+    _observer: null,
 
     init() {
       // Get heading levels from data attribute or use default
@@ -32,6 +33,12 @@ function tocComponent() {
 
       // Set up scroll spy
       this.setupScrollSpy();
+    },
+
+    destroy() {
+      if (this._observer) {
+        this._observer.disconnect();
+      }
     },
 
     buildToc() {
@@ -63,7 +70,7 @@ function tocComponent() {
     },
 
     setupScrollSpy() {
-      const observer = new IntersectionObserver(
+      this._observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -77,7 +84,7 @@ function tocComponent() {
         }
       );
 
-      this.headings.forEach(heading => observer.observe(heading));
+      this.headings.forEach(heading => this._observer.observe(heading));
     },
 
     setActive(id) {
