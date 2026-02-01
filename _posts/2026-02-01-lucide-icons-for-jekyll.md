@@ -16,7 +16,7 @@ They hadn't, so I did.
 
 Fortunately, I didn't have to start from scratch. I found [lucide-rails](https://github.com/heyvito/lucide-rails), and it basically worked exactly how I wanted, just for Rails and not Jekyll.
 
-Huge thanks to Vito for making the original Rails gem. That foundation made putting [jekyll-lucide](https://github.com/builtfast/jekyll-lucide) together a breeze.
+Huge thanks to Vito for making the original Rails gem. That foundation made putting [jekyll-lucide](https://github.com/built-fast/jekyll-lucide) together a breeze.
 
 ## How it works
 
@@ -43,4 +43,4 @@ lucide:
 
 The only downside is that the gem bundles all 1,500+ icons, so it adds a bit to your install size. In practice this hasn't been an issue --- the SVGs are tiny and only the ones you use end up in your HTML.
 
-Source and installation instructions are on [GitHub](https://github.com/builtfast/jekyll-lucide).
+Source and installation instructions are on [GitHub](https://github.com/built-fast/jekyll-lucide).
