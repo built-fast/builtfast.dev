@@ -73,7 +73,7 @@ image: /assets/images/opengraph-vector-pro.png
           <h2 class="text-xl font-semibold text-primary mb-3">{{ group.name }}</h2>
           {% if group.description != '' %}
             <div class="api-prose">
-              {{ group.description | markdownify }}
+              {{ group.description | calloutify }}
             </div>
           {% endif %}
         </div>
@@ -86,7 +86,7 @@ image: /assets/images/opengraph-vector-pro.png
             <h3 class="text-lg font-semibold text-primary">{{ subgroup.name }}</h3>
             {% if subgroup.description != '' %}
               <div class="api-prose text-sm mt-1">
-                {{ subgroup.description | markdownify }}
+                {{ subgroup.description | calloutify }}
               </div>
             {% endif %}
           </div>

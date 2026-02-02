@@ -9,6 +9,10 @@
 # Into styled HTML matching the existing callout component styles.
 #
 # Supported types: note, tip, info, warning, caution, error, danger, success, important
+#
+# Usage in templates:
+#   {{ content | calloutify }}           - converts callouts and markdown
+#   {{ description | calloutify }}       - works with any markdown string
 module MarkdownCallouts
   # SVG icon definitions (Lucide icons as inline SVG)
   ICONS = {
@@ -125,4 +129,77 @@ module MarkdownCallouts
       HTML
     end
   end
+
+  # Liquid filter for use in templates: {{ content | calloutify }}
+  module CalloutFilter
+    def calloutify(input)
+      return '' if input.nil? || input.empty?
+
+      site = @context.registers[:site]
+      markdown = site.find_converter_instance(Jekyll::Converters::Markdown)
+
+      # Normalize collapsed blockquote callouts (newlines may become spaces in some contexts)
+      # Convert "> [!TYPE] > line1 > line2" back to multiline format
+      normalized = input.dup
+      if input.match?(/>\s*\[![A-Z]+\]/) && input.include?(' > ')
+        # Replace " > " with newline only after a callout marker appears
+        normalized = input.gsub(/(>\s*\[![A-Z]+\].*)/) do |match|
+          match.gsub(' > ', "\n> ")
+        end
+      end
+
+      # Protect code blocks from processing
+      code_blocks = []
+      protected = normalized.gsub(/```[\s\S]*?```/m) do |match|
+        code_blocks << match
+        "<<<CODEBLOCK#{code_blocks.length - 1}>>>"
+      end
+
+      # Match callout blocks
+      pattern = /^(?<indent>\s*)>\s*\[!(?<type>[A-Z]+)\](?<custom_title>[^\n]*)\n(?<body>(?:\k<indent>>\s*[^\n]*\n?)+)/
+
+      result = protected.gsub(pattern) do
+        indent = Regexp.last_match[:indent]
+        type = Regexp.last_match[:type].downcase
+        custom_title = Regexp.last_match[:custom_title].strip
+        body = Regexp.last_match[:body]
+
+        config = CALLOUT_CONFIG[type] || CALLOUT_CONFIG['note']
+        title = custom_title.empty? ? config[:title] : custom_title
+
+        # Remove blockquote markers and dedent the body
+        body_content = body.lines.map do |line|
+          line.sub(/^#{Regexp.escape(indent)}>\s?/, '')
+        end.join.strip
+
+        body_html = markdown.convert(body_content)
+        build_callout_html(config[:class], config[:icon], title, body_html)
+      end
+
+      # Restore code blocks
+      result = result.gsub(/<<<CODEBLOCK(\d+)>>>/) { code_blocks[Regexp.last_match(1).to_i] }
+
+      # Convert remaining markdown to HTML
+      markdown.convert(result)
+    end
+
+    private
+
+    def build_callout_html(css_class, icon, title, body_html)
+      icon_svg = ICONS[icon] || ICONS['info']
+      <<~HTML
+        <div class="callout callout-#{css_class}">
+          <div class="callout-title">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">#{icon_svg}</svg>
+            <span>#{title}</span>
+          </div>
+          <div class="callout-content">
+            #{body_html}
+          </div>
+        </div>
+      HTML
+    end
+  end
 end
+
+Liquid::Template.register_filter(MarkdownCallouts::CalloutFilter)

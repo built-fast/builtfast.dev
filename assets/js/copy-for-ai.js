@@ -11,12 +11,13 @@
    */
   function assembleAIContent(button) {
     const title = button.dataset.endpointTitle || 'Untitled Endpoint';
-    const description = button.dataset.endpointDescription || '';
     const method = button.dataset.endpointMethod || 'GET';
     const uri = button.dataset.endpointUri || '';
 
-    // Find the hidden OpenAPI YAML in the same endpoint section
+    // Find hidden content in the same endpoint section
     const section = button.closest('.endpoint-section');
+    const descriptionEl = section?.querySelector('.endpoint-description-text');
+    const description = descriptionEl?.textContent?.trim() || '';
     const yamlScript = section?.querySelector('.endpoint-openapi-yaml');
     const openapiYaml = yamlScript?.textContent?.trim() || '';
 
@@ -34,7 +35,7 @@
     lines.push('');
 
     if (description) {
-      lines.push(`> ${description}`);
+      lines.push(description);
       lines.push('');
     }
 

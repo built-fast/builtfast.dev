@@ -702,6 +702,87 @@
   border-left: 2px solid var(--border-subtle);
 }
 
+/* Callouts in API prose */
+.api-prose .callout {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  border-left: 3px solid;
+  background-color: var(--bg-elevated);
+  overflow: hidden;
+}
+
+.api-prose .callout-content > *:first-child {
+  margin-top: 0;
+}
+
+.api-prose .callout-content > *:last-child,
+.api-prose .callout p:last-child {
+  margin-bottom: 0;
+}
+
+.api-prose .callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.api-prose .callout-title svg {
+  width: 14px;
+  height: 14px;
+}
+
+.api-prose .callout-content {
+  font-size: 0.8125rem;
+}
+
+.api-prose .callout-info {
+  border-left-color: var(--accent-cyan);
+}
+
+.api-prose .callout-info .callout-title {
+  color: var(--accent-cyan);
+}
+
+.api-prose .callout-warning {
+  border-left-color: var(--color-warning);
+}
+
+.api-prose .callout-warning .callout-title {
+  color: var(--color-warning);
+}
+
+.api-prose .callout-error {
+  border-left-color: var(--color-error);
+}
+
+.api-prose .callout-error .callout-title {
+  color: var(--color-error);
+}
+
+.api-prose .callout-success {
+  border-left-color: var(--color-success);
+}
+
+.api-prose .callout-success .callout-title {
+  color: var(--color-success);
+}
+
+.api-prose .callout-note {
+  border-left-color: var(--text-muted);
+}
+
+.api-prose .callout-note .callout-title {
+  color: var(--text-muted);
+}
+
 /* Section divider */
 .section-divider {
   height: 1px;

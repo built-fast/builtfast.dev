@@ -27,7 +27,6 @@
           class="copy-btn copy-btn-subtle copy-btn-ai"
           data-copy-ai
           data-endpoint-title="{{ e.title | escape }}"
-          data-endpoint-description="{{ e.description | strip_html | strip_newlines | escape }}"
           data-endpoint-method="{{ e.method }}"
           data-endpoint-uri="{{ e.uri_display }}"
           aria-label="Copy for AI"
@@ -36,7 +35,8 @@
         </button>
       </div>
 
-      <!-- Hidden OpenAPI YAML for AI copy -->
+      <!-- Hidden content for AI copy -->
+      <script type="text/plain" class="endpoint-description-text" style="display: none;">{{ e.description | strip_html }}</script>
       <script type="application/yaml" class="endpoint-openapi-yaml" style="display: none;">
 {{ e.openapi_yaml }}
       </script>
@@ -50,7 +50,7 @@
 
       {% if e.description != '' %}
       <div class="api-prose mb-6">
-        {{ e.description | markdownify }}
+        {{ e.description | calloutify }}
       </div>
       {% endif %}
 

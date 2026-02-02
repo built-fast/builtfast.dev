@@ -765,8 +765,10 @@
   margin: 1.5rem 0;
   padding: 1rem 1.25rem;
   border-radius: var(--radius-md);
+  border: 1px solid transparent;
   border-left: 3px solid;
   background-color: var(--bg-elevated);
+  overflow: hidden;
 }
 
 .prose .callout-content > *:first-child {
