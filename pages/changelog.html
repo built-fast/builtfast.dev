@@ -10,8 +10,8 @@ cta: false
 {% include heroes/page.html
    label="// changelog"
    title="What we've shipped,"
-   accent="date by date."
-   description="A chronological record of releases across all our tools. Filter by category to find updates for the products you use."
+   accent="release by release."
+   description="A chronological record of updates across all our tools. Filter by category to find changes for the products you use."
 %}
 
 {% comment %}Collect all unique tags from changelog entries{% endcomment %}
@@ -29,62 +29,60 @@ cta: false
 <!-- Filter Controls -->
 <section class="py-8 border-t border-subtle">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="changelog-filters-wrapper">
-      <span class="text-sm text-muted">Filter by:</span>
-      <div class="changelog-filters">
-        <button class="changelog-filter active" data-filter="all">All</button>
+    <div class="changelog-filter-bar">
+      <span class="changelog-filter-label">Filter by category</span>
+      <div class="changelog-filter-chips">
+        <button class="changelog-chip active" data-filter="all">All</button>
         {% for tag in tag_array %}
-        <button class="changelog-filter" data-filter="{{ tag }}">{% include changelog/tag-category.html tag=tag %}</button>
+        <button class="changelog-chip" data-filter="{{ tag }}">{% include changelog/tag-category.html tag=tag %}</button>
         {% endfor %}
       </div>
     </div>
   </div>
 </section>
 
-<!-- Changelog Timeline -->
+<!-- Changelog Entries -->
 <section class="py-12 md:py-16 border-t border-subtle bg-elevated">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="changelog-timeline">
+    <div class="changelog-feed">
 
       {% assign sorted_entries = site.changelog | sort: 'date' | reverse %}
-      {% assign current_year = nil %}
+      {% assign current_month = nil %}
 
       {% for entry in sorted_entries %}
-        {% assign entry_year = entry.date | date: "%Y" %}
+        {% assign entry_month = entry.date | date: "%B %Y" %}
 
-        {% if entry_year != current_year %}
-          {% assign current_year = entry_year %}
-          <!-- Year Marker -->
-          <div class="changelog-year">
-            <span class="changelog-year-label">{{ current_year }}</span>
-          </div>
+        {% if entry_month != current_month %}
+          {% if current_month != nil %}
+          </div><!-- close previous month group -->
+          {% endif %}
+          {% assign current_month = entry_month %}
+
+          <!-- Month Group -->
+          <div class="changelog-month" data-month="{{ entry.date | date: '%Y-%m' }}">
+            <div class="changelog-month-header">
+              <h2 class="changelog-month-label">{{ entry_month }}</h2>
+            </div>
         {% endif %}
 
-        <!-- Entry: {{ entry.title }} -->
+        <!-- Entry -->
         {% assign entry_slug = entry.url | split: '/' | last %}
-        <article id="{{ entry_slug }}" class="changelog-entry" data-tags="{{ entry.tags | join: ' ' }}">
-          <div class="changelog-entry-marker">
-            <div class="changelog-date-badge">
-              <span class="changelog-date-month">{{ entry.date | date: "%b" }}</span>
-              <span class="changelog-date-day">{{ entry.date | date: "%-d" }}</span>
-            </div>
-            <div class="changelog-entry-line"></div>
+        <article id="{{ entry_slug }}" class="changelog-item" data-tags="{{ entry.tags | join: ' ' }}">
+          <div class="changelog-item-date">
+            <time datetime="{{ entry.date | date: '%Y-%m-%d' }}">
+              {{ entry.date | date: "%b %d" }}
+            </time>
           </div>
-          <div class="changelog-entry-content">
-            <header class="changelog-entry-header">
-              <div class="changelog-entry-meta">
-                <time datetime="{{ entry.date | date: '%Y-%m-%d' }}" class="changelog-entry-date">
-                  {{ entry.date | date: "%B %-d, %Y" }}
-                </time>
-              </div>
-              <h2 class="changelog-entry-title">
-                <a href="#{{ entry_slug }}">{{ entry.title }}</a>
-              </h2>
-              <div class="changelog-tags">
+          <div class="changelog-item-content">
+            <header class="changelog-item-header">
+              <h3 class="changelog-item-title">
+                <a href="{{ entry.url }}">{{ entry.title }}</a>
+              </h3>
+              <div class="changelog-item-tags">
                 {% assign entry_tags = entry.tags | sort %}
                 {% for tag in entry_tags %}
                 {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
-                {% if tag == "bug" %}
+                {% if tag == "bug" or tag == "breaking-change" or tag == "breaking" %}
                 {% include components/lang-badge.html name=tag_label size="sm" variant="red" %}
                 {% else %}
                 {% include components/lang-badge.html name=tag_label size="sm" %}
@@ -93,25 +91,28 @@ cta: false
               </div>
             </header>
 
-            <div class="changelog-entry-body prose prose-compact">
+            {% assign has_more = entry.content | contains: '<!--more-->' %}
+            {% if has_more %}
+            <div class="changelog-item-body prose prose-compact">
+              {{ entry.excerpt | markdownify }}
+            </div>
+            <a href="{{ entry.url }}" class="changelog-item-more">
+              View full details
+              {% lucide_icon "arrow-right" class="icon-sm" %}
+            </a>
+            {% else %}
+            <div class="changelog-item-body prose prose-compact">
               {{ entry.content | markdownify }}
             </div>
-
-            <footer class="changelog-entry-footer">
-              <a href="{{ entry.url }}" class="link-arrow text-sm">
-                Full release notes
-                {% lucide_icon "chevron-right" class="icon-sm" %}
-              </a>
-            </footer>
+            {% endif %}
           </div>
         </article>
 
       {% endfor %}
 
-      <!-- End marker -->
-      <div class="changelog-end">
-        <span class="changelog-end-label">Beginning of changelog</span>
-      </div>
+      {% if current_month != nil %}
+      </div><!-- close last month group -->
+      {% endif %}
 
     </div>
   </div>
@@ -129,75 +130,73 @@ cta: false
           Follow along as we ship new features, improvements, and fixes. Subscribe via RSS or watch us on GitHub.
         </p>
         <div class="flex flex-wrap gap-4">
+          <a href="/changelog/feed.xml" class="btn-secondary">
+            {% lucide_icon "rss" class="icon-sm" %}
+            RSS Feed
+          </a>
           <a href="https://github.com/built-fast" class="btn-secondary" target="_blank" rel="noopener">
             {% include icons/github.html size="sm" %}
             Watch on GitHub
           </a>
-          <a href="/blog/" class="btn-secondary">
-            {% lucide_icon "pen-line" class="icon-sm" %}
-            Read the blog
-          </a>
         </div>
       </div>
 
-      <!-- Right: RSS/Feed Card -->
-      {% capture tc_content %}
-      <div class="space-y-4 font-mono text-sm p-5">
-        <div>
-          <span class="text-muted"># Subscribe via RSS</span>
-          <div class="mt-2">
-            <span class="text-cyan">$</span>
-            <span class="text-secondary ml-2">curl</span>
-            <span class="text-orange ml-2">builtfast.dev/changelog/feed.xml</span>
+      <!-- Right: What you'll get -->
+      <div class="card p-6">
+        <h3 class="text-primary font-medium mb-4">What's in the changelog</h3>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="text-cyan mt-0.5">{% lucide_icon "plus" class="icon-sm" %}</span>
+            <div>
+              <span class="text-primary text-sm font-medium">New features</span>
+              <p class="text-sm text-muted">Major additions and new capabilities</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-cyan mt-0.5">{% lucide_icon "sparkles" class="icon-sm" %}</span>
+            <div>
+              <span class="text-primary text-sm font-medium">Improvements</span>
+              <p class="text-sm text-muted">Enhancements to existing functionality</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-orange mt-0.5">{% lucide_icon "bug" class="icon-sm" %}</span>
+            <div>
+              <span class="text-primary text-sm font-medium">Bug fixes</span>
+              <p class="text-sm text-muted">Resolved issues and patches</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-orange mt-0.5">{% lucide_icon "alert-triangle" class="icon-sm" %}</span>
+            <div>
+              <span class="text-primary text-sm font-medium">Breaking changes</span>
+              <p class="text-sm text-muted">Migration guides when APIs change</p>
+            </div>
           </div>
         </div>
-
-        <div class="pt-2 border-t border-subtle/50">
-          <span class="text-muted"># Or use your favorite reader</span>
-          <ul class="mt-2 space-y-1 text-secondary">
-            <li><span class="text-cyan">-</span> Feedly, Inoreader, NetNewsWire</li>
-            <li><span class="text-cyan">-</span> Any RSS-compatible app</li>
-          </ul>
-        </div>
-
-        <div class="pt-2 border-t border-subtle/50">
-          <span class="text-muted"># What you'll get</span>
-          <ul class="mt-2 space-y-1 text-secondary">
-            <li><span class="text-green-500">+</span> New feature announcements</li>
-            <li><span class="text-green-500">+</span> Breaking change warnings</li>
-            <li><span class="text-green-500">+</span> Security advisories</li>
-          </ul>
-        </div>
       </div>
-      {% endcapture %}
-      {% include components/terminal-card.html filename="subscribe.sh" content=tc_content %}
     </div>
   </div>
 </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const filters = document.querySelectorAll('.changelog-filter');
-  const entries = document.querySelectorAll('.changelog-entry');
-  const yearMarkers = document.querySelectorAll('.changelog-year');
+  const filters = document.querySelectorAll('.changelog-chip');
+  const entries = document.querySelectorAll('.changelog-item');
+  const monthGroups = document.querySelectorAll('.changelog-month');
 
-  function updateYearVisibility() {
-    // Hide year markers that have no visible entries following them
-    yearMarkers.forEach((marker, index) => {
-      const nextMarker = yearMarkers[index + 1];
+  function updateMonthVisibility() {
+    monthGroups.forEach(monthGroup => {
+      const monthEntries = monthGroup.querySelectorAll('.changelog-item');
       let hasVisibleEntries = false;
 
-      // Find entries between this year marker and the next (or end)
-      let sibling = marker.nextElementSibling;
-      while (sibling && sibling !== nextMarker && !sibling.classList.contains('changelog-end')) {
-        if (sibling.classList.contains('changelog-entry') && sibling.getAttribute('data-filtered') !== 'true') {
+      monthEntries.forEach(entry => {
+        if (entry.getAttribute('data-filtered') !== 'true') {
           hasVisibleEntries = true;
-          break;
         }
-        sibling = sibling.nextElementSibling;
-      }
+      });
 
-      marker.style.display = hasVisibleEntries ? '' : 'none';
+      monthGroup.style.display = hasVisibleEntries ? '' : 'none';
     });
   }
 
@@ -219,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
 
-      updateYearVisibility();
+      updateMonthVisibility();
     });
   });
 });

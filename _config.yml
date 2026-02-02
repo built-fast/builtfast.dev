@@ -81,6 +81,7 @@ defaults:
       type: "changelog"
     values:
       layout: "changelog-entry"
+      excerpt_separator: "<!--more-->"
   - scope:
       path: ""
       type: "docs"

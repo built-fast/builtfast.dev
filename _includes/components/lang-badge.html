@@ -5,6 +5,7 @@ Usage:
 {% include components/lang-badge.html name="PHP" %}
 {% include components/lang-badge.html name=lang.name size="sm" %}
 {% include components/lang-badge.html name="Bug" size="sm" variant="red" %}
+{% include components/lang-badge.html name="Breaking" size="sm" variant="orange" %}
 {% endcomment %}
 
-<span class="lang-badge{% if include.size == 'sm' %}-sm{% endif %}{% if include.variant == 'red' %} lang-badge-red{% endif %}">{{ include.name }}</span>
+<span class="lang-badge{% if include.size == 'sm' %}-sm{% endif %}{% if include.variant == 'red' %} lang-badge-red{% elsif include.variant == 'orange' %} lang-badge-orange{% endif %}">{{ include.name }}</span>

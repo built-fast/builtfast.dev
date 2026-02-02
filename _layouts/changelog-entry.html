@@ -38,7 +38,7 @@ cta: changelog
           {% assign sorted_tags = page.tags | sort %}
           {% for tag in sorted_tags %}
           {% capture tag_label %}{% include changelog/tag-category.html tag=tag %}{% endcapture %}
-          {% if tag == "bug" %}
+          {% if tag == "bug" or tag == "breaking-change" or tag == "breaking" %}
           {% include components/lang-badge.html name=tag_label size="sm" variant="red" %}
           {% else %}
           {% include components/lang-badge.html name=tag_label size="sm" %}
