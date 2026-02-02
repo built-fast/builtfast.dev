@@ -243,7 +243,6 @@ endpoints:
                   "tags": ["live", "primary"],
                   "fqdn": "wispy-dust.vectorpages.com",
                   "custom_domain": "ourshop.com",
-                  "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
@@ -745,6 +744,122 @@ endpoints:
     custom: []
     httpMethods:
       - POST
+    uri: 'api/v1/vector/environments/{env}/database/reset-password'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Databases
+      subgroupDescription: |-
+        Manage database credentials for production environments. Each environment has its
+        own isolated database with credentials that can be rotated for security.
+      title: 'Reset Password'
+      description: |-
+        Rotates the database password for a production environment via Ymir.
+        The old password is immediately invalidated.
+
+        > [!WARNING]
+        > The new password is returned ONLY in this response. Store it securely—it cannot be retrieved again.
+
+        > [!NOTE]
+        > After rotating the password, you must redeploy the environment for your application to pick up the new credentials.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "your_customer_id": "customer-123",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "fqdn": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "database_user": "user_abc123_production",
+                  "database_password": "aBcD1234!@#$EfGh5678",
+                  "created_at": "2024-01-01T00:00:00.000000Z",
+                  "updated_at": "2024-01-01T00:00:00.000000Z"
+              },
+              "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 400
+        content: '{"data": {}, "message": "Environment does not have a database user configured. Deploy the environment first.", "http_status": 400}'
+        headers: []
+        description: 'No Database User'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 500
+        content: '{"data": {}, "message": "Failed to rotate database password", "http_status": 500}'
+        headers: []
+        description: 'Rotation Failed'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
     uri: 'api/v1/vector/sites/{site}/environments'
     metadata:
       custom: []
@@ -890,7 +1005,6 @@ endpoints:
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
                   "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
                   "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
                   "created_at": "2025-05-27T09:50:21+00:00",
@@ -1057,7 +1171,6 @@ endpoints:
                   "tags": ["live", "updated"],
                   "fqdn": "wispy-dust.vectorpages.com",
                   "custom_domain": "newshop.com",
-                  "custom_domain": "newshop.com",
                   "subdomain": "wispy-dust",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
@@ -1188,7 +1301,6 @@ endpoints:
                   "tags": [],
                   "fqdn": "wispy-dust.vectorpages.com",
                   "custom_domain": "ourshop.com",
-                  "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
@@ -1216,122 +1328,6 @@ endpoints:
         content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/vector/environments/{env}/database/reset-password'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Databases
-      subgroupDescription: |-
-        Manage database credentials for production environments. Each environment has its
-        own isolated database with credentials that can be rotated for security.
-      title: 'Reset Password'
-      description: |-
-        Rotates the database password for a production environment via Ymir.
-        The old password is immediately invalidated.
-
-        The new password is returned ONLY in this response - store it securely
-        as it cannot be retrieved again.
-
-        **Important:** After rotating the password, you must redeploy the environment
-        for your application to pick up the new credentials.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      env:
-        custom: []
-        name: env
-        description: 'The environment ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      env: 01jfgxk4nqrst5vwx9yz0abcdg
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
-                  "name": "production",
-                  "is_production": true,
-                  "status": "active",
-                  "provisioning_step": "complete",
-                  "failure_reason": null,
-                  "php_version": "8.3",
-                  "tags": [],
-                  "fqdn": "wispy-dust.vectorpages.com",
-                  "custom_domain": "example.com",
-                  "subdomain": "wispy-dust",
-                  "database_user": "user_abc123_production",
-                  "database_password": "aBcD1234!@#$EfGh5678",
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
-              },
-              "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 400
-        content: '{"data": {}, "message": "Environment does not have a database user configured. Deploy the environment first.", "http_status": 400}'
-        headers: []
-        description: 'No Database User'
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
-        status: 500
-        content: '{"data": {}, "message": "Failed to rotate database password", "http_status": 500}'
-        headers: []
-        description: 'Rotation Failed'
     responseFields: []
     auth:
       - headers

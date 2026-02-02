@@ -99,7 +99,7 @@ paths:
                       updated_at: '2025-05-27T09:50:21+00:00'
                   links: {  }
                   meta: {  }
-                  message: Success
+                  message: 'Sites retrieved successfully'
                   http_status: 200
                 properties:
                   data:
@@ -209,7 +209,7 @@ paths:
                     properties: {  }
                   message:
                     type: string
-                    example: Success
+                    example: 'Sites retrieved successfully'
                   http_status:
                     type: integer
                     example: 200
@@ -1097,94 +1097,6 @@ paths:
                   http_status:
                     type: integer
                     example: 200
-      tags:
-        - Sites
-    parameters:
-      -
-        in: path
-        name: env
-        description: 'The environment ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/sites/{site}/clone':
-    post:
-      summary: 'Clone Site'
-      operationId: cloneSite
-      description: "Creates a new site by cloning an existing site's development container,\nincluding files and database. Only the development container is cloned;\nproduction and staging environments are not copied. The new site is created\nwith fresh, empty environments.\n\nThis workflow is useful for testing larger redesigns or refactors in\nisolation while still allowing maintenance of the original site. The cloned\nsite operates independently, so changes to one do not affect the other.\n\nThe new site inherits attributes from the source site unless overridden in\nthe request. The cloned site is created with a `pending` status and will\ntransition to `active` once the clone operation completes."
-      parameters: []
-      responses:
-        201:
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDF
-                    account_id: 1
-                    your_customer_id: cust_12345
-                    status: pending
-                    tags:
-                      - wordpress
-                      - clone
-                    dev_domain: site-xyz789.dev.example.com
-                    dev_db_username: db-01jfgxk4nqrst5vwx9yz0abcdf
-                    dev_db_password: 'aBcD1234!@#$EfGh5678'
-                    environments: []
-                    created_at: '2025-05-27T09:50:21+00:00'
-                    updated_at: '2025-05-27T09:50:21+00:00'
-                  message: 'Vector site clone initiated'
-                  http_status: 201
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
-                      account_id:
-                        type: integer
-                        example: 1
-                      your_customer_id:
-                        type: string
-                        example: cust_12345
-                      status:
-                        type: string
-                        example: pending
-                      tags:
-                        type: array
-                        example:
-                          - wordpress
-                          - clone
-                        items:
-                          type: string
-                      dev_domain:
-                        type: string
-                        example: site-xyz789.dev.example.com
-                      dev_db_username:
-                        type: string
-                        example: db-01jfgxk4nqrst5vwx9yz0abcdf
-                      dev_db_password:
-                        type: string
-                        example: 'aBcD1234!@#$EfGh5678'
-                      environments:
-                        type: array
-                        example: []
-                      created_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                      updated_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                  message:
-                    type: string
-                    example: 'Vector site clone initiated'
-                  http_status:
-                    type: integer
-                    example: 201
         401:
           description: Unauthenticated
           content:
@@ -1233,7 +1145,7 @@ paths:
                 type: object
                 example:
                   data: {  }
-                  message: 'Site not found'
+                  message: 'Environment not found'
                   http_status: 404
                 properties:
                   data:
@@ -1241,109 +1153,18 @@ paths:
                     properties: {  }
                   message:
                     type: string
-                    example: 'Site not found'
+                    example: 'Environment not found'
                   http_status:
                     type: integer
                     example: 404
-        422:
-          description: ''
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  -
-                    description: 'Validation Error - Site Not Active'
-                    type: object
-                    example:
-                      data: {  }
-                      errors:
-                        site:
-                          - 'Source site must be in active state to clone.'
-                      message: 'Validation failed'
-                      http_status: 422
-                    properties:
-                      data:
-                        type: object
-                        properties: {  }
-                      errors:
-                        type: object
-                        properties:
-                          site:
-                            type: array
-                            example:
-                              - 'Source site must be in active state to clone.'
-                            items:
-                              type: string
-                      message:
-                        type: string
-                        example: 'Validation failed'
-                      http_status:
-                        type: integer
-                        example: 422
-                  -
-                    description: 'Validation Error - No Dev Container'
-                    type: object
-                    example:
-                      data: {  }
-                      errors:
-                        site:
-                          - 'Source site must have a dev container to clone.'
-                      message: 'Validation failed'
-                      http_status: 422
-                    properties:
-                      data:
-                        type: object
-                        properties: {  }
-                      errors:
-                        type: object
-                        properties:
-                          site:
-                            type: array
-                            example:
-                              - 'Source site must have a dev container to clone.'
-                            items:
-                              type: string
-                      message:
-                        type: string
-                        example: 'Validation failed'
-                      http_status:
-                        type: integer
-                        example: 422
       tags:
         - Sites
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                your_customer_id:
-                  type:
-                    - string
-                    - 'null'
-                  description: 'Optional customer identifier. Inherits from source if not provided.'
-                  example: cust_67890
-                dev_php_version:
-                  type:
-                    - string
-                    - 'null'
-                  description: 'Optional PHP version. Inherits from source if not provided.'
-                  example: '8.3'
-                tags:
-                  type: array
-                  description: 'Optional tags. Inherits from source if not provided.'
-                  example:
-                    - wordpress
-                    - clone
-                  items:
-                    type: string
     parameters:
       -
         in: path
-        name: site
-        description: 'The source site ID to clone from.'
-        example: 01jfgxk4nqrst5vwx9yz0abcde
+        name: env
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
           type: string
@@ -1679,11 +1500,250 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/sites/{site}/clone':
+    post:
+      summary: 'Clone Site'
+      operationId: cloneSite
+      description: "Creates a new site by cloning an existing site's development container,\nincluding files and database. Only the development container is cloned;\nproduction and staging environments are not copied. The new site is created\nwith fresh, empty environments.\n\nThis workflow is useful for testing larger redesigns or refactors in\nisolation while still allowing maintenance of the original site. The cloned\nsite operates independently, so changes to one do not affect the other.\n\nThe new site inherits attributes from the source site unless overridden in\nthe request. The cloned site is created with a `pending` status and will\ntransition to `active` once the clone operation completes."
+      parameters: []
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                    account_id: 1
+                    your_customer_id: cust_12345
+                    status: pending
+                    tags:
+                      - wordpress
+                      - clone
+                    dev_domain: site-xyz789.dev.example.com
+                    dev_db_username: db-01jfgxk4nqrst5vwx9yz0abcdf
+                    dev_db_password: 'aBcD1234!@#$EfGh5678'
+                    environments: []
+                    created_at: '2025-05-27T09:50:21+00:00'
+                    updated_at: '2025-05-27T09:50:21+00:00'
+                  message: 'Vector site clone initiated'
+                  http_status: 201
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      account_id:
+                        type: integer
+                        example: 1
+                      your_customer_id:
+                        type: string
+                        example: cust_12345
+                      status:
+                        type: string
+                        example: pending
+                      tags:
+                        type: array
+                        example:
+                          - wordpress
+                          - clone
+                        items:
+                          type: string
+                      dev_domain:
+                        type: string
+                        example: site-xyz789.dev.example.com
+                      dev_db_username:
+                        type: string
+                        example: db-01jfgxk4nqrst5vwx9yz0abcdf
+                      dev_db_password:
+                        type: string
+                        example: 'aBcD1234!@#$EfGh5678'
+                      environments:
+                        type: array
+                        example: []
+                      created_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                  message:
+                    type: string
+                    example: 'Vector site clone initiated'
+                  http_status:
+                    type: integer
+                    example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Validation Error - Site Not Active'
+                    type: object
+                    example:
+                      data: {  }
+                      errors:
+                        site:
+                          - 'Source site must be in active state to clone.'
+                      message: 'Validation failed'
+                      http_status: 422
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      errors:
+                        type: object
+                        properties:
+                          site:
+                            type: array
+                            example:
+                              - 'Source site must be in active state to clone.'
+                            items:
+                              type: string
+                      message:
+                        type: string
+                        example: 'Validation failed'
+                      http_status:
+                        type: integer
+                        example: 422
+                  -
+                    description: 'Validation Error - No Dev Container'
+                    type: object
+                    example:
+                      data: {  }
+                      errors:
+                        site:
+                          - 'Source site must have a dev container to clone.'
+                      message: 'Validation failed'
+                      http_status: 422
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      errors:
+                        type: object
+                        properties:
+                          site:
+                            type: array
+                            example:
+                              - 'Source site must have a dev container to clone.'
+                            items:
+                              type: string
+                      message:
+                        type: string
+                        example: 'Validation failed'
+                      http_status:
+                        type: integer
+                        example: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                your_customer_id:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional customer identifier. Inherits from source if not provided.'
+                  example: cust_67890
+                dev_php_version:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional PHP version. Inherits from source if not provided.'
+                  example: '8.3'
+                tags:
+                  type: array
+                  description: 'Optional tags. Inherits from source if not provided.'
+                  example:
+                    - wordpress
+                    - clone
+                  items:
+                    type: string
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The source site ID to clone from.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/sites/{site}/sftp/reset-password':
     post:
       summary: 'Reset Password'
       operationId: sitesSFTPResetPassword
-      description: "Generates a new SFTP password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\nSFTP connection details:\n- hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)\n- port: 22\n- username: site subdomain (e.g., my-site)\n- password: the generated password"
+      description: "Generates a new SFTP password for the site's development container.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely—it cannot be retrieved again.\n\nSFTP connection details:\n- hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)\n- port: 22\n- username: site subdomain (e.g., my-site)\n- password: the generated password"
       parameters: []
       responses:
         200:
@@ -1837,7 +1897,7 @@ paths:
     post:
       summary: 'Reset Password'
       operationId: sitesDatabasesResetPassword
-      description: "Generates a new database password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again."
+      description: "Generates a new database password for the site's development container.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely—it cannot be retrieved again."
       parameters: []
       responses:
         200:
@@ -2078,6 +2138,26 @@ paths:
                   http_status:
                     type: integer
                     example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
         422:
           description: 'Empty Body'
           content:
@@ -2292,6 +2372,26 @@ paths:
                   http_status:
                     type: integer
                     example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
         422:
           description: 'Validation Error'
           content:
@@ -2617,6 +2717,161 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/sites/{site}/db/export':
+    post:
+      summary: 'Create Export'
+      operationId: sitesDatabasesCreateExport
+      description: "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
+      parameters: []
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    status: pending
+                    format: sql
+                    size_bytes: null
+                    duration_ms: null
+                    error_message: null
+                    download_expires_at: null
+                    created_at: '2025-01-23T10:00:00+00:00'
+                    started_at: null
+                    completed_at: null
+                  message: 'Database export started'
+                  http_status: 202
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      status:
+                        type: string
+                        example: pending
+                      format:
+                        type: string
+                        example: sql
+                      size_bytes:
+                        type: string
+                        example: null
+                      duration_ms:
+                        type: string
+                        example: null
+                      error_message:
+                        type: string
+                        example: null
+                      download_expires_at:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-01-23T10:00:00+00:00'
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                  message:
+                    type: string
+                    example: 'Database export started'
+                  http_status:
+                    type: integer
+                    example: 202
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                format:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Export format. Currently only "sql" is supported. Default: sql.'
+                  example: sql
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/sites/{site}/db/imports/{import}':
     get:
       summary: 'Get Import Status'
@@ -2784,141 +3039,6 @@ paths:
         name: import
         description: 'The import ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdf
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/sites/{site}/db/export':
-    post:
-      summary: 'Create Export'
-      operationId: sitesDatabasesCreateExport
-      description: "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
-      parameters: []
-      responses:
-        202:
-          description: Accepted
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    status: pending
-                    format: sql
-                    size_bytes: null
-                    duration_ms: null
-                    error_message: null
-                    download_expires_at: null
-                    created_at: '2025-01-23T10:00:00+00:00'
-                    started_at: null
-                    completed_at: null
-                  message: 'Database export started'
-                  http_status: 202
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                      vector_site_id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      status:
-                        type: string
-                        example: pending
-                      format:
-                        type: string
-                        example: sql
-                      size_bytes:
-                        type: string
-                        example: null
-                      duration_ms:
-                        type: string
-                        example: null
-                      error_message:
-                        type: string
-                        example: null
-                      download_expires_at:
-                        type: string
-                        example: null
-                      created_at:
-                        type: string
-                        example: '2025-01-23T10:00:00+00:00'
-                      started_at:
-                        type: string
-                        example: null
-                      completed_at:
-                        type: string
-                        example: null
-                  message:
-                    type: string
-                    example: 'Database export started'
-                  http_status:
-                    type: integer
-                    example: 202
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthenticated
-                  http_status: 401
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthenticated
-                  http_status:
-                    type: integer
-                    example: 401
-        403:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthorized
-                  http_status: 403
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthorized
-                  http_status:
-                    type: integer
-                    example: 403
-      tags:
-        - Sites
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                format:
-                  type:
-                    - string
-                    - 'null'
-                  description: 'Export format. Currently only "sql" is supported. Default: sql.'
-                  example: sql
-    parameters:
-      -
-        in: path
-        name: site
-        description: 'The site ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
         schema:
           type: string
@@ -3154,7 +3274,7 @@ paths:
               schema:
                 oneOf:
                   -
-                    description: Advanced
+                    description: 'Provisioning Progressed'
                     type: object
                     example:
                       data:
@@ -3307,6 +3427,66 @@ paths:
                       http_status:
                         type: integer
                         example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Environment not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Environment not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
       requestBody:
@@ -3333,7 +3513,7 @@ paths:
     get:
       summary: 'Get Logs'
       operationId: sitesLogsGetLogs
-      description: "Retrieves logs for the specified Vector site. Logs are returned in reverse\nchronological order (newest first).\n\nUse the `environment` and `deployment_id` filters to narrow down results."
+      description: "Retrieves logs for the specified Vector site. Logs are returned in reverse\nchronological order (newest first).\n\nUse the `environment`, `deployment_id`, and `level` filters to narrow down results.\nUse cursor-based pagination for large result sets.\n\nRate limited to 60 queries per hour per account. Query time window is limited to 24 hours."
       parameters:
         -
           in: query
@@ -3395,6 +3575,30 @@ paths:
               - 'null'
             description: 'Filter by deployment ID.'
             example: 01jfgxk4nqrst5vwx9yz0abcdh
+        -
+          in: query
+          name: level
+          description: 'Filter by log level (e.g., error, warning, info).'
+          example: error
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            description: 'Filter by log level (e.g., error, warning, info).'
+            example: error
+        -
+          in: query
+          name: cursor
+          description: 'Pagination cursor from previous response.'
+          example: abc123xyz
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            description: 'Pagination cursor from previous response.'
+            example: abc123xyz
       responses:
         200:
           description: Success
@@ -3404,98 +3608,106 @@ paths:
                 type: object
                 example:
                   data:
-                    tables:
-                      -
-                        name: '0'
-                        columns:
-                          -
-                            name: _time
-                            type: datetime
-                          -
-                            name: message
-                            type: string
-                          -
-                            name: level
-                            type: string
-                        rows:
-                          -
-                            - '2025-05-27T09:50:21Z'
-                            - 'Request completed'
-                            - info
-                    status:
-                      rowsExamined: 1000
-                      rowsMatched: 50
+                    logs:
+                      tables:
+                        -
+                          name: '0'
+                          columns:
+                            -
+                              name: _time
+                              type: datetime
+                            -
+                              name: message
+                              type: string
+                            -
+                              name: level
+                              type: string
+                          rows:
+                            -
+                              - '2025-05-27T09:50:21Z'
+                              - 'Request completed'
+                              - info
+                      status:
+                        rowsExamined: 1000
+                        rowsMatched: 50
+                    cursor: abc123xyz
+                    has_more: true
                   message: 'Logs retrieved successfully'
                   http_status: 200
                 properties:
                   data:
                     type: object
                     properties:
-                      tables:
-                        type: array
-                        example:
-                          -
-                            name: '0'
-                            columns:
-                              -
-                                name: _time
-                                type: datetime
-                              -
-                                name: message
-                                type: string
-                              -
-                                name: level
-                                type: string
-                            rows:
-                              -
-                                - '2025-05-27T09:50:21Z'
-                                - 'Request completed'
-                                - info
-                        items:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                              example: '0'
-                            columns:
-                              type: array
-                              example:
-                                -
-                                  name: _time
-                                  type: datetime
-                                -
-                                  name: message
-                                  type: string
-                                -
-                                  name: level
-                                  type: string
-                              items:
-                                type: object
-                                properties:
-                                  name:
-                                    type: string
-                                    example: _time
-                                  type:
-                                    type: string
-                                    example: datetime
-                            rows:
-                              type: array
-                              example:
-                                -
-                                  - '2025-05-27T09:50:21Z'
-                                  - 'Request completed'
-                                  - info
-                              items:
-                                type: array
-                      status:
+                      logs:
                         type: object
                         properties:
-                          rowsExamined:
-                            type: integer
-                            example: 1000
-                          rowsMatched:
-                            type: integer
-                            example: 50
+                          tables:
+                            type: array
+                            example:
+                              -
+                                name: '0'
+                                columns:
+                                  -
+                                    name: _time
+                                    type: datetime
+                                  -
+                                    name: message
+                                    type: string
+                                  -
+                                    name: level
+                                    type: string
+                                rows:
+                                  -
+                                    - '2025-05-27T09:50:21Z'
+                                    - 'Request completed'
+                                    - info
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: '0'
+                                columns:
+                                  type: array
+                                  example:
+                                    -
+                                      name: _time
+                                      type: datetime
+                                    -
+                                      name: message
+                                      type: string
+                                    -
+                                      name: level
+                                      type: string
+                                  items:
+                                    type: object
+                                    properties:
+                                      name: { type: string, example: _time }
+                                      type: { type: string, example: datetime }
+                                rows:
+                                  type: array
+                                  example:
+                                    -
+                                      - '2025-05-27T09:50:21Z'
+                                      - 'Request completed'
+                                      - info
+                                  items:
+                                    type: array
+                          status:
+                            type: object
+                            properties:
+                              rowsExamined:
+                                type: integer
+                                example: 1000
+                              rowsMatched:
+                                type: integer
+                                example: 50
+                      cursor:
+                        type: string
+                        example: abc123xyz
+                      has_more:
+                        type: boolean
+                        example: true
                   message:
                     type: string
                     example: 'Logs retrieved successfully'
@@ -3562,6 +3774,58 @@ paths:
                   http_status:
                     type: integer
                     example: 404
+        422:
+          description: 'Time Window Exceeded'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    time_window:
+                      - 'The query time window cannot exceed 24 hours.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      time_window:
+                        type: array
+                        example:
+                          - 'The query time window cannot exceed 24 hours.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
+        429:
+          description: 'Rate Limit Exceeded'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Too many log queries. Rate limit: 60 per hour.'
+                  http_status: 429
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Too many log queries. Rate limit: 60 per hour.'
+                  http_status:
+                    type: integer
+                    example: 429
       tags:
         - Sites
     parameters:
@@ -3614,6 +3878,66 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
     post:
@@ -3646,6 +3970,98 @@ paths:
                   http_status:
                     type: integer
                     example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    hostname:
+                      - 'The hostname field is required.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      hostname:
+                        type: array
+                        example:
+                          - 'The hostname field is required.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
       tags:
         - Sites
       requestBody:
@@ -3711,6 +4127,66 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
     post:
@@ -3743,6 +4219,98 @@ paths:
                   http_status:
                     type: integer
                     example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    hostname:
+                      - 'The hostname field is required.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      hostname:
+                        type: array
+                        example:
+                          - 'The hostname field is required.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
       tags:
         - Sites
       requestBody:
@@ -3808,6 +4376,66 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
     post:
@@ -3840,6 +4468,98 @@ paths:
                   http_status:
                     type: integer
                     example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    ip:
+                      - 'The ip field is required.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      ip:
+                        type: array
+                        example:
+                          - 'The ip field is required.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
       tags:
         - Sites
       requestBody:
@@ -3868,7 +4588,7 @@ paths:
     get:
       summary: 'List Rate Limits'
       operationId: 'sitesWAF:RateLimitsListRateLimits'
-      description: 'Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone.'
+      description: 'Retrieves all rate limit rules configured for a site.'
       parameters: []
       responses:
         200:
@@ -3971,6 +4691,66 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
     post:
@@ -4061,6 +4841,66 @@ paths:
                   http_status:
                     type: integer
                     example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
         422:
           description: ''
           content:
@@ -4280,26 +5120,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
-        404:
-          description: 'Not Found'
+        401:
+          description: Unauthenticated
           content:
             application/json:
               schema:
                 type: object
                 example:
                   data: {  }
-                  message: 'Rate limit not found'
-                  http_status: 404
+                  message: Unauthenticated
+                  http_status: 401
                 properties:
                   data:
                     type: object
                     properties: {  }
                   message:
                     type: string
-                    example: 'Rate limit not found'
+                    example: Unauthenticated
                   http_status:
                     type: integer
-                    example: 404
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Rate limit not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Rate limit not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
       tags:
         - Sites
     put:
@@ -4390,6 +5290,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Rate limit not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Rate limit not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
         422:
           description: 'Validation Error'
           content:
@@ -4506,6 +5486,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Rate limit not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Rate limit not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
       tags:
         - Sites
     parameters:
@@ -4564,6 +5624,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Allowed referrer not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Allowed referrer not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
       tags:
         - Sites
     parameters:
@@ -4614,6 +5754,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Blocked referrer not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Blocked referrer not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
       tags:
         - Sites
     parameters:
@@ -4664,6 +5884,86 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Blocked IP not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Blocked IP not found'
+                      http_status:
+                        type: integer
+                        example: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    example:
+                      data: {  }
+                      message: 'Site not found'
+                      http_status: 404
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        example: 'Site not found'
+                      http_status:
+                        type: integer
+                        example: 404
       tags:
         - Sites
     parameters:
@@ -4755,6 +6055,66 @@ paths:
                       http_status:
                         type: integer
                         example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Site not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Site not found'
+                  http_status:
+                    type: integer
+                    example: 404
       tags:
         - Sites
       requestBody:
@@ -7357,6 +8717,212 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/environments/{env}/database/reset-password':
+    post:
+      summary: 'Reset Password'
+      operationId: environmentsDatabasesResetPassword
+      description: "Rotates the database password for a production environment via Ymir.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely—it cannot be retrieved again.\n\n> [!NOTE]\n> After rotating the password, you must redeploy the environment for your application to pick up the new credentials."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    your_customer_id: customer-123
+                    name: production
+                    is_production: true
+                    status: active
+                    provisioning_step: complete
+                    failure_reason: null
+                    php_version: '8.3'
+                    tags: []
+                    fqdn: wispy-dust.vectorpages.com
+                    custom_domain: example.com
+                    subdomain: wispy-dust
+                    database_user: user_abc123_production
+                    database_password: 'aBcD1234!@#$EfGh5678'
+                    created_at: '2024-01-01T00:00:00.000000Z'
+                    updated_at: '2024-01-01T00:00:00.000000Z'
+                  message: 'Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.'
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      your_customer_id:
+                        type: string
+                        example: customer-123
+                      name:
+                        type: string
+                        example: production
+                      is_production:
+                        type: boolean
+                        example: true
+                      status:
+                        type: string
+                        example: active
+                      provisioning_step:
+                        type: string
+                        example: complete
+                      failure_reason:
+                        type: string
+                        example: null
+                      php_version:
+                        type: string
+                        example: '8.3'
+                      tags:
+                        type: array
+                        example: []
+                      fqdn:
+                        type: string
+                        example: wispy-dust.vectorpages.com
+                      custom_domain:
+                        type: string
+                        example: example.com
+                      subdomain:
+                        type: string
+                        example: wispy-dust
+                      database_user:
+                        type: string
+                        example: user_abc123_production
+                      database_password:
+                        type: string
+                        example: 'aBcD1234!@#$EfGh5678'
+                      created_at:
+                        type: string
+                        example: '2024-01-01T00:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-01-01T00:00:00.000000Z'
+                  message:
+                    type: string
+                    example: 'Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.'
+                  http_status:
+                    type: integer
+                    example: 200
+        400:
+          description: 'No Database User'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Environment does not have a database user configured. Deploy the environment first.'
+                  http_status: 400
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Environment does not have a database user configured. Deploy the environment first.'
+                  http_status:
+                    type: integer
+                    example: 400
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Environment not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Environment not found'
+                  http_status:
+                    type: integer
+                    example: 404
+        500:
+          description: 'Rotation Failed'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Failed to rotate database password'
+                  http_status: 500
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Failed to rotate database password'
+                  http_status:
+                    type: integer
+                    example: 500
+      tags:
+        - Environments
+    parameters:
+      -
+        in: path
+        name: env
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/sites/{site}/environments':
     post:
       summary: 'Create Environment'
@@ -7587,212 +9153,6 @@ paths:
         name: site
         description: 'The site ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/environments/{env}/database/reset-password':
-    post:
-      summary: 'Reset Password'
-      operationId: environmentsDatabasesResetPassword
-      description: "Rotates the database password for a production environment via Ymir.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\n**Important:** After rotating the password, you must redeploy the environment\nfor your application to pick up the new credentials."
-      parameters: []
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    your_customer_id: customer-123
-                    name: production
-                    is_production: true
-                    status: active
-                    provisioning_step: complete
-                    failure_reason: null
-                    php_version: '8.3'
-                    tags: []
-                    fqdn: wispy-dust.vectorpages.com
-                    custom_domain: example.com
-                    subdomain: wispy-dust
-                    database_user: user_abc123_production
-                    database_password: 'aBcD1234!@#$EfGh5678'
-                    created_at: '2024-01-01T00:00:00.000000Z'
-                    updated_at: '2024-01-01T00:00:00.000000Z'
-                  message: 'Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.'
-                  http_status: 200
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                      vector_site_id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      your_customer_id:
-                        type: string
-                        example: customer-123
-                      name:
-                        type: string
-                        example: production
-                      is_production:
-                        type: boolean
-                        example: true
-                      status:
-                        type: string
-                        example: active
-                      provisioning_step:
-                        type: string
-                        example: complete
-                      failure_reason:
-                        type: string
-                        example: null
-                      php_version:
-                        type: string
-                        example: '8.3'
-                      tags:
-                        type: array
-                        example: []
-                      fqdn:
-                        type: string
-                        example: wispy-dust.vectorpages.com
-                      custom_domain:
-                        type: string
-                        example: example.com
-                      subdomain:
-                        type: string
-                        example: wispy-dust
-                      database_user:
-                        type: string
-                        example: user_abc123_production
-                      database_password:
-                        type: string
-                        example: 'aBcD1234!@#$EfGh5678'
-                      created_at:
-                        type: string
-                        example: '2024-01-01T00:00:00.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2024-01-01T00:00:00.000000Z'
-                  message:
-                    type: string
-                    example: 'Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.'
-                  http_status:
-                    type: integer
-                    example: 200
-        400:
-          description: 'No Database User'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Environment does not have a database user configured. Deploy the environment first.'
-                  http_status: 400
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Environment does not have a database user configured. Deploy the environment first.'
-                  http_status:
-                    type: integer
-                    example: 400
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthenticated
-                  http_status: 401
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthenticated
-                  http_status:
-                    type: integer
-                    example: 401
-        403:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthorized
-                  http_status: 403
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthorized
-                  http_status:
-                    type: integer
-                    example: 403
-        404:
-          description: 'Not Found'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Environment not found'
-                  http_status: 404
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Environment not found'
-                  http_status:
-                    type: integer
-                    example: 404
-        500:
-          description: 'Rotation Failed'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Failed to rotate database password'
-                  http_status: 500
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Failed to rotate database password'
-                  http_status:
-                    type: integer
-                    example: 500
-      tags:
-        - Environments
-    parameters:
-      -
-        in: path
-        name: env
-        description: 'The environment ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
           type: string
@@ -8908,7 +10268,7 @@ paths:
     post:
       summary: 'Create API Key'
       operationId: accountAPIKeysCreateAPIKey
-      description: "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `mcp` - Full MCP access (for AI assistants like Claude)\n- `account:read` - Read account information\n- `site:read` - Read sites, environments, deployments, database operations\n- `site:write` - Manage sites, environments, deployments, database import/export\n- `domain:read` - Read domains\n- `domain:write` - Manage domains\n- `log:read` - Read site logs\n- `cdn:read` - Read CDN settings\n- `cdn:write` - Manage CDN settings and cache\n- `webhook:read` - Read webhooks\n- `webhook:write` - Manage webhooks\n- `secret:read` - Read API keys and global secrets\n- `secret:write` - Manage API keys and global secrets\n- `sshkey:read` - Read SSH keys\n- `sshkey:write` - Manage SSH keys\n- `events:read` - Read event logs"
+      description: "Creates a new API key for the authenticated user.\n\n> [!WARNING]\n> The API key is returned ONLY in this response. Store it securely—it cannot be retrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `mcp` - Full MCP access (for AI assistants like Claude)\n- `account:read` - Read account information\n- `site:read` - Read sites, environments, deployments, database operations\n- `site:write` - Manage sites, environments, deployments, database import/export\n- `domain:read` - Read domains\n- `domain:write` - Manage domains\n- `log:read` - Read site logs\n- `cdn:read` - Read CDN settings\n- `cdn:write` - Manage CDN settings and cache\n- `webhook:read` - Read webhooks\n- `webhook:write` - Manage webhooks\n- `secret:read` - Read API keys and global secrets\n- `secret:write` - Manage API keys and global secrets\n- `sshkey:read` - Read SSH keys\n- `sshkey:write` - Manage SSH keys\n- `events:read` - Read event logs"
       parameters: []
       responses:
         201:
@@ -10256,7 +11616,7 @@ paths:
     post:
       summary: 'Create Webhook'
       operationId: createWebhook
-      description: "Creates a new webhook for the current account. For HTTP webhooks, the secret\nis returned ONLY in this response - store it securely as it cannot be\nretrieved again (only rotated via the rotate-secret endpoint).\n\nSlack webhooks do not require secrets as they use URL-based authentication."
+      description: "Creates a new webhook for the current account.\n\n> [!WARNING]\n> For HTTP webhooks, the secret is returned ONLY in this response. Store it securely—it cannot be retrieved again (only rotated via the rotate-secret endpoint).\n\nSlack webhooks do not require secrets as they use URL-based authentication."
       parameters: []
       responses:
         201:
@@ -11129,7 +12489,7 @@ paths:
     post:
       summary: 'Rotate Secret'
       operationId: rotateSecret
-      description: "Generates a new secret for the webhook. The old secret is immediately\ninvalidated and any pending deliveries will use the new secret.\n\nThe new secret is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\nThis endpoint is only available for HTTP webhooks. Slack webhooks do not\nuse secrets."
+      description: "Generates a new secret for the webhook. The old secret is immediately\ninvalidated and any pending deliveries will use the new secret.\n\n> [!WARNING]\n> The new secret is returned ONLY in this response. Store it securely—it cannot be retrieved again.\n\nThis endpoint is only available for HTTP webhooks. Slack webhooks do not\nuse secrets."
       parameters: []
       responses:
         200:

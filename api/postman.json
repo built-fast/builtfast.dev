@@ -60,7 +60,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"account_id\": 1,\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"site-abc123.dev.example.com\",\n            \"environments\": [\n                {\n                    \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                    \"custom_domain\": \"ourshop.com\",\n                    \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                    \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Success\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"account_id\": 1,\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"site-abc123.dev.example.com\",\n            \"environments\": [\n                {\n                    \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                    \"custom_domain\": \"ourshop.com\",\n                    \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                    \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Sites retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -176,6 +176,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"SSL status retrieved\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
                                 }
                             ]
                         },
@@ -218,74 +236,33 @@
                                     "header": [],
                                     "code": 200,
                                     "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"provisioning\",\n        \"provisioning_step\": \"deploying\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"SSL provisioning advanced from waiting_cert to deploying\",\n    \"http_status\": 200\n}",
-                                    "name": "Advanced"
+                                    "name": "Provisioning Progressed"
                                 },
                                 {
                                     "header": [],
                                     "code": 200,
                                     "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"provisioning\",\n        \"provisioning_step\": \"waiting_custom_dns\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns\",\n    \"http_status\": 200\n}",
                                     "name": "Waiting"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    "name": "Create Site",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"your_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.3\",\"tags\":[\"wordpress\",\"production\"]}"
-                        },
-                        "description": "Creates a new site for the authenticated account. The site is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nA development container is automatically provisioned for the site, accessible\nvia the `dev_domain` in the response."
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db-01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
-                            "name": "Created"
-                        },
-                        {
-                            "header": [],
-                            "code": 401,
-                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                            "name": "Unauthenticated"
-                        },
-                        {
-                            "header": [],
-                            "code": 403,
-                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                            "name": "Unauthorized"
-                        },
-                        {
-                            "header": [],
-                            "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"your_customer_id\": [\"The partner customer id field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                            "name": "Validation Error"
-                        },
-                        {
-                            "header": [],
-                            "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"cluster\": [\"No Vector cluster is configured for your account.\"]},\n    \"message\": \"No Vector cluster available for this account\",\n    \"http_status\": 422\n}",
-                            "name": "No Cluster Available"
                         }
                     ]
                 },
@@ -353,6 +330,193 @@
                             "code": 422,
                             "body": "{\n    \"data\": {},\n    \"errors\": {\"tags\": [\"Tags must be an array of strings.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                             "name": "Validation Error"
+                        }
+                    ]
+                },
+                {
+                    "name": "Suspend Site",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/sites\/:site\/suspend",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/suspend",
+                            "variable": [
+                                {
+                                    "id": "site",
+                                    "key": "site",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "The site ID."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Suspends a site's development container by scaling the ECS service to zero.\nThis reduces costs during low-traffic periods while preserving container\nresources for quick resumption.\n\nThe site must be in `active` status to be suspended. Suspended sites can be\nresumed using the unsuspend endpoint."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"suspended\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site suspension initiated\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                            "name": "Not Found"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"status\": [\"Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended.\"]},\n    \"message\": \"Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended.\",\n    \"http_status\": 422\n}",
+                            "name": "Invalid State"
+                        }
+                    ]
+                },
+                {
+                    "name": "Unsuspend Site",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/sites\/:site\/unsuspend",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/unsuspend",
+                            "variable": [
+                                {
+                                    "id": "site",
+                                    "key": "site",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "The site ID."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Resumes a previously suspended site's development container by scaling the\nECS service back to one. The site must be in `suspended` status to be unsuspended.\n\nAfter unsuspension, the site transitions back to `active` status and resumes\nserving traffic."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"active\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site unsuspension initiated\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                            "name": "Not Found"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"status\": [\"Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended.\"]},\n    \"message\": \"Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended.\",\n    \"http_status\": 422\n}",
+                            "name": "Invalid State"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Site",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/sites",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"your_customer_id\":\"cust_12345\",\"dev_php_version\":\"8.3\",\"tags\":[\"wordpress\",\"production\"]}"
+                        },
+                        "description": "Creates a new site for the authenticated account. The site is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nA development container is automatically provisioned for the site, accessible\nvia the `dev_domain` in the response."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db-01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
+                            "name": "Created"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"your_customer_id\": [\"The partner customer id field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Validation Error"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"cluster\": [\"No Vector cluster is configured for your account.\"]},\n    \"message\": \"No Vector cluster available for this account\",\n    \"http_status\": 422\n}",
+                            "name": "No Cluster Available"
                         }
                     ]
                 },
@@ -494,134 +658,6 @@
                     ]
                 },
                 {
-                    "name": "Suspend Site",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/suspend",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/suspend",
-                            "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                    "description": "The site ID."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Suspends a site's development container by scaling the ECS service to zero.\nThis reduces costs during low-traffic periods while preserving container\nresources for quick resumption.\n\nThe site must be in `active` status to be suspended. Suspended sites can be\nresumed using the unsuspend endpoint."
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"suspended\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site suspension initiated\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
-                        },
-                        {
-                            "header": [],
-                            "code": 401,
-                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                            "name": "Unauthenticated"
-                        },
-                        {
-                            "header": [],
-                            "code": 403,
-                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                            "name": "Unauthorized"
-                        },
-                        {
-                            "header": [],
-                            "code": 404,
-                            "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
-                            "name": "Not Found"
-                        },
-                        {
-                            "header": [],
-                            "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"status\": [\"Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended.\"]},\n    \"message\": \"Site cannot be suspended from current state 'pending'. Site must be 'active' to be suspended.\",\n    \"http_status\": 422\n}",
-                            "name": "Invalid State"
-                        }
-                    ]
-                },
-                {
-                    "name": "Unsuspend Site",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/unsuspend",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/unsuspend",
-                            "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                    "description": "The site ID."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Resumes a previously suspended site's development container by scaling the\nECS service back to one. The site must be in `suspended` status to be unsuspended.\n\nAfter unsuspension, the site transitions back to `active` status and resumes\nserving traffic."
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"account_id\": 1,\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"active\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site unsuspension initiated\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
-                        },
-                        {
-                            "header": [],
-                            "code": 401,
-                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                            "name": "Unauthenticated"
-                        },
-                        {
-                            "header": [],
-                            "code": 403,
-                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                            "name": "Unauthorized"
-                        },
-                        {
-                            "header": [],
-                            "code": 404,
-                            "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
-                            "name": "Not Found"
-                        },
-                        {
-                            "header": [],
-                            "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"status\": [\"Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended.\"]},\n    \"message\": \"Site cannot be unsuspended from current state 'active'. Site must be 'suspended' to be unsuspended.\",\n    \"http_status\": 422\n}",
-                            "name": "Invalid State"
-                        }
-                    ]
-                },
-                {
                     "name": "SFTP",
                     "description": "Manage SFTP access to your site's development container. SFTP provides secure\nfile transfer for uploading themes, plugins, and other files directly to your dev environment.",
                     "item": [
@@ -654,7 +690,7 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Generates a new SFTP password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\nSFTP connection details:\n- hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)\n- port: 22\n- username: site subdomain (e.g., my-site)\n- password: the generated password"
+                                "description": "Generates a new SFTP password for the site's development container.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again.\n\nSFTP connection details:\n- hostname: ssh.{partner-domain} (e.g., ssh.vectorpages.com)\n- port: 22\n- username: site subdomain (e.g., my-site)\n- password: the generated password"
                             },
                             "response": [
                                 {
@@ -718,7 +754,7 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Generates a new database password for the site's development container.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again."
+                                "description": "Generates a new database password for the site's development container.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again."
                             },
                             "response": [
                                 {
@@ -812,6 +848,12 @@
                                 },
                                 {
                                     "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
                                     "code": 422,
                                     "body": "{\"data\": {}, \"errors\": {\"content\": [\"SQL content is required in the request body\"]}, \"message\": \"Request body is empty\", \"http_status\": 422}",
                                     "name": "Empty Body"
@@ -876,6 +918,12 @@
                                     "code": 403,
                                     "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
                                     "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 },
                                 {
                                     "header": [],
@@ -962,6 +1010,67 @@
                             ]
                         },
                         {
+                            "name": "Create Export",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/export",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/export",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"format\":\"sql\"}"
+                                },
+                                "description": "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"format\": \"sql\",\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_expires_at\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database export started\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
                             "name": "Get Import Status",
                             "request": {
                                 "url": {
@@ -1022,61 +1131,6 @@
                                     "code": 404,
                                     "body": "{\"data\": {}, \"message\": \"Import not found\", \"http_status\": 404}",
                                     "name": "Not Found"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Create Export",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/db\/export",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/export",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"format\":\"sql\"}"
-                                },
-                                "description": "Start a database export operation. Dispatches an async job to create\nthe export and upload it to S3. Poll the status endpoint to check progress\nand retrieve the download URL when complete."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"format\": \"sql\",\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_expires_at\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database export started\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
                                 }
                             ]
                         },
@@ -1154,7 +1208,7 @@
                 },
                 {
                     "name": "Logs",
-                    "description": "Fetch logs for a Vector site. Supports filtering by time range,\nenvironment, and deployment.",
+                    "description": "Fetch logs for a Vector site. Supports filtering by time range,\nenvironment, deployment, and log level. Rate limited to 60 queries per hour per account.",
                     "item": [
                         {
                             "name": "Get Logs",
@@ -1192,9 +1246,21 @@
                                             "value": "01jfgxk4nqrst5vwx9yz0abcdh",
                                             "description": "Filter by deployment ID.",
                                             "disabled": false
+                                        },
+                                        {
+                                            "key": "level",
+                                            "value": "error",
+                                            "description": "Filter by log level (e.g., error, warning, info).",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "cursor",
+                                            "value": "abc123xyz",
+                                            "description": "Pagination cursor from previous response.",
+                                            "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=production&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=production&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh&level=error&cursor=abc123xyz",
                                     "variable": [
                                         {
                                             "id": "site",
@@ -1216,13 +1282,13 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Retrieves logs for the specified Vector site. Logs are returned in reverse\nchronological order (newest first).\n\nUse the `environment` and `deployment_id` filters to narrow down results."
+                                "description": "Retrieves logs for the specified Vector site. Logs are returned in reverse\nchronological order (newest first).\n\nUse the `environment`, `deployment_id`, and `level` filters to narrow down results.\nUse cursor-based pagination for large result sets.\n\nRate limited to 60 queries per hour per account. Query time window is limited to 24 hours."
                             },
                             "response": [
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"tables\": [\n            {\n                \"name\": \"0\",\n                \"columns\": [\n                    {\"name\": \"_time\", \"type\": \"datetime\"},\n                    {\"name\": \"message\", \"type\": \"string\"},\n                    {\"name\": \"level\", \"type\": \"string\"}\n                ],\n                \"rows\": [\n                    [\"2025-05-27T09:50:21Z\", \"Request completed\", \"info\"]\n                ]\n            }\n        ],\n        \"status\": {\n            \"rowsExamined\": 1000,\n            \"rowsMatched\": 50\n        }\n    },\n    \"message\": \"Logs retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"logs\": {\n            \"tables\": [\n                {\n                    \"name\": \"0\",\n                    \"columns\": [\n                        {\"name\": \"_time\", \"type\": \"datetime\"},\n                        {\"name\": \"message\", \"type\": \"string\"},\n                        {\"name\": \"level\", \"type\": \"string\"}\n                    ],\n                    \"rows\": [\n                        [\"2025-05-27T09:50:21Z\", \"Request completed\", \"info\"]\n                    ]\n                }\n            ],\n            \"status\": {\n                \"rowsExamined\": 1000,\n                \"rowsMatched\": 50\n            }\n        },\n        \"cursor\": \"abc123xyz\",\n        \"has_more\": true\n    },\n    \"message\": \"Logs retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -1242,6 +1308,18 @@
                                     "code": 404,
                                     "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
                                     "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"time_window\": [\"The query time window cannot exceed 24 hours.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "name": "Time Window Exceeded"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 429,
+                                    "body": "{\"data\": {}, \"message\": \"Too many log queries. Rate limit: 60 per hour.\", \"http_status\": 429}",
+                                    "name": "Rate Limit Exceeded"
                                 }
                             ]
                         }
@@ -1288,6 +1366,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": [\n        {\"hostname\": \"example.com\"},\n        {\"hostname\": \"*.example.com\"}\n    ],\n    \"message\": \"Allowed referrers retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1328,6 +1424,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": [\n        {\"hostname\": \"spam.com\"},\n        {\"hostname\": \"*.malicious.net\"}\n    ],\n    \"message\": \"Blocked referrers retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1371,6 +1485,30 @@
                                     "code": 201,
                                     "body": "{\n    \"data\": {\"hostname\": \"example.com\"},\n    \"message\": \"Allowed referrer added successfully\",\n    \"http_status\": 201\n}",
                                     "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"hostname\": [\"The hostname field is required.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "name": "Validation Error"
                                 }
                             ]
                         },
@@ -1417,6 +1555,30 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\"hostname\": \"example.com\"},\n    \"message\": \"Allowed referrer removed successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Allowed referrer not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1460,6 +1622,30 @@
                                     "code": 201,
                                     "body": "{\n    \"data\": {\"hostname\": \"spam.com\"},\n    \"message\": \"Blocked referrer added successfully\",\n    \"http_status\": 201\n}",
                                     "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"hostname\": [\"The hostname field is required.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "name": "Validation Error"
                                 }
                             ]
                         },
@@ -1506,6 +1692,30 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\"hostname\": \"spam.com\"},\n    \"message\": \"Blocked referrer removed successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Blocked referrer not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         }
@@ -1552,6 +1762,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": [\n        {\"ip\": \"192.168.1.100\"},\n        {\"ip\": \"10.0.0.0\"}\n    ],\n    \"message\": \"Blocked IPs retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1595,6 +1823,30 @@
                                     "code": 201,
                                     "body": "{\n    \"data\": {\"ip\": \"192.168.1.100\"},\n    \"message\": \"Blocked IP added successfully\",\n    \"http_status\": 201\n}",
                                     "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"ip\": [\"The ip field is required.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "name": "Validation Error"
                                 }
                             ]
                         },
@@ -1641,6 +1893,30 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\"ip\": \"192.168.1.100\"},\n    \"message\": \"Blocked IP removed successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Blocked IP not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         }
@@ -1679,7 +1955,7 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Retrieves all rate limit rules configured for a site. Maximum 25 rules per zone."
+                                "description": "Retrieves all rate limit rules configured for a site."
                             },
                             "response": [
                                 {
@@ -1687,6 +1963,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": [\n        {\n            \"id\": 12345,\n            \"name\": \"API Rate Limit\",\n            \"description\": \"Limit API requests to 100\/second\",\n            \"shield_zone_id\": 67890,\n            \"configuration\": {\n                \"request_count\": 100,\n                \"timeframe\": 1,\n                \"block_time\": 60,\n                \"value\": \"\/api\/*\",\n                \"action\": \"rate-limit\",\n                \"operator\": \"begins-with\",\n                \"variables\": [\"request-uri\"],\n                \"transformations\": [\"lowercase\"]\n            }\n        }\n    ],\n    \"message\": \"Rate limits retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1742,9 +2036,27 @@
                                 },
                                 {
                                     "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
                                     "code": 404,
                                     "body": "{\n    \"data\": {},\n    \"message\": \"Rate limit not found\",\n    \"http_status\": 404\n}",
                                     "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         },
@@ -1788,6 +2100,24 @@
                                     "code": 201,
                                     "body": "{\n    \"data\": {\n        \"id\": 12345,\n        \"name\": \"API Rate Limit\",\n        \"description\": \"Limit API requests to prevent abuse\",\n        \"shield_zone_id\": 67890,\n        \"configuration\": {\n            \"request_count\": 100,\n            \"timeframe\": 1,\n            \"block_time\": 60,\n            \"value\": \"\/api\/*\",\n            \"action\": \"rate-limit\",\n            \"operator\": \"begins-with\",\n            \"variables\": [\"request-uri\"],\n            \"transformations\": [\"lowercase\", \"url-decode\"]\n        }\n    },\n    \"message\": \"Rate limit created successfully\",\n    \"http_status\": 201\n}",
                                     "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 },
                                 {
                                     "header": [],
@@ -1858,6 +2188,30 @@
                                 },
                                 {
                                     "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Rate limit not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
                                     "code": 422,
                                     "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"operator\": [\"The match operator field must be a valid enum value.\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                                     "name": "Validation Error"
@@ -1913,6 +2267,30 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {},\n    \"message\": \"Rate limit deleted successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Rate limit not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         }
@@ -1974,6 +2352,24 @@
                                     "code": 200,
                                     "body": "{\n    \"data\": {\"url\": \"https:\/\/cdn.example.com\/style.css\"},\n    \"message\": \"URL purged successfully\",\n    \"http_status\": 200\n}",
                                     "name": "URL Purge"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
                                 }
                             ]
                         }
@@ -2309,7 +2705,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -2920,6 +3316,82 @@
                     ]
                 },
                 {
+                    "name": "Databases",
+                    "description": "Manage database credentials for production environments. Each environment has its\nown isolated database with credentials that can be rotated for security.",
+                    "item": [
+                        {
+                            "name": "Reset Password",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/database\/reset-password",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/database\/reset-password",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Rotates the database password for a production environment via Ymir.\nThe old password is immediately invalidated.\n\n> [!WARNING]\n> The new password is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again.\n\n> [!NOTE]\n> After rotating the password, you must redeploy the environment for your application to pick up the new credentials."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_user\": \"user_abc123_production\",\n        \"database_password\": \"aBcD1234!@#$EfGh5678\",\n        \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n        \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n    },\n    \"message\": \"Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 400,
+                                    "body": "{\"data\": {}, \"message\": \"Environment does not have a database user configured. Deploy the environment first.\", \"http_status\": 400}",
+                                    "name": "No Database User"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 500,
+                                    "body": "{\"data\": {}, \"message\": \"Failed to rotate database password\", \"http_status\": 500}",
+                                    "name": "Rotation Failed"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "Create Environment",
                     "request": {
                         "url": {
@@ -2957,7 +3429,7 @@
                         {
                             "header": [],
                             "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
                         },
                         {
@@ -3024,7 +3496,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.4\",\n        \"tags\": [\"live\", \"updated\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"newshop.com\",\n        \"custom_domain\": \"newshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment updated successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.4\",\n        \"tags\": [\"live\", \"updated\"],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"newshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment updated successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -3088,7 +3560,7 @@
                         {
                             "header": [],
                             "code": 202,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 202\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 202\n}",
                             "name": "Accepted"
                         },
                         {
@@ -3108,82 +3580,6 @@
                             "code": 404,
                             "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
                             "name": "Not Found"
-                        }
-                    ]
-                },
-                {
-                    "name": "Databases",
-                    "description": "Manage database credentials for production environments. Each environment has its\nown isolated database with credentials that can be rotated for security.",
-                    "item": [
-                        {
-                            "name": "Reset Password",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/database\/reset-password",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/database\/reset-password",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Rotates the database password for a production environment via Ymir.\nThe old password is immediately invalidated.\n\nThe new password is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\n**Important:** After rotating the password, you must redeploy the environment\nfor your application to pick up the new credentials."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"fqdn\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_user\": \"user_abc123_production\",\n        \"database_password\": \"aBcD1234!@#$EfGh5678\",\n        \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n        \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n    },\n    \"message\": \"Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 400,
-                                    "body": "{\"data\": {}, \"message\": \"Environment does not have a database user configured. Deploy the environment first.\", \"http_status\": 400}",
-                                    "name": "No Database User"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 500,
-                                    "body": "{\"data\": {}, \"message\": \"Failed to rotate database password\", \"http_status\": 500}",
-                                    "name": "Rotation Failed"
-                                }
-                            ]
                         }
                     ]
                 }
@@ -3554,7 +3950,7 @@
                                     "mode": "raw",
                                     "raw": "{\"name\":\"Production API Key\",\"abilities\":[\"site:read\",\"site:write\"],\"expires_at\":\"2025-12-31T23:59:59Z\"}"
                                 },
-                                "description": "Creates a new API key for the authenticated user. The plain text token is\nreturned ONLY in this response - store it securely as it cannot be\nretrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `mcp` - Full MCP access (for AI assistants like Claude)\n- `account:read` - Read account information\n- `site:read` - Read sites, environments, deployments, database operations\n- `site:write` - Manage sites, environments, deployments, database import\/export\n- `domain:read` - Read domains\n- `domain:write` - Manage domains\n- `log:read` - Read site logs\n- `cdn:read` - Read CDN settings\n- `cdn:write` - Manage CDN settings and cache\n- `webhook:read` - Read webhooks\n- `webhook:write` - Manage webhooks\n- `secret:read` - Read API keys and global secrets\n- `secret:write` - Manage API keys and global secrets\n- `sshkey:read` - Read SSH keys\n- `sshkey:write` - Manage SSH keys\n- `events:read` - Read event logs"
+                                "description": "Creates a new API key for the authenticated user.\n\n> [!WARNING]\n> The API key is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again.\n\nUse this token in the `Authorization` header for all API requests.\n\n##### Abilities\n\nAbilities control what operations the token can perform. Available abilities:\n\n- `*` - Full access (default)\n- `mcp` - Full MCP access (for AI assistants like Claude)\n- `account:read` - Read account information\n- `site:read` - Read sites, environments, deployments, database operations\n- `site:write` - Manage sites, environments, deployments, database import\/export\n- `domain:read` - Read domains\n- `domain:write` - Manage domains\n- `log:read` - Read site logs\n- `cdn:read` - Read CDN settings\n- `cdn:write` - Manage CDN settings and cache\n- `webhook:read` - Read webhooks\n- `webhook:write` - Manage webhooks\n- `secret:read` - Read API keys and global secrets\n- `secret:write` - Manage API keys and global secrets\n- `sshkey:read` - Read SSH keys\n- `sshkey:write` - Manage SSH keys\n- `events:read` - Read event logs"
                             },
                             "response": [
                                 {
@@ -4301,7 +4697,7 @@
                             "mode": "raw",
                             "raw": "{\"type\":\"http\",\"url\":\"https:\\\/\\\/example.com\\\/webhook\",\"events\":[\"site.created\",\"deployment.completed\"],\"enabled\":true}"
                         },
-                        "description": "Creates a new webhook for the current account. For HTTP webhooks, the secret\nis returned ONLY in this response - store it securely as it cannot be\nretrieved again (only rotated via the rotate-secret endpoint).\n\nSlack webhooks do not require secrets as they use URL-based authentication."
+                        "description": "Creates a new webhook for the current account.\n\n> [!WARNING]\n> For HTTP webhooks, the secret is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again (only rotated via the rotate-secret endpoint).\n\nSlack webhooks do not require secrets as they use URL-based authentication."
                     },
                     "response": [
                         {
@@ -4490,7 +4886,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Generates a new secret for the webhook. The old secret is immediately\ninvalidated and any pending deliveries will use the new secret.\n\nThe new secret is returned ONLY in this response - store it securely\nas it cannot be retrieved again.\n\nThis endpoint is only available for HTTP webhooks. Slack webhooks do not\nuse secrets."
+                        "description": "Generates a new secret for the webhook. The old secret is immediately\ninvalidated and any pending deliveries will use the new secret.\n\n> [!WARNING]\n> The new secret is returned ONLY in this response. Store it securely\u2014it cannot be retrieved again.\n\nThis endpoint is only available for HTTP webhooks. Slack webhooks do not\nuse secrets."
                     },
                     "response": [
                         {

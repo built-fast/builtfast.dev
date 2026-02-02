@@ -487,9 +487,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Create Webhook'
       description: |-
-        Creates a new webhook for the current account. For HTTP webhooks, the secret
-        is returned ONLY in this response - store it securely as it cannot be
-        retrieved again (only rotated via the rotate-secret endpoint).
+        Creates a new webhook for the current account.
+
+        > [!WARNING]
+        > For HTTP webhooks, the secret is returned ONLY in this response. Store it securely—it cannot be retrieved again (only rotated via the rotate-secret endpoint).
 
         Slack webhooks do not require secrets as they use URL-based authentication.
       authenticated: true
@@ -959,8 +960,8 @@ endpoints:
         Generates a new secret for the webhook. The old secret is immediately
         invalidated and any pending deliveries will use the new secret.
 
-        The new secret is returned ONLY in this response - store it securely
-        as it cannot be retrieved again.
+        > [!WARNING]
+        > The new secret is returned ONLY in this response. Store it securely—it cannot be retrieved again.
 
         This endpoint is only available for HTTP webhooks. Slack webhooks do not
         use secrets.

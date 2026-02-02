@@ -846,9 +846,10 @@ endpoints:
         as it cannot be retrieved again. Tokens can be revoked at any time.
       title: 'Create API Key'
       description: |-
-        Creates a new API key for the authenticated user. The plain text token is
-        returned ONLY in this response - store it securely as it cannot be
-        retrieved again.
+        Creates a new API key for the authenticated user.
+
+        > [!WARNING]
+        > The API key is returned ONLY in this response. Store it securely—it cannot be retrieved again.
 
         Use this token in the `Authorization` header for all API requests.
 
