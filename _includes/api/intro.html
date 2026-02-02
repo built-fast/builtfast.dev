@@ -89,15 +89,15 @@
         </div>
         <div class="code-block">
           <div class="code-block-body">
-<pre>{
-  <span class="syn-property">"data"</span>: {
-    <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7KXYZ..."</span>,
-    <span class="syn-property">"type"</span>: <span class="syn-string">"production"</span>,
-    <span class="syn-property">"status"</span>: <span class="syn-string">"active"</span>
+<pre><code class="language-json">{
+  "data": {
+    "id": "01HQ7KXYZ...",
+    "type": "production",
+    "status": "active"
   },
-  <span class="syn-property">"message"</span>: <span class="syn-string">"Success"</span>,
-  <span class="syn-property">"http_status"</span>: <span class="syn-number">200</span>
-}</pre>
+  "message": "Success",
+  "http_status": 200
+}</code></pre>
           </div>
         </div>
       </div>
@@ -109,14 +109,14 @@
         </div>
         <div class="code-block">
           <div class="code-block-body">
-<pre>{
-  <span class="syn-property">"data"</span>: [
-    { <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7K..."</span> },
-    { <span class="syn-property">"id"</span>: <span class="syn-string">"01HQ7L..."</span> }
+<pre><code class="language-json">{
+  "data": [
+    { "id": "01HQ7K..." },
+    { "id": "01HQ7L..." }
   ],
-  <span class="syn-property">"links"</span>: { <span class="syn-property">"next"</span>: <span class="syn-string">"..."</span> },
-  <span class="syn-property">"meta"</span>: { <span class="syn-property">"total"</span>: <span class="syn-number">42</span> }
-}</pre>
+  "links": { "next": "..." },
+  "meta": { "total": 42 }
+}</code></pre>
           </div>
         </div>
       </div>
@@ -128,13 +128,13 @@
         </div>
         <div class="code-block">
           <div class="code-block-body">
-<pre>{
-  <span class="syn-property">"errors"</span>: {
-    <span class="syn-property">"type"</span>: [<span class="syn-string">"Required"</span>],
-    <span class="syn-property">"php_version"</span>: [<span class="syn-string">"Invalid"</span>]
+<pre><code class="language-json">{
+  "errors": {
+    "type": ["Required"],
+    "php_version": ["Invalid"]
   },
-  <span class="syn-property">"message"</span>: <span class="syn-string">"Validation failed"</span>
-}</pre>
+  "message": "Validation failed"
+}</code></pre>
           </div>
         </div>
       </div>
@@ -162,9 +162,13 @@
     <div class="api-ref-card">
       <h3 class="api-ref-title">Rate Limits</h3>
       <div class="api-ref-list">
-        <div class="api-ref-item"><span class="api-ref-label">Standard</span><code class="api-ref-value">1000/min</code></div>
-        <div class="api-ref-item"><span class="api-ref-label">Deployments</span><code class="api-ref-value">100/min</code></div>
-        <div class="api-ref-item"><span class="api-ref-label">Webhooks</span><code class="api-ref-value">10/min</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Default</span><code class="api-ref-value">120/min</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Logs</span><code class="api-ref-value">60/hour</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Deployments</span><code class="api-ref-value">30/hour</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Cache Purge</span><code class="api-ref-value">60/hour</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Site Mutations</span><code class="api-ref-value">10/hour</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">Credentials</span><code class="api-ref-value">10/hour</code></div>
+        <div class="api-ref-item"><span class="api-ref-label">DB Operations</span><code class="api-ref-value">10/hour</code></div>
       </div>
       <div class="api-ref-note">
         Headers: <code>X-RateLimit-Remaining</code>

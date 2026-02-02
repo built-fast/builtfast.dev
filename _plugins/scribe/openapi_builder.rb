@@ -53,6 +53,15 @@ module Scribe
           desc = response['description'] || 'Response'
           yaml_lines << "        '#{status}':"
           yaml_lines << "          description: #{yaml_escape(desc)}"
+          content = response['content']
+          if content && !content.empty?
+            yaml_lines << '          content:'
+            yaml_lines << '            application/json:'
+            yaml_lines << '              example:'
+            content.each_line do |line|
+              yaml_lines << "                #{line.rstrip}"
+            end
+          end
         end
       else
         yaml_lines << "        '200':"
