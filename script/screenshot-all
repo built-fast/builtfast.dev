@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+require "nokogiri"
+require "ferrum"
+require "fileutils"
+require "uri"
+require "net/http"
+
+# Configuration
+SITEMAP_PATH = "_site/sitemap.xml"
+BASE_URL_TO_REPLACE = "https://builtfast.dev"
+LOCAL_BASE_URL = "http://localhost:4000"
+OUTPUT_DIR = "screenshots"
+WINDOW_SIZE = [1280, 800]
+
+unless File.exist?(SITEMAP_PATH)
+  puts "Error: #{SITEMAP_PATH} not found. Did you build the site?"
+  exit 1
+end
+
+# Check if local server is running
+begin
+  uri = URI.parse(LOCAL_BASE_URL)
+  Net::HTTP.get(uri)
+rescue Errno::ECONNREFUSED
+  puts "Error: Could not connect to #{LOCAL_BASE_URL}. Is your Jekyll server running?"
+  exit 1
+rescue => e
+  puts "Warning: Could not verify local server: #{e.message}"
+end
+
+FileUtils.mkdir_p(OUTPUT_DIR)
+
+# Initialize Browser
+# browser = Ferrum::Browser.new(window_size: WINDOW_SIZE, timeout: 30)
+# Optimization: Enable screenshots and set a retina-like DPR
+browser = Ferrum::Browser.new(
+  window_size: WINDOW_SIZE,
+  timeout: 45,
+  process_timeout: 15,
+  browser_options: { "force-device-scale-factor" => "2" }
+)
+
+begin
+  sitemap = Nokogiri::XML(File.read(SITEMAP_PATH))
+  urls = sitemap.css("loc").map(&:text)
+
+  puts "Found #{urls.count} URLs in sitemap."
+
+  urls.each_with_index do |url, index|
+    path = URI.parse(url).path
+    local_url = "#{LOCAL_BASE_URL}#{path}"
+    filename = path == "/" ? "index" : path.gsub(/^\/|\/$/, "").gsub("/", "-")
+    output_path = File.join(OUTPUT_DIR, "#{filename}.png")
+
+    puts "[#{index + 1}/#{urls.count}] Capturing #{local_url} -> #{output_path}..."
+
+    begin
+      browser.goto(local_url)
+
+      # Wait for network idle to ensure styles/images are loaded
+      browser.network.wait_for_idle(timeout: 5)
+
+      # Take a full page screenshot
+      browser.screenshot(path: output_path, full: true)
+    rescue => e
+      puts "  Error capturing #{local_url}: #{e.message}"
+    end
+  end
+
+ensure
+  browser.quit
+end
+
+puts "Done! Screenshots are in the #{OUTPUT_DIR}/ directory."
