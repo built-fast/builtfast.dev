@@ -2210,8 +2210,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/sites\/:site\/environments",
+                            "path": "api\/v1\/vector\/environments",
                             "query": [
+                                {
+                                    "key": "site",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by site ID or subdomain.",
+                                    "disabled": false
+                                },
                                 {
                                     "key": "per_page",
                                     "value": "25",
@@ -2225,15 +2231,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/environments?per_page=25&page=1",
-                            "variable": [
-                                {
-                                    "id": "site",
-                                    "key": "site",
-                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                    "description": "The site ID."
-                                }
-                            ]
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/environments?site=01jfgxk4nqrst5vwx9yz0abcde&per_page=25&page=1"
                         },
                         "method": "GET",
                         "header": [
@@ -2247,13 +2245,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "Retrieves a paginated list of all environments for a specific site."
+                        "description": "Retrieves a paginated list of environments. Filter by site using the optional\n`site` parameter, or list all environments for the authenticated account."
                     },
                     "response": [
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n            \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"customer-123\",\n            \"name\": \"production\",\n            \"is_production\": true,\n            \"status\": \"active\",\n            \"provisioning_step\": \"complete\",\n            \"failure_reason\": null,\n            \"php_version\": \"8.3\",\n            \"tags\": [\"live\", \"primary\"],\n            \"fqdn\": \"wispy-dust.vectorpages.com\",\n            \"custom_domain\": \"ourshop.com\",\n            \"custom_domain\": \"ourshop.com\",\n            \"subdomain\": \"wispy-dust\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Environments retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n            \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"customer-123\",\n            \"name\": \"production\",\n            \"is_production\": true,\n            \"status\": \"active\",\n            \"provisioning_step\": \"complete\",\n            \"failure_reason\": null,\n            \"php_version\": \"8.3\",\n            \"tags\": [\"live\", \"primary\"],\n            \"fqdn\": \"wispy-dust.vectorpages.com\",\n            \"custom_domain\": \"ourshop.com\",\n            \"subdomain\": \"wispy-dust\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Environments retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
