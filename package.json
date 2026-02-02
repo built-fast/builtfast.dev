@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "setup": "npm run copy:deps",
-    "copy:deps": "mkdir -p vendor/js && cp node_modules/alpinejs/dist/cdn.min.js vendor/js/alpine.min.js"
+    "copy:deps": "mkdir -p vendor/js vendor/css && cp node_modules/alpinejs/dist/cdn.min.js vendor/js/alpine.min.js && npm run copy:hljs",
+    "copy:hljs": "curl -sL https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js -o vendor/js/highlight.min.js && curl -sL https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css -o vendor/css/github-dark.min.css"
   },
   "dependencies": {
     "alpinejs": "^3.14.8"
