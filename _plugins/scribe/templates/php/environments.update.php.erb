@@ -1,0 +1,4 @@
+$environment = $client->environments->update(
+    <%= quote(url_params['env']) %>,
+    <%= php_array(body_params) %>
+);

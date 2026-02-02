@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+const environments = await client.environments.listAll(<%= js_object(query_params) %>);
+<% else -%>
+const environments = await client.environments.listAll();
+<% end -%>

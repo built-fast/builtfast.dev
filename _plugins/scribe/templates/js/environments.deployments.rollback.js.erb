@@ -1,0 +1,8 @@
+<% if has_body_params? -%>
+const deployment = await client.environments.deployments.rollback(
+    <%= quote(url_params['env']) %>,
+    <%= js_object(body_params) %>
+);
+<% else -%>
+const deployment = await client.environments.deployments.rollback(<%= quote(url_params['env']) %>);
+<% end -%>

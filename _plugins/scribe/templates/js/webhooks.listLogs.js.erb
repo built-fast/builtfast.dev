@@ -1,0 +1,8 @@
+<% if has_query_params? -%>
+const response = await client.webhooks.listLogs(
+    <%= quote(url_params['webhook']) %>,
+    <%= js_object(query_params) %>
+);
+<% else -%>
+const response = await client.webhooks.listLogs(<%= quote(url_params['webhook']) %>);
+<% end -%>

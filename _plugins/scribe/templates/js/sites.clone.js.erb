@@ -1,0 +1,8 @@
+<% if has_body_params? -%>
+const site = await client.sites.clone(
+    <%= quote(url_params['site']) %>,
+    <%= js_object(body_params) %>
+);
+<% else -%>
+const site = await client.sites.clone(<%= quote(url_params['site']) %>);
+<% end -%>

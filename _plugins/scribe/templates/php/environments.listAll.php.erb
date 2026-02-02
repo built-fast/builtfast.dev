@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+$environments = $client->environments->list(<%= php_array(query_params) %>);
+<% else -%>
+$environments = $client->environments->list();
+<% end -%>

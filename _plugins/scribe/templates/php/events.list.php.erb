@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+$events = $client->events->list(<%= php_array(query_params) %>);
+<% else -%>
+$events = $client->events->list();
+<% end -%>

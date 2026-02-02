@@ -1,0 +1,4 @@
+const response = await client.sites.waf.deleteRateLimit(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['rule']) %>
+);

@@ -1,0 +1,4 @@
+const environment = await client.environments.update(
+    <%= quote(url_params['env']) %>,
+    <%= js_object(body_params) %>
+);

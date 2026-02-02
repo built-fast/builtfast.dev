@@ -1,0 +1,4 @@
+const response = await client.sites.waf.addBlockedIP(
+    <%= quote(url_params['site']) %>,
+    <%= js_object(body_params) %>
+);

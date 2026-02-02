@@ -1,0 +1,4 @@
+$site = $client->sites->update(
+    <%= quote(url_params['site']) %>,
+    <%= php_array(body_params) %>
+);

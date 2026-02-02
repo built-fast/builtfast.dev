@@ -1,0 +1,4 @@
+$response = $client->sites->waf->addBlockedIP(
+    <%= quote(url_params['site']) %>,
+    <%= php_array(body_params) %>
+);

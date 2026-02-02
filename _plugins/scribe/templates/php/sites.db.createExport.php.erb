@@ -1,0 +1,8 @@
+<% if has_body_params? -%>
+$exportStatus = $client->sites->db->createExport(
+    <%= quote(url_params['site']) %>,
+    <%= php_array(body_params) %>
+);
+<% else -%>
+$exportStatus = $client->sites->db->createExport(<%= quote(url_params['site']) %>);
+<% end -%>

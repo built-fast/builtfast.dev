@@ -1,0 +1,8 @@
+<% if has_query_params? -%>
+$response = $client->webhooks->listLogs(
+    <%= quote(url_params['webhook']) %>,
+    <%= php_array(query_params) %>
+);
+<% else -%>
+$response = $client->webhooks->listLogs(<%= quote(url_params['webhook']) %>);
+<% end -%>

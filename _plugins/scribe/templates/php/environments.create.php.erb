@@ -1,0 +1,4 @@
+$environment = $client->environments->create(
+    <%= quote(url_params['site']) %>,
+    <%= php_array(body_params) %>
+);

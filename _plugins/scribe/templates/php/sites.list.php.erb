@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+$sites = $client->sites->list(<%= php_array(query_params) %>);
+<% else -%>
+$sites = $client->sites->list();
+<% end -%>

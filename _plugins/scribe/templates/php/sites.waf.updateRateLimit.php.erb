@@ -1,0 +1,5 @@
+$response = $client->sites->waf->updateRateLimit(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['rule']) %>,
+    <%= php_array(body_params) %>
+);

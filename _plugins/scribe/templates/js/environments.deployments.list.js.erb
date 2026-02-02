@@ -1,0 +1,8 @@
+<% if has_query_params? -%>
+const deployments = await client.environments.deployments.list(
+    <%= quote(url_params['env']) %>,
+    <%= js_object(query_params) %>
+);
+<% else -%>
+const deployments = await client.environments.deployments.list(<%= quote(url_params['env']) %>);
+<% end -%>

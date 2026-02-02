@@ -1,0 +1,4 @@
+$deployment = $client->environments->deployments->rollback(
+    <%= quote(url_params['env']) %>,
+    <%= php_array(body_params) %>
+);

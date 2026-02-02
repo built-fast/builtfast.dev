@@ -1,0 +1,8 @@
+<% if has_body_params? -%>
+$deployment = $client->environments->deployments->create(
+    <%= quote(url_params['env']) %>,
+    <%= php_array(body_params) %>
+);
+<% else -%>
+$deployment = $client->environments->deployments->create(<%= quote(url_params['env']) %>);
+<% end -%>

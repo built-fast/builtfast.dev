@@ -1,0 +1,8 @@
+<% if has_query_params? -%>
+$deployments = $client->environments->deployments->list(
+    <%= quote(url_params['env']) %>,
+    <%= php_array(query_params) %>
+);
+<% else -%>
+$deployments = $client->environments->deployments->list(<%= quote(url_params['env']) %>);
+<% end -%>

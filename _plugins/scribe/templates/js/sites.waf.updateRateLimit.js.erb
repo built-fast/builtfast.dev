@@ -1,0 +1,5 @@
+const rateLimit = await client.sites.waf.updateRateLimit(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['rule']) %>,
+    <%= js_object(body_params) %>
+);

@@ -1,0 +1,4 @@
+const webhook = await client.webhooks.update(
+    <%= quote(url_params['webhook']) %>,
+    <%= js_object(body_params) %>
+);

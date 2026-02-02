@@ -1,0 +1,4 @@
+$importStatus = $client->sites->db->getImportStatus(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['import']) %>
+);

@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+const webhooks = await client.webhooks.list(<%= js_object(query_params) %>);
+<% else -%>
+const webhooks = await client.webhooks.list();
+<% end -%>

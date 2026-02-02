@@ -1,0 +1,4 @@
+const importSession = await client.sites.db.createImportSession(
+    <%= quote(url_params['site']) %>,
+    <%= js_object(body_params) %>
+);

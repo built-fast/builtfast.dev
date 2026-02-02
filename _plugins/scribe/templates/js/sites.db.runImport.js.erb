@@ -1,0 +1,12 @@
+<% if has_body_params? -%>
+const importStatus = await client.sites.db.runImport(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['import']) %>,
+    <%= js_object(body_params) %>
+);
+<% else -%>
+const importStatus = await client.sites.db.runImport(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['import']) %>
+);
+<% end -%>

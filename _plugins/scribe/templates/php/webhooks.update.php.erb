@@ -1,0 +1,4 @@
+$webhook = $client->webhooks->update(
+    <%= quote(url_params['webhook']) %>,
+    <%= php_array(body_params) %>
+);

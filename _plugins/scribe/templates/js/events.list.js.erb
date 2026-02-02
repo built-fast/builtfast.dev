@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+const events = await client.events.list(<%= js_object(query_params) %>);
+<% else -%>
+const events = await client.events.list();
+<% end -%>

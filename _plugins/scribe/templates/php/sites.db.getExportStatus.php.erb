@@ -1,0 +1,4 @@
+$exportStatus = $client->sites->db->getExportStatus(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['export']) %>
+);

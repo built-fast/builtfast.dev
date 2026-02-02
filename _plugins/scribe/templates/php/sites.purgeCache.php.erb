@@ -1,0 +1,8 @@
+<% if has_body_params? -%>
+$response = $client->sites->purgeCache(
+    <%= quote(url_params['site']) %>,
+    <%= php_array(body_params) %>
+);
+<% else -%>
+$response = $client->sites->purgeCache(<%= quote(url_params['site']) %>);
+<% end -%>

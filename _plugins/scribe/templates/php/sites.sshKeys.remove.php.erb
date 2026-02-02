@@ -1,0 +1,4 @@
+$response = $client->sites->sshKeys->remove(
+    <%= quote(url_params['site']) %>,
+    <%= quote(url_params['key']) %>
+);

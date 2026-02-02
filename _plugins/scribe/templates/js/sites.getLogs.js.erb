@@ -1,0 +1,8 @@
+<% if has_query_params? -%>
+const logs = await client.sites.getLogs(
+    <%= quote(url_params['site']) %>,
+    <%= js_object(query_params) %>
+);
+<% else -%>
+const logs = await client.sites.getLogs(<%= quote(url_params['site']) %>);
+<% end -%>

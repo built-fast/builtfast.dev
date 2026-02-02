@@ -1,0 +1,5 @@
+<% if has_query_params? -%>
+const sites = await client.sites.list(<%= js_object(query_params) %>);
+<% else -%>
+const sites = await client.sites.list();
+<% end -%>
