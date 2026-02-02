@@ -119,6 +119,7 @@ exclude:
 
 # Redirect settings
 redirect_from:
+  layout: redirect
   json: false
 
 # Gems

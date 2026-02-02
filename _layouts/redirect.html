@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Redirect via meta refresh (fallback for no-JS) -->
+  <meta http-equiv="refresh" content="0; url={{ page.redirect.to }}">
+
+  <!-- Canonical URL for SEO -->
+  <link rel="canonical" href="{{ page.redirect.to }}">
+
+  <title>Redirecting...</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  {%- assign asset_hash = site.time | date: "%s" -%}
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/assets/css/app.css?v={{ asset_hash }}">
+
+</head>
+<body class="min-h-screen bg-base">
+  <!-- Theme: prevent flash of wrong theme -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.classList.add('light');
+    })();
+  </script>
+
+  <main class="min-h-screen flex items-center justify-center py-16">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <!-- Redirect indicator -->
+      <div class="mb-6">
+        <span class="text-7xl md:text-9xl font-mono font-bold text-cyan/20">301</span>
+      </div>
+
+      <!-- Message -->
+      <h1 class="text-2xl md:text-3xl font-mono font-semibold text-primary mb-4">Redirecting...</h1>
+      <p class="text-secondary mb-8">This page has moved. You should be redirected automatically.</p>
+
+      <!-- Loading animation -->
+      <div id="redirect-loading" class="flex items-center justify-center gap-3 mb-8">
+        <svg class="animate-spin h-5 w-5 text-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-muted text-sm font-mono">Redirecting to new location...</span>
+      </div>
+
+      <!-- Manual link (shown if redirect fails) -->
+      <div id="redirect-fallback" class="hidden">
+        <p class="text-secondary mb-6">If you are not redirected automatically, click the link below:</p>
+
+        <!-- Destination info -->
+        <div class="mb-6 p-4 rounded-lg border border-subtle bg-elevated text-left">
+          <p class="text-sm text-muted mb-1">New location:</p>
+          <a href="{{ page.redirect.to }}" class="text-sm text-cyan hover:text-cyan-light break-all font-mono">{{ page.redirect.to }}</a>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="{{ page.redirect.to }}" class="btn-primary">
+            Go to new page
+          </a>
+          <a href="/" class="btn-secondary">
+            Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      var destination = {{ page.redirect.to | jsonify }};
+      var loading = document.getElementById('redirect-loading');
+      var fallback = document.getElementById('redirect-fallback');
+
+      function showFallback() {
+        if (loading) loading.classList.add('hidden');
+        if (fallback) fallback.classList.remove('hidden');
+      }
+
+      // Attempt redirect after a tiny delay to ensure page renders
+      setTimeout(function() {
+        try {
+          window.location.replace(destination);
+        } catch (e) {
+          showFallback();
+        }
+      }, 100);
+
+      // Show fallback if still here after 3 seconds
+      setTimeout(showFallback, 3000);
+    })();
+  </script>
+
+  <!-- noscript fallback with direct link -->
+  <noscript>
+    <style>
+      #redirect-loading { display: none !important; }
+      #redirect-fallback { display: block !important; }
+    </style>
+  </noscript>
+</body>
+</html>
