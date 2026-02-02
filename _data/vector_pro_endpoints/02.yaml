@@ -181,14 +181,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -307,26 +307,14 @@ endpoints:
         name: env
         description: 'The environment ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -568,14 +556,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -718,14 +706,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -830,14 +818,14 @@ endpoints:
         name: site
         description: 'The source site ID to clone from.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -991,14 +979,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1096,14 +1084,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1207,14 +1195,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1306,14 +1294,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1401,14 +1389,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters:
       drop_tables:
         custom: []
@@ -1525,14 +1513,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1694,7 +1682,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1705,15 +1693,15 @@ endpoints:
         name: import
         description: 'The import ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      import: 01JFGXK4NQRST5VWX9YZ0ABCDF
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      import: 01jfgxk4nqrst5vwx9yz0abcdf
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1812,7 +1800,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1823,15 +1811,15 @@ endpoints:
         name: import
         description: 'The import ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      import: 01JFGXK4NQRST5VWX9YZ0ABCDF
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      import: 01jfgxk4nqrst5vwx9yz0abcdf
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1918,14 +1906,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2016,7 +2004,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2027,15 +2015,15 @@ endpoints:
         name: export
         description: 'The export ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      export: 01JFGXK4NQRST5VWX9YZ0ABCDG
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      export: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2142,26 +2130,14 @@ endpoints:
         name: env
         description: 'The environment ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: 01JFGXK4NQRST5VWX9YZ0ABCDG
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2273,14 +2249,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters:
       start_time:
         custom: []
@@ -2331,7 +2307,7 @@ endpoints:
         name: deployment_id
         description: 'Filter by deployment ID.'
         required: false
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2342,7 +2318,7 @@ endpoints:
       end_time: now
       limit: 500
       environment: production
-      deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+      deployment_id: 01jfgxk4nqrst5vwx9yz0abcdh
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -2427,14 +2403,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2494,14 +2470,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2560,14 +2536,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2629,14 +2605,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2712,7 +2688,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2741,7 +2717,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       rule: architecto
       ruleId: 12345
     queryParameters: []
@@ -2822,14 +2798,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2892,7 +2868,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2910,7 +2886,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       hostname: example.com
     queryParameters: []
     cleanQueryParameters: []
@@ -2970,14 +2946,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3046,7 +3022,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3064,7 +3040,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       hostname: spam.com
     queryParameters: []
     cleanQueryParameters: []
@@ -3123,14 +3099,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3198,7 +3174,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3216,7 +3192,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       ip: 192.168.1.100
     queryParameters: []
     cleanQueryParameters: []
@@ -3276,14 +3252,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3499,7 +3475,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3528,7 +3504,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       rule: architecto
       ruleId: 12345
     queryParameters: []
@@ -3732,7 +3708,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3761,7 +3737,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       rule: architecto
       ruleId: 12345
     queryParameters: []
@@ -3816,14 +3792,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3926,14 +3902,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      site: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters:
       per_page:
         custom: []
@@ -4048,14 +4024,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      site: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4190,7 +4166,7 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -4201,15 +4177,15 @@ endpoints:
         name: key
         description: 'The SSH key ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDK
+        example: 01jfgxk4nqrst5vwx9yz0abcdk
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDI
-      key: 01JFGXK4NQRST5VWX9YZ0ABCDK
+      site: 01jfgxk4nqrst5vwx9yz0abcdi
+      key: 01jfgxk4nqrst5vwx9yz0abcdk
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

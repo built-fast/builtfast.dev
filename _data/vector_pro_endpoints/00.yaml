@@ -244,14 +244,14 @@ endpoints:
         name: key
         description: 'The SSH key ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      key: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -465,14 +465,14 @@ endpoints:
         name: key
         description: 'The SSH key ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      key: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      key: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -769,7 +769,7 @@ endpoints:
         name: accountSecret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -777,7 +777,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1233,7 +1233,7 @@ endpoints:
         name: accountSecret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1241,7 +1241,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1370,7 +1370,7 @@ endpoints:
         name: accountSecret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1378,7 +1378,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       secret: architecto
-      accountSecret: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

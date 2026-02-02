@@ -251,14 +251,14 @@ endpoints:
         name: webhook
         description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -341,14 +341,14 @@ endpoints:
         name: webhook
         description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters:
       per_page:
         custom: []
@@ -702,14 +702,14 @@ endpoints:
         name: webhook
         description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -883,14 +883,14 @@ endpoints:
         name: webhook
         description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -976,14 +976,14 @@ endpoints:
         name: webhook
         description: 'The webhook ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

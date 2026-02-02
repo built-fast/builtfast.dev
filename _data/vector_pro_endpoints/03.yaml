@@ -68,14 +68,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters:
       per_page:
         custom: []
@@ -208,28 +208,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -321,28 +309,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters:
       per_page:
         custom: []
@@ -452,38 +428,14 @@ endpoints:
         name: secret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -570,28 +522,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters:
       per_page:
         custom: []
@@ -725,38 +665,14 @@ endpoints:
         name: deployment
         description: 'The deployment ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      deployment: 01JFGXK4NQRST5VWX9YZ0ABCDH
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      deployment: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -878,14 +794,14 @@ endpoints:
         name: site
         description: 'The site ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1066,28 +982,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1249,28 +1153,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1364,28 +1256,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1493,28 +1373,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1634,38 +1502,14 @@ endpoints:
         name: secret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1781,38 +1625,14 @@ endpoints:
         name: secret
         description: 'The secret ID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      env:
-        custom: []
-        name: env
-        description: 'The environment name.'
-        required: true
-        example: production
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
-      env: production
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1902,28 +1722,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2020,28 +1828,16 @@ endpoints:
       env:
         custom: []
         name: env
-        description: 'The environment name.'
+        description: 'The environment ID.'
         required: true
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: production
-      site: 01JFGXK4NQRST5VWX9YZ0ABCDE
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2050,14 +1846,14 @@ endpoints:
         name: target_deployment_id
         description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
         required: false
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      target_deployment_id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+      target_deployment_id: 01jfgxk4nqrst5vwx9yz0abcdh
     fileParameters: []
     responses:
       -
