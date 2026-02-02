@@ -744,7 +744,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/environments/{env}/database/reset-password'
+    uri: 'api/v1/vector/environments/{env}/db/reset-password'
     metadata:
       custom: []
       groupName: Environments

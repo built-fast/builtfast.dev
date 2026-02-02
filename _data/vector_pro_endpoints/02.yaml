@@ -1284,7 +1284,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/database/reset-password'
+    uri: 'api/v1/vector/sites/{site}/db/reset-password'
     metadata:
       custom: []
       groupName: Sites

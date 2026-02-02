@@ -730,9 +730,9 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/database\/reset-password",
+                                    "path": "api\/v1\/vector\/sites\/:site\/db\/reset-password",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/database\/reset-password",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/reset-password",
                                     "variable": [
                                         {
                                             "id": "site",
@@ -3324,9 +3324,9 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/database\/reset-password",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/reset-password",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/database\/reset-password",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/reset-password",
                                     "variable": [
                                         {
                                             "id": "env",
