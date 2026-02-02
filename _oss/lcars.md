@@ -17,11 +17,13 @@ excerpt: |
   shortcuts.
 ---
 
-LCARS (Laravel CLI and Reusable Scripts) is a command-line toolkit that
+LCARS (Laravel CLI and Reusable Scripts)[^1] is a command-line toolkit that
 enhances Laravel development workflows with convenient utilities and
 shortcuts. It provides quick access to common Laravel tasks, testing tools,
 development utilities, and documentation browsing—all through a unified CLI
 interface.
+
+[^1]: Yes, it's a backronym for the [Star Trek UI](https://en.wikipedia.org/wiki/LCARS). No, it's not the only Star Trek-named app we have.
 
 Key features:
 

@@ -63,7 +63,7 @@ labels: Feature
 created: 2025-09-03T21:20:51.833Z
 updated: 2025-09-09T17:36:34.109Z
 git-branch: feature/dev-222-password-reset
-linear-url: https://linear.app/builtfast/issue/DEV-222/...
+linear-url: https://linear.app/mycompany/issue/DEV-222/...
 tags:
   - linear/dev-222
 ---
@@ -216,6 +216,9 @@ most of the implementation:
 - Basic UI matching mockups
 - Test coverage for happy paths and edge cases
 
+Simple bugs with clear reproduction steps? Literally just `fix DEV-456`. Claude
+reads the issue, finds the problem, writes the fix, and runs the tests.
+
 Humans still review, handle edge cases Claude misses, and make architectural
 decisions. The tedious middle is automated.
 
@@ -251,10 +254,159 @@ integrates with Claude Code's tool permission system.
 ## Getting started
 
 1. Install the Linear MCP server for Claude Code
-2. Create the command file at `.claude/commands/linear/fetch.md`
-3. Configure allowed tools: `Task, Bash(wget:*), mcp__linear-server__get_issue, Write(*.md)`
-4. Start fetching issues
+2. Create the command files at `.claude/commands/linear/`
+3. Start fetching and creating issues
 
 The investment in structured issues pays dividends. Every well-written AC
 bullet, every attached mockup, every clear requirement—it all compounds into
 faster, more accurate implementation.
+
+## The command files
+
+### `.claude/commands/linear/fetch.md`
+
+{% raw %}
+````markdown
+---
+allowed-tools: Task, Bash(wget:*), mcp__linear-server__get_issue, Write(*.md)
+description: Fetch Linear issues and associated images to local files with parallel processing.
+---
+
+# Fetch Linear Issues
+
+Downloads Linear issues and associated images to local files. Supports single issues or multiple issues with parallel processing.
+
+## Usage
+
+**Single Issue:**
+
+```bash
+claude '/linear:fetch DEV-123'
+
+# or
+
+claude '/linear:fetch https://linear.app/mycompany/issue/DEV-222'
+```
+
+**Multiple Issues (Parallel Processing):**
+
+```bash
+claude '/linear:fetch DEV-123 DEV-124 DEV-125'
+
+# or mix URLs and IDs
+
+claude '/linear:fetch https://linear.app/mycompany/issue/DEV-222 DEV-224'
+```
+
+For multiple issues, launch parallel general-purpose agents to process each issue concurrently for faster execution.
+
+Process Linear issues from $ARGUMENTS:
+
+1. Parse all issue identifiers (extract IDs from URLs or use directly if in DEV-123 format)
+2. If multiple issues detected, launch parallel Task agents with general-purpose subagent_type
+3. Each agent fetches issue details via Linear MCP `get_issue`, downloads images using wget, and creates markdown with local image references
+4. Single issues are processed directly without agents
+
+## Output Format
+
+Creates a markdown file with YAML frontmatter following this template:
+
+```markdown
+---
+title: "DEV-222: Issue Title"
+status: In Review
+assignee: Josh Priddle
+team: Development
+project: DNS and Domain Ownership
+labels: Bug
+created: 2025-09-03T21:20:51.833Z
+updated: 2025-09-09T17:36:34.109Z
+git-branch: feature/dev-222-branch-name
+linear-url: https://linear.app/mycompany/issue/DEV-222/...
+tags:
+  - linear/dev-222
+---
+
+Issue description with Linear image URLs replaced by local references:
+
+![Screenshot 1](./DEV-222-img1.png)
+![Screenshot 2](./DEV-222-img2.png)
+```
+````
+{% endraw %}
+
+### `.claude/commands/linear/create.md`
+
+{% raw %}
+````markdown
+---
+allowed-tools: mcp__linear-server__create_issue
+description: Create Linear issue
+---
+
+# Create Linear Issue
+
+Creates a new Linear issue using `mcp__linear-server__create_issue`. Supports
+agile user story format or flexible input.
+
+## Usage
+
+```
+/linear:create [DESCRIPTION] [--team=NAME]
+```
+
+## Arguments
+
+- `DESCRIPTION` - Issue description. Can be:
+  - User story format: "As a [role] I want [feature] so I can [action]"
+  - Natural language: "create an issue for X"
+  - Direct feature request: "Add password reset functionality"
+
+## Options
+
+- `--team=NAME` - Team name (defaults to "DEV")
+
+## Examples
+
+```
+/linear:create "As a developer I want automated deployments so I can ship faster"
+/linear:create "create an issue for password reset" --team=Support
+/linear:create "Add dark mode toggle to user settings"
+/linear:create "Fix bug with checkout process"
+```
+
+## Output Format
+
+**Title**: Exactly as provided in user story format
+
+**Description**: Structured with acceptance criteria:
+
+```
+AC:
+- Must do X
+- Must do Y
+- If condition Z:
+    - Do action 1
+    - Do action 2
+- Should handle edge case A
+- Should validate input B
+```
+
+## Implementation
+
+The command will:
+
+1. Parse the input and extract team option (default: "DEV")
+2. If user story format is provided, use as title directly
+3. If natural language is provided ("create an issue for X"), convert to appropriate title
+4. Ask follow-up questions as needed to gather missing information:
+   - Clarify feature requirements
+   - Determine user role/perspective if not obvious
+   - Gather technical constraints or dependencies
+5. Prompt for acceptance criteria in AC format
+6. Format description with "AC:" header followed by bullet points
+7. Use nested bullets (4 spaces) for conditional logic
+8. Call `mcp__linear-server__create_issue` with formatted data
+9. Display the Linear issue URL returned from the creation response
+````
+{% endraw %}
