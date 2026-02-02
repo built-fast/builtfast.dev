@@ -159,6 +159,11 @@
 .param-table {
   width: 100%;
   font-size: 0.8125rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
 }
 
 .param-table th {
@@ -873,6 +878,7 @@
   position: relative;
   padding: 3rem 1.5rem;
   overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 @media (min-width: 1024px) {
@@ -1042,8 +1048,6 @@
   display: grid;
   gap: 1px;
   background: var(--border-subtle);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
 }
 
 @media (min-width: 768px) {
@@ -1206,6 +1210,7 @@
 /* Section Title */
 .api-section {
   padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -1314,7 +1319,6 @@
   display: grid;
   gap: 1px;
   background: var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
 }
 
 @media (min-width: 768px) {
@@ -1458,6 +1462,7 @@
 /* SDK Section */
 .api-sdk-section {
   padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
 }
 
