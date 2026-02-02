@@ -142,6 +142,7 @@ lucide:
 tailwind:
   input: "assets/css/app.css"
   output: "_site/assets/css/app.css"
+  minify: true
 
 # Enable drafts
 # show_drafts: true
