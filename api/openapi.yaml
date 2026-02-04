@@ -77,7 +77,6 @@ paths:
                   data:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      account_id: 1
                       your_customer_id: cust_12345
                       status: active
                       tags:
@@ -107,7 +106,6 @@ paths:
                     example:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        account_id: 1
                         your_customer_id: cust_12345
                         status: active
                         tags:
@@ -133,9 +131,6 @@ paths:
                         id:
                           type: string
                           example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        account_id:
-                          type: integer
-                          example: 1
                         your_customer_id:
                           type: string
                           example: cust_12345
@@ -499,7 +494,6 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    account_id: 1
                     your_customer_id: cust_12345
                     status: active
                     tags:
@@ -528,9 +522,6 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      account_id:
-                        type: integer
-                        example: 1
                       your_customer_id:
                         type: string
                         example: cust_12345
@@ -679,7 +670,6 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    account_id: 1
                     your_customer_id: cust_67890
                     status: active
                     tags:
@@ -698,9 +688,6 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      account_id:
-                        type: integer
-                        example: 1
                       your_customer_id:
                         type: string
                         example: cust_67890
@@ -860,7 +847,6 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    account_id: 1
                     your_customer_id: cust_12345
                     status: terminating
                     tags: []
@@ -877,9 +863,6 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      account_id:
-                        type: integer
-                        example: 1
                       your_customer_id:
                         type: string
                         example: cust_12345
@@ -1007,164 +990,6 @@ paths:
         name: site
         description: 'The site ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/environments/{env}/ssl':
-    get:
-      summary: 'Get Status'
-      operationId: sitesSSLGetStatus
-      description: 'Get the current SSL provisioning status for an environment.'
-      parameters: []
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    your_customer_id: customer-123
-                    name: production
-                    is_production: true
-                    status: active
-                    provisioning_step: complete
-                    failure_reason: null
-                    php_version: '8.3'
-                    tags: []
-                    fqdn: wispy-dust.vectorpages.com
-                    custom_domain: example.com
-                    subdomain: wispy-dust
-                    created_at: '2025-05-27T09:50:21+00:00'
-                    updated_at: '2025-05-27T09:55:42+00:00'
-                  message: 'SSL status retrieved'
-                  http_status: 200
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                      vector_site_id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      your_customer_id:
-                        type: string
-                        example: customer-123
-                      name:
-                        type: string
-                        example: production
-                      is_production:
-                        type: boolean
-                        example: true
-                      status:
-                        type: string
-                        example: active
-                      provisioning_step:
-                        type: string
-                        example: complete
-                      failure_reason:
-                        type: string
-                        example: null
-                      php_version:
-                        type: string
-                        example: '8.3'
-                      tags:
-                        type: array
-                        example: []
-                      fqdn:
-                        type: string
-                        example: wispy-dust.vectorpages.com
-                      custom_domain:
-                        type: string
-                        example: example.com
-                      subdomain:
-                        type: string
-                        example: wispy-dust
-                      created_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                      updated_at:
-                        type: string
-                        example: '2025-05-27T09:55:42+00:00'
-                  message:
-                    type: string
-                    example: 'SSL status retrieved'
-                  http_status:
-                    type: integer
-                    example: 200
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthenticated
-                  http_status: 401
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthenticated
-                  http_status:
-                    type: integer
-                    example: 401
-        403:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthorized
-                  http_status: 403
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthorized
-                  http_status:
-                    type: integer
-                    example: 403
-        404:
-          description: 'Not Found'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Environment not found'
-                  http_status: 404
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Environment not found'
-                  http_status:
-                    type: integer
-                    example: 404
-      tags:
-        - Sites
-    parameters:
-      -
-        in: path
-        name: env
-        description: 'The environment ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
           type: string
@@ -1516,7 +1341,6 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDF
-                    account_id: 1
                     your_customer_id: cust_12345
                     status: pending
                     tags:
@@ -1537,9 +1361,6 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDF
-                      account_id:
-                        type: integer
-                        example: 1
                       your_customer_id:
                         type: string
                         example: cust_12345
@@ -1909,7 +1730,6 @@ paths:
                 example:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    account_id: 01JFGXK4NQRST5VWX9YZ0ABCDA
                     your_customer_id: null
                     status: active
                     dev_php_version: '8.3'
@@ -1929,9 +1749,6 @@ paths:
                       id:
                         type: string
                         example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      account_id:
-                        type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDA
                       your_customer_id:
                         type: string
                         example: null
@@ -3256,255 +3073,6 @@ paths:
         in: path
         name: export
         description: 'The export ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/environments/{env}/ssl/nudge':
-    post:
-      summary: Nudge
-      operationId: sitesSSLNudge
-      description: "Manually nudge SSL provisioning for an environment. Use this when SSL\nprovisioning appears to be stuck or to retry after a failure."
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  -
-                    description: 'Provisioning Progressed'
-                    type: object
-                    example:
-                      data:
-                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        your_customer_id: customer-123
-                        name: production
-                        is_production: true
-                        status: provisioning
-                        provisioning_step: deploying
-                        failure_reason: null
-                        php_version: '8.3'
-                        tags: []
-                        fqdn: wispy-dust.vectorpages.com
-                        custom_domain: example.com
-                        subdomain: wispy-dust
-                        created_at: '2025-05-27T09:50:21+00:00'
-                        updated_at: '2025-05-27T09:55:42+00:00'
-                      message: 'SSL provisioning advanced from waiting_cert to deploying'
-                      http_status: 200
-                    properties:
-                      data:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                          vector_site_id:
-                            type: string
-                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          your_customer_id:
-                            type: string
-                            example: customer-123
-                          name:
-                            type: string
-                            example: production
-                          is_production:
-                            type: boolean
-                            example: true
-                          status:
-                            type: string
-                            example: provisioning
-                          provisioning_step:
-                            type: string
-                            example: deploying
-                          failure_reason:
-                            type: string
-                            example: null
-                          php_version:
-                            type: string
-                            example: '8.3'
-                          tags:
-                            type: array
-                            example: []
-                          fqdn:
-                            type: string
-                            example: wispy-dust.vectorpages.com
-                          custom_domain:
-                            type: string
-                            example: example.com
-                          subdomain:
-                            type: string
-                            example: wispy-dust
-                          created_at:
-                            type: string
-                            example: '2025-05-27T09:50:21+00:00'
-                          updated_at:
-                            type: string
-                            example: '2025-05-27T09:55:42+00:00'
-                      message:
-                        type: string
-                        example: 'SSL provisioning advanced from waiting_cert to deploying'
-                      http_status:
-                        type: integer
-                        example: 200
-                  -
-                    description: Waiting
-                    type: object
-                    example:
-                      data:
-                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                        your_customer_id: customer-123
-                        name: production
-                        is_production: true
-                        status: provisioning
-                        provisioning_step: waiting_custom_dns
-                        failure_reason: null
-                        php_version: '8.3'
-                        tags: []
-                        fqdn: wispy-dust.vectorpages.com
-                        custom_domain: example.com
-                        subdomain: wispy-dust
-                        created_at: '2025-05-27T09:50:21+00:00'
-                        updated_at: '2025-05-27T09:55:42+00:00'
-                      message: 'SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns'
-                      http_status: 200
-                    properties:
-                      data:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
-                          vector_site_id:
-                            type: string
-                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                          your_customer_id:
-                            type: string
-                            example: customer-123
-                          name:
-                            type: string
-                            example: production
-                          is_production:
-                            type: boolean
-                            example: true
-                          status:
-                            type: string
-                            example: provisioning
-                          provisioning_step:
-                            type: string
-                            example: waiting_custom_dns
-                          failure_reason:
-                            type: string
-                            example: null
-                          php_version:
-                            type: string
-                            example: '8.3'
-                          tags:
-                            type: array
-                            example: []
-                          fqdn:
-                            type: string
-                            example: wispy-dust.vectorpages.com
-                          custom_domain:
-                            type: string
-                            example: example.com
-                          subdomain:
-                            type: string
-                            example: wispy-dust
-                          created_at:
-                            type: string
-                            example: '2025-05-27T09:50:21+00:00'
-                          updated_at:
-                            type: string
-                            example: '2025-05-27T09:55:42+00:00'
-                      message:
-                        type: string
-                        example: 'SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns'
-                      http_status:
-                        type: integer
-                        example: 200
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthenticated
-                  http_status: 401
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthenticated
-                  http_status:
-                    type: integer
-                    example: 401
-        403:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthorized
-                  http_status: 403
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthorized
-                  http_status:
-                    type: integer
-                    example: 403
-        404:
-          description: 'Not Found'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Environment not found'
-                  http_status: 404
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Environment not found'
-                  http_status:
-                    type: integer
-                    example: 404
-      tags:
-        - Sites
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                retry:
-                  type: boolean
-                  description: 'Whether to retry from a failed state. Default: false.'
-                  example: true
-    parameters:
-      -
-        in: path
-        name: env
-        description: 'The environment ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
@@ -6747,7 +6315,7 @@ paths:
                       tags:
                         - live
                         - primary
-                      fqdn: wispy-dust.vectorpages.com
+                      platform_domain: wispy-dust.vectorpages.com
                       custom_domain: ourshop.com
                       subdomain: wispy-dust
                       created_at: '2025-05-27T09:50:21+00:00'
@@ -6773,7 +6341,7 @@ paths:
                         tags:
                           - live
                           - primary
-                        fqdn: wispy-dust.vectorpages.com
+                        platform_domain: wispy-dust.vectorpages.com
                         custom_domain: ourshop.com
                         subdomain: wispy-dust
                         created_at: '2025-05-27T09:50:21+00:00'
@@ -6815,7 +6383,7 @@ paths:
                             - primary
                           items:
                             type: string
-                        fqdn:
+                        platform_domain:
                           type: string
                           example: wispy-dust.vectorpages.com
                         custom_domain:
@@ -6931,7 +6499,7 @@ paths:
                     tags:
                       - live
                       - primary
-                    fqdn: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust.vectorpages.com
                     custom_domain: ourshop.com
                     subdomain: wispy-dust
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -6976,7 +6544,7 @@ paths:
                           - primary
                         items:
                           type: string
-                      fqdn:
+                      platform_domain:
                         type: string
                         example: wispy-dust.vectorpages.com
                       custom_domain:
@@ -7085,7 +6653,7 @@ paths:
                     tags:
                       - live
                       - updated
-                    fqdn: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust.vectorpages.com
                     custom_domain: newshop.com
                     subdomain: wispy-dust
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -7130,7 +6698,7 @@ paths:
                           - updated
                         items:
                           type: string
-                      fqdn:
+                      platform_domain:
                         type: string
                         example: wispy-dust.vectorpages.com
                       custom_domain:
@@ -7294,7 +6862,7 @@ paths:
                     failure_reason: null
                     php_version: '8.3'
                     tags: []
-                    fqdn: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust.vectorpages.com
                     custom_domain: ourshop.com
                     subdomain: wispy-dust
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -7335,7 +6903,7 @@ paths:
                       tags:
                         type: array
                         example: []
-                      fqdn:
+                      platform_domain:
                         type: string
                         example: wispy-dust.vectorpages.com
                       custom_domain:
@@ -8717,6 +8285,164 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/environments/{env}/ssl':
+    get:
+      summary: 'Get Status'
+      operationId: environmentsSSLGetStatus
+      description: 'Get the current SSL provisioning status for an environment.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                    vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                    your_customer_id: customer-123
+                    name: production
+                    is_production: true
+                    status: active
+                    provisioning_step: complete
+                    failure_reason: null
+                    php_version: '8.3'
+                    tags: []
+                    platform_domain: wispy-dust.vectorpages.com
+                    custom_domain: example.com
+                    subdomain: wispy-dust
+                    created_at: '2025-05-27T09:50:21+00:00'
+                    updated_at: '2025-05-27T09:55:42+00:00'
+                  message: 'SSL status retrieved'
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                      vector_site_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                      your_customer_id:
+                        type: string
+                        example: customer-123
+                      name:
+                        type: string
+                        example: production
+                      is_production:
+                        type: boolean
+                        example: true
+                      status:
+                        type: string
+                        example: active
+                      provisioning_step:
+                        type: string
+                        example: complete
+                      failure_reason:
+                        type: string
+                        example: null
+                      php_version:
+                        type: string
+                        example: '8.3'
+                      tags:
+                        type: array
+                        example: []
+                      platform_domain:
+                        type: string
+                        example: wispy-dust.vectorpages.com
+                      custom_domain:
+                        type: string
+                        example: example.com
+                      subdomain:
+                        type: string
+                        example: wispy-dust
+                      created_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-05-27T09:55:42+00:00'
+                  message:
+                    type: string
+                    example: 'SSL status retrieved'
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Environment not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Environment not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Environments
+    parameters:
+      -
+        in: path
+        name: env
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/environments/{env}/db/reset-password':
     post:
       summary: 'Reset Password'
@@ -8742,7 +8468,7 @@ paths:
                     failure_reason: null
                     php_version: '8.3'
                     tags: []
-                    fqdn: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust.vectorpages.com
                     custom_domain: example.com
                     subdomain: wispy-dust
                     database_user: user_abc123_production
@@ -8785,7 +8511,7 @@ paths:
                       tags:
                         type: array
                         example: []
-                      fqdn:
+                      platform_domain:
                         type: string
                         example: wispy-dust.vectorpages.com
                       custom_domain:
@@ -8950,7 +8676,7 @@ paths:
                     tags:
                       - live
                       - primary
-                    fqdn: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust.vectorpages.com
                     custom_domain: ourshop.com
                     subdomain: wispy-dust
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -8995,7 +8721,7 @@ paths:
                           - primary
                         items:
                           type: string
-                      fqdn:
+                      platform_domain:
                         type: string
                         example: wispy-dust.vectorpages.com
                       custom_domain:
@@ -9338,6 +9064,255 @@ paths:
                     - 'null'
                   description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
                   example: 01jfgxk4nqrst5vwx9yz0abcdh
+    parameters:
+      -
+        in: path
+        name: env
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/environments/{env}/ssl/nudge':
+    post:
+      summary: Nudge
+      operationId: environmentsSSLNudge
+      description: "Manually nudge SSL provisioning for an environment. Use this when SSL\nprovisioning appears to be stuck or to retry after a failure."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Provisioning Progressed'
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        your_customer_id: customer-123
+                        name: production
+                        is_production: true
+                        status: provisioning
+                        provisioning_step: deploying
+                        failure_reason: null
+                        php_version: '8.3'
+                        tags: []
+                        platform_domain: wispy-dust.vectorpages.com
+                        custom_domain: example.com
+                        subdomain: wispy-dust
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:55:42+00:00'
+                      message: 'SSL provisioning advanced from waiting_cert to deploying'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          vector_site_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          your_customer_id:
+                            type: string
+                            example: customer-123
+                          name:
+                            type: string
+                            example: production
+                          is_production:
+                            type: boolean
+                            example: true
+                          status:
+                            type: string
+                            example: provisioning
+                          provisioning_step:
+                            type: string
+                            example: deploying
+                          failure_reason:
+                            type: string
+                            example: null
+                          php_version:
+                            type: string
+                            example: '8.3'
+                          tags:
+                            type: array
+                            example: []
+                          platform_domain:
+                            type: string
+                            example: wispy-dust.vectorpages.com
+                          custom_domain:
+                            type: string
+                            example: example.com
+                          subdomain:
+                            type: string
+                            example: wispy-dust
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:55:42+00:00'
+                      message:
+                        type: string
+                        example: 'SSL provisioning advanced from waiting_cert to deploying'
+                      http_status:
+                        type: integer
+                        example: 200
+                  -
+                    description: Waiting
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        vector_site_id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        your_customer_id: customer-123
+                        name: production
+                        is_production: true
+                        status: provisioning
+                        provisioning_step: waiting_custom_dns
+                        failure_reason: null
+                        php_version: '8.3'
+                        tags: []
+                        platform_domain: wispy-dust.vectorpages.com
+                        custom_domain: example.com
+                        subdomain: wispy-dust
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:55:42+00:00'
+                      message: 'SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          vector_site_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          your_customer_id:
+                            type: string
+                            example: customer-123
+                          name:
+                            type: string
+                            example: production
+                          is_production:
+                            type: boolean
+                            example: true
+                          status:
+                            type: string
+                            example: provisioning
+                          provisioning_step:
+                            type: string
+                            example: waiting_custom_dns
+                          failure_reason:
+                            type: string
+                            example: null
+                          php_version:
+                            type: string
+                            example: '8.3'
+                          tags:
+                            type: array
+                            example: []
+                          platform_domain:
+                            type: string
+                            example: wispy-dust.vectorpages.com
+                          custom_domain:
+                            type: string
+                            example: example.com
+                          subdomain:
+                            type: string
+                            example: wispy-dust
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:55:42+00:00'
+                      message:
+                        type: string
+                        example: 'SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns'
+                      http_status:
+                        type: integer
+                        example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Environment not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Environment not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Environments
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                retry:
+                  type: boolean
+                  description: 'Whether to retry from a failed state. Default: false.'
+                  example: true
     parameters:
       -
         in: path
