@@ -25,6 +25,12 @@ human-readable tables for interactive use.
 
 ## Installation
 
+### Homebrew (macOS/Linux)
+
+```bash
+brew install built-fast/devtools/vector
+```
+
 ### Pre-built binaries
 
 Download from [Releases](https://github.com/built-fast/vector-cli/releases):

@@ -13,7 +13,7 @@ The Vector CLI provides terminal-based management for sites, environments, and d
 ### Homebrew (macOS)
 
 ```bash
-brew install builtfast/tap/vector-cli
+brew install built-fast/devtools/vector
 ```
 
 ### Direct Download
