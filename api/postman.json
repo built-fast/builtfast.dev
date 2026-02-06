@@ -360,7 +360,7 @@
                         {
                             "header": [],
                             "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db-01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
                         },
                         {
@@ -491,7 +491,7 @@
                         {
                             "header": [],
                             "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"tags\": [\"wordpress\", \"clone\"],\n        \"dev_domain\": \"site-xyz789.dev.example.com\",\n        \"dev_db_username\": \"db-01jfgxk4nqrst5vwx9yz0abcdf\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site clone initiated\",\n    \"http_status\": 201\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"tags\": [\"wordpress\", \"clone\"],\n        \"dev_domain\": \"site-xyz789.dev.example.com\",\n        \"dev_db_username\": \"db_01jfgxk4nqrst5vwx9yz0abcdf\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site clone initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
                         },
                         {
@@ -629,7 +629,7 @@
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": null,\n        \"status\": \"active\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.vectorpages.com\",\n        \"dev_db_username\": \"db-01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n        \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n    },\n    \"message\": \"Database password reset successfully. Store the new password securely - it will not be shown again.\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": null,\n        \"status\": \"active\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.vectorpages.com\",\n        \"dev_db_username\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n        \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n    },\n    \"message\": \"Database password reset successfully. Store the new password securely - it will not be shown again.\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -3085,7 +3085,10 @@
                                         "value": "application\/json"
                                     }
                                 ],
-                                "body": null,
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"include_uploads\":false}"
+                                },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
                             "response": [

@@ -277,7 +277,7 @@ paths:
                       port: 22
                       username: my-site
                       password: 'aBcD1234!@#$EfGh5678'
-                    dev_db_username: db-01jfgxk4nqrst5vwx9yz0abcde
+                    dev_db_username: db_01jfgxk4nqrst5vwx9yz0abcde
                     dev_db_password: 'aBcD1234!@#$EfGh5678'
                     environments: []
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -327,7 +327,7 @@ paths:
                             example: 'aBcD1234!@#$EfGh5678'
                       dev_db_username:
                         type: string
-                        example: db-01jfgxk4nqrst5vwx9yz0abcde
+                        example: db_01jfgxk4nqrst5vwx9yz0abcde
                       dev_db_password:
                         type: string
                         example: 'aBcD1234!@#$EfGh5678'
@@ -1347,7 +1347,7 @@ paths:
                       - wordpress
                       - clone
                     dev_domain: site-xyz789.dev.example.com
-                    dev_db_username: db-01jfgxk4nqrst5vwx9yz0abcdf
+                    dev_db_username: db_01jfgxk4nqrst5vwx9yz0abcdf
                     dev_db_password: 'aBcD1234!@#$EfGh5678'
                     environments: []
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -1379,7 +1379,7 @@ paths:
                         example: site-xyz789.dev.example.com
                       dev_db_username:
                         type: string
-                        example: db-01jfgxk4nqrst5vwx9yz0abcdf
+                        example: db_01jfgxk4nqrst5vwx9yz0abcdf
                       dev_db_password:
                         type: string
                         example: 'aBcD1234!@#$EfGh5678'
@@ -1735,7 +1735,7 @@ paths:
                     dev_php_version: '8.3'
                     tags: []
                     dev_domain: site-abc123.vectorpages.com
-                    dev_db_username: db-01jfgxk4nqrst5vwx9yz0abcde
+                    dev_db_username: db_01jfgxk4nqrst5vwx9yz0abcde
                     dev_db_password: 'aBcD1234!@#$EfGh5678'
                     environments: []
                     created_at: '2024-01-01T00:00:00.000000Z'
@@ -1766,7 +1766,7 @@ paths:
                         example: site-abc123.vectorpages.com
                       dev_db_username:
                         type: string
-                        example: db-01jfgxk4nqrst5vwx9yz0abcde
+                        example: db_01jfgxk4nqrst5vwx9yz0abcde
                       dev_db_password:
                         type: string
                         example: 'aBcD1234!@#$EfGh5678'
@@ -8086,6 +8086,17 @@ paths:
                     example: 404
       tags:
         - Environments
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                include_uploads:
+                  type: boolean
+                  description: 'Whether to include wp-content/uploads in the deployment. Defaults to false.'
+                  example: false
     parameters:
       -
         in: path

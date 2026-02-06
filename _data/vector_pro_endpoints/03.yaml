@@ -1851,8 +1851,20 @@ endpoints:
       env: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      include_uploads:
+        custom: []
+        name: include_uploads
+        description: 'Whether to include wp-content/uploads in the deployment. Defaults to false.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      include_uploads: false
     fileParameters: []
     responses:
       -
