@@ -980,6 +980,391 @@ endpoints:
     custom: []
     httpMethods:
       - POST
+    uri: 'api/v1/vector/environments/{env}/db/import'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Direct database import for small files (<50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Import Directly'
+      description: |-
+        Import SQL content directly from the request body. For files under 50MB.
+        The request body should contain raw SQL content with Content-Type: application/sql.
+
+        This is a synchronous operation that blocks until the import completes.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters:
+      drop_tables:
+        custom: []
+        name: drop_tables
+        description: 'Drop all existing tables before import. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      disable_foreign_keys:
+        custom: []
+        name: disable_foreign_keys
+        description: 'Disable foreign key checks during import. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      drop_tables: true
+      disable_foreign_keys: true
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/db/imports'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database import session management for large file uploads (>50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Create Import Session'
+      description: |-
+        Create a database import session for large files (>50MB). Returns a presigned
+        S3 upload URL that can be used to upload the SQL file directly to storage.
+
+        After uploading, call the "Run Import" endpoint to execute the import.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      filename:
+        custom: []
+        name: filename
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content_length:
+        custom: []
+        name: content_length
+        description: 'Must be at least 1. Must not be greater than 5368709120.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content_md5:
+        custom: []
+        name: content_md5
+        description: 'Must match the regex /^[a-fA-F0-9]+$/. Must be 32 characters.'
+        required: false
+        example: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options:
+        custom: []
+        name: options
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.drop_tables:
+        custom: []
+        name: options.drop_tables
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.disable_foreign_keys:
+        custom: []
+        name: options.disable_foreign_keys
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      filename: b
+      content_length: 22
+      content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+      options:
+        drop_tables: false
+        disable_foreign_keys: false
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/db/imports/{import}/run'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Execute a database import from S3 after the file has been uploaded.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Run Import'
+      description: |-
+        Execute a database import from S3 after the file has been uploaded via the
+        presigned URL. Dispatches an async job to perform the import.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      import: 01jfgxk4nqrst5vwx9yz0abcdf
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/db/imports/{import}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database import session management for large file uploads (>50MB).
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Get Import Status'
+      description: 'Get the current status of a database import operation.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      import: 01jfgxk4nqrst5vwx9yz0abcdf
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-vector-pro-revision: UNKNOWN
+          access-control-allow-origin: 'https://go.builtfast.test'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
     uri: 'api/v1/vector/sites/{site}/environments'
     metadata:
       custom: []

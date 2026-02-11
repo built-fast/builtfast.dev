@@ -8660,6 +8660,214 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/environments/{env}/db/import':
+    post:
+      summary: 'Import Directly'
+      operationId: environmentsDatabasesImportDirectly
+      description: "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application/sql.\n\nThis is a synchronous operation that blocks until the import completes."
+      parameters:
+        -
+          in: query
+          name: drop_tables
+          description: 'Drop all existing tables before import. Default: false.'
+          example: true
+          required: false
+          schema:
+            type:
+              - boolean
+              - 'null'
+            description: 'Drop all existing tables before import. Default: false.'
+            example: true
+        -
+          in: query
+          name: disable_foreign_keys
+          description: 'Disable foreign key checks during import. Default: true.'
+          example: true
+          required: false
+          schema:
+            type:
+              - boolean
+              - 'null'
+            description: 'Disable foreign key checks during import. Default: true.'
+            example: true
+      responses: {  }
+      tags:
+        - Environments
+    parameters:
+      -
+        in: path
+        name: env
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: environment
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/environments/{env}/db/imports':
+    post:
+      summary: 'Create Import Session'
+      operationId: environmentsDatabasesCreateImportSession
+      description: "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+      parameters: []
+      responses: {  }
+      tags:
+        - Environments
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                content_length:
+                  type:
+                    - integer
+                    - 'null'
+                  description: 'Must be at least 1. Must not be greater than 5368709120.'
+                  example: 22
+                content_md5:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Must match the regex /^[a-fA-F0-9]+$/. Must be 32 characters.'
+                  example: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+                options:
+                  type:
+                    - object
+                    - 'null'
+                  description: ''
+                  example: null
+                  properties:
+                    drop_tables:
+                      type:
+                        - boolean
+                        - 'null'
+                      description: ''
+                      example: false
+                    disable_foreign_keys:
+                      type:
+                        - boolean
+                        - 'null'
+                      description: ''
+                      example: false
+    parameters:
+      -
+        in: path
+        name: env
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: environment
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/environments/{env}/db/imports/{import}/run':
+    post:
+      summary: 'Run Import'
+      operationId: environmentsDatabasesRunImport
+      description: "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import."
+      parameters: []
+      responses: {  }
+      tags:
+        - Environments
+    parameters:
+      -
+        in: path
+        name: env
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: import
+        description: 'The import ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: environment
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/environments/{env}/db/imports/{import}':
+    get:
+      summary: 'Get Import Status'
+      operationId: environmentsDatabasesGetImportStatus
+      description: 'Get the current status of a database import operation.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: []
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: array
+                    example: []
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+      tags:
+        - Environments
+    parameters:
+      -
+        in: path
+        name: env
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: import
+        description: 'The import ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: environment
+        description: 'The environment ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/sites/{site}/environments':
     post:
       summary: 'Create Environment'

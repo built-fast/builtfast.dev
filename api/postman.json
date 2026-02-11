@@ -3391,6 +3391,218 @@
                                     "name": "Rotation Failed"
                                 }
                             ]
+                        },
+                        {
+                            "name": "Import Directly",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/import",
+                                    "query": [
+                                        {
+                                            "key": "drop_tables",
+                                            "value": "1",
+                                            "description": "Drop all existing tables before import. Default: false.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "disable_foreign_keys",
+                                            "value": "1",
+                                            "description": "Disable foreign key checks during import. Default: true.",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/import?drop_tables=1&disable_foreign_keys=1",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application\/sql.\n\nThis is a synchronous operation that blocks until the import completes."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Create Import Session",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
+                                },
+                                "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Run Import",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports\/:import\/run",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports\/:import\/run",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "import",
+                                            "key": "import",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
+                                            "description": "The import ID."
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Import Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports\/:import",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports\/:import",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "import",
+                                            "key": "import",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
+                                            "description": "The import ID."
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of a database import operation."
+                            },
+                            "response": [
+                                {
+                                    "header": [
+                                        {
+                                            "key": "cache-control",
+                                            "value": "no-cache, private"
+                                        },
+                                        {
+                                            "key": "content-type",
+                                            "value": "application\/json"
+                                        },
+                                        {
+                                            "key": "x-vector-pro-revision",
+                                            "value": "UNKNOWN"
+                                        },
+                                        {
+                                            "key": "access-control-allow-origin",
+                                            "value": "https:\/\/go.builtfast.test"
+                                        },
+                                        {
+                                            "key": "access-control-allow-credentials",
+                                            "value": "true"
+                                        }
+                                    ],
+                                    "code": 401,
+                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                                    "name": ""
+                                }
+                            ]
                         }
                     ]
                 },
