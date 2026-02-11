@@ -6999,7 +6999,7 @@ paths:
     get:
       summary: 'List Secrets'
       operationId: environmentsSecretsListSecrets
-      description: "Retrieves a paginated list of all secrets for a specific environment.\nSecret values are not included in the response for security."
+      description: "Retrieves a paginated list of all secrets and environment variables for a specific environment.\nValues are only included for environment variables (`is_secret=false`)."
       parameters:
         -
           in: query
@@ -7033,6 +7033,14 @@ paths:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                       key: STRIPE_SECRET_KEY
+                      is_secret: true
+                      created_at: '2025-05-27T09:50:21+00:00'
+                      updated_at: '2025-05-27T09:50:21+00:00'
+                    -
+                      id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      key: APP_ENV
+                      is_secret: false
+                      value: production
                       created_at: '2025-05-27T09:50:21+00:00'
                       updated_at: '2025-05-27T09:50:21+00:00'
                   links: {  }
@@ -7046,6 +7054,14 @@ paths:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                         key: STRIPE_SECRET_KEY
+                        is_secret: true
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      -
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                        key: APP_ENV
+                        is_secret: false
+                        value: production
                         created_at: '2025-05-27T09:50:21+00:00'
                         updated_at: '2025-05-27T09:50:21+00:00'
                     items:
@@ -7057,6 +7073,9 @@ paths:
                         key:
                           type: string
                           example: STRIPE_SECRET_KEY
+                        is_secret:
+                          type: boolean
+                          example: true
                         created_at:
                           type: string
                           example: '2025-05-27T09:50:21+00:00'
@@ -7140,7 +7159,7 @@ paths:
     post:
       summary: 'Create Secret'
       operationId: environmentsSecretsCreateSecret
-      description: "Creates a new secret for a specific environment. The secret will be available\nto this environment during deployment.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
+      description: "Creates a new secret or environment variable for a specific environment.\nIt will be available to this environment during deployment.\n\nSet `is_secret` to `false` to create a plain environment variable instead of a secret.\nEnvironment variables are stored as Lambda env vars (cheaper) and their values are\nreturned in API responses. Secrets are stored in AWS Secrets Manager and their values\nare never returned.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
         201:
@@ -7153,6 +7172,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_SECRET_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T09:50:21+00:00'
                   message: 'Environment secret created successfully'
@@ -7167,6 +7187,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_SECRET_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -7288,6 +7311,10 @@ paths:
                   type: string
                   description: 'The secret value.'
                   example: sk_live_xxxx
+                is_secret:
+                  type: boolean
+                  description: 'Whether this is a secret (stored in AWS Secrets Manager) or a plain environment variable. Default: true.'
+                  example: true
               required:
                 - key
                 - value
@@ -7304,45 +7331,93 @@ paths:
     get:
       summary: 'Get Secret'
       operationId: environmentsSecretsGetSecret
-      description: "Retrieves details of a specific environment secret.\nThe secret value is not included in the response for security."
+      description: "Retrieves details of a specific environment secret or variable.\nThe value is only included for environment variables (`is_secret=false`)."
       parameters: []
       responses:
         200:
-          description: Success
+          description: ''
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    key: STRIPE_SECRET_KEY
-                    created_at: '2025-05-27T09:50:21+00:00'
-                    updated_at: '2025-05-27T09:50:21+00:00'
-                  message: 'Environment secret retrieved successfully'
-                  http_status: 200
-                properties:
-                  data:
+                oneOf:
+                  -
+                    description: Secret
                     type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        key: STRIPE_SECRET_KEY
+                        is_secret: true
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      message: 'Environment secret retrieved successfully'
+                      http_status: 200
                     properties:
-                      id:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          key:
+                            type: string
+                            example: STRIPE_SECRET_KEY
+                          is_secret:
+                            type: boolean
+                            example: true
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                      message:
                         type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      key:
+                        example: 'Environment secret retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+                  -
+                    description: 'Environment Variable'
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                        key: APP_ENV
+                        is_secret: false
+                        value: production
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      message: 'Environment secret retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                          key:
+                            type: string
+                            example: APP_ENV
+                          is_secret:
+                            type: boolean
+                            example: false
+                          value:
+                            type: string
+                            example: production
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                      message:
                         type: string
-                        example: STRIPE_SECRET_KEY
-                      created_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                      updated_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                  message:
-                    type: string
-                    example: 'Environment secret retrieved successfully'
-                  http_status:
-                    type: integer
-                    example: 200
+                        example: 'Environment secret retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
         401:
           description: Unauthenticated
           content:
@@ -7408,7 +7483,7 @@ paths:
     put:
       summary: 'Update Secret'
       operationId: environmentsSecretsUpdateSecret
-      description: "Updates an existing environment secret. You can update the key, value, or both.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
+      description: "Updates an existing environment secret or variable. You can update the key, value,\nis_secret flag, or any combination.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
         200:
@@ -7421,6 +7496,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_API_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T10:30:45+00:00'
                   message: 'Environment secret updated successfully'
@@ -7435,6 +7511,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_API_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -7556,6 +7635,10 @@ paths:
                   type: string
                   description: 'The new secret value.'
                   example: sk_live_yyyy
+                is_secret:
+                  type: boolean
+                  description: 'Whether this is a secret or a plain environment variable.'
+                  example: true
     delete:
       summary: 'Delete Secret'
       operationId: environmentsSecretsDeleteSecret
@@ -7572,6 +7655,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_SECRET_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T09:50:21+00:00'
                   message: 'Environment secret deleted successfully'
@@ -7586,6 +7670,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_SECRET_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -10594,7 +10681,7 @@ paths:
     get:
       summary: 'List Secrets'
       operationId: accountSecretsListSecrets
-      description: "Retrieves a paginated list of all global secrets for your account.\nSecret values are not included in the response for security."
+      description: "Retrieves a paginated list of all global secrets and environment variables for your account.\nValues are only included for environment variables (`is_secret=false`)."
       parameters:
         -
           in: query
@@ -10628,6 +10715,14 @@ paths:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                       key: STRIPE_SECRET_KEY
+                      is_secret: true
+                      created_at: '2025-05-27T09:50:21+00:00'
+                      updated_at: '2025-05-27T09:50:21+00:00'
+                    -
+                      id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                      key: APP_ENV
+                      is_secret: false
+                      value: production
                       created_at: '2025-05-27T09:50:21+00:00'
                       updated_at: '2025-05-27T09:50:21+00:00'
                   links: {  }
@@ -10641,6 +10736,14 @@ paths:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                         key: STRIPE_SECRET_KEY
+                        is_secret: true
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      -
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                        key: APP_ENV
+                        is_secret: false
+                        value: production
                         created_at: '2025-05-27T09:50:21+00:00'
                         updated_at: '2025-05-27T09:50:21+00:00'
                     items:
@@ -10652,6 +10755,9 @@ paths:
                         key:
                           type: string
                           example: STRIPE_SECRET_KEY
+                        is_secret:
+                          type: boolean
+                          example: true
                         created_at:
                           type: string
                           example: '2025-05-27T09:50:21+00:00'
@@ -10715,7 +10821,7 @@ paths:
     post:
       summary: 'Create Secret'
       operationId: accountSecretsCreateSecret
-      description: "Creates a new global secret for your account. The secret will be available\nto all sites within your account during deployment.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
+      description: "Creates a new global secret or environment variable for your account. It will be available\nto all sites within your account during deployment.\n\nSet `is_secret` to `false` to create a plain environment variable instead of a secret.\nEnvironment variables are stored as Lambda env vars (cheaper) and their values are\nreturned in API responses. Secrets are stored in AWS Secrets Manager and their values\nare never returned.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
         201:
@@ -10728,6 +10834,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_SECRET_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T09:50:21+00:00'
                   message: 'Global secret created successfully'
@@ -10742,6 +10849,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_SECRET_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -10843,6 +10953,10 @@ paths:
                   type: string
                   description: 'The secret value.'
                   example: sk_live_xxxx
+                is_secret:
+                  type: boolean
+                  description: 'Whether this is a secret (stored in AWS Secrets Manager) or a plain environment variable. Default: true.'
+                  example: true
               required:
                 - key
                 - value
@@ -10850,45 +10964,93 @@ paths:
     get:
       summary: 'Get Secret'
       operationId: accountSecretsGetSecret
-      description: "Retrieves details of a specific global secret.\nThe secret value is not included in the response for security."
+      description: "Retrieves details of a specific global secret or environment variable.\nThe value is only included for environment variables (`is_secret=false`)."
       parameters: []
       responses:
         200:
-          description: Success
+          description: ''
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  data:
-                    id: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                    key: STRIPE_SECRET_KEY
-                    created_at: '2025-05-27T09:50:21+00:00'
-                    updated_at: '2025-05-27T09:50:21+00:00'
-                  message: 'Global secret retrieved successfully'
-                  http_status: 200
-                properties:
-                  data:
+                oneOf:
+                  -
+                    description: Secret
                     type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                        key: STRIPE_SECRET_KEY
+                        is_secret: true
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      message: 'Global secret retrieved successfully'
+                      http_status: 200
                     properties:
-                      id:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDE
+                          key:
+                            type: string
+                            example: STRIPE_SECRET_KEY
+                          is_secret:
+                            type: boolean
+                            example: true
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                      message:
                         type: string
-                        example: 01JFGXK4NQRST5VWX9YZ0ABCDE
-                      key:
+                        example: 'Global secret retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+                  -
+                    description: 'Environment Variable'
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                        key: APP_ENV
+                        is_secret: false
+                        value: production
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      message: 'Global secret retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDF
+                          key:
+                            type: string
+                            example: APP_ENV
+                          is_secret:
+                            type: boolean
+                            example: false
+                          value:
+                            type: string
+                            example: production
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                      message:
                         type: string
-                        example: STRIPE_SECRET_KEY
-                      created_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                      updated_at:
-                        type: string
-                        example: '2025-05-27T09:50:21+00:00'
-                  message:
-                    type: string
-                    example: 'Global secret retrieved successfully'
-                  http_status:
-                    type: integer
-                    example: 200
+                        example: 'Global secret retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
         401:
           description: Unauthenticated
           content:
@@ -10954,7 +11116,7 @@ paths:
     put:
       summary: 'Update Secret'
       operationId: accountSecretsUpdateSecret
-      description: "Updates an existing global secret. You can update the key, value, or both.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
+      description: "Updates an existing global secret or environment variable. You can update the key, value,\nis_secret flag, or any combination.\n\nThe following keys are reserved and cannot be used:\n<kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>"
       parameters: []
       responses:
         200:
@@ -10967,6 +11129,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_API_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T10:30:45+00:00'
                   message: 'Global secret updated successfully'
@@ -10981,6 +11144,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_API_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -11102,6 +11268,10 @@ paths:
                   type: string
                   description: 'The new secret value.'
                   example: sk_live_yyyy
+                is_secret:
+                  type: boolean
+                  description: 'Whether this is a secret or a plain environment variable.'
+                  example: true
     delete:
       summary: 'Delete Secret'
       operationId: accountSecretsDeleteSecret
@@ -11118,6 +11288,7 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDE
                     key: STRIPE_SECRET_KEY
+                    is_secret: true
                     created_at: '2025-05-27T09:50:21+00:00'
                     updated_at: '2025-05-27T09:50:21+00:00'
                   message: 'Global secret deleted successfully'
@@ -11132,6 +11303,9 @@ paths:
                       key:
                         type: string
                         example: STRIPE_SECRET_KEY
+                      is_secret:
+                        type: boolean
+                        example: true
                       created_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'

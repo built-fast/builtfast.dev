@@ -633,18 +633,21 @@ endpoints:
       groupDescription: ''
       subgroup: Secrets
       subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+        Manage account-level secrets and environment variables that are available to all
+        sites within your account. These are injected during site deployment.
 
         Global secrets apply to all environments across all sites in your account. For
         environment-specific secrets, use the Environment Secrets API instead.
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
       title: 'List Secrets'
       description: |-
-        Retrieves a paginated list of all global secrets for your account.
-        Secret values are not included in the response for security.
+        Retrieves a paginated list of all global secrets and environment variables for your account.
+        Values are only included for environment variables (`is_secret=false`).
       authenticated: true
       deprecated: false
     headers:
@@ -692,6 +695,15 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                       "key": "STRIPE_SECRET_KEY",
+                      "is_secret": true,
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:50:21+00:00"
+                  },
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                      "key": "APP_ENV",
+                      "is_secret": false,
+                      "value": "production",
                       "created_at": "2025-05-27T09:50:21+00:00",
                       "updated_at": "2025-05-27T09:50:21+00:00"
                   }
@@ -734,18 +746,21 @@ endpoints:
       groupDescription: ''
       subgroup: Secrets
       subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+        Manage account-level secrets and environment variables that are available to all
+        sites within your account. These are injected during site deployment.
 
         Global secrets apply to all environments across all sites in your account. For
         environment-specific secrets, use the Environment Secrets API instead.
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
       title: 'Get Secret'
       description: |-
-        Retrieves details of a specific global secret.
-        The secret value is not included in the response for security.
+        Retrieves details of a specific global secret or environment variable.
+        The value is only included for environment variables (`is_secret=false`).
       authenticated: true
       deprecated: false
     headers:
@@ -792,6 +807,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
@@ -799,7 +815,25 @@ endpoints:
               "http_status": 200
           }
         headers: []
-        description: Success
+        description: Secret
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "key": "APP_ENV",
+                  "is_secret": false,
+                  "value": "production",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Global secret retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Environment Variable'
       -
         custom: []
         status: 401
@@ -1085,18 +1119,26 @@ endpoints:
       groupDescription: ''
       subgroup: Secrets
       subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+        Manage account-level secrets and environment variables that are available to all
+        sites within your account. These are injected during site deployment.
 
         Global secrets apply to all environments across all sites in your account. For
         environment-specific secrets, use the Environment Secrets API instead.
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
       title: 'Create Secret'
       description: |-
-        Creates a new global secret for your account. The secret will be available
+        Creates a new global secret or environment variable for your account. It will be available
         to all sites within your account during deployment.
+
+        Set `is_secret` to `false` to create a plain environment variable instead of a secret.
+        Environment variables are stored as Lambda env vars (cheaper) and their values are
+        returned in API responses. Secrets are stored in AWS Secrets Manager and their values
+        are never returned.
 
         The following keys are reserved and cannot be used:
         <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
@@ -1133,9 +1175,21 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      is_secret:
+        custom: []
+        name: is_secret
+        description: 'Whether this is a secret (stored in AWS Secrets Manager) or a plain environment variable. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       key: STRIPE_SECRET_KEY
       value: sk_live_xxxx
+      is_secret: true
     fileParameters: []
     responses:
       -
@@ -1146,6 +1200,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
@@ -1197,17 +1252,21 @@ endpoints:
       groupDescription: ''
       subgroup: Secrets
       subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+        Manage account-level secrets and environment variables that are available to all
+        sites within your account. These are injected during site deployment.
 
         Global secrets apply to all environments across all sites in your account. For
         environment-specific secrets, use the Environment Secrets API instead.
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
       title: 'Update Secret'
       description: |-
-        Updates an existing global secret. You can update the key, value, or both.
+        Updates an existing global secret or environment variable. You can update the key, value,
+        is_secret flag, or any combination.
 
         The following keys are reserved and cannot be used:
         <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
@@ -1268,9 +1327,21 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      is_secret:
+        custom: []
+        name: is_secret
+        description: 'Whether this is a secret or a plain environment variable.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       key: STRIPE_API_KEY
       value: sk_live_yyyy
+      is_secret: true
     fileParameters: []
     responses:
       -
@@ -1281,6 +1352,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "key": "STRIPE_API_KEY",
+                  "is_secret": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
@@ -1338,14 +1410,17 @@ endpoints:
       groupDescription: ''
       subgroup: Secrets
       subgroupDescription: |-
-        Manage account-level secrets that are available to all sites within your account.
-        These secrets are injected as environment variables during site deployment.
+        Manage account-level secrets and environment variables that are available to all
+        sites within your account. These are injected during site deployment.
 
         Global secrets apply to all environments across all sites in your account. For
         environment-specific secrets, use the Environment Secrets API instead.
 
-        Secret values are never returned in API responses for security. Certain keys
-        are reserved for system use and cannot be used.
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
       title: 'Delete Secret'
       description: 'Deletes a global secret from your account.'
       authenticated: true
@@ -1394,6 +1469,7 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
                   "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
