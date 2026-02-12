@@ -60,7 +60,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"site-abc123.dev.example.com\",\n            \"environments\": [\n                {\n                    \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                    \"custom_domain\": \"ourshop.com\",\n                    \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                    \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Sites retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"site-abc123.dev.example.com\",\n            \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n            \"environments\": [\n                {\n                    \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                    \"custom_domain\": \"ourshop.com\",\n                    \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                    \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Sites retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -112,7 +112,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"active\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [\n            {\n                \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                \"name\": \"production\",\n                \"is_production\": true,\n                \"status\": \"active\",\n                \"php_version\": \"8.3\",\n                \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                \"custom_domain\": \"ourshop.com\",\n                \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n            }\n        ],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Site retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"active\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"environments\": [\n            {\n                \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n                \"name\": \"production\",\n                \"is_production\": true,\n                \"status\": \"active\",\n                \"php_version\": \"8.3\",\n                \"platform_domain\": \"wispy-dust.vectorpages.com\",\n                \"custom_domain\": \"ourshop.com\",\n                \"created_at\": \"2025-05-27T09:50:21+00:00\",\n                \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n            }\n        ],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Site retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -173,7 +173,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_67890\",\n        \"status\": \"active\",\n        \"tags\": [\"wordpress\", \"staging\"],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site updated successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_67890\",\n        \"status\": \"active\",\n        \"tags\": [\"wordpress\", \"staging\"],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site updated successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -360,7 +360,7 @@
                         {
                             "header": [],
                             "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"pending\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [\"wordpress\", \"production\"],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_sftp\": {\n            \"hostname\": \"ssh.vectorpages.com\",\n            \"port\": 22,\n            \"username\": \"my-site\",\n            \"password\": \"aBcD1234!@#$EfGh5678\"\n        },\n        \"dev_db_username\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"dev_db_password\": \"aBcD1234!@#$EfGh5678\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Vector site creation initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
                         },
                         {
@@ -424,7 +424,7 @@
                         {
                             "header": [],
                             "code": 202,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"terminating\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 202\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"terminating\",\n        \"tags\": [],\n        \"dev_domain\": \"site-abc123.dev.example.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"environments\": [],\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 202\n}",
                             "name": "Accepted"
                         },
                         {
@@ -1082,6 +1082,70 @@
                                     "code": 404,
                                     "body": "{\"data\": {}, \"message\": \"Export not found\", \"http_status\": 404}",
                                     "name": "Not Found"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WordPress",
+                    "description": "Manage WordPress configuration for your site's development container.",
+                    "item": [
+                        {
+                            "name": "Regenerate wp-config.php",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/wp\/reconfig",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/wp\/reconfig",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Regenerates the wp-config.php file for the site's development container\nwith current database credentials, WP_HOME\/WP_SITEURL, and HMAC secret."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": null,\n        \"status\": \"active\",\n        \"dev_php_version\": \"8.3\",\n        \"tags\": [],\n        \"dev_domain\": \"my-site.vectorpages.com\",\n        \"environments\": [],\n        \"created_at\": \"2024-01-01T00:00:00.000000Z\",\n        \"updated_at\": \"2024-01-01T00:00:00.000000Z\"\n    },\n    \"message\": \"WordPress configuration regenerated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"status\": [\"Site must be active to regenerate wp-config. Current state: 'pending'.\"]}, \"message\": \"Site must be active to regenerate wp-config. Current state: 'pending'.\", \"http_status\": 422}",
+                                    "name": "Not Active"
                                 }
                             ]
                         }
@@ -2528,7 +2592,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n            \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"customer-123\",\n            \"name\": \"production\",\n            \"is_production\": true,\n            \"status\": \"active\",\n            \"provisioning_step\": \"complete\",\n            \"failure_reason\": null,\n            \"php_version\": \"8.3\",\n            \"tags\": [\"live\", \"primary\"],\n            \"platform_domain\": \"wispy-dust.vectorpages.com\",\n            \"custom_domain\": \"ourshop.com\",\n            \"subdomain\": \"wispy-dust\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Environments retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n            \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"your_customer_id\": \"customer-123\",\n            \"name\": \"production\",\n            \"is_production\": true,\n            \"status\": \"active\",\n            \"provisioning_step\": \"complete\",\n            \"failure_reason\": null,\n            \"php_version\": \"8.3\",\n            \"tags\": [\"live\", \"primary\"],\n            \"platform_domain\": \"wispy-dust.vectorpages.com\",\n            \"custom_domain\": \"ourshop.com\",\n            \"subdomain\": \"wispy-dust\",\n            \"database_host\": \"prod-cluster.xyz789.us-east-1.rds.amazonaws.com\",\n            \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Environments retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -2586,7 +2650,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"prod-cluster.xyz789.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -3105,7 +3169,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -3498,7 +3562,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":true}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
@@ -3546,6 +3610,48 @@
                                 ],
                                 "body": null,
                                 "description": "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Create Database Promote",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/promote",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/promote",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"drop_tables\":false,\"disable_foreign_keys\":true}"
+                                },
+                                "description": "Promote the dev database to this environment. Exports the dev database,\nthen imports it into the environment's database."
                             },
                             "response": []
                         },
@@ -3621,6 +3727,85 @@
                                     "name": ""
                                 }
                             ]
+                        },
+                        {
+                            "name": "Get Promote Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/promotes\/:vectorDbPromote",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/promotes\/:vectorDbPromote",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "vectorDbPromote",
+                                            "key": "vectorDbPromote",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        },
+                                        {
+                                            "id": "promote",
+                                            "key": "promote",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
+                                            "description": "The promote ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of a database promote operation."
+                            },
+                            "response": [
+                                {
+                                    "header": [
+                                        {
+                                            "key": "cache-control",
+                                            "value": "no-cache, private"
+                                        },
+                                        {
+                                            "key": "content-type",
+                                            "value": "application\/json"
+                                        },
+                                        {
+                                            "key": "x-vector-pro-revision",
+                                            "value": "UNKNOWN"
+                                        },
+                                        {
+                                            "key": "access-control-allow-origin",
+                                            "value": "https:\/\/go.builtfast.test"
+                                        },
+                                        {
+                                            "key": "access-control-allow-credentials",
+                                            "value": "true"
+                                        }
+                                    ],
+                                    "code": 401,
+                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                                    "name": ""
+                                }
+                            ]
                         }
                     ]
                 },
@@ -3662,7 +3847,7 @@
                         {
                             "header": [],
                             "code": 201,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"prod-cluster.xyz789.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
                         },
                         {
@@ -3688,6 +3873,12 @@
                             "code": 422,
                             "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"Environment name must be lowercase letters, numbers, and hyphens only.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                             "name": "Validation Error"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"Environment name must not contain consecutive hyphens (--).\" ]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Consecutive Hyphens"
                         }
                     ]
                 },
@@ -3729,7 +3920,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.4\",\n        \"tags\": [\"live\", \"updated\"],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"newshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment updated successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.4\",\n        \"tags\": [\"live\", \"updated\"],\n        \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n        \"custom_domain\": \"newshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"prod-cluster.xyz789.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment updated successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -3755,6 +3946,12 @@
                             "code": 422,
                             "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"An environment with this name already exists for this site.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                             "name": "Validation Error"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"Environment name must not contain consecutive hyphens (--).\" ]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Consecutive Hyphens"
                         }
                     ]
                 },
@@ -3793,7 +3990,7 @@
                         {
                             "header": [],
                             "code": 202,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 202\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"your_customer_id\": \"customer-123\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"terminating\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"platform_domain\": \"wispy-dust.vectorpages.com\",\n        \"custom_domain\": \"ourshop.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"prod-cluster.xyz789.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T10:30:45+00:00\"\n    },\n    \"message\": \"Environment deletion initiated\",\n    \"http_status\": 202\n}",
                             "name": "Accepted"
                         },
                         {

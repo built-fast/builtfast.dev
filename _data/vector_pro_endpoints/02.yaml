@@ -96,6 +96,8 @@ endpoints:
                       "status": "active",
                       "tags": ["wordpress", "production"],
                       "dev_domain": "site-abc123.dev.example.com",
+                      "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
+                      "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                       "environments": [
                           {
                               "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
@@ -205,6 +207,8 @@ endpoints:
                   "status": "active",
                   "tags": ["wordpress", "production"],
                   "dev_domain": "site-abc123.dev.example.com",
+                  "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [
                       {
                           "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
@@ -345,6 +349,8 @@ endpoints:
                   "status": "active",
                   "tags": ["wordpress", "staging"],
                   "dev_domain": "site-abc123.dev.example.com",
+                  "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [],
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
@@ -703,6 +709,8 @@ endpoints:
                   "dev_php_version": "8.3",
                   "tags": ["wordpress", "production"],
                   "dev_domain": "my-site.vectorpages.com",
+                  "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_sftp": {
                       "hostname": "ssh.vectorpages.com",
                       "port": 22,
@@ -838,6 +846,8 @@ endpoints:
                   "status": "terminating",
                   "tags": [],
                   "dev_domain": "site-abc123.dev.example.com",
+                  "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [],
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
@@ -1242,6 +1252,94 @@ endpoints:
         content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/wp/reconfig'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: WordPress
+      subgroupDescription: "Manage WordPress configuration for your site's development container."
+      title: 'Regenerate wp-config.php'
+      description: |-
+        Regenerates the wp-config.php file for the site's development container
+        with current database credentials, WP_HOME/WP_SITEURL, and HMAC secret.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "your_customer_id": null,
+                  "status": "active",
+                  "dev_php_version": "8.3",
+                  "tags": [],
+                  "dev_domain": "my-site.vectorpages.com",
+                  "environments": [],
+                  "created_at": "2024-01-01T00:00:00.000000Z",
+                  "updated_at": "2024-01-01T00:00:00.000000Z"
+              },
+              "message": "WordPress configuration regenerated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"status": ["Site must be active to regenerate wp-config. Current state: ''pending''."]}, "message": "Site must be active to regenerate wp-config. Current state: ''pending''.", "http_status": 422}'
+        headers: []
+        description: 'Not Active'
     responseFields: []
     auth:
       - headers

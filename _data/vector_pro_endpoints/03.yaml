@@ -128,6 +128,8 @@ endpoints:
                       "platform_domain": "wispy-dust.vectorpages.com",
                       "custom_domain": "ourshop.com",
                       "subdomain": "wispy-dust",
+                      "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                      "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                       "created_at": "2025-05-27T09:50:21+00:00",
                       "updated_at": "2025-05-27T09:50:21+00:00"
                   }
@@ -244,6 +246,8 @@ endpoints:
                   "platform_domain": "wispy-dust.vectorpages.com",
                   "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
+                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
@@ -1211,7 +1215,7 @@ endpoints:
         name: options.disable_foreign_keys
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1223,7 +1227,7 @@ endpoints:
       content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
       options:
         drop_tables: false
-        disable_foreign_keys: true
+        disable_foreign_keys: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -1299,6 +1303,93 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/db/promote'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database promote operations - promote dev database to an environment.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Create Database Promote'
+      description: |-
+        Promote the dev database to this environment. Exports the dev database,
+        then imports it into the environment's database.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      drop_tables:
+        custom: []
+        name: drop_tables
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      disable_foreign_keys:
+        custom: []
+        name: disable_foreign_keys
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      drop_tables: false
+      disable_foreign_keys: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -1396,6 +1487,102 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/db/promotes/{vectorDbPromote}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database promote operations - promote dev database to an environment.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Get Promote Status'
+      description: 'Get the current status of a database promote operation.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorDbPromote:
+        custom: []
+        name: vectorDbPromote
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      promote:
+        custom: []
+        name: promote
+        description: 'The promote ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      vectorDbPromote: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      promote: 01jfgxk4nqrst5vwx9yz0abcdf
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-vector-pro-revision: UNKNOWN
+          access-control-allow-origin: 'https://go.builtfast.test'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - POST
     uri: 'api/v1/vector/sites/{site}/environments'
     metadata:
@@ -1461,7 +1648,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'A unique name for this environment (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
+        description: 'A unique name for this environment (slug format: lowercase letters, numbers, hyphens; consecutive hyphens `--` are not allowed). Max 50 chars.'
         required: true
         example: production
         type: string
@@ -1541,9 +1728,11 @@ endpoints:
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
-                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
+                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
@@ -1582,6 +1771,18 @@ endpoints:
           }
         headers: []
         description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["Environment name must not contain consecutive hyphens (--)." ]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Consecutive Hyphens'
     responseFields: []
     auth:
       - headers
@@ -1650,7 +1851,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'The environment name (slug format: lowercase letters, numbers, hyphens). Max 50 chars.'
+        description: 'The environment name (slug format: lowercase letters, numbers, hyphens; consecutive hyphens `--` are not allowed). Max 50 chars.'
         required: false
         example: production
         type: string
@@ -1706,9 +1907,11 @@ endpoints:
                   "failure_reason": null,
                   "php_version": "8.4",
                   "tags": ["live", "updated"],
-                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "newshop.com",
                   "subdomain": "wispy-dust",
+                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
@@ -1747,6 +1950,18 @@ endpoints:
           }
         headers: []
         description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["Environment name must not contain consecutive hyphens (--)." ]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Consecutive Hyphens'
     responseFields: []
     auth:
       - headers
@@ -1839,6 +2054,8 @@ endpoints:
                   "platform_domain": "wispy-dust.vectorpages.com",
                   "custom_domain": "ourshop.com",
                   "subdomain": "wispy-dust",
+                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "created_at": "2025-05-27T09:50:21+00:00",
                   "updated_at": "2025-05-27T10:30:45+00:00"
               },
@@ -2319,8 +2536,20 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      include_database:
+        custom: []
+        name: include_database
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       include_uploads: false
+      include_database: true
     fileParameters: []
     responses:
       -
