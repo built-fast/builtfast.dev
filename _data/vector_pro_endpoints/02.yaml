@@ -1312,9 +1312,33 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      search_replace_from:
+        custom: []
+        name: search_replace_from
+        description: 'The domain/string to search for after import. Required with `search_replace_to`.'
+        required: false
+        example: oldsite.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      search_replace_to:
+        custom: []
+        name: search_replace_to
+        description: 'The domain/string to replace with after import. Required with `search_replace_from`.'
+        required: false
+        example: dev.newsite.builtfast.dev
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanQueryParameters:
       drop_tables: true
       disable_foreign_keys: true
+      search_replace_from: oldsite.com
+      search_replace_to: dev.newsite.builtfast.dev
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -1488,6 +1512,39 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      options.search_replace:
+        custom: []
+        name: options.search_replace
+        description: 'Optional search-replace configuration to run after import. Both `from` and `to` are required together.'
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.search_replace.from:
+        custom: []
+        name: options.search_replace.from
+        description: 'The domain/string to search for. Required with `to`.'
+        required: false
+        example: oldsite.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      options.search_replace.to:
+        custom: []
+        name: options.search_replace.to
+        description: 'The domain/string to replace with. Required with `from`.'
+        required: false
+        example: dev.newsite.builtfast.dev
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       filename: backup-2025-01-23.sql
       content_length: 104857600
@@ -1495,6 +1552,9 @@ endpoints:
       options:
         drop_tables: true
         disable_foreign_keys: true
+        search_replace:
+          from: oldsite.com
+          to: dev.newsite.builtfast.dev
     fileParameters: []
     responses:
       -
@@ -1509,7 +1569,7 @@ endpoints:
                   "filename": "backup-2025-01-23.sql",
                   "content_length": 104857600,
                   "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": {"from": "oldsite.com", "to": "dev.newsite.builtfast.dev"}},
                   "upload_url": "https://s3.amazonaws.com/bucket/imports/...",
                   "upload_expires_at": "2025-01-23T11:00:00+00:00",
                   "duration_ms": null,
@@ -1624,7 +1684,7 @@ endpoints:
                   "filename": "backup-2025-01-23.sql",
                   "content_length": 104857600,
                   "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": {"from": "oldsite.com", "to": "dev.newsite.builtfast.dev"}},
                   "duration_ms": null,
                   "error_message": null,
                   "created_at": "2025-01-23T10:00:00+00:00",
@@ -1847,7 +1907,7 @@ endpoints:
                   "filename": "backup-2025-01-23.sql",
                   "content_length": 104857600,
                   "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": "d41d8cd98f00b204e9800998ecf8427e"},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true},
+                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": null},
                   "duration_ms": 45000,
                   "error_message": null,
                   "created_at": "2025-01-23T10:00:00+00:00",

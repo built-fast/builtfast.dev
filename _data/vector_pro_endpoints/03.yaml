@@ -1211,7 +1211,7 @@ endpoints:
         name: options.disable_foreign_keys
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1223,7 +1223,7 @@ endpoints:
       content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
       options:
         drop_tables: false
-        disable_foreign_keys: false
+        disable_foreign_keys: true
     fileParameters: []
     responses: []
     responseFields: []

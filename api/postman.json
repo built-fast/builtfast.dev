@@ -670,9 +670,21 @@
                                             "value": "1",
                                             "description": "Disable foreign key checks during import. Default: true.",
                                             "disabled": false
+                                        },
+                                        {
+                                            "key": "search_replace_from",
+                                            "value": "oldsite.com",
+                                            "description": "The domain\/string to search for after import. Required with `search_replace_to`.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "search_replace_to",
+                                            "value": "dev.newsite.builtfast.dev",
+                                            "description": "The domain\/string to replace with after import. Required with `search_replace_from`.",
+                                            "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/import?drop_tables=1&disable_foreign_keys=1",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/import?drop_tables=1&disable_foreign_keys=1&search_replace_from=oldsite.com&search_replace_to=dev.newsite.builtfast.dev",
                                     "variable": [
                                         {
                                             "id": "site",
@@ -765,7 +777,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"backup-2025-01-23.sql\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true}}"
+                                    "raw": "{\"filename\":\"backup-2025-01-23.sql\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"oldsite.com\",\"to\":\"dev.newsite.builtfast.dev\"}}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
@@ -773,7 +785,7 @@
                                 {
                                     "header": [],
                                     "code": 201,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-23T11:00:00+00:00\",\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": {\"from\": \"oldsite.com\", \"to\": \"dev.newsite.builtfast.dev\"}},\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-23T11:00:00+00:00\",\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
                                     "name": "Created"
                                 },
                                 {
@@ -843,7 +855,7 @@
                                 {
                                     "header": [],
                                     "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"uploaded\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-23T10:00:30+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database import started\",\n    \"http_status\": 202\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"uploaded\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": {\"from\": \"oldsite.com\", \"to\": \"dev.newsite.builtfast.dev\"}},\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-23T10:00:30+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database import started\",\n    \"http_status\": 202\n}",
                                     "name": "Accepted"
                                 },
                                 {
@@ -980,7 +992,7 @@
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true},\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:01:00+00:00\",\n        \"completed_at\": \"2025-01-23T10:01:45+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": null},\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:01:00+00:00\",\n        \"completed_at\": \"2025-01-23T10:01:45+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -3486,7 +3498,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":true}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },

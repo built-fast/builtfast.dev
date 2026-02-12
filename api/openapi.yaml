@@ -1886,6 +1886,30 @@ paths:
               - 'null'
             description: 'Disable foreign key checks during import. Default: true.'
             example: true
+        -
+          in: query
+          name: search_replace_from
+          description: 'The domain/string to search for after import. Required with `search_replace_to`.'
+          example: oldsite.com
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            description: 'The domain/string to search for after import. Required with `search_replace_to`.'
+            example: oldsite.com
+        -
+          in: query
+          name: search_replace_to
+          description: 'The domain/string to replace with after import. Required with `search_replace_from`.'
+          example: dev.newsite.builtfast.dev
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            description: 'The domain/string to replace with after import. Required with `search_replace_from`.'
+            example: dev.newsite.builtfast.dev
       responses:
         200:
           description: Success
@@ -2076,6 +2100,9 @@ paths:
                     options:
                       drop_tables: true
                       disable_foreign_keys: true
+                      search_replace:
+                        from: oldsite.com
+                        to: dev.newsite.builtfast.dev
                     upload_url: 'https://s3.amazonaws.com/bucket/imports/...'
                     upload_expires_at: '2025-01-23T11:00:00+00:00'
                     duration_ms: null
@@ -2122,6 +2149,15 @@ paths:
                           disable_foreign_keys:
                             type: boolean
                             example: true
+                          search_replace:
+                            type: object
+                            properties:
+                              from:
+                                type: string
+                                example: oldsite.com
+                              to:
+                                type: string
+                                example: dev.newsite.builtfast.dev
                       upload_url:
                         type: string
                         example: 'https://s3.amazonaws.com/bucket/imports/...'
@@ -2287,6 +2323,25 @@ paths:
                         - 'null'
                       description: 'Disable foreign key checks during import. Default: true.'
                       example: true
+                    search_replace:
+                      type:
+                        - object
+                        - 'null'
+                      description: 'Optional search-replace configuration to run after import. Both `from` and `to` are required together.'
+                      example: []
+                      properties:
+                        from:
+                          type:
+                            - string
+                            - 'null'
+                          description: 'The domain/string to search for. Required with `to`.'
+                          example: oldsite.com
+                        to:
+                          type:
+                            - string
+                            - 'null'
+                          description: 'The domain/string to replace with. Required with `from`.'
+                          example: dev.newsite.builtfast.dev
     parameters:
       -
         in: path
@@ -2322,6 +2377,9 @@ paths:
                     options:
                       drop_tables: true
                       disable_foreign_keys: true
+                      search_replace:
+                        from: oldsite.com
+                        to: dev.newsite.builtfast.dev
                     duration_ms: null
                     error_message: null
                     created_at: '2025-01-23T10:00:00+00:00'
@@ -2367,6 +2425,15 @@ paths:
                           disable_foreign_keys:
                             type: boolean
                             example: true
+                          search_replace:
+                            type: object
+                            properties:
+                              from:
+                                type: string
+                                example: oldsite.com
+                              to:
+                                type: string
+                                example: dev.newsite.builtfast.dev
                       duration_ms:
                         type: string
                         example: null
@@ -2715,6 +2782,7 @@ paths:
                     options:
                       drop_tables: true
                       disable_foreign_keys: true
+                      search_replace: null
                     duration_ms: 45000
                     error_message: null
                     created_at: '2025-01-23T10:00:00+00:00'
@@ -2759,6 +2827,9 @@ paths:
                           disable_foreign_keys:
                             type: boolean
                             example: true
+                          search_replace:
+                            type: string
+                            example: null
                       duration_ms:
                         type: integer
                         example: 45000
@@ -8849,7 +8920,7 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: false
+                      example: true
     parameters:
       -
         in: path
