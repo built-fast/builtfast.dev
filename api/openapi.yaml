@@ -8973,7 +8973,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -9639,7 +9639,7 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: true
+                      example: false
     parameters:
       -
         in: path
@@ -9710,7 +9710,7 @@ paths:
                 drop_tables:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                 disable_foreign_keys:
                   type: boolean
                   description: ''
