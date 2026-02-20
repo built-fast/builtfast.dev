@@ -3339,7 +3339,7 @@ paths:
   '/api/v1/vector/sites/{site}/backups':
     get:
       summary: 'List Backups'
-      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)ListBackups"
+      operationId: sitesBackupsListBackups
       description: "Retrieves a paginated list of backups for the specified site, ordered by\nmost recent first."
       parameters:
         -
@@ -3485,7 +3485,7 @@ paths:
         - Sites
     post:
       summary: 'Create Backup'
-      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)CreateBackup"
+      operationId: sitesBackupsCreateBackup
       description: "Creates a new backup for the specified site. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic\nbackup via an ECS task."
       parameters: []
       responses:
@@ -3642,14 +3642,6 @@ paths:
       -
         in: path
         name: site
-        description: 'The site.'
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: vectorSite
         description: 'The site ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
@@ -3658,7 +3650,7 @@ paths:
   '/api/v1/vector/sites/{site}/backups/{vectorBackup}':
     get:
       summary: 'Get Backup'
-      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)GetBackup"
+      operationId: sitesBackupsGetBackup
       description: 'Retrieves details of a specific backup for the specified site.'
       parameters: []
       responses:
@@ -3784,24 +3776,24 @@ paths:
       -
         in: path
         name: site
-        description: 'The site.'
-        example: architecto
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
         schema:
           type: string
       -
         in: path
         name: vectorBackup
-        description: 'The backup ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        description: ''
+        example: architecto
         required: true
         schema:
           type: string
       -
         in: path
-        name: vectorSite
-        description: 'The site ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcde
+        name: backup
+        description: 'The backup ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
           type: string
@@ -8981,7 +8973,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
     parameters:
       -
         in: path
@@ -9641,13 +9633,13 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: true
+                      example: false
                     disable_foreign_keys:
                       type:
                         - boolean
                         - 'null'
                       description: ''
-                      example: false
+                      example: true
     parameters:
       -
         in: path

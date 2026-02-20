@@ -2180,9 +2180,8 @@ endpoints:
       custom: []
       groupName: Sites
       groupDescription: ''
-      subgroup: |-
-        Backups
-
+      subgroup: Backups
+      subgroupDescription: |-
         Manage on-demand and scheduled backups for Vector sites. Backups use restic
         snapshots stored in S3 and are orchestrated via ECS tasks.
 
@@ -2192,7 +2191,6 @@ endpoints:
         - `processing` - ECS task is running the restic backup
         - `completed` - Backup finished successfully, snapshot available
         - `failed` - Backup failed (see error details in callback logs)
-      subgroupDescription: ''
       title: 'List Backups'
       description: |-
         Retrieves a paginated list of backups for the specified site, ordered by
@@ -2207,17 +2205,6 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      vectorSite:
-        custom: []
-        name: vectorSite
         description: 'The site ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -2227,8 +2214,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: architecto
-      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters:
       per_page:
         custom: []
@@ -2313,9 +2299,8 @@ endpoints:
       custom: []
       groupName: Sites
       groupDescription: ''
-      subgroup: |-
-        Backups
-
+      subgroup: Backups
+      subgroupDescription: |-
         Manage on-demand and scheduled backups for Vector sites. Backups use restic
         snapshots stored in S3 and are orchestrated via ECS tasks.
 
@@ -2325,7 +2310,6 @@ endpoints:
         - `processing` - ECS task is running the restic backup
         - `completed` - Backup finished successfully, snapshot available
         - `failed` - Backup failed (see error details in callback logs)
-      subgroupDescription: ''
       title: 'Get Backup'
       description: 'Retrieves details of a specific backup for the specified site.'
       authenticated: true
@@ -2338,28 +2322,6 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      vectorBackup:
-        custom: []
-        name: vectorBackup
-        description: 'The backup ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      vectorSite:
-        custom: []
-        name: vectorSite
         description: 'The site ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -2368,10 +2330,32 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      backup:
+        custom: []
+        name: backup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: architecto
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
-      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      vectorBackup: architecto
+      backup: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2434,9 +2418,8 @@ endpoints:
       custom: []
       groupName: Sites
       groupDescription: ''
-      subgroup: |-
-        Backups
-
+      subgroup: Backups
+      subgroupDescription: |-
         Manage on-demand and scheduled backups for Vector sites. Backups use restic
         snapshots stored in S3 and are orchestrated via ECS tasks.
 
@@ -2446,7 +2429,6 @@ endpoints:
         - `processing` - ECS task is running the restic backup
         - `completed` - Backup finished successfully, snapshot available
         - `failed` - Backup failed (see error details in callback logs)
-      subgroupDescription: ''
       title: 'Create Backup'
       description: |-
         Creates a new backup for the specified site. The backup is created with a
@@ -2462,17 +2444,6 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      vectorSite:
-        custom: []
-        name: vectorSite
         description: 'The site ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -2482,8 +2453,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: architecto
-      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:

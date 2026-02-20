@@ -1152,8 +1152,8 @@
                     ]
                 },
                 {
-                    "name": "Backups\n\nManage on-demand and scheduled backups for Vector sites. Backups use restic\nsnapshots stored in S3 and are orchestrated via ECS tasks.\n\n#### Backup Status Lifecycle\n\n- `pending` - Backup record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic backup\n- `completed` - Backup finished successfully, snapshot available\n- `failed` - Backup failed (see error details in callback logs)",
-                    "description": "",
+                    "name": "Backups",
+                    "description": "Manage on-demand and scheduled backups for Vector sites. Backups use restic\nsnapshots stored in S3 and are orchestrated via ECS tasks.\n\n#### Backup Status Lifecycle\n\n- `pending` - Backup record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic backup\n- `completed` - Backup finished successfully, snapshot available\n- `failed` - Backup failed (see error details in callback logs)",
                     "item": [
                         {
                             "name": "List Backups",
@@ -1180,12 +1180,6 @@
                                         {
                                             "id": "site",
                                             "key": "site",
-                                            "value": "architecto",
-                                            "description": "The site."
-                                        },
-                                        {
-                                            "id": "vectorSite",
-                                            "key": "vectorSite",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The site ID."
                                         }
@@ -1238,20 +1232,20 @@
                                         {
                                             "id": "site",
                                             "key": "site",
-                                            "value": "architecto",
-                                            "description": "The site."
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
                                         },
                                         {
                                             "id": "vectorBackup",
                                             "key": "vectorBackup",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The backup ID."
+                                            "value": "architecto",
+                                            "description": ""
                                         },
                                         {
-                                            "id": "vectorSite",
-                                            "key": "vectorSite",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
+                                            "id": "backup",
+                                            "key": "backup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
                                         }
                                     ]
                                 },
@@ -1308,12 +1302,6 @@
                                         {
                                             "id": "site",
                                             "key": "site",
-                                            "value": "architecto",
-                                            "description": "The site."
-                                        },
-                                        {
-                                            "id": "vectorSite",
-                                            "key": "vectorSite",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The site ID."
                                         }
@@ -3383,7 +3371,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -3776,7 +3764,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":false}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":true}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },

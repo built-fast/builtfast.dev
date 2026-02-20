@@ -1204,7 +1204,7 @@ endpoints:
         name: options.drop_tables
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1215,7 +1215,7 @@ endpoints:
         name: options.disable_foreign_keys
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1226,8 +1226,8 @@ endpoints:
       content_length: 22
       content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
       options:
-        drop_tables: true
-        disable_foreign_keys: false
+        drop_tables: false
+        disable_foreign_keys: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -2541,7 +2541,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2549,7 +2549,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: false
+      include_database: true
     fileParameters: []
     responses:
       -
