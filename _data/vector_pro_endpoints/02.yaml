@@ -2175,6 +2175,402 @@ endpoints:
     custom: []
     httpMethods:
       - GET
+    uri: 'api/v1/vector/sites/{site}/backups'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: |-
+        Backups
+
+        Manage on-demand and scheduled backups for Vector sites. Backups use restic
+        snapshots stored in S3 and are orchestrated via ECS tasks.
+
+        #### Backup Status Lifecycle
+
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      subgroupDescription: ''
+      title: 'List Backups'
+      description: |-
+        Retrieves a paginated list of backups for the specified site, ordered by
+        most recent first.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                      "type": "manual",
+                      "status": "completed",
+                      "description": "Pre-deployment backup",
+                      "snapshot_id": "a1b2c3d4",
+                      "started_at": "2025-05-27T09:50:21+00:00",
+                      "completed_at": "2025-05-27T09:55:42+00:00",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:55:42+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Backups retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/backups/{vectorBackup}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: |-
+        Backups
+
+        Manage on-demand and scheduled backups for Vector sites. Backups use restic
+        snapshots stored in S3 and are orchestrated via ECS tasks.
+
+        #### Backup Status Lifecycle
+
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      subgroupDescription: ''
+      title: 'Get Backup'
+      description: 'Retrieves details of a specific backup for the specified site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "type": "manual",
+                  "status": "completed",
+                  "description": "Pre-deployment backup",
+                  "snapshot_id": "a1b2c3d4",
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:55:42+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "Backup retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/backups'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: |-
+        Backups
+
+        Manage on-demand and scheduled backups for Vector sites. Backups use restic
+        snapshots stored in S3 and are orchestrated via ECS tasks.
+
+        #### Backup Status Lifecycle
+
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      subgroupDescription: ''
+      title: 'Create Backup'
+      description: |-
+        Creates a new backup for the specified site. The backup is created with a
+        `pending` status and an async job is dispatched to orchestrate the restic
+        backup via an ECS task.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      type:
+        custom: []
+        name: type
+        description: 'The backup type (manual, scheduled).'
+        required: true
+        example: manual
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Optional description for the backup. Max 500 characters.'
+        required: false
+        example: 'Pre-deployment backup'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      type: manual
+      description: 'Pre-deployment backup'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "type": "manual",
+                  "status": "pending",
+                  "description": "Pre-deployment backup",
+                  "snapshot_id": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup initiated successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"type": ["The type field is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
     uri: 'api/v1/vector/sites/{site}/logs'
     metadata:
       custom: []

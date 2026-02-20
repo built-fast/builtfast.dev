@@ -3336,6 +3336,475 @@ paths:
         required: true
         schema:
           type: string
+  '/api/v1/vector/sites/{site}/backups':
+    get:
+      summary: 'List Backups'
+      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)ListBackups"
+      description: "Retrieves a paginated list of backups for the specified site, ordered by\nmost recent first."
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Number of items per page (max 100). Default: 15.'
+          example: 25
+          required: false
+          schema:
+            type: integer
+            description: 'Number of items per page (max 100). Default: 15.'
+            example: 25
+        -
+          in: query
+          name: page
+          description: 'Page number for pagination. Default: 1.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Page number for pagination. Default: 1.'
+            example: 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                      type: manual
+                      status: completed
+                      description: 'Pre-deployment backup'
+                      snapshot_id: a1b2c3d4
+                      started_at: '2025-05-27T09:50:21+00:00'
+                      completed_at: '2025-05-27T09:55:42+00:00'
+                      created_at: '2025-05-27T09:50:21+00:00'
+                      updated_at: '2025-05-27T09:55:42+00:00'
+                  links: {  }
+                  meta: {  }
+                  message: 'Backups retrieved successfully'
+                  http_status: 200
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                        type: manual
+                        status: completed
+                        description: 'Pre-deployment backup'
+                        snapshot_id: a1b2c3d4
+                        started_at: '2025-05-27T09:50:21+00:00'
+                        completed_at: '2025-05-27T09:55:42+00:00'
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:55:42+00:00'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                        type:
+                          type: string
+                          example: manual
+                        status:
+                          type: string
+                          example: completed
+                        description:
+                          type: string
+                          example: 'Pre-deployment backup'
+                        snapshot_id:
+                          type: string
+                          example: a1b2c3d4
+                        started_at:
+                          type: string
+                          example: '2025-05-27T09:50:21+00:00'
+                        completed_at:
+                          type: string
+                          example: '2025-05-27T09:55:42+00:00'
+                        created_at:
+                          type: string
+                          example: '2025-05-27T09:50:21+00:00'
+                        updated_at:
+                          type: string
+                          example: '2025-05-27T09:55:42+00:00'
+                  links:
+                    type: object
+                    properties: {  }
+                  meta:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Backups retrieved successfully'
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+      tags:
+        - Sites
+    post:
+      summary: 'Create Backup'
+      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)CreateBackup"
+      description: "Creates a new backup for the specified site. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic\nbackup via an ECS task."
+      parameters: []
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                    type: manual
+                    status: pending
+                    description: 'Pre-deployment backup'
+                    snapshot_id: null
+                    started_at: null
+                    completed_at: null
+                    created_at: '2025-05-27T09:50:21+00:00'
+                    updated_at: '2025-05-27T09:50:21+00:00'
+                  message: 'Backup initiated successfully'
+                  http_status: 201
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                      type:
+                        type: string
+                        example: manual
+                      status:
+                        type: string
+                        example: pending
+                      description:
+                        type: string
+                        example: 'Pre-deployment backup'
+                      snapshot_id:
+                        type: string
+                        example: null
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                  message:
+                    type: string
+                    example: 'Backup initiated successfully'
+                  http_status:
+                    type: integer
+                    example: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  errors:
+                    type:
+                      - 'The type field is required.'
+                  message: 'Validation failed'
+                  http_status: 422
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      type:
+                        type: array
+                        example:
+                          - 'The type field is required.'
+                        items:
+                          type: string
+                  message:
+                    type: string
+                    example: 'Validation failed'
+                  http_status:
+                    type: integer
+                    example: 422
+      tags:
+        - Sites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: 'The backup type (manual, scheduled).'
+                  example: manual
+                description:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional description for the backup. Max 500 characters.'
+                  example: 'Pre-deployment backup'
+              required:
+                - type
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/backups/{vectorBackup}':
+    get:
+      summary: 'Get Backup'
+      operationId: "sitesBackups\n\nManageon-demandandscheduledbackupsforVectorsites.Backupsuserestic\nsnapshotsstoredinS3andareorchestratedviaECStasks.\n\n####BackupStatusLifecycle\n\n-`pending`-Backuprecordcreated,waitingforECStasktostart\n-`processing`-ECStaskisrunningtheresticbackup\n-`completed`-Backupfinishedsuccessfully,snapshotavailable\n-`failed`-Backupfailed(seeerrordetailsincallbacklogs)GetBackup"
+      description: 'Retrieves details of a specific backup for the specified site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                    type: manual
+                    status: completed
+                    description: 'Pre-deployment backup'
+                    snapshot_id: a1b2c3d4
+                    started_at: '2025-05-27T09:50:21+00:00'
+                    completed_at: '2025-05-27T09:55:42+00:00'
+                    created_at: '2025-05-27T09:50:21+00:00'
+                    updated_at: '2025-05-27T09:55:42+00:00'
+                  message: 'Backup retrieved successfully'
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                      type:
+                        type: string
+                        example: manual
+                      status:
+                        type: string
+                        example: completed
+                      description:
+                        type: string
+                        example: 'Pre-deployment backup'
+                      snapshot_id:
+                        type: string
+                        example: a1b2c3d4
+                      started_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      completed_at:
+                        type: string
+                        example: '2025-05-27T09:55:42+00:00'
+                      created_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-05-27T09:55:42+00:00'
+                  message:
+                    type: string
+                    example: 'Backup retrieved successfully'
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Backup not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Backup not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorBackup
+        description: 'The backup ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
   '/api/v1/vector/sites/{site}/logs':
     get:
       summary: 'Get Logs'
@@ -8512,7 +8981,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -9172,7 +9641,7 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: false
+                      example: true
                     disable_foreign_keys:
                       type:
                         - boolean

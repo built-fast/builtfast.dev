@@ -1152,6 +1152,220 @@
                     ]
                 },
                 {
+                    "name": "Backups\n\nManage on-demand and scheduled backups for Vector sites. Backups use restic\nsnapshots stored in S3 and are orchestrated via ECS tasks.\n\n#### Backup Status Lifecycle\n\n- `pending` - Backup record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic backup\n- `completed` - Backup finished successfully, snapshot available\n- `failed` - Backup failed (see error details in callback logs)",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "List Backups",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/backups",
+                                    "query": [
+                                        {
+                                            "key": "per_page",
+                                            "value": "25",
+                                            "description": "Number of items per page (max 100). Default: 15.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "page",
+                                            "value": "1",
+                                            "description": "Page number for pagination. Default: 1.",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups?per_page=25&page=1",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a paginated list of backups for the specified site, ordered by\nmost recent first."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"type\": \"manual\",\n            \"status\": \"completed\",\n            \"description\": \"Pre-deployment backup\",\n            \"snapshot_id\": \"a1b2c3d4\",\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Backups retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Backup",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorBackup",
+                                            "key": "vectorBackup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves details of a specific backup for the specified site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"completed\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": \"a1b2c3d4\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Backup not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Backup",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/backups",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"type\":\"manual\",\"description\":\"Pre-deployment backup\"}"
+                                },
+                                "description": "Creates a new backup for the specified site. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic\nbackup via an ECS task."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 201,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"type\": [\"The type field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "Logs",
                     "description": "Fetch logs for a Vector site. Supports filtering by time range,\nenvironment, deployment, and log level. Rate limited to 60 queries per hour per account.",
                     "item": [
@@ -3169,7 +3383,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -3562,7 +3776,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":false}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
