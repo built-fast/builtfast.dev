@@ -1327,9 +1327,9 @@
                             "response": [
                                 {
                                     "header": [],
-                                    "code": 201,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 201\n}",
-                                    "name": "Created"
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
                                 },
                                 {
                                     "header": [],
@@ -1347,6 +1347,208 @@
                                     "header": [],
                                     "code": 422,
                                     "body": "{\n    \"data\": {},\n    \"errors\": {\"type\": [\"The type field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Restores",
+                    "description": "Manage on-demand restores for Vector sites. Restores use restic\nsnapshots from a previously completed backup and are orchestrated via ECS tasks.\n\n#### Restore Status Lifecycle\n\n- `pending` - Restore record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic restore\n- `completed` - Restore finished successfully\n- `failed` - Restore failed (see error_message for details)",
+                    "item": [
+                        {
+                            "name": "List Restores",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/restores",
+                                    "query": [
+                                        {
+                                            "key": "per_page",
+                                            "value": "25",
+                                            "description": "Number of items per page (max 100). Default: 15.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "page",
+                                            "value": "1",
+                                            "description": "Page number for pagination. Default: 1.",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores?per_page=25&page=1",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a paginated list of restores for the specified site, ordered by\nmost recent first."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"scope\": \"full\",\n            \"trigger\": \"manual\",\n            \"status\": \"completed\",\n            \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n            \"search_replace\": null,\n            \"drop_tables\": false,\n            \"disable_foreign_keys\": false,\n            \"error_message\": null,\n            \"duration_ms\": 45000,\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Restores retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Restore",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/restores\/:vectorRestore",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores\/:vectorRestore",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "vectorRestore",
+                                            "key": "vectorRestore",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "restore",
+                                            "key": "restore",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The restore ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves details of a specific restore for the specified site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"completed\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n        \"search_replace\": null,\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": 45000,\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Restore retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Restore not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Restore",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/restores",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"backup_id\":\"01JFGXK4NQRST5VWX9YZ0ABCDI\",\"scope\":\"full\",\"search_replace\":[{\"from\":\"old-domain.com\",\"to\":\"new-domain.com\"}],\"drop_tables\":false,\"disable_foreign_keys\":false}"
+                                },
+                                "description": "Creates a new restore for the specified site from a previously completed backup.\nThe restore is created with a `pending` status and an async job is dispatched\nto orchestrate the restic restore via an ECS task."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"pending\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n        \"search_replace\": null,\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Restore initiated successfully\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"backup_id\": [\"A backup ID is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                                     "name": "Validation Error"
                                 }
                             ]
@@ -3764,7 +3966,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },

@@ -2486,7 +2486,7 @@ endpoints:
     responses:
       -
         custom: []
-        status: 201
+        status: 202
         content: |-
           {
               "data": {
@@ -2501,10 +2501,10 @@ endpoints:
                   "updated_at": "2025-05-27T09:50:21+00:00"
               },
               "message": "Backup initiated successfully",
-              "http_status": 201
+              "http_status": 202
           }
         headers: []
-        description: Created
+        description: Accepted
       -
         custom: []
         status: 401
@@ -2524,6 +2524,451 @@ endpoints:
           {
               "data": {},
               "errors": {"type": ["The type field is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/restores'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: Restores
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites. Restores use restic
+        snapshots from a previously completed backup and are orchestrated via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'List Restores'
+      description: |-
+        Retrieves a paginated list of restores for the specified site, ordered by
+        most recent first.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                      "scope": "full",
+                      "trigger": "manual",
+                      "status": "completed",
+                      "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "search_replace": null,
+                      "drop_tables": false,
+                      "disable_foreign_keys": false,
+                      "error_message": null,
+                      "duration_ms": 45000,
+                      "started_at": "2025-05-27T09:50:21+00:00",
+                      "completed_at": "2025-05-27T09:55:42+00:00",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:55:42+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Restores retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/restores/{vectorRestore}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: Restores
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites. Restores use restic
+        snapshots from a previously completed backup and are orchestrated via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'Get Restore'
+      description: 'Retrieves details of a specific restore for the specified site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorRestore:
+        custom: []
+        name: vectorRestore
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      restore:
+        custom: []
+        name: restore
+        description: 'The restore ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      vectorRestore: architecto
+      restore: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "completed",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "search_replace": null,
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": 45000,
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:55:42+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "Restore retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Restore not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/restores'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: Restores
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites. Restores use restic
+        snapshots from a previously completed backup and are orchestrated via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'Create Restore'
+      description: |-
+        Creates a new restore for the specified site from a previously completed backup.
+        The restore is created with a `pending` status and an async job is dispatched
+        to orchestrate the restic restore via an ECS task.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      backup_id:
+        custom: []
+        name: backup_id
+        description: 'The ID of a completed backup to restore from. Must be a valid ULID.'
+        required: true
+        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      scope:
+        custom: []
+        name: scope
+        description: 'The restore scope (full, database, files). Default: full.'
+        required: false
+        example: full
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      search_replace:
+        custom: []
+        name: search_replace
+        description: 'Optional search and replace pairs.'
+        required: false
+        example:
+          -
+            from: old-domain.com
+            to: new-domain.com
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      drop_tables:
+        custom: []
+        name: drop_tables
+        description: 'Whether to drop existing tables before restore. Default: false.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      disable_foreign_keys:
+        custom: []
+        name: disable_foreign_keys
+        description: 'Whether to disable foreign key checks during restore. Default: false.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'search_replace[].from':
+        custom: []
+        name: 'search_replace[].from'
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'search_replace[].to':
+        custom: []
+        name: 'search_replace[].to'
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      backup_id: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      scope: full
+      search_replace:
+        -
+          from: old-domain.com
+          to: new-domain.com
+      drop_tables: false
+      disable_foreign_keys: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "pending",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "search_replace": null,
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Restore initiated successfully",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"backup_id": ["A backup ID is required."]},
               "message": "Validation failed",
               "http_status": 422
           }
