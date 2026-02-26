@@ -3374,9 +3374,11 @@ paths:
                     -
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDH
                       type: manual
+                      scope: full
                       status: completed
                       description: 'Pre-deployment backup'
-                      snapshot_id: a1b2c3d4
+                      file_snapshot_id: a1b2c3d4
+                      database_snapshot_id: e5f6g7h8
                       started_at: '2025-05-27T09:50:21+00:00'
                       completed_at: '2025-05-27T09:55:42+00:00'
                       created_at: '2025-05-27T09:50:21+00:00'
@@ -3392,9 +3394,11 @@ paths:
                       -
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDH
                         type: manual
+                        scope: full
                         status: completed
                         description: 'Pre-deployment backup'
-                        snapshot_id: a1b2c3d4
+                        file_snapshot_id: a1b2c3d4
+                        database_snapshot_id: e5f6g7h8
                         started_at: '2025-05-27T09:50:21+00:00'
                         completed_at: '2025-05-27T09:55:42+00:00'
                         created_at: '2025-05-27T09:50:21+00:00'
@@ -3408,15 +3412,21 @@ paths:
                         type:
                           type: string
                           example: manual
+                        scope:
+                          type: string
+                          example: full
                         status:
                           type: string
                           example: completed
                         description:
                           type: string
                           example: 'Pre-deployment backup'
-                        snapshot_id:
+                        file_snapshot_id:
                           type: string
                           example: a1b2c3d4
+                        database_snapshot_id:
+                          type: string
+                          example: e5f6g7h8
                         started_at:
                           type: string
                           example: '2025-05-27T09:50:21+00:00'
@@ -3499,9 +3509,11 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDH
                     type: manual
+                    scope: full
                     status: pending
                     description: 'Pre-deployment backup'
-                    snapshot_id: null
+                    file_snapshot_id: null
+                    database_snapshot_id: null
                     started_at: null
                     completed_at: null
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -3518,13 +3530,19 @@ paths:
                       type:
                         type: string
                         example: manual
+                      scope:
+                        type: string
+                        example: full
                       status:
                         type: string
                         example: pending
                       description:
                         type: string
                         example: 'Pre-deployment backup'
-                      snapshot_id:
+                      file_snapshot_id:
+                        type: string
+                        example: null
+                      database_snapshot_id:
                         type: string
                         example: null
                       started_at:
@@ -3630,6 +3648,10 @@ paths:
                   type: string
                   description: 'The backup type (manual, scheduled).'
                   example: manual
+                scope:
+                  type: string
+                  description: 'The backup scope (full, database, files). Default: full.'
+                  example: full
                 description:
                   type:
                     - string
@@ -3664,9 +3686,11 @@ paths:
                   data:
                     id: 01JFGXK4NQRST5VWX9YZ0ABCDH
                     type: manual
+                    scope: full
                     status: completed
                     description: 'Pre-deployment backup'
-                    snapshot_id: a1b2c3d4
+                    file_snapshot_id: a1b2c3d4
+                    database_snapshot_id: e5f6g7h8
                     started_at: '2025-05-27T09:50:21+00:00'
                     completed_at: '2025-05-27T09:55:42+00:00'
                     created_at: '2025-05-27T09:50:21+00:00'
@@ -3683,15 +3707,21 @@ paths:
                       type:
                         type: string
                         example: manual
+                      scope:
+                        type: string
+                        example: full
                       status:
                         type: string
                         example: completed
                       description:
                         type: string
                         example: 'Pre-deployment backup'
-                      snapshot_id:
+                      file_snapshot_id:
                         type: string
                         example: a1b2c3d4
+                      database_snapshot_id:
+                        type: string
+                        example: e5f6g7h8
                       started_at:
                         type: string
                         example: '2025-05-27T09:50:21+00:00'
@@ -3794,6 +3824,398 @@ paths:
         name: backup
         description: 'The backup ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/backups/{vectorBackup}/downloads/{vectorBackupDownload}':
+    get:
+      summary: 'Get Backup Download'
+      operationId: sitesBackupDownloadsGetBackupDownload
+      description: "Retrieves the status of a backup download. If the download is complete and\nnot expired, includes a presigned download URL."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: Completed
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                        vector_backup_id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        status: completed
+                        s3_key: downloads/site-id/backup-id/download-id.tar.gz
+                        size_bytes: 52428800
+                        duration_ms: 45000
+                        error_message: null
+                        download_url: 'https://s3.amazonaws.com/bucket/downloads/...'
+                        download_expires_at: '2025-05-27T11:00:00+00:00'
+                        started_at: '2025-05-27T09:50:21+00:00'
+                        completed_at: '2025-05-27T09:55:42+00:00'
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:55:42+00:00'
+                      message: 'Backup download retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                          vector_backup_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          status:
+                            type: string
+                            example: completed
+                          s3_key:
+                            type: string
+                            example: downloads/site-id/backup-id/download-id.tar.gz
+                          size_bytes:
+                            type: integer
+                            example: 52428800
+                          duration_ms:
+                            type: integer
+                            example: 45000
+                          error_message:
+                            type: string
+                            example: null
+                          download_url:
+                            type: string
+                            example: 'https://s3.amazonaws.com/bucket/downloads/...'
+                          download_expires_at:
+                            type: string
+                            example: '2025-05-27T11:00:00+00:00'
+                          started_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          completed_at:
+                            type: string
+                            example: '2025-05-27T09:55:42+00:00'
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:55:42+00:00'
+                      message:
+                        type: string
+                        example: 'Backup download retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+                  -
+                    description: Processing
+                    type: object
+                    example:
+                      data:
+                        id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                        vector_backup_id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                        status: processing
+                        s3_key: null
+                        size_bytes: null
+                        duration_ms: null
+                        error_message: null
+                        download_url: null
+                        download_expires_at: null
+                        started_at: '2025-05-27T09:50:21+00:00'
+                        completed_at: null
+                        created_at: '2025-05-27T09:50:21+00:00'
+                        updated_at: '2025-05-27T09:50:21+00:00'
+                      message: 'Backup download retrieved successfully'
+                      http_status: 200
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                          vector_backup_id:
+                            type: string
+                            example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                          status:
+                            type: string
+                            example: processing
+                          s3_key:
+                            type: string
+                            example: null
+                          size_bytes:
+                            type: string
+                            example: null
+                          duration_ms:
+                            type: string
+                            example: null
+                          error_message:
+                            type: string
+                            example: null
+                          download_url:
+                            type: string
+                            example: null
+                          download_expires_at:
+                            type: string
+                            example: null
+                          started_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          completed_at:
+                            type: string
+                            example: null
+                          created_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                          updated_at:
+                            type: string
+                            example: '2025-05-27T09:50:21+00:00'
+                      message:
+                        type: string
+                        example: 'Backup download retrieved successfully'
+                      http_status:
+                        type: integer
+                        example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: 'Backup download not found'
+                  http_status: 404
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: 'Backup download not found'
+                  http_status:
+                    type: integer
+                    example: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorBackup
+        description: 'The backup ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorBackupDownload
+        description: 'The download ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        required: true
+        schema:
+          type: string
+  '/api/v1/vector/sites/{site}/backups/{vectorBackup}/downloads':
+    post:
+      summary: 'Create Backup Download'
+      operationId: sitesBackupDownloadsCreateBackupDownload
+      description: "Creates a new download request for the specified backup. The download is created with a\n`pending` status and an async job is dispatched to archive the backup snapshots."
+      parameters: []
+      responses:
+        202:
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                    vector_backup_id: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                    status: pending
+                    s3_key: null
+                    size_bytes: null
+                    duration_ms: null
+                    error_message: null
+                    download_url: null
+                    download_expires_at: null
+                    started_at: null
+                    completed_at: null
+                    created_at: '2025-05-27T09:50:21+00:00'
+                    updated_at: '2025-05-27T09:50:21+00:00'
+                  message: 'Backup download initiated'
+                  http_status: 202
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDH
+                      vector_backup_id:
+                        type: string
+                        example: 01JFGXK4NQRST5VWX9YZ0ABCDG
+                      status:
+                        type: string
+                        example: pending
+                      s3_key:
+                        type: string
+                        example: null
+                      size_bytes:
+                        type: string
+                        example: null
+                      duration_ms:
+                        type: string
+                        example: null
+                      error_message:
+                        type: string
+                        example: null
+                      download_url:
+                        type: string
+                        example: null
+                      download_expires_at:
+                        type: string
+                        example: null
+                      started_at:
+                        type: string
+                        example: null
+                      completed_at:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-05-27T09:50:21+00:00'
+                  message:
+                    type: string
+                    example: 'Backup download initiated'
+                  http_status:
+                    type: integer
+                    example: 202
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthenticated
+                  http_status: 401
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthenticated
+                  http_status:
+                    type: integer
+                    example: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data: {  }
+                  message: Unauthorized
+                  http_status: 403
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    example: Unauthorized
+                  http_status:
+                    type: integer
+                    example: 403
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorBackup
+        description: 'The backup ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
         schema:
           type: string
@@ -9516,7 +9938,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -10253,7 +10675,7 @@ paths:
                 drop_tables:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                 disable_foreign_keys:
                   type: boolean
                   description: ''

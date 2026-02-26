@@ -1370,7 +1370,7 @@ endpoints:
         name: drop_tables
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1388,7 +1388,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      drop_tables: false
+      drop_tables: true
       disable_foreign_keys: true
     fileParameters: []
     responses: []
@@ -2541,7 +2541,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2549,7 +2549,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: true
+      include_database: false
     fileParameters: []
     responses:
       -

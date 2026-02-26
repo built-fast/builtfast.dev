@@ -2254,9 +2254,11 @@ endpoints:
                   {
                       "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
                       "type": "manual",
+                      "scope": "full",
                       "status": "completed",
                       "description": "Pre-deployment backup",
-                      "snapshot_id": "a1b2c3d4",
+                      "file_snapshot_id": "a1b2c3d4",
+                      "database_snapshot_id": "e5f6g7h8",
                       "started_at": "2025-05-27T09:50:21+00:00",
                       "completed_at": "2025-05-27T09:55:42+00:00",
                       "created_at": "2025-05-27T09:50:21+00:00",
@@ -2370,9 +2372,11 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
                   "type": "manual",
+                  "scope": "full",
                   "status": "completed",
                   "description": "Pre-deployment backup",
-                  "snapshot_id": "a1b2c3d4",
+                  "file_snapshot_id": "a1b2c3d4",
+                  "database_snapshot_id": "e5f6g7h8",
                   "started_at": "2025-05-27T09:50:21+00:00",
                   "completed_at": "2025-05-27T09:55:42+00:00",
                   "created_at": "2025-05-27T09:50:21+00:00",
@@ -2468,6 +2472,17 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      scope:
+        custom: []
+        name: scope
+        description: 'The backup scope (full, database, files). Default: full.'
+        required: false
+        example: full
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       description:
         custom: []
         name: description
@@ -2481,6 +2496,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       type: manual
+      scope: full
       description: 'Pre-deployment backup'
     fileParameters: []
     responses:
@@ -2492,9 +2508,11 @@ endpoints:
               "data": {
                   "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
                   "type": "manual",
+                  "scope": "full",
                   "status": "pending",
                   "description": "Pre-deployment backup",
-                  "snapshot_id": null,
+                  "file_snapshot_id": null,
+                  "database_snapshot_id": null,
                   "started_at": null,
                   "completed_at": null,
                   "created_at": "2025-05-27T09:50:21+00:00",
@@ -2529,6 +2547,289 @@ endpoints:
           }
         headers: []
         description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/backups/{vectorBackup}/downloads/{vectorBackupDownload}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'Backup Downloads'
+      subgroupDescription: |-
+        Manage backup download requests for Vector sites. When a download is
+        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
+        complete, a presigned download URL is available for a limited time.
+
+        #### Download Status Lifecycle
+
+        - `pending` - Download record created, waiting for ECS task to start
+        - `processing` - ECS task is archiving the backup snapshots
+        - `completed` - Archive uploaded to S3, presigned URL available
+        - `failed` - Download failed (see error_message for details)
+      title: 'Get Backup Download'
+      description: |-
+        Retrieves the status of a backup download. If the download is complete and
+        not expired, includes a presigned download URL.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorBackupDownload:
+        custom: []
+        name: vectorBackupDownload
+        description: 'The download ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      vectorBackupDownload: 01jfgxk4nqrst5vwx9yz0abcdh
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "completed",
+                  "s3_key": "downloads/site-id/backup-id/download-id.tar.gz",
+                  "size_bytes": 52428800,
+                  "duration_ms": 45000,
+                  "error_message": null,
+                  "download_url": "https://s3.amazonaws.com/bucket/downloads/...",
+                  "download_expires_at": "2025-05-27T11:00:00+00:00",
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:55:42+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:55:42+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "processing",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Processing
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup download not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/backups/{vectorBackup}/downloads'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'Backup Downloads'
+      subgroupDescription: |-
+        Manage backup download requests for Vector sites. When a download is
+        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
+        complete, a presigned download URL is available for a limited time.
+
+        #### Download Status Lifecycle
+
+        - `pending` - Download record created, waiting for ECS task to start
+        - `processing` - ECS task is archiving the backup snapshots
+        - `completed` - Archive uploaded to S3, presigned URL available
+        - `failed` - Download failed (see error_message for details)
+      title: 'Create Backup Download'
+      description: |-
+        Creates a new download request for the specified backup. The download is created with a
+        `pending` status and an async job is dispatched to archive the backup snapshots.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "pending",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup download initiated",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers

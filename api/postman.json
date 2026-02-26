@@ -1203,7 +1203,7 @@
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"type\": \"manual\",\n            \"status\": \"completed\",\n            \"description\": \"Pre-deployment backup\",\n            \"snapshot_id\": \"a1b2c3d4\",\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Backups retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"type\": \"manual\",\n            \"scope\": \"full\",\n            \"status\": \"completed\",\n            \"description\": \"Pre-deployment backup\",\n            \"file_snapshot_id\": \"a1b2c3d4\",\n            \"database_snapshot_id\": \"e5f6g7h8\",\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Backups retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -1267,7 +1267,7 @@
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"completed\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": \"a1b2c3d4\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"completed\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": \"a1b2c3d4\",\n        \"database_snapshot_id\": \"e5f6g7h8\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -1320,7 +1320,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"type\":\"manual\",\"description\":\"Pre-deployment backup\"}"
+                                    "raw": "{\"type\":\"manual\",\"scope\":\"full\",\"description\":\"Pre-deployment backup\"}"
                                 },
                                 "description": "Creates a new backup for the specified site. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic\nbackup via an ECS task."
                             },
@@ -1328,7 +1328,7 @@
                                 {
                                     "header": [],
                                     "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 202\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": null,\n        \"database_snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 202\n}",
                                     "name": "Accepted"
                                 },
                                 {
@@ -1348,6 +1348,158 @@
                                     "code": 422,
                                     "body": "{\n    \"data\": {},\n    \"errors\": {\"type\": [\"The type field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
                                     "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Backup Downloads",
+                    "description": "Manage backup download requests for Vector sites. When a download is\nrequested, an async job archives the backup snapshots and uploads the archive to S3. Once\ncomplete, a presigned download URL is available for a limited time.\n\n#### Download Status Lifecycle\n\n- `pending` - Download record created, waiting for ECS task to start\n- `processing` - ECS task is archiving the backup snapshots\n- `completed` - Archive uploaded to S3, presigned URL available\n- `failed` - Download failed (see error_message for details)",
+                    "item": [
+                        {
+                            "name": "Get Backup Download",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorBackup",
+                                            "key": "vectorBackup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
+                                        },
+                                        {
+                                            "id": "vectorBackupDownload",
+                                            "key": "vectorBackupDownload",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdh",
+                                            "description": "The download ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the status of a backup download. If the download is complete and\nnot expired, includes a presigned download URL."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"completed\",\n        \"s3_key\": \"downloads\/site-id\/backup-id\/download-id.tar.gz\",\n        \"size_bytes\": 52428800,\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"download_url\": \"https:\/\/s3.amazonaws.com\/bucket\/downloads\/...\",\n        \"download_expires_at\": \"2025-05-27T11:00:00+00:00\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Completed"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"processing\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Processing"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Backup download not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Backup Download",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorBackup",
+                                            "key": "vectorBackup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Creates a new download request for the specified backup. The download is created with a\n`pending` status and an async job is dispatched to archive the backup snapshots."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"pending\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download initiated\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
                                 }
                             ]
                         }
@@ -3573,7 +3725,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -4053,7 +4205,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"drop_tables\":false,\"disable_foreign_keys\":true}"
+                                    "raw": "{\"drop_tables\":true,\"disable_foreign_keys\":true}"
                                 },
                                 "description": "Promote the dev database to this environment. Exports the dev database,\nthen imports it into the environment's database."
                             },
