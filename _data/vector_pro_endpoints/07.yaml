@@ -1,0 +1,439 @@
+name: Events
+description: |-
+
+  View event logs for Vector Pro resources. Events are logged automatically when
+  actions occur (site creation, deployments, etc.) and are retained for 90 days.
+
+  Event logs provide an audit trail of all activity in your account.
+
+  #### Actor Tracking
+
+  Each event includes an `actor` object when the action was triggered via the API:
+  - `ip` - The IP address of the request
+  - `token_name` - The name of the API token used
+
+  The `actor` field is omitted for events triggered by system processes (scheduled tasks,
+  queue workers processing internal jobs, etc.) where no user context exists.
+
+  #### Event Naming Convention
+
+  Events follow a consistent dot-notation pattern:
+  - Simple actions: `{entity}.{action}` (e.g., `site.created`, `site.updated`)
+  - Lifecycle operations: `{entity}.{operation}.{phase}` (e.g., `site.provisioning.started`)
+
+  #### Available Event Types
+
+  ##### Site Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `site.created` | Site record has been created |
+  | `site.updated` | Site settings have been modified |
+  | `site.cloned` | Site has been cloned from another site |
+  | `site.provisioning.started` | Container provisioning has started |
+  | `site.provisioning.completed` | Site is fully provisioned and running |
+  | `site.provisioning.failed` | Site provisioning failed |
+  | `site.suspension.started` | Site suspension has started |
+  | `site.suspension.completed` | Site has been suspended |
+  | `site.unsuspension.started` | Site unsuspension has started |
+  | `site.unsuspension.completed` | Site has been unsuspended |
+  | `site.termination.started` | Site termination has started |
+  | `site.termination.completed` | Site has been terminated |
+  | `site.sftp.password.reset` | SFTP password has been reset |
+  | `site.database.password.reset` | Database password has been reset |
+  | `site.sshkey.added` | SSH key has been added to site |
+  | `site.sshkey.removed` | SSH key has been removed from site |
+  | `site.database.import.started` | Database import has started |
+  | `site.database.import.completed` | Database import completed successfully |
+  | `site.database.import.failed` | Database import failed |
+  | `site.database.export.started` | Database export has started |
+  | `site.database.export.completed` | Database export completed successfully |
+  | `site.database.export.failed` | Database export failed |
+
+  ##### SSH Key Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `sshkey.created` | SSH key has been created |
+  | `sshkey.deleted` | SSH key has been deleted |
+
+  ##### Environment Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `environment.created` | Production environment has been created |
+  | `environment.updated` | Environment settings have been modified |
+  | `environment.provisioning.started` | Environment provisioning has started |
+  | `environment.provisioning.completed` | Environment is fully provisioned |
+  | `environment.provisioning.failed` | Environment provisioning failed |
+  | `environment.suspension.started` | Environment suspension has started |
+  | `environment.suspension.completed` | Environment has been suspended |
+  | `environment.unsuspension.started` | Environment unsuspension has started |
+  | `environment.unsuspension.completed` | Environment has been unsuspended |
+  | `environment.termination.started` | Environment termination has started |
+  | `environment.termination.completed` | Environment has been terminated |
+  | `environment.database.password.reset` | Database password has been reset |
+
+  ##### Deployment Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `deployment.started` | Deployment to production has started |
+  | `deployment.completed` | Deployment completed successfully |
+  | `deployment.failed` | Deployment failed |
+  | `deployment.rollback.started` | Deployment rollback has started |
+  | `deployment.rollback.completed` | Deployment rollback completed |
+  | `deployment.rollback.failed` | Deployment rollback failed |
+
+  ##### CDN Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `cdn.setup.started` | CDN configuration has started |
+  | `cdn.setup.completed` | CDN setup completed successfully |
+  | `cdn.setup.failed` | CDN setup failed |
+
+  ##### DNS Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `dns.record.created` | DNS record has been created |
+  | `dns.record.deleted` | DNS record has been deleted |
+
+  ##### WAF Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `waf.ratelimit.created` | Rate limit rule has been created |
+  | `waf.ratelimit.updated` | Rate limit rule has been updated |
+  | `waf.ratelimit.deleted` | Rate limit rule has been deleted |
+  | `waf.blockedip.created` | IP block has been created |
+  | `waf.blockedip.deleted` | IP block has been removed |
+  | `waf.blockedreferrer.created` | Referrer block has been created |
+  | `waf.blockedreferrer.deleted` | Referrer block has been removed |
+  | `waf.allowedreferrer.created` | Allowed referrer has been added |
+  | `waf.allowedreferrer.deleted` | Allowed referrer has been removed |
+
+  ##### Secret Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `secret.created` | Secret has been created |
+  | `secret.updated` | Secret has been updated |
+  | `secret.deleted` | Secret has been deleted |
+
+  ##### Domain Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `domain.created` | Domain has been registered |
+  | `domain.deleted` | Domain has been deleted |
+
+  ##### API Key Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `apikey.created` | API key has been created |
+  | `apikey.deleted` | API key has been deleted |
+
+  ##### Webhook Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `webhook.created` | Webhook endpoint has been registered |
+  | `webhook.updated` | Webhook configuration has been modified |
+  | `webhook.deleted` | Webhook endpoint has been removed |
+
+  ##### Cache Events
+
+  | Event | Description |
+  |-------|-------------|
+  | `cache.purged` | Cache has been purged |
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/vector/events
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        View event logs for Vector Pro resources. Events are logged automatically when
+        actions occur (site creation, deployments, etc.) and are retained for 90 days.
+
+        Event logs provide an audit trail of all activity in your account.
+
+        #### Actor Tracking
+
+        Each event includes an `actor` object when the action was triggered via the API:
+        - `ip` - The IP address of the request
+        - `token_name` - The name of the API token used
+
+        The `actor` field is omitted for events triggered by system processes (scheduled tasks,
+        queue workers processing internal jobs, etc.) where no user context exists.
+
+        #### Event Naming Convention
+
+        Events follow a consistent dot-notation pattern:
+        - Simple actions: `{entity}.{action}` (e.g., `site.created`, `site.updated`)
+        - Lifecycle operations: `{entity}.{operation}.{phase}` (e.g., `site.provisioning.started`)
+
+        #### Available Event Types
+
+        ##### Site Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `site.created` | Site record has been created |
+        | `site.updated` | Site settings have been modified |
+        | `site.cloned` | Site has been cloned from another site |
+        | `site.provisioning.started` | Container provisioning has started |
+        | `site.provisioning.completed` | Site is fully provisioned and running |
+        | `site.provisioning.failed` | Site provisioning failed |
+        | `site.suspension.started` | Site suspension has started |
+        | `site.suspension.completed` | Site has been suspended |
+        | `site.unsuspension.started` | Site unsuspension has started |
+        | `site.unsuspension.completed` | Site has been unsuspended |
+        | `site.termination.started` | Site termination has started |
+        | `site.termination.completed` | Site has been terminated |
+        | `site.sftp.password.reset` | SFTP password has been reset |
+        | `site.database.password.reset` | Database password has been reset |
+        | `site.sshkey.added` | SSH key has been added to site |
+        | `site.sshkey.removed` | SSH key has been removed from site |
+        | `site.database.import.started` | Database import has started |
+        | `site.database.import.completed` | Database import completed successfully |
+        | `site.database.import.failed` | Database import failed |
+        | `site.database.export.started` | Database export has started |
+        | `site.database.export.completed` | Database export completed successfully |
+        | `site.database.export.failed` | Database export failed |
+
+        ##### SSH Key Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `sshkey.created` | SSH key has been created |
+        | `sshkey.deleted` | SSH key has been deleted |
+
+        ##### Environment Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `environment.created` | Production environment has been created |
+        | `environment.updated` | Environment settings have been modified |
+        | `environment.provisioning.started` | Environment provisioning has started |
+        | `environment.provisioning.completed` | Environment is fully provisioned |
+        | `environment.provisioning.failed` | Environment provisioning failed |
+        | `environment.suspension.started` | Environment suspension has started |
+        | `environment.suspension.completed` | Environment has been suspended |
+        | `environment.unsuspension.started` | Environment unsuspension has started |
+        | `environment.unsuspension.completed` | Environment has been unsuspended |
+        | `environment.termination.started` | Environment termination has started |
+        | `environment.termination.completed` | Environment has been terminated |
+        | `environment.database.password.reset` | Database password has been reset |
+
+        ##### Deployment Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `deployment.started` | Deployment to production has started |
+        | `deployment.completed` | Deployment completed successfully |
+        | `deployment.failed` | Deployment failed |
+        | `deployment.rollback.started` | Deployment rollback has started |
+        | `deployment.rollback.completed` | Deployment rollback completed |
+        | `deployment.rollback.failed` | Deployment rollback failed |
+
+        ##### CDN Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `cdn.setup.started` | CDN configuration has started |
+        | `cdn.setup.completed` | CDN setup completed successfully |
+        | `cdn.setup.failed` | CDN setup failed |
+
+        ##### DNS Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `dns.record.created` | DNS record has been created |
+        | `dns.record.deleted` | DNS record has been deleted |
+
+        ##### WAF Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `waf.ratelimit.created` | Rate limit rule has been created |
+        | `waf.ratelimit.updated` | Rate limit rule has been updated |
+        | `waf.ratelimit.deleted` | Rate limit rule has been deleted |
+        | `waf.blockedip.created` | IP block has been created |
+        | `waf.blockedip.deleted` | IP block has been removed |
+        | `waf.blockedreferrer.created` | Referrer block has been created |
+        | `waf.blockedreferrer.deleted` | Referrer block has been removed |
+        | `waf.allowedreferrer.created` | Allowed referrer has been added |
+        | `waf.allowedreferrer.deleted` | Allowed referrer has been removed |
+
+        ##### Secret Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `secret.created` | Secret has been created |
+        | `secret.updated` | Secret has been updated |
+        | `secret.deleted` | Secret has been deleted |
+
+        ##### Domain Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `domain.created` | Domain has been registered |
+        | `domain.deleted` | Domain has been deleted |
+
+        ##### API Key Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `apikey.created` | API key has been created |
+        | `apikey.deleted` | API key has been deleted |
+
+        ##### Webhook Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `webhook.created` | Webhook endpoint has been registered |
+        | `webhook.updated` | Webhook configuration has been modified |
+        | `webhook.deleted` | Webhook endpoint has been removed |
+
+        ##### Cache Events
+
+        | Event | Description |
+        |-------|-------------|
+        | `cache.purged` | Cache has been purged |
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Events'
+      description: |-
+        Retrieves a paginated list of event logs for the authenticated account.
+        Logs are returned in reverse chronological order (newest first).
+
+        Event logs are automatically pruned after 90 days.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      from:
+        custom: []
+        name: from
+        description: 'Filter events that occurred on or after this timestamp (ISO 8601).'
+        required: false
+        example: '2025-01-01T00:00:00Z'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      to:
+        custom: []
+        name: to
+        description: 'Filter events that occurred on or before this timestamp (ISO 8601).'
+        required: false
+        example: '2025-01-31T23:59:59Z'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'Filter by event type(s). Accepts a single event or comma-separated list.'
+        required: false
+        example: 'site.provisioning.completed,deployment.completed'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanQueryParameters:
+      from: '2025-01-01T00:00:00Z'
+      to: '2025-01-31T23:59:59Z'
+      event: 'site.provisioning.completed,deployment.completed'
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDL",
+                      "event": "site.provisioning.completed",
+                      "model_type": "VectorSite",
+                      "model_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "context": null,
+                      "actor": {
+                          "ip": "203.0.113.50",
+                          "token_name": "Production API Key"
+                      },
+                      "occurred_at": "2026-02-01T09:50:21+00:00",
+                      "created_at": "2026-02-01T09:50:21+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Event logs retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

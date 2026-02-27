@@ -1152,562 +1152,6 @@
                     ]
                 },
                 {
-                    "name": "Backups",
-                    "description": "Manage on-demand and scheduled backups for Vector sites. Backups use restic\nsnapshots stored in S3 and are orchestrated via ECS tasks.\n\n#### Backup Status Lifecycle\n\n- `pending` - Backup record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic backup\n- `completed` - Backup finished successfully, snapshot available\n- `failed` - Backup failed (see error details in callback logs)",
-                    "item": [
-                        {
-                            "name": "List Backups",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/backups",
-                                    "query": [
-                                        {
-                                            "key": "per_page",
-                                            "value": "25",
-                                            "description": "Number of items per page (max 100). Default: 15.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "page",
-                                            "value": "1",
-                                            "description": "Page number for pagination. Default: 1.",
-                                            "disabled": false
-                                        }
-                                    ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups?per_page=25&page=1",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves a paginated list of backups for the specified site, ordered by\nmost recent first."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"type\": \"manual\",\n            \"scope\": \"full\",\n            \"status\": \"completed\",\n            \"description\": \"Pre-deployment backup\",\n            \"file_snapshot_id\": \"a1b2c3d4\",\n            \"database_snapshot_id\": \"e5f6g7h8\",\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Backups retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Get Backup",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "vectorBackup",
-                                            "key": "vectorBackup",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "backup",
-                                            "key": "backup",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The backup ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves details of a specific backup for the specified site."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"completed\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": \"a1b2c3d4\",\n        \"database_snapshot_id\": \"e5f6g7h8\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Backup not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Create Backup",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/backups",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"type\":\"manual\",\"scope\":\"full\",\"description\":\"Pre-deployment backup\"}"
-                                },
-                                "description": "Creates a new backup for the specified site. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic\nbackup via an ECS task."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": null,\n        \"database_snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"type\": [\"The type field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                                    "name": "Validation Error"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "Backup Downloads",
-                    "description": "Manage backup download requests for Vector sites. When a download is\nrequested, an async job archives the backup snapshots and uploads the archive to S3. Once\ncomplete, a presigned download URL is available for a limited time.\n\n#### Download Status Lifecycle\n\n- `pending` - Download record created, waiting for ECS task to start\n- `processing` - ECS task is archiving the backup snapshots\n- `completed` - Archive uploaded to S3, presigned URL available\n- `failed` - Download failed (see error_message for details)",
-                    "item": [
-                        {
-                            "name": "Get Backup Download",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "architecto",
-                                            "description": "The site."
-                                        },
-                                        {
-                                            "id": "vectorBackup",
-                                            "key": "vectorBackup",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The backup ID."
-                                        },
-                                        {
-                                            "id": "vectorBackupDownload",
-                                            "key": "vectorBackupDownload",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdh",
-                                            "description": "The download ID."
-                                        },
-                                        {
-                                            "id": "vectorSite",
-                                            "key": "vectorSite",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves the status of a backup download. If the download is complete and\nnot expired, includes a presigned download URL."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"completed\",\n        \"s3_key\": \"downloads\/site-id\/backup-id\/download-id.tar.gz\",\n        \"size_bytes\": 52428800,\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"download_url\": \"https:\/\/s3.amazonaws.com\/bucket\/downloads\/...\",\n        \"download_expires_at\": \"2025-05-27T11:00:00+00:00\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Completed"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"processing\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Processing"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Backup download not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Create Backup Download",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/backups\/:vectorBackup\/downloads",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "architecto",
-                                            "description": "The site."
-                                        },
-                                        {
-                                            "id": "vectorBackup",
-                                            "key": "vectorBackup",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The backup ID."
-                                        },
-                                        {
-                                            "id": "vectorSite",
-                                            "key": "vectorSite",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Creates a new download request for the specified backup. The download is created with a\n`pending` status and an async job is dispatched to archive the backup snapshots."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"pending\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download initiated\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "Restores",
-                    "description": "Manage on-demand restores for Vector sites. Restores use restic\nsnapshots from a previously completed backup and are orchestrated via ECS tasks.\n\n#### Restore Status Lifecycle\n\n- `pending` - Restore record created, waiting for ECS task to start\n- `processing` - ECS task is running the restic restore\n- `completed` - Restore finished successfully\n- `failed` - Restore failed (see error_message for details)",
-                    "item": [
-                        {
-                            "name": "List Restores",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/restores",
-                                    "query": [
-                                        {
-                                            "key": "per_page",
-                                            "value": "25",
-                                            "description": "Number of items per page (max 100). Default: 15.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "page",
-                                            "value": "1",
-                                            "description": "Page number for pagination. Default: 1.",
-                                            "disabled": false
-                                        }
-                                    ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores?per_page=25&page=1",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves a paginated list of restores for the specified site, ordered by\nmost recent first."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"scope\": \"full\",\n            \"trigger\": \"manual\",\n            \"status\": \"completed\",\n            \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n            \"search_replace\": null,\n            \"drop_tables\": false,\n            \"disable_foreign_keys\": false,\n            \"error_message\": null,\n            \"duration_ms\": 45000,\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Restores retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Get Restore",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/restores\/:vectorRestore",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores\/:vectorRestore",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "vectorRestore",
-                                            "key": "vectorRestore",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "restore",
-                                            "key": "restore",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
-                                            "description": "The restore ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Retrieves details of a specific restore for the specified site."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"completed\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n        \"search_replace\": null,\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": 45000,\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:55:42+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:55:42+00:00\"\n    },\n    \"message\": \"Restore retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Restore not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Create Restore",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/restores",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/restores",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"backup_id\":\"01JFGXK4NQRST5VWX9YZ0ABCDI\",\"scope\":\"full\",\"search_replace\":[{\"from\":\"old-domain.com\",\"to\":\"new-domain.com\"}],\"drop_tables\":false,\"disable_foreign_keys\":false}"
-                                },
-                                "description": "Creates a new restore for the specified site from a previously completed backup.\nThe restore is created with a `pending` status and an async job is dispatched\nto orchestrate the restic restore via an ECS task."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"pending\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n        \"search_replace\": null,\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Restore initiated successfully\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"backup_id\": [\"A backup ID is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                                    "name": "Validation Error"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "name": "Logs",
                     "description": "Fetch logs for a Vector site. Supports filtering by time range,\nenvironment, deployment, and log level. Rate limited to 60 queries per hour per account.",
                     "item": [
@@ -4118,7 +3562,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":false}}"
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":true}}"
                                 },
                                 "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
@@ -4205,7 +3649,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"drop_tables\":true,\"disable_foreign_keys\":true}"
+                                    "raw": "{\"drop_tables\":true,\"disable_foreign_keys\":false}"
                                 },
                                 "description": "Promote the dev database to this environment. Exports the dev database,\nthen imports it into the environment's database."
                             },
@@ -5351,6 +4795,291 @@
             ]
         },
         {
+            "name": "Backups",
+            "description": "",
+            "item": [
+                {
+                    "name": "List Backups",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/backups",
+                            "query": [
+                                {
+                                    "key": "type",
+                                    "value": "site",
+                                    "description": "Filter by archivable type (site, environment).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "site_id",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by site ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "environment_id",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by environment ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "25",
+                                    "description": "Number of items per page (max 100). Default: 15.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination. Default: 1.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/backups?type=site&site_id=01jfgxk4nqrst5vwx9yz0abcde&environment_id=01jfgxk4nqrst5vwx9yz0abcde&per_page=25&page=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves a paginated list of backups, optionally filtered by type, site, or environment."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-vector-pro-revision",
+                                    "value": "UNKNOWN"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "https:\/\/go.builtfast.test"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Backup",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/backups\/:vectorBackup",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup",
+                            "variable": [
+                                {
+                                    "id": "vectorBackup",
+                                    "key": "vectorBackup",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                    "description": "The backup ID."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves details of a specific backup."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-vector-pro-revision",
+                                    "value": "UNKNOWN"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "https:\/\/go.builtfast.test"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Backup Downloads",
+                    "description": "Manage backup download requests. When a download is\nrequested, an async job archives the backup snapshots and uploads the archive to S3. Once\ncomplete, a presigned download URL is available for a limited time.\n\n#### Download Status Lifecycle\n\n- `pending` - Download record created, waiting for ECS task to start\n- `processing` - ECS task is archiving the backup snapshots\n- `completed` - Archive uploaded to S3, presigned URL available\n- `failed` - Download failed (see error_message for details)",
+                    "item": [
+                        {
+                            "name": "Get Backup Download",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "variable": [
+                                        {
+                                            "id": "vectorBackup",
+                                            "key": "vectorBackup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
+                                        },
+                                        {
+                                            "id": "vectorBackupDownload",
+                                            "key": "vectorBackupDownload",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdh",
+                                            "description": "The download ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the status of a backup download. If the download is complete and\nnot expired, includes a presigned download URL."
+                            },
+                            "response": [
+                                {
+                                    "header": [
+                                        {
+                                            "key": "cache-control",
+                                            "value": "no-cache, private"
+                                        },
+                                        {
+                                            "key": "content-type",
+                                            "value": "application\/json"
+                                        },
+                                        {
+                                            "key": "x-vector-pro-revision",
+                                            "value": "UNKNOWN"
+                                        },
+                                        {
+                                            "key": "access-control-allow-origin",
+                                            "value": "https:\/\/go.builtfast.test"
+                                        },
+                                        {
+                                            "key": "access-control-allow-credentials",
+                                            "value": "true"
+                                        }
+                                    ],
+                                    "code": 401,
+                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                                    "name": ""
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Backup Download",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/backups\/:vectorBackup\/downloads",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup\/downloads",
+                                    "variable": [
+                                        {
+                                            "id": "vectorBackup",
+                                            "key": "vectorBackup",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                            "description": "The backup ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Creates a new download request for the specified backup. The download is created with a\n`pending` status and an async job is dispatched to archive the backup snapshots."
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Backup",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/backups",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/backups"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"site_id\":\"01jfgxk4nqrst5vwx9yz0abcde\",\"environment_id\":\"01jfgxk4nqrst5vwx9yz0abcde\",\"type\":\"manual\",\"scope\":\"full\",\"description\":\"Pre-deployment backup\"}"
+                        },
+                        "description": "Creates a new backup for the specified site or environment. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic backup via an\nECS task."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
             "name": "Events",
             "description": "\nView event logs for Vector Pro resources. Events are logged automatically when\nactions occur (site creation, deployments, etc.) and are retained for 90 days.\n\nEvent logs provide an audit trail of all activity in your account.\n\n#### Actor Tracking\n\nEach event includes an `actor` object when the action was triggered via the API:\n- `ip` - The IP address of the request\n- `token_name` - The name of the API token used\n\nThe `actor` field is omitted for events triggered by system processes (scheduled tasks,\nqueue workers processing internal jobs, etc.) where no user context exists.\n\n#### Event Naming Convention\n\nEvents follow a consistent dot-notation pattern:\n- Simple actions: `{entity}.{action}` (e.g., `site.created`, `site.updated`)\n- Lifecycle operations: `{entity}.{operation}.{phase}` (e.g., `site.provisioning.started`)\n\n#### Available Event Types\n\n##### Site Events\n\n| Event | Description |\n|-------|-------------|\n| `site.created` | Site record has been created |\n| `site.updated` | Site settings have been modified |\n| `site.cloned` | Site has been cloned from another site |\n| `site.provisioning.started` | Container provisioning has started |\n| `site.provisioning.completed` | Site is fully provisioned and running |\n| `site.provisioning.failed` | Site provisioning failed |\n| `site.suspension.started` | Site suspension has started |\n| `site.suspension.completed` | Site has been suspended |\n| `site.unsuspension.started` | Site unsuspension has started |\n| `site.unsuspension.completed` | Site has been unsuspended |\n| `site.termination.started` | Site termination has started |\n| `site.termination.completed` | Site has been terminated |\n| `site.sftp.password.reset` | SFTP password has been reset |\n| `site.database.password.reset` | Database password has been reset |\n| `site.sshkey.added` | SSH key has been added to site |\n| `site.sshkey.removed` | SSH key has been removed from site |\n| `site.database.import.started` | Database import has started |\n| `site.database.import.completed` | Database import completed successfully |\n| `site.database.import.failed` | Database import failed |\n| `site.database.export.started` | Database export has started |\n| `site.database.export.completed` | Database export completed successfully |\n| `site.database.export.failed` | Database export failed |\n\n##### SSH Key Events\n\n| Event | Description |\n|-------|-------------|\n| `sshkey.created` | SSH key has been created |\n| `sshkey.deleted` | SSH key has been deleted |\n\n##### Environment Events\n\n| Event | Description |\n|-------|-------------|\n| `environment.created` | Production environment has been created |\n| `environment.updated` | Environment settings have been modified |\n| `environment.provisioning.started` | Environment provisioning has started |\n| `environment.provisioning.completed` | Environment is fully provisioned |\n| `environment.provisioning.failed` | Environment provisioning failed |\n| `environment.suspension.started` | Environment suspension has started |\n| `environment.suspension.completed` | Environment has been suspended |\n| `environment.unsuspension.started` | Environment unsuspension has started |\n| `environment.unsuspension.completed` | Environment has been unsuspended |\n| `environment.termination.started` | Environment termination has started |\n| `environment.termination.completed` | Environment has been terminated |\n| `environment.database.password.reset` | Database password has been reset |\n\n##### Deployment Events\n\n| Event | Description |\n|-------|-------------|\n| `deployment.started` | Deployment to production has started |\n| `deployment.completed` | Deployment completed successfully |\n| `deployment.failed` | Deployment failed |\n| `deployment.rollback.started` | Deployment rollback has started |\n| `deployment.rollback.completed` | Deployment rollback completed |\n| `deployment.rollback.failed` | Deployment rollback failed |\n\n##### CDN Events\n\n| Event | Description |\n|-------|-------------|\n| `cdn.setup.started` | CDN configuration has started |\n| `cdn.setup.completed` | CDN setup completed successfully |\n| `cdn.setup.failed` | CDN setup failed |\n\n##### DNS Events\n\n| Event | Description |\n|-------|-------------|\n| `dns.record.created` | DNS record has been created |\n| `dns.record.deleted` | DNS record has been deleted |\n\n##### WAF Events\n\n| Event | Description |\n|-------|-------------|\n| `waf.ratelimit.created` | Rate limit rule has been created |\n| `waf.ratelimit.updated` | Rate limit rule has been updated |\n| `waf.ratelimit.deleted` | Rate limit rule has been deleted |\n| `waf.blockedip.created` | IP block has been created |\n| `waf.blockedip.deleted` | IP block has been removed |\n| `waf.blockedreferrer.created` | Referrer block has been created |\n| `waf.blockedreferrer.deleted` | Referrer block has been removed |\n| `waf.allowedreferrer.created` | Allowed referrer has been added |\n| `waf.allowedreferrer.deleted` | Allowed referrer has been removed |\n\n##### Secret Events\n\n| Event | Description |\n|-------|-------------|\n| `secret.created` | Secret has been created |\n| `secret.updated` | Secret has been updated |\n| `secret.deleted` | Secret has been deleted |\n\n##### Domain Events\n\n| Event | Description |\n|-------|-------------|\n| `domain.created` | Domain has been registered |\n| `domain.deleted` | Domain has been deleted |\n\n##### API Key Events\n\n| Event | Description |\n|-------|-------------|\n| `apikey.created` | API key has been created |\n| `apikey.deleted` | API key has been deleted |\n\n##### Webhook Events\n\n| Event | Description |\n|-------|-------------|\n| `webhook.created` | Webhook endpoint has been registered |\n| `webhook.updated` | Webhook configuration has been modified |\n| `webhook.deleted` | Webhook endpoint has been removed |\n\n##### Cache Events\n\n| Event | Description |\n|-------|-------------|\n| `cache.purged` | Cache has been purged |",
             "item": [
@@ -5472,6 +5201,191 @@
                             "name": "Unauthenticated"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "name": "Restores",
+            "description": "",
+            "item": [
+                {
+                    "name": "List Restores",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/restores",
+                            "query": [
+                                {
+                                    "key": "type",
+                                    "value": "site",
+                                    "description": "Filter by archivable type (site, environment).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "site_id",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by site ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "environment_id",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by environment ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "backup_id",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                    "description": "Filter by backup ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "25",
+                                    "description": "Number of items per page (max 100). Default: 15.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination. Default: 1.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/restores?type=site&site_id=01jfgxk4nqrst5vwx9yz0abcde&environment_id=01jfgxk4nqrst5vwx9yz0abcde&backup_id=01jfgxk4nqrst5vwx9yz0abcde&per_page=25&page=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves a paginated list of restores, optionally filtered by type, site, environment,\nor backup."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-vector-pro-revision",
+                                    "value": "UNKNOWN"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "https:\/\/go.builtfast.test"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Restore",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/restores\/:vectorRestore",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/restores\/:vectorRestore",
+                            "variable": [
+                                {
+                                    "id": "vectorRestore",
+                                    "key": "vectorRestore",
+                                    "value": "01jfgxk4nqrst5vwx9yz0abcdg",
+                                    "description": "The restore ID."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves details of a specific restore."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-vector-pro-revision",
+                                    "value": "UNKNOWN"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "https:\/\/go.builtfast.test"
+                                },
+                                {
+                                    "key": "access-control-allow-credentials",
+                                    "value": "true"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Restore",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/restores",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/restores"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"backup_id\":\"01JFGXK4NQRST5VWX9YZ0ABCDI\",\"scope\":\"full\",\"search_replace\":[{\"from\":\"old-domain.com\",\"to\":\"new-domain.com\"}],\"drop_tables\":false,\"disable_foreign_keys\":false}"
+                        },
+                        "description": "Creates a new restore from a previously completed backup. The archivable (site or\nenvironment) is inferred from the backup. The restore is created with a `pending`\nstatus and an async job is dispatched to orchestrate the restic restore via an ECS task."
+                    },
+                    "response": []
                 }
             ]
         },

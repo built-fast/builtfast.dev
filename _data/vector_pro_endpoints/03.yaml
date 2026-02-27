@@ -1215,7 +1215,7 @@ endpoints:
         name: options.disable_foreign_keys
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1227,7 +1227,7 @@ endpoints:
       content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
       options:
         drop_tables: false
-        disable_foreign_keys: false
+        disable_foreign_keys: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -1381,7 +1381,7 @@ endpoints:
         name: disable_foreign_keys
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1389,7 +1389,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       drop_tables: true
-      disable_foreign_keys: true
+      disable_foreign_keys: false
     fileParameters: []
     responses: []
     responseFields: []
