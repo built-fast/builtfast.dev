@@ -1352,491 +1352,6 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/db/import'
-    metadata:
-      custom: []
-      groupName: Sites
-      groupDescription: |-
-
-        Direct database import for small files (<50MB).
-      subgroup: Databases
-      subgroupDescription: ''
-      title: 'Import Directly'
-      description: |-
-        Import SQL content directly from the request body. For files under 50MB.
-        The request body should contain raw SQL content with Content-Type: application/sql.
-
-        This is a synchronous operation that blocks until the import completes.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01jfgxk4nqrst5vwx9yz0abcde
-    queryParameters:
-      drop_tables:
-        custom: []
-        name: drop_tables
-        description: 'Drop all existing tables before import. Default: false.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      disable_foreign_keys:
-        custom: []
-        name: disable_foreign_keys
-        description: 'Disable foreign key checks during import. Default: true.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      search_replace_from:
-        custom: []
-        name: search_replace_from
-        description: 'The domain/string to search for after import. Required with `search_replace_to`.'
-        required: false
-        example: oldsite.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      search_replace_to:
-        custom: []
-        name: search_replace_to
-        description: 'The domain/string to replace with after import. Required with `search_replace_from`.'
-        required: false
-        example: dev.newsite.builtfast.dev
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-    cleanQueryParameters:
-      drop_tables: true
-      disable_foreign_keys: true
-      search_replace_from: oldsite.com
-      search_replace_to: dev.newsite.builtfast.dev
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "success": true,
-                  "duration_ms": 1234
-              },
-              "message": "Database imported successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
-        headers: []
-        description: 'Site Not Found'
-      -
-        custom: []
-        status: 422
-        content: '{"data": {}, "errors": {"content": ["SQL content is required in the request body"]}, "message": "Request body is empty", "http_status": 422}'
-        headers: []
-        description: 'Empty Body'
-      -
-        custom: []
-        status: 500
-        content: |-
-          {
-              "data": {
-                  "success": false,
-                  "duration_ms": 567,
-                  "error": "Access denied for user"
-              },
-              "message": "Database import failed",
-              "http_status": 500
-          }
-        headers: []
-        description: 'Import Failed'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/vector/sites/{site}/db/imports'
-    metadata:
-      custom: []
-      groupName: Sites
-      groupDescription: |-
-
-        Database import session management for large file uploads (>50MB).
-      subgroup: Databases
-      subgroupDescription: ''
-      title: 'Create Import Session'
-      description: |-
-        Create a database import session for large files (>50MB). Returns a presigned
-        S3 upload URL that can be used to upload the SQL file directly to storage.
-
-        After uploading, call the "Run Import" endpoint to execute the import.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01jfgxk4nqrst5vwx9yz0abcde
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      filename:
-        custom: []
-        name: filename
-        description: 'Optional filename for reference.'
-        required: false
-        example: backup-2025-01-23.sql
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      content_length:
-        custom: []
-        name: content_length
-        description: 'Optional file size in bytes for validation.'
-        required: false
-        example: 104857600
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      content_md5:
-        custom: []
-        name: content_md5
-        description: 'Optional MD5 checksum (32 hex chars) for integrity verification.'
-        required: false
-        example: d41d8cd98f00b204e9800998ecf8427e
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      options:
-        custom: []
-        name: options
-        description: 'Optional import options.'
-        required: false
-        example: []
-        type: object
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      options.drop_tables:
-        custom: []
-        name: options.drop_tables
-        description: 'Drop all existing tables before import. Default: false.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      options.disable_foreign_keys:
-        custom: []
-        name: options.disable_foreign_keys
-        description: 'Disable foreign key checks during import. Default: true.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      options.search_replace:
-        custom: []
-        name: options.search_replace
-        description: 'Optional search-replace configuration to run after import. Both `from` and `to` are required together.'
-        required: false
-        example: []
-        type: object
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      options.search_replace.from:
-        custom: []
-        name: options.search_replace.from
-        description: 'The domain/string to search for. Required with `to`.'
-        required: false
-        example: oldsite.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      options.search_replace.to:
-        custom: []
-        name: options.search_replace.to
-        description: 'The domain/string to replace with. Required with `from`.'
-        required: false
-        example: dev.newsite.builtfast.dev
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      filename: backup-2025-01-23.sql
-      content_length: 104857600
-      content_md5: d41d8cd98f00b204e9800998ecf8427e
-      options:
-        drop_tables: true
-        disable_foreign_keys: true
-        search_replace:
-          from: oldsite.com
-          to: dev.newsite.builtfast.dev
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "status": "pending",
-                  "filename": "backup-2025-01-23.sql",
-                  "content_length": 104857600,
-                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": {"from": "oldsite.com", "to": "dev.newsite.builtfast.dev"}},
-                  "upload_url": "https://s3.amazonaws.com/bucket/imports/...",
-                  "upload_expires_at": "2025-01-23T11:00:00+00:00",
-                  "duration_ms": null,
-                  "error_message": null,
-                  "created_at": "2025-01-23T10:00:00+00:00",
-                  "started_at": null,
-                  "completed_at": null
-              },
-              "message": "Import session created successfully",
-              "http_status": 201
-          }
-        headers: []
-        description: Created
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
-        headers: []
-        description: 'Site Not Found'
-      -
-        custom: []
-        status: 422
-        content: '{"data": {}, "errors": {"content_length": ["The content length must not exceed 10GB."]}, "message": "Validation failed", "http_status": 422}'
-        headers: []
-        description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/vector/sites/{site}/db/imports/{import}/run'
-    metadata:
-      custom: []
-      groupName: Sites
-      groupDescription: |-
-
-        Execute a database import from S3 after the file has been uploaded.
-      subgroup: Databases
-      subgroupDescription: ''
-      title: 'Run Import'
-      description: |-
-        Execute a database import from S3 after the file has been uploaded via the
-        presigned URL. Dispatches an async job to perform the import.
-
-        The import must be in `pending` or `uploaded` status and not expired.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      site:
-        custom: []
-        name: site
-        description: 'The site ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      import:
-        custom: []
-        name: import
-        description: 'The import ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdf
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      site: 01jfgxk4nqrst5vwx9yz0abcde
-      import: 01jfgxk4nqrst5vwx9yz0abcdf
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 202
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "status": "uploaded",
-                  "filename": "backup-2025-01-23.sql",
-                  "content_length": 104857600,
-                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": null},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": {"from": "oldsite.com", "to": "dev.newsite.builtfast.dev"}},
-                  "duration_ms": null,
-                  "error_message": null,
-                  "created_at": "2025-01-23T10:00:00+00:00",
-                  "uploaded_at": "2025-01-23T10:00:30+00:00",
-                  "started_at": null,
-                  "completed_at": null
-              },
-              "message": "Database import started",
-              "http_status": 202
-          }
-        headers: []
-        description: Accepted
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
-        status: 422
-        content: '{"data": {}, "errors": {"status": ["Import must be in pending or uploaded status"]}, "message": "Import is not ready to run", "http_status": 422}'
-        headers: []
-        description: 'Not Ready'
-      -
-        custom: []
-        status: 422
-        content: '{"data": {}, "errors": {"expires_at": ["Please create a new import session"]}, "message": "Import session has expired", "http_status": 422}'
-        headers: []
-        description: Expired
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
     uri: 'api/v1/vector/sites/{site}/db/export'
     metadata:
       custom: []
@@ -1941,19 +1456,245 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/v1/vector/sites/{site}/db/imports/{import}'
+      - POST
+    uri: 'api/v1/vector/sites/{site}/imports'
     metadata:
       custom: []
       groupName: Sites
       groupDescription: |-
 
-        Database import session management for large file uploads (>50MB).
-      subgroup: Databases
+        Archive import session management for site dev containers.
+      subgroup: Imports
+      subgroupDescription: ''
+      title: 'Create Import Session'
+      description: |-
+        Create an archive import session. Returns a presigned S3 upload URL
+        that can be used to upload the archive file directly to storage.
+
+        After uploading, call the "Run Import" endpoint to execute the import.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      filename:
+        custom: []
+        name: filename
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content_length:
+        custom: []
+        name: content_length
+        description: 'Must be at least 1. Must not be greater than 5368709120.'
+        required: false
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      content_md5:
+        custom: []
+        name: content_md5
+        description: 'Must match the regex /^[a-fA-F0-9]+$/. Must be 32 characters.'
+        required: false
+        example: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options:
+        custom: []
+        name: options
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.drop_tables:
+        custom: []
+        name: options.drop_tables
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.disable_foreign_keys:
+        custom: []
+        name: options.disable_foreign_keys
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.search_replace:
+        custom: []
+        name: options.search_replace
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.search_replace.from:
+        custom: []
+        name: options.search_replace.from
+        description: 'This field is required when <code>options.search_replace.to</code> is present. Must not be greater than 255 characters.'
+        required: false
+        example: c
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      options.search_replace.to:
+        custom: []
+        name: options.search_replace.to
+        description: 'This field is required when <code>options.search_replace.from</code> is present. Must not be greater than 255 characters.'
+        required: false
+        example: p
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      filename: b
+      content_length: 22
+      content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+      options:
+        drop_tables: true
+        disable_foreign_keys: true
+        search_replace:
+          from: c
+          to: p
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/imports/{vectorImport}/run'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Execute an archive import from S3 after the file has been uploaded.
+      subgroup: Imports
+      subgroupDescription: ''
+      title: 'Run Import'
+      description: |-
+        Execute an archive import from S3 after the file has been uploaded via the
+        presigned URL. Dispatches an async job to perform the import.
+
+        The import must be in `pending` or `uploaded` status and not expired.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorImport:
+        custom: []
+        name: vectorImport
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorImport: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/imports/{vectorImport}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: |-
+
+        Archive import session management for site dev containers.
+      subgroup: Imports
       subgroupDescription: ''
       title: 'Get Import Status'
       description: |-
-        Get the current status of a database import operation. If the import is still
+        Get the current status of an archive import operation. If the import is still
         pending and not expired, includes a fresh presigned upload URL.
       authenticated: true
       deprecated: false
@@ -1965,28 +1706,28 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site ID.'
+        description: 'The site.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcde
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
-      import:
+      vectorImport:
         custom: []
-        name: import
-        description: 'The import ID.'
+        name: vectorImport
+        description: ''
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        example: architecto
         type: string
         enumValues: []
-        exampleWasSpecified: true
+        exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: 01jfgxk4nqrst5vwx9yz0abcde
-      import: 01jfgxk4nqrst5vwx9yz0abcdf
+      site: architecto
+      vectorImport: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1995,46 +1736,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "status": "completed",
-                  "filename": "backup-2025-01-23.sql",
-                  "content_length": 104857600,
-                  "checksum": {"provided_md5": "d41d8cd98f00b204e9800998ecf8427e", "s3_etag": "d41d8cd98f00b204e9800998ecf8427e"},
-                  "options": {"drop_tables": true, "disable_foreign_keys": true, "search_replace": null},
-                  "duration_ms": 45000,
-                  "error_message": null,
-                  "created_at": "2025-01-23T10:00:00+00:00",
-                  "started_at": "2025-01-23T10:01:00+00:00",
-                  "completed_at": "2025-01-23T10:01:45+00:00"
-              },
-              "message": "Import retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
         status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
+        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-vector-pro-revision: UNKNOWN
+          access-control-allow-origin: 'https://go.builtfast.test'
+          access-control-allow-credentials: 'true'
+        description: null
     responseFields: []
     auth:
       - headers

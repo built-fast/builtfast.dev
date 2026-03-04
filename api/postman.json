@@ -653,244 +653,6 @@
                             ]
                         },
                         {
-                            "name": "Import Directly",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/db\/import",
-                                    "query": [
-                                        {
-                                            "key": "drop_tables",
-                                            "value": "1",
-                                            "description": "Drop all existing tables before import. Default: false.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "disable_foreign_keys",
-                                            "value": "1",
-                                            "description": "Disable foreign key checks during import. Default: true.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "search_replace_from",
-                                            "value": "oldsite.com",
-                                            "description": "The domain\/string to search for after import. Required with `search_replace_to`.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "search_replace_to",
-                                            "value": "dev.newsite.builtfast.dev",
-                                            "description": "The domain\/string to replace with after import. Required with `search_replace_from`.",
-                                            "disabled": false
-                                        }
-                                    ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/import?drop_tables=1&disable_foreign_keys=1&search_replace_from=oldsite.com&search_replace_to=dev.newsite.builtfast.dev",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application\/sql.\n\nThis is a synchronous operation that blocks until the import completes."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"success\": true,\n        \"duration_ms\": 1234\n    },\n    \"message\": \"Database imported successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
-                                    "name": "Site Not Found"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\"data\": {}, \"errors\": {\"content\": [\"SQL content is required in the request body\"]}, \"message\": \"Request body is empty\", \"http_status\": 422}",
-                                    "name": "Empty Body"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 500,
-                                    "body": "{\n    \"data\": {\n        \"success\": false,\n        \"duration_ms\": 567,\n        \"error\": \"Access denied for user\"\n    },\n    \"message\": \"Database import failed\",\n    \"http_status\": 500\n}",
-                                    "name": "Import Failed"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Create Import Session",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"filename\":\"backup-2025-01-23.sql\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"oldsite.com\",\"to\":\"dev.newsite.builtfast.dev\"}}}"
-                                },
-                                "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 201,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": {\"from\": \"oldsite.com\", \"to\": \"dev.newsite.builtfast.dev\"}},\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-23T11:00:00+00:00\",\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
-                                    "name": "Created"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
-                                    "name": "Site Not Found"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\"data\": {}, \"errors\": {\"content_length\": [\"The content length must not exceed 10GB.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
-                                    "name": "Validation Error"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Run Import",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports\/:import\/run",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports\/:import\/run",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "import",
-                                            "key": "import",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
-                                            "description": "The import ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"uploaded\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": null},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": {\"from\": \"oldsite.com\", \"to\": \"dev.newsite.builtfast.dev\"}},\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-23T10:00:30+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Database import started\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Import not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\"data\": {}, \"errors\": {\"status\": [\"Import must be in pending or uploaded status\"]}, \"message\": \"Import is not ready to run\", \"http_status\": 422}",
-                                    "name": "Not Ready"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\"data\": {}, \"errors\": {\"expires_at\": [\"Please create a new import session\"]}, \"message\": \"Import session has expired\", \"http_status\": 422}",
-                                    "name": "Expired"
-                                }
-                            ]
-                        },
-                        {
                             "name": "Create Export",
                             "request": {
                                 "url": {
@@ -948,70 +710,6 @@
                                     "code": 404,
                                     "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
                                     "name": "Site Not Found"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Get Import Status",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/db\/imports\/:import",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/db\/imports\/:import",
-                                    "variable": [
-                                        {
-                                            "id": "site",
-                                            "key": "site",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "import",
-                                            "key": "import",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
-                                            "description": "The import ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Get the current status of a database import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"vector_site_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"filename\": \"backup-2025-01-23.sql\",\n        \"content_length\": 104857600,\n        \"checksum\": {\"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\", \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"},\n        \"options\": {\"drop_tables\": true, \"disable_foreign_keys\": true, \"search_replace\": null},\n        \"duration_ms\": 45000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-23T10:00:00+00:00\",\n        \"started_at\": \"2025-01-23T10:01:00+00:00\",\n        \"completed_at\": \"2025-01-23T10:01:45+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
-                                    "name": "Success"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Import not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
                                 }
                             ]
                         },
@@ -1146,6 +844,154 @@
                                     "code": 422,
                                     "body": "{\"data\": {}, \"errors\": {\"status\": [\"Site must be active to regenerate wp-config. Current state: 'pending'.\"]}, \"message\": \"Site must be active to regenerate wp-config. Current state: 'pending'.\", \"http_status\": 422}",
                                     "name": "Not Active"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Imports",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "Create Import Session",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/imports",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"c\",\"to\":\"p\"}}}"
+                                },
+                                "description": "Create an archive import session. Returns a presigned S3 upload URL\nthat can be used to upload the archive file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Run Import",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:vectorImport\/run",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:vectorImport\/run",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorImport",
+                                            "key": "vectorImport",
+                                            "value": "architecto",
+                                            "description": ""
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Execute an archive import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Import Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:vectorImport",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:vectorImport",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorImport",
+                                            "key": "vectorImport",
+                                            "value": "architecto",
+                                            "description": ""
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of an archive import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
+                            },
+                            "response": [
+                                {
+                                    "header": [
+                                        {
+                                            "key": "cache-control",
+                                            "value": "no-cache, private"
+                                        },
+                                        {
+                                            "key": "content-type",
+                                            "value": "application\/json"
+                                        },
+                                        {
+                                            "key": "x-vector-pro-revision",
+                                            "value": "UNKNOWN"
+                                        },
+                                        {
+                                            "key": "access-control-allow-origin",
+                                            "value": "https:\/\/go.builtfast.test"
+                                        },
+                                        {
+                                            "key": "access-control-allow-credentials",
+                                            "value": "true"
+                                        }
+                                    ],
+                                    "code": 401,
+                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
+                                    "name": ""
                                 }
                             ]
                         }
@@ -3169,7 +3015,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -3475,145 +3321,6 @@
                             ]
                         },
                         {
-                            "name": "Import Directly",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/db\/import",
-                                    "query": [
-                                        {
-                                            "key": "drop_tables",
-                                            "value": "1",
-                                            "description": "Drop all existing tables before import. Default: false.",
-                                            "disabled": false
-                                        },
-                                        {
-                                            "key": "disable_foreign_keys",
-                                            "value": "1",
-                                            "description": "Disable foreign key checks during import. Default: true.",
-                                            "disabled": false
-                                        }
-                                    ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/import?drop_tables=1&disable_foreign_keys=1",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Import SQL content directly from the request body. For files under 50MB.\nThe request body should contain raw SQL content with Content-Type: application\/sql.\n\nThis is a synchronous operation that blocks until the import completes."
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Create Import Session",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"filename\":\"b\",\"content_length\":22,\"content_md5\":\"gzmiyvdljnikhwaykcmyuwpwlvqwrsit\",\"options\":{\"drop_tables\":false,\"disable_foreign_keys\":true}}"
-                                },
-                                "description": "Create a database import session for large files (>50MB). Returns a presigned\nS3 upload URL that can be used to upload the SQL file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
-                            },
-                            "response": []
-                        },
-                        {
-                            "name": "Run Import",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports\/:import\/run",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports\/:import\/run",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "import",
-                                            "key": "import",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
-                                            "description": "The import ID."
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Execute a database import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import."
-                            },
-                            "response": []
-                        },
-                        {
                             "name": "Create Database Promote",
                             "request": {
                                 "url": {
@@ -3649,84 +3356,11 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"drop_tables\":true,\"disable_foreign_keys\":false}"
+                                    "raw": "{\"drop_tables\":true,\"disable_foreign_keys\":true}"
                                 },
                                 "description": "Promote the dev database to this environment. Exports the dev database,\nthen imports it into the environment's database."
                             },
                             "response": []
-                        },
-                        {
-                            "name": "Get Import Status",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/db\/imports\/:import",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/imports\/:import",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "import",
-                                            "key": "import",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
-                                            "description": "The import ID."
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Get the current status of a database import operation."
-                            },
-                            "response": [
-                                {
-                                    "header": [
-                                        {
-                                            "key": "cache-control",
-                                            "value": "no-cache, private"
-                                        },
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        },
-                                        {
-                                            "key": "x-vector-pro-revision",
-                                            "value": "UNKNOWN"
-                                        },
-                                        {
-                                            "key": "access-control-allow-origin",
-                                            "value": "https:\/\/go.builtfast.test"
-                                        },
-                                        {
-                                            "key": "access-control-allow-credentials",
-                                            "value": "true"
-                                        }
-                                    ],
-                                    "code": 401,
-                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                                    "name": ""
-                                }
-                            ]
                         },
                         {
                             "name": "Get Promote Status",
@@ -3804,6 +3438,173 @@
                                     "code": 401,
                                     "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
                                     "name": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Domains",
+                    "description": "Change the custom domain for an environment. A domain change runs\nsearch-replace on the database, syncs environment variables, and redeploys.\n\n#### Domain Change Status Lifecycle\n\n- `pending` - Domain change created, waiting to start\n- `search_replacing` - Running search-replace on the database\n- `syncing_env` - Syncing environment variables with new domain\n- `redeploying` - Redeploying the environment\n- `completed` - Domain change finished successfully\n- `failed` - Domain change failed (see `error_message` for details)",
+                    "item": [
+                        {
+                            "name": "Create Domain Change",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/domain-change",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/domain-change",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"custom_domain\":\"newshop.com\"}"
+                                },
+                                "description": "Initiate a domain change for this environment. Runs search-replace on\nthe database, syncs environment variables, and redeploys.\n\nOnly one domain change can be in progress per environment at a time.\nThe environment must be in `active` state."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_environment_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"pending\",\n        \"old_domain\": \"wispy-dust.vectorpages.com\",\n        \"new_domain\": \"wispy-dust.vectorpages.com\",\n        \"old_custom_domain\": \"oldshop.com\",\n        \"new_custom_domain\": \"newshop.com\",\n        \"error_message\": null,\n        \"duration_ms\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Domain change initiated\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"custom_domain\": [\"The custom domain field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"environment\": [\"Environment must be in active state to change domain.\"]},\n    \"message\": \"Environment must be in active state to change domain.\",\n    \"http_status\": 422\n}",
+                                    "name": "Environment Not Active"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"domain_change\": [\"A domain change is already in progress for this environment.\"]},\n    \"message\": \"A domain change is already in progress for this environment.\",\n    \"http_status\": 422\n}",
+                                    "name": "Already In Progress"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Domain Change Status",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/environments\/:env\/domain-changes\/:vectorDomainChange",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/domain-changes\/:vectorDomainChange",
+                                    "variable": [
+                                        {
+                                            "id": "env",
+                                            "key": "env",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "vectorDomainChange",
+                                            "key": "vectorDomainChange",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "environment",
+                                            "key": "environment",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The environment ID."
+                                        },
+                                        {
+                                            "id": "domainChange",
+                                            "key": "domainChange",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcdf",
+                                            "description": "The domain change ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Get the current status of a domain change operation."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_environment_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"status\": \"completed\",\n        \"old_domain\": \"wispy-dust.vectorpages.com\",\n        \"new_domain\": \"wispy-dust.vectorpages.com\",\n        \"old_custom_domain\": \"oldshop.com\",\n        \"new_custom_domain\": \"newshop.com\",\n        \"error_message\": null,\n        \"duration_ms\": 12450,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"started_at\": \"2025-05-27T09:50:22+00:00\",\n        \"completed_at\": \"2025-05-27T09:50:34+00:00\"\n    },\n    \"message\": \"Domain change retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Domain change not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
                                 }
                             ]
                         }
@@ -4854,31 +4655,22 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-vector-pro-revision",
-                                    "value": "UNKNOWN"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "https:\/\/go.builtfast.test"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"archivable_type\": \"vector_site\",\n            \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n            \"type\": \"manual\",\n            \"scope\": \"full\",\n            \"status\": \"completed\",\n            \"description\": \"Pre-deployment backup\",\n            \"file_snapshot_id\": \"abc123def456\",\n            \"database_snapshot_id\": \"ghi789jkl012\",\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:52:45+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:52:45+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Backups retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                            "name": ""
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
                         }
                     ]
                 },
@@ -4915,31 +4707,28 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-vector-pro-revision",
-                                    "value": "UNKNOWN"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "https:\/\/go.builtfast.test"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"archivable_type\": \"vector_site\",\n        \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDF\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"completed\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": \"abc123def456\",\n        \"database_snapshot_id\": \"ghi789jkl012\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:52:45+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:52:45+00:00\"\n    },\n    \"message\": \"Backup retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                            "name": ""
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"data\": {}, \"message\": \"Backup not found\", \"http_status\": 404}",
+                            "name": "Not Found"
                         }
                     ]
                 },
@@ -4986,31 +4775,34 @@
                             },
                             "response": [
                                 {
-                                    "header": [
-                                        {
-                                            "key": "cache-control",
-                                            "value": "no-cache, private"
-                                        },
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        },
-                                        {
-                                            "key": "x-vector-pro-revision",
-                                            "value": "UNKNOWN"
-                                        },
-                                        {
-                                            "key": "access-control-allow-origin",
-                                            "value": "https:\/\/go.builtfast.test"
-                                        },
-                                        {
-                                            "key": "access-control-allow-credentials",
-                                            "value": "true"
-                                        }
-                                    ],
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"completed\",\n        \"s3_key\": \"backups\/downloads\/01JFGXK4NQRST5VWX9YZ0ABCDH.tar.gz\",\n        \"size_bytes\": 52428800,\n        \"duration_ms\": 12500,\n        \"error_message\": null,\n        \"download_url\": \"https:\/\/s3.amazonaws.com\/bucket\/backups\/downloads\/01JFGXK4NQRST5VWX9YZ0ABCDH.tar.gz?presigned=...\",\n        \"download_expires_at\": \"2025-05-27T10:50:21+00:00\",\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:50:33+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:33+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Completed"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"processing\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Pending"
+                                },
+                                {
+                                    "header": [],
                                     "code": 401,
-                                    "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                                    "name": ""
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Backup download not found\", \"http_status\": 404}",
+                                    "name": "Not Found"
                                 }
                             ]
                         },
@@ -5045,7 +4837,26 @@
                                 "body": null,
                                 "description": "Creates a new download request for the specified backup. The download is created with a\n`pending` status and an async job is dispatched to archive the backup snapshots."
                             },
-                            "response": []
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 202,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"status\": \"pending\",\n        \"s3_key\": null,\n        \"size_bytes\": null,\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"download_url\": null,\n        \"download_expires_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup download initiated\",\n    \"http_status\": 202\n}",
+                                    "name": "Accepted"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -5075,7 +4886,32 @@
                         },
                         "description": "Creates a new backup for the specified site or environment. The backup is created with a\n`pending` status and an async job is dispatched to orchestrate the restic backup via an\nECS task."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 202,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"archivable_type\": \"vector_site\",\n        \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"type\": \"manual\",\n        \"scope\": \"full\",\n        \"status\": \"pending\",\n        \"description\": \"Pre-deployment backup\",\n        \"file_snapshot_id\": null,\n        \"database_snapshot_id\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Backup initiated successfully\",\n    \"http_status\": 202\n}",
+                            "name": "Accepted"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"site_id\": [\"Either a site ID or environment ID is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Validation Error"
+                        }
+                    ]
                 }
             ]
         },
@@ -5270,31 +5106,22 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-vector-pro-revision",
-                                    "value": "UNKNOWN"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "https:\/\/go.builtfast.test"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n            \"archivable_type\": \"vector_site\",\n            \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n            \"scope\": \"full\",\n            \"trigger\": \"manual\",\n            \"status\": \"completed\",\n            \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n            \"search_replace\": null,\n            \"drop_tables\": false,\n            \"disable_foreign_keys\": false,\n            \"error_message\": null,\n            \"duration_ms\": 45200,\n            \"started_at\": \"2025-05-27T09:50:21+00:00\",\n            \"completed_at\": \"2025-05-27T09:51:06+00:00\",\n            \"created_at\": \"2025-05-27T09:50:21+00:00\",\n            \"updated_at\": \"2025-05-27T09:51:06+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Restores retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                            "name": ""
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
                         }
                     ]
                 },
@@ -5331,31 +5158,28 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-vector-pro-revision",
-                                    "value": "UNKNOWN"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "https:\/\/go.builtfast.test"
-                                },
-                                {
-                                    "key": "access-control-allow-credentials",
-                                    "value": "true"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"archivable_type\": \"vector_site\",\n        \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"completed\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDG\",\n        \"search_replace\": [{\"from\": \"old-domain.com\", \"to\": \"new-domain.com\"}],\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": 45200,\n        \"started_at\": \"2025-05-27T09:50:21+00:00\",\n        \"completed_at\": \"2025-05-27T09:51:06+00:00\",\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:51:06+00:00\"\n    },\n    \"message\": \"Restore retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"data\":[],\"message\":\"Unauthenticated\",\"http_status\":401}",
-                            "name": ""
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"data\": {}, \"message\": \"Restore not found\", \"http_status\": 404}",
+                            "name": "Not Found"
                         }
                     ]
                 },
@@ -5385,7 +5209,32 @@
                         },
                         "description": "Creates a new restore from a previously completed backup. The archivable (site or\nenvironment) is inferred from the backup. The restore is created with a `pending`\nstatus and an async job is dispatched to orchestrate the restic restore via an ECS task."
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 202,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01JFGXK4NQRST5VWX9YZ0ABCDH\",\n        \"archivable_type\": \"vector_site\",\n        \"archivable_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDE\",\n        \"scope\": \"full\",\n        \"trigger\": \"manual\",\n        \"status\": \"pending\",\n        \"vector_backup_id\": \"01JFGXK4NQRST5VWX9YZ0ABCDI\",\n        \"search_replace\": [{\"from\": \"old-domain.com\", \"to\": \"new-domain.com\"}],\n        \"drop_tables\": false,\n        \"disable_foreign_keys\": false,\n        \"error_message\": null,\n        \"duration_ms\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"created_at\": \"2025-05-27T09:50:21+00:00\",\n        \"updated_at\": \"2025-05-27T09:50:21+00:00\"\n    },\n    \"message\": \"Restore initiated successfully\",\n    \"http_status\": 202\n}",
+                            "name": "Accepted"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"backup_id\": [\"A backup ID is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Validation Error"
+                        }
+                    ]
                 }
             ]
         },

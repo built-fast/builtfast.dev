@@ -99,15 +99,45 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "archivable_type": "vector_site",
+                      "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                      "type": "manual",
+                      "scope": "full",
+                      "status": "completed",
+                      "description": "Pre-deployment backup",
+                      "file_snapshot_id": "abc123def456",
+                      "database_snapshot_id": "ghi789jkl012",
+                      "started_at": "2025-05-27T09:50:21+00:00",
+                      "completed_at": "2025-05-27T09:52:45+00:00",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:52:45+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Backups retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers
@@ -166,15 +196,47 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "type": "manual",
+                  "scope": "full",
+                  "status": "completed",
+                  "description": "Pre-deployment backup",
+                  "file_snapshot_id": "abc123def456",
+                  "database_snapshot_id": "ghi789jkl012",
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:52:45+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:52:45+00:00"
+              },
+              "message": "Backup retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -248,15 +310,72 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "completed",
+                  "s3_key": "backups/downloads/01JFGXK4NQRST5VWX9YZ0ABCDH.tar.gz",
+                  "size_bytes": 52428800,
+                  "duration_ms": 12500,
+                  "error_message": null,
+                  "download_url": "https://s3.amazonaws.com/bucket/backups/downloads/01JFGXK4NQRST5VWX9YZ0ABCDH.tar.gz?presigned=...",
+                  "download_expires_at": "2025-05-27T10:50:21+00:00",
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:50:33+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:33+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "processing",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Pending
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup download not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -363,7 +482,56 @@ endpoints:
       scope: full
       description: 'Pre-deployment backup'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "type": "manual",
+                  "scope": "full",
+                  "status": "pending",
+                  "description": "Pre-deployment backup",
+                  "file_snapshot_id": null,
+                  "database_snapshot_id": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup initiated successfully",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"site_id": ["Either a site ID or environment ID is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
@@ -422,7 +590,44 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "status": "pending",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Backup download initiated",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers

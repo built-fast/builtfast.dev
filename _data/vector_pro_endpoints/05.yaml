@@ -114,15 +114,48 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                      "archivable_type": "vector_site",
+                      "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "scope": "full",
+                      "trigger": "manual",
+                      "status": "completed",
+                      "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "search_replace": null,
+                      "drop_tables": false,
+                      "disable_foreign_keys": false,
+                      "error_message": null,
+                      "duration_ms": 45200,
+                      "started_at": "2025-05-27T09:50:21+00:00",
+                      "completed_at": "2025-05-27T09:51:06+00:00",
+                      "created_at": "2025-05-27T09:50:21+00:00",
+                      "updated_at": "2025-05-27T09:51:06+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Restores retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
     responseFields: []
     auth:
       - headers
@@ -182,15 +215,50 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "completed",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "search_replace": [{"from": "old-domain.com", "to": "new-domain.com"}],
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": 45200,
+                  "started_at": "2025-05-27T09:50:21+00:00",
+                  "completed_at": "2025-05-27T09:51:06+00:00",
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:51:06+00:00"
+              },
+              "message": "Restore retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Restore not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -326,7 +394,59 @@ endpoints:
       drop_tables: false
       disable_foreign_keys: false
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "pending",
+                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "search_replace": [{"from": "old-domain.com", "to": "new-domain.com"}],
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "updated_at": "2025-05-27T09:50:21+00:00"
+              },
+              "message": "Restore initiated successfully",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"backup_id": ["A backup ID is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
