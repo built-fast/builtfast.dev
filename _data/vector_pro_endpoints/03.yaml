@@ -1080,7 +1080,7 @@ endpoints:
         name: disable_foreign_keys
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1088,7 +1088,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       drop_tables: true
-      disable_foreign_keys: true
+      disable_foreign_keys: false
     fileParameters: []
     responses: []
     responseFields: []

@@ -2251,13 +2251,13 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: true
+                      example: false
                     disable_foreign_keys:
                       type:
                         - boolean
                         - 'null'
                       description: ''
-                      example: true
+                      example: false
                     search_replace:
                       type:
                         - object
@@ -8339,7 +8339,7 @@ paths:
                 disable_foreign_keys:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path

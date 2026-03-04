@@ -1544,7 +1544,7 @@ endpoints:
         name: options.drop_tables
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1555,7 +1555,7 @@ endpoints:
         name: options.disable_foreign_keys
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1599,8 +1599,8 @@ endpoints:
       content_length: 22
       content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
       options:
-        drop_tables: true
-        disable_foreign_keys: true
+        drop_tables: false
+        disable_foreign_keys: false
         search_replace:
           from: c
           to: p
