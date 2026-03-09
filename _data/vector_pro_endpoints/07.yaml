@@ -330,7 +330,7 @@ endpoints:
         name: from
         description: 'Filter events that occurred on or after this timestamp (ISO 8601).'
         required: false
-        example: '2025-01-01T00:00:00Z'
+        example: '2025-01-01T00:00:00+00:00'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -341,7 +341,7 @@ endpoints:
         name: to
         description: 'Filter events that occurred on or before this timestamp (ISO 8601).'
         required: false
-        example: '2025-01-31T23:59:59Z'
+        example: '2025-01-31T23:59:59+00:00'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -381,8 +381,8 @@ endpoints:
         nullable: true
         deprecated: false
     cleanQueryParameters:
-      from: '2025-01-01T00:00:00Z'
-      to: '2025-01-31T23:59:59Z'
+      from: '2025-01-01T00:00:00+00:00'
+      to: '2025-01-31T23:59:59+00:00'
       event: 'site.provisioning.completed,deployment.completed'
       per_page: 25
       page: 1
@@ -397,17 +397,19 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDL",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdl",
                       "event": "site.provisioning.completed",
                       "model_type": "VectorSite",
-                      "model_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "model_id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "context": null,
                       "actor": {
-                          "ip": "203.0.113.50",
+                          "id": 1,
+                          "ip": "192.0.2.1",
+                          "token_id": 1,
                           "token_name": "Production API Key"
                       },
-                      "occurred_at": "2026-02-01T09:50:21+00:00",
-                      "created_at": "2026-02-01T09:50:21+00:00"
+                      "occurred_at": "2025-01-15T12:00:00+00:00",
+                      "created_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},

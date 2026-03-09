@@ -43,7 +43,7 @@ endpoints:
               "data": {
                   "owner": {
                       "name": "John Doe",
-                      "email": "john@example.com"
+                      "email": "user@example.com"
                   },
                   "account": {
                       "name": "My Account",
@@ -51,10 +51,10 @@ endpoints:
                   },
                   "cluster": {
                       "alb_dns_name": "alb-abc123.us-west-2.elb.amazonaws.com",
-                      "aurora_cluster_endpoint": "cluster.abc123.us-west-2.rds.amazonaws.com",
+                      "aurora_cluster_endpoint": "cluster.abc123.us-east-1.rds.amazonaws.com",
                       "ssh_nlb_dns": "nlb-abc123.us-west-2.elb.amazonaws.com"
                   },
-                  "domains": ["mysite.com", "another.org"],
+                  "domains": ["example.com", "example.org"],
                   "sites": {
                       "total": 5,
                       "by_status": {
@@ -175,15 +175,15 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                       "account_id": 1,
                       "vector_site_id": null,
                       "name": "deploy key",
                       "fingerprint": "SHA256:abc123def456...",
                       "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                       "is_account_default": true,
-                      "created_at": "2026-01-15T10:00:00+00:00",
-                      "updated_at": "2026-01-15T10:00:00+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -264,15 +264,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                   "account_id": 1,
                   "vector_site_id": null,
                   "name": "deploy key",
                   "fingerprint": "SHA256:abc123def456...",
                   "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                   "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSH key retrieved successfully",
               "http_status": 200
@@ -373,15 +373,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                   "account_id": 1,
                   "vector_site_id": null,
                   "name": "deploy key",
                   "fingerprint": "SHA256:abc123def456...",
                   "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                   "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSH key created successfully",
               "http_status": 201
@@ -485,15 +485,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                   "account_id": 1,
                   "vector_site_id": null,
                   "name": "deploy key",
                   "fingerprint": "SHA256:abc123def456...",
                   "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                   "is_account_default": true,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSH key deleted successfully",
               "http_status": 200
@@ -596,9 +596,9 @@ endpoints:
                   {
                       "name": "Production API Key",
                       "abilities": ["*"],
-                      "last_used_at": "2025-05-27T10:30:00+00:00",
+                      "last_used_at": "2025-01-15T12:00:00+00:00",
                       "expires_at": null,
-                      "created_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -693,19 +693,19 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "key": "STRIPE_SECRET_KEY",
                       "is_secret": true,
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   },
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdf",
                       "key": "APP_ENV",
                       "is_secret": false,
                       "value": "production",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -805,11 +805,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Global secret retrieved successfully",
               "http_status": 200
@@ -822,12 +822,12 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
                   "key": "APP_ENV",
                   "is_secret": false,
                   "value": "production",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Global secret retrieved successfully",
               "http_status": 200
@@ -948,7 +948,7 @@ endpoints:
         name: expires_at
         description: 'Optional expiration date for the token. Must be in the future.'
         required: false
-        example: '2025-12-31T23:59:59Z'
+        example: '2025-12-31T23:59:59+00:00'
         type: datetime
         enumValues: []
         exampleWasSpecified: true
@@ -959,7 +959,7 @@ endpoints:
       abilities:
         - 'site:read'
         - 'site:write'
-      expires_at: '2025-12-31T23:59:59Z'
+      expires_at: '2025-12-31T23:59:59+00:00'
     fileParameters: []
     responses:
       -
@@ -972,7 +972,7 @@ endpoints:
                   "token": "1|a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
                   "abilities": ["*"],
                   "expires_at": null,
-                  "created_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "API key created successfully. Store this token securely - it will not be shown again.",
               "http_status": 201
@@ -1073,9 +1073,9 @@ endpoints:
               "data": {
                   "name": "Production API Key",
                   "abilities": ["*"],
-                  "last_used_at": "2025-05-27T10:30:00+00:00",
+                  "last_used_at": "2025-01-15T12:00:00+00:00",
                   "expires_at": null,
-                  "created_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "API key deleted successfully",
               "http_status": 200
@@ -1198,11 +1198,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Global secret created successfully",
               "http_status": 201
@@ -1350,11 +1350,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_API_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Global secret updated successfully",
               "http_status": 200
@@ -1467,11 +1467,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Global secret deleted successfully",
               "http_status": 200

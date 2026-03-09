@@ -115,9 +115,9 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "your_customer_id": "customer-123",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
                       "name": "production",
                       "is_production": true,
                       "status": "active",
@@ -126,12 +126,12 @@ endpoints:
                       "php_version": "8.3",
                       "tags": ["live", "primary"],
                       "platform_domain": "wispy-dust.vectorpages.com",
-                      "custom_domain": "ourshop.com",
+                      "custom_domain": "example.com",
                       "subdomain": "wispy-dust",
-                      "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                      "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                       "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -233,9 +233,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -244,12 +244,12 @@ endpoints:
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
                   "platform_domain": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
+                  "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment retrieved successfully",
               "http_status": 200
@@ -362,19 +362,19 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "key": "STRIPE_SECRET_KEY",
                       "is_secret": true,
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   },
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdf",
                       "key": "APP_ENV",
                       "is_secret": false,
                       "value": "production",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -465,11 +465,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment secret retrieved successfully",
               "http_status": 200
@@ -482,12 +482,12 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
                   "key": "APP_ENV",
                   "is_secret": false,
                   "value": "production",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment secret retrieved successfully",
               "http_status": 200
@@ -605,16 +605,16 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                      "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
                       "status": "deployed",
                       "stdout": "Deployment output...",
                       "stderr": null,
-                      "actor": "john@example.com",
+                      "actor": "user@example.com",
                       "environment": {
-                          "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                          "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                          "your_customer_id": "cust_123456",
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                          "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                          "your_customer_id": "cust_12345",
                           "name": "production",
                           "is_production": true,
                           "status": "active",
@@ -623,11 +623,11 @@ endpoints:
                           "fqdn": "example.com",
                           "custom_domain": "example.com",
                           "subdomain": "wispy-dust",
-                          "created_at": "2025-05-20T09:00:00+00:00",
-                          "updated_at": "2025-05-27T09:55:30+00:00"
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
                       },
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -721,16 +721,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
                   "status": "deployed",
                   "stdout": "Building project...\nUploading assets...\nDeployment complete.",
                   "stderr": null,
-                  "actor": "john@example.com",
+                  "actor": "user@example.com",
                   "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "your_customer_id": "cust_123456",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
                       "name": "production",
                       "is_production": true,
                       "status": "active",
@@ -739,11 +739,11 @@ endpoints:
                       "fqdn": "example.com",
                       "custom_domain": "example.com",
                       "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:55:30+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:30+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Deployment retrieved successfully",
               "http_status": 200
@@ -849,9 +849,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -862,8 +862,8 @@ endpoints:
                   "platform_domain": "wispy-dust.vectorpages.com",
                   "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:42+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSL status retrieved",
               "http_status": 200
@@ -951,9 +951,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -966,8 +966,8 @@ endpoints:
                   "subdomain": "wispy-dust",
                   "database_user": "user_abc123_production",
                   "database_password": "aBcD1234!@#$EfGh5678",
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
               "http_status": 200
@@ -1067,30 +1067,86 @@ endpoints:
       drop_tables:
         custom: []
         name: drop_tables
-        description: ''
+        description: 'Whether to drop existing tables before importing. Defaults to true.'
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       disable_foreign_keys:
         custom: []
         name: disable_foreign_keys
-        description: ''
+        description: 'Whether to disable foreign key checks during import. Defaults to true.'
         required: false
         example: true
         type: boolean
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      drop_tables: false
+      drop_tables: true
       disable_foreign_keys: true
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": null,
+                  "status": "pending",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Database promote initiated",
+              "http_status": 202
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"environment": ["Environment must be in active state to promote database."]}, "message": "Environment must be in active state to promote database.", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"promote": ["A database promote is already in progress for this environment."]}, "message": "A database promote is already in progress for this environment.", "http_status": 422}'
+        headers: []
+        description: 'Already In Progress'
     responseFields: []
     auth:
       - headers
@@ -1178,15 +1234,74 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "completed",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": 12500,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Database promote retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": null,
+                  "status": "exporting",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": null
+              },
+              "message": "Database promote retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'In Progress'
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Promote not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -1264,14 +1379,14 @@ endpoints:
         name: custom_domain
         description: 'The new custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
         required: true
-        example: newshop.com
+        example: example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      custom_domain: newshop.com
+      custom_domain: example.com
     fileParameters: []
     responses:
       -
@@ -1280,16 +1395,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "status": "pending",
                   "old_domain": "wispy-dust.vectorpages.com",
                   "new_domain": "wispy-dust.vectorpages.com",
-                  "old_custom_domain": "oldshop.com",
-                  "new_custom_domain": "newshop.com",
+                  "old_custom_domain": "example.org",
+                  "new_custom_domain": "example.com",
                   "error_message": null,
                   "duration_ms": null,
-                  "created_at": "2025-05-27T09:50:21+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
                   "started_at": null,
                   "completed_at": null
               },
@@ -1429,7 +1544,7 @@ endpoints:
         name: domainChange
         description: 'The domain change ID.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1439,7 +1554,7 @@ endpoints:
       env: architecto
       vectorDomainChange: architecto
       environment: 01jfgxk4nqrst5vwx9yz0abcde
-      domainChange: 01jfgxk4nqrst5vwx9yz0abcdf
+      domainChange: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1452,18 +1567,18 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "status": "completed",
                   "old_domain": "wispy-dust.vectorpages.com",
                   "new_domain": "wispy-dust.vectorpages.com",
-                  "old_custom_domain": "oldshop.com",
-                  "new_custom_domain": "newshop.com",
+                  "old_custom_domain": "example.org",
+                  "new_custom_domain": "example.com",
                   "error_message": null,
                   "duration_ms": 12450,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "started_at": "2025-05-27T09:50:22+00:00",
-                  "completed_at": "2025-05-27T09:50:34+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Domain change retrieved successfully",
               "http_status": 200
@@ -1577,7 +1692,7 @@ endpoints:
         name: custom_domain
         description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
         required: true
-        example: ourshop.com
+        example: example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1620,7 +1735,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: production
-      custom_domain: ourshop.com
+      custom_domain: example.com
       is_production: true
       php_version: '8.3'
       tags:
@@ -1634,9 +1749,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "pending",
@@ -1645,12 +1760,12 @@ endpoints:
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
-                  "custom_domain": "ourshop.com",
+                  "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment creation initiated",
               "http_status": 201
@@ -1780,7 +1895,7 @@ endpoints:
         name: custom_domain
         description: 'A custom vanity domain for this environment. Must be a valid domain name.'
         required: false
-        example: newshop.com
+        example: example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -1801,7 +1916,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: production
-      custom_domain: newshop.com
+      custom_domain: example.com
       tags:
         - live
         - updated
@@ -1813,9 +1928,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "active",
@@ -1824,12 +1939,12 @@ endpoints:
                   "php_version": "8.4",
                   "tags": ["live", "updated"],
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
-                  "custom_domain": "newshop.com",
+                  "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment updated successfully",
               "http_status": 200
@@ -1957,9 +2072,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "terminating",
@@ -1968,12 +2083,12 @@ endpoints:
                   "php_version": "8.3",
                   "tags": [],
                   "platform_domain": "wispy-dust.vectorpages.com",
-                  "custom_domain": "ourshop.com",
+                  "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "database_host": "prod-cluster.xyz789.us-east-1.rds.amazonaws.com",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment deletion initiated",
               "http_status": 202
@@ -2105,11 +2220,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment secret created successfully",
               "http_status": 201
@@ -2248,11 +2363,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_API_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment secret updated successfully",
               "http_status": 200
@@ -2350,11 +2465,11 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "key": "STRIPE_SECRET_KEY",
                   "is_secret": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment secret deleted successfully",
               "http_status": 200
@@ -2457,7 +2572,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2465,7 +2580,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: false
+      include_database: true
     fileParameters: []
     responses:
       -
@@ -2474,16 +2589,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
                   "status": "pending",
                   "stdout": null,
                   "stderr": null,
-                  "actor": "john@example.com",
+                  "actor": "user@example.com",
                   "environment": {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                      "your_customer_id": "cust_123456",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
                       "name": "production",
                       "is_production": true,
                       "status": "active",
@@ -2492,11 +2607,11 @@ endpoints:
                       "fqdn": "example.com",
                       "custom_domain": "example.com",
                       "subdomain": "wispy-dust",
-                      "created_at": "2025-05-20T09:00:00+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   },
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Deployment initiated",
               "http_status": 201
@@ -2592,15 +2707,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "vector_environment_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
                   "status": "pending",
                   "stdout": null,
                   "stderr": null,
-                  "actor": "john@example.com",
-                  "environment": {"id": "01JFGXK4NQRST5VWX9YZ0ABCDG", "name": "production", "is_production": true},
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "actor": "user@example.com",
+                  "environment": {"id": "01jfgxk4nqrst5vwx9yz0abcdg", "name": "production", "is_production": true},
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Rollback initiated",
               "http_status": 201
@@ -2698,9 +2813,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "provisioning",
@@ -2711,8 +2826,8 @@ endpoints:
                   "platform_domain": "wispy-dust.vectorpages.com",
                   "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:42+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSL provisioning advanced from waiting_cert to deploying",
               "http_status": 200
@@ -2725,9 +2840,9 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "your_customer_id": "customer-123",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
                   "name": "production",
                   "is_production": true,
                   "status": "provisioning",
@@ -2738,8 +2853,8 @@ endpoints:
                   "platform_domain": "wispy-dust.vectorpages.com",
                   "custom_domain": "example.com",
                   "subdomain": "wispy-dust",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:55:42+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns",
               "http_status": 200

@@ -91,28 +91,28 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "your_customer_id": "cust_12345",
                       "status": "active",
                       "tags": ["wordpress", "production"],
-                      "dev_domain": "site-abc123.dev.example.com",
+                      "dev_domain": "dev.wispy-dust.vectorpages.com",
                       "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                       "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                       "environments": [
                           {
-                              "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                              "id": "01jfgxk4nqrst5vwx9yz0abcdg",
                               "name": "production",
                               "is_production": true,
                               "status": "active",
                               "php_version": "8.3",
                               "platform_domain": "wispy-dust.vectorpages.com",
-                              "custom_domain": "ourshop.com",
-                              "created_at": "2025-05-27T09:50:21+00:00",
-                              "updated_at": "2025-05-27T09:50:21+00:00"
+                              "custom_domain": "example.com",
+                              "created_at": "2025-01-15T12:00:00+00:00",
+                              "updated_at": "2025-01-15T12:00:00+00:00"
                           }
                       ],
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -202,28 +202,28 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
                   "status": "active",
                   "tags": ["wordpress", "production"],
-                  "dev_domain": "site-abc123.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                   "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [
                       {
-                          "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdg",
                           "name": "production",
                           "is_production": true,
                           "status": "active",
                           "php_version": "8.3",
                           "platform_domain": "wispy-dust.vectorpages.com",
-                          "custom_domain": "ourshop.com",
-                          "created_at": "2025-05-27T09:50:21+00:00",
-                          "updated_at": "2025-05-27T09:50:21+00:00"
+                          "custom_domain": "example.com",
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
                       }
                   ],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Site retrieved successfully",
               "http_status": 200
@@ -344,16 +344,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_67890",
                   "status": "active",
                   "tags": ["wordpress", "staging"],
-                  "dev_domain": "site-abc123.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                   "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site updated successfully",
               "http_status": 200
@@ -452,15 +452,14 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "account_id": 1,
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
                   "status": "suspended",
                   "tags": [],
-                  "dev_domain": "site-abc123.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site suspension initiated",
               "http_status": 200
@@ -557,15 +556,14 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
-                  "account_id": 1,
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
                   "status": "active",
                   "tags": [],
-                  "dev_domain": "site-abc123.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site unsuspension initiated",
               "http_status": 200
@@ -703,25 +701,25 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
                   "status": "pending",
                   "dev_php_version": "8.3",
                   "tags": ["wordpress", "production"],
-                  "dev_domain": "my-site.vectorpages.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                   "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_sftp": {
                       "hostname": "ssh.vectorpages.com",
                       "port": 22,
-                      "username": "my-site",
+                      "username": "wispy-dust",
                       "password": "aBcD1234!@#$EfGh5678"
                   },
                   "dev_db_username": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_db_password": "aBcD1234!@#$EfGh5678",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site creation initiated",
               "http_status": 201
@@ -841,16 +839,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
                   "status": "terminating",
                   "tags": [],
-                  "dev_domain": "site-abc123.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                   "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site deletion initiated",
               "http_status": 202
@@ -950,7 +948,7 @@ endpoints:
         name: your_customer_id
         description: 'Optional customer identifier. Inherits from source if not provided.'
         required: false
-        example: cust_67890
+        example: cust_12345
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -981,7 +979,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      your_customer_id: cust_67890
+      your_customer_id: cust_12345
       dev_php_version: '8.3'
       tags:
         - wordpress
@@ -994,16 +992,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDF",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
                   "your_customer_id": "cust_12345",
                   "status": "pending",
                   "tags": ["wordpress", "clone"],
-                  "dev_domain": "site-xyz789.dev.example.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_username": "db_01jfgxk4nqrst5vwx9yz0abcdf",
                   "dev_db_password": "aBcD1234!@#$EfGh5678",
                   "environments": [],
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Vector site clone initiated",
               "http_status": 201
@@ -1118,21 +1116,21 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": null,
                   "status": "active",
                   "dev_php_version": "8.3",
                   "tags": [],
-                  "dev_domain": "my-site.vectorpages.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_sftp": {
                       "hostname": "ssh.vectorpages.com",
                       "port": 22,
-                      "username": "my-site",
+                      "username": "wispy-dust",
                       "password": "aBcD1234!@#$EfGh5678"
                   },
                   "environments": [],
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SFTP password reset successfully. Store the new password securely - it will not be shown again.",
               "http_status": 200
@@ -1217,17 +1215,17 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": null,
                   "status": "active",
                   "dev_php_version": "8.3",
                   "tags": [],
-                  "dev_domain": "site-abc123.vectorpages.com",
+                  "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_username": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_db_password": "aBcD1234!@#$EfGh5678",
                   "environments": [],
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Database password reset successfully. Store the new password securely - it will not be shown again.",
               "http_status": 200
@@ -1307,15 +1305,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": null,
                   "status": "active",
                   "dev_php_version": "8.3",
                   "tags": [],
-                  "dev_domain": "my-site.vectorpages.com",
+                  "dev_domain": "wispy-dust.vectorpages.com",
                   "environments": [],
-                  "created_at": "2024-01-01T00:00:00.000000Z",
-                  "updated_at": "2024-01-01T00:00:00.000000Z"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "WordPress configuration regenerated successfully",
               "http_status": 200
@@ -1334,6 +1332,12 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
       -
         custom: []
         status: 422
@@ -1410,15 +1414,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "status": "pending",
                   "format": "sql",
                   "size_bytes": null,
                   "duration_ms": null,
                   "error_message": null,
                   "download_expires_at": null,
-                  "created_at": "2025-01-23T10:00:00+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
                   "started_at": null,
                   "completed_at": null
               },
@@ -1445,6 +1449,12 @@ endpoints:
         content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
         description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"format": ["The selected format is invalid."]}, "message": "Validation failed", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
@@ -1482,16 +1492,16 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
+        description: 'The site ID.'
         required: true
-        example: architecto
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      site: architecto
+      site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1510,42 +1520,42 @@ endpoints:
       filename:
         custom: []
         name: filename
-        description: 'Must not be greater than 255 characters.'
+        description: 'The archive filename.'
         required: false
-        example: b
+        example: backup.sql.gz
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       content_length:
         custom: []
         name: content_length
-        description: 'Must be at least 1. Must not be greater than 5368709120.'
+        description: 'The file size in bytes.'
         required: false
-        example: 22
+        example: 52428800
         type: integer
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       content_md5:
         custom: []
         name: content_md5
-        description: 'Must match the regex /^[a-fA-F0-9]+$/. Must be 32 characters.'
+        description: 'The MD5 hash of the file (32 hex characters).'
         required: false
-        example: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+        example: d41d8cd98f00b204e9800998ecf8427e
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       options:
         custom: []
         name: options
-        description: ''
+        description: 'Import options.'
         required: false
-        example: null
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
@@ -1554,31 +1564,31 @@ endpoints:
       options.drop_tables:
         custom: []
         name: options.drop_tables
-        description: ''
+        description: 'Drop existing tables before import. Default: true.'
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       options.disable_foreign_keys:
         custom: []
         name: options.disable_foreign_keys
-        description: ''
+        description: 'Disable foreign key checks during import. Default: true.'
         required: false
         example: true
         type: boolean
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       options.search_replace:
         custom: []
         name: options.search_replace
-        description: ''
+        description: 'Search and replace configuration.'
         required: false
-        example: null
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
@@ -1587,38 +1597,101 @@ endpoints:
       options.search_replace.from:
         custom: []
         name: options.search_replace.from
-        description: 'This field is required when <code>options.search_replace.to</code> is present. Must not be greater than 255 characters.'
+        description: 'The value to search for.'
         required: false
-        example: c
+        example: example.org
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
       options.search_replace.to:
         custom: []
         name: options.search_replace.to
-        description: 'This field is required when <code>options.search_replace.from</code> is present. Must not be greater than 255 characters.'
+        description: 'The replacement value.'
         required: false
-        example: p
+        example: example.com
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: true
         deprecated: false
     cleanBodyParameters:
       scope: database
-      filename: b
-      content_length: 22
-      content_md5: gzmiyvdljnikhwaykcmyuwpwlvqwrsit
+      filename: backup.sql.gz
+      content_length: 52428800
+      content_md5: d41d8cd98f00b204e9800998ecf8427e
       options:
-        drop_tables: false
+        drop_tables: true
         disable_foreign_keys: true
         search_replace:
-          from: c
-          to: p
+          from: example.org
+          to: example.com
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "pending",
+                  "scope": null,
+                  "filename": "backup.sql.gz",
+                  "content_length": 52428800,
+                  "checksum": {
+                      "provided_md5": "d41d8cd98f00b204e9800998ecf8427e",
+                      "s3_etag": null
+                  },
+                  "metadata": null,
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": {
+                          "from": "example.org",
+                          "to": "example.com"
+                      }
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "uploaded_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "upload_url": "https://s3.amazonaws.com/bucket/imports/01jfgxk4nqrst5vwx9yz0abcdh.sql.gz?X-Amz-Expires=3600",
+                  "upload_expires_at": "2025-01-15T13:00:00+00:00"
+              },
+              "message": "Import session created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"site": ["Site must be in active state to import archive."]}, "message": "Validation failed", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
@@ -1656,12 +1729,12 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
+        description: 'The site ID.'
         required: true
-        example: architecto
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       vectorImport:
@@ -1675,15 +1748,94 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: architecto
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       vectorImport: architecto
+      import: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "uploaded",
+                  "scope": null,
+                  "filename": "backup.sql.gz",
+                  "content_length": 52428800,
+                  "checksum": {
+                      "provided_md5": "d41d8cd98f00b204e9800998ecf8427e",
+                      "s3_etag": null
+                  },
+                  "metadata": null,
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": {
+                          "from": "example.org",
+                          "to": "example.com"
+                      }
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "uploaded_at": "2025-01-15T12:00:01+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Archive import started",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"status": ["Import must be in pending or uploaded status"]}, "message": "Import is not ready to run", "http_status": 422}'
+        headers: []
+        description: 'Not Ready'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"expires_at": ["Please create a new import session"]}, "message": "Import session has expired", "http_status": 422}'
+        headers: []
+        description: Expired
     responseFields: []
     auth:
       - headers
@@ -1719,12 +1871,12 @@ endpoints:
       site:
         custom: []
         name: site
-        description: 'The site.'
+        description: 'The site ID.'
         required: true
-        example: architecto
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       vectorImport:
@@ -1738,9 +1890,21 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      import:
+        custom: []
+        name: import
+        description: 'The import ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      site: architecto
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       vectorImport: architecto
+      import: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1749,15 +1913,98 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "pending",
+                  "scope": null,
+                  "filename": "backup.sql.gz",
+                  "content_length": 52428800,
+                  "checksum": {
+                      "provided_md5": "d41d8cd98f00b204e9800998ecf8427e",
+                      "s3_etag": null
+                  },
+                  "metadata": null,
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": {
+                          "from": "example.org",
+                          "to": "example.com"
+                      }
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "uploaded_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "upload_url": "https://s3.amazonaws.com/bucket/imports/01jfgxk4nqrst5vwx9yz0abcdh.sql.gz?X-Amz-Expires=3600",
+                  "upload_expires_at": "2025-01-15T13:00:00+00:00"
+              },
+              "message": "Import retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Pending
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "completed",
+                  "scope": "full",
+                  "filename": "backup.sql.gz",
+                  "content_length": 52428800,
+                  "checksum": {
+                      "provided_md5": "d41d8cd98f00b204e9800998ecf8427e",
+                      "s3_etag": "d41d8cd98f00b204e9800998ecf8427e"
+                  },
+                  "metadata": null,
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": {
+                          "from": "example.org",
+                          "to": "example.com"
+                      }
+                  },
+                  "duration_ms": 30000,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "uploaded_at": "2025-01-15T12:00:01+00:00",
+                  "started_at": "2025-01-15T12:00:02+00:00",
+                  "completed_at": "2025-01-15T12:00:32+00:00"
+              },
+              "message": "Import retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
         status: 401
-        content: '{"data":[],"message":"Unauthenticated","http_status":401}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-vector-pro-revision: UNKNOWN
-          access-control-allow-origin: 'https://go.builtfast.test'
-          access-control-allow-credentials: 'true'
-        description: null
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Import not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers
@@ -1827,18 +2074,18 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "status": "completed",
                   "format": "sql",
                   "size_bytes": 52428800,
                   "duration_ms": 30000,
                   "error_message": null,
-                  "download_url": "https://s3.amazonaws.com/bucket/exports/...",
-                  "download_expires_at": "2025-01-23T11:00:00+00:00",
-                  "created_at": "2025-01-23T10:00:00+00:00",
-                  "started_at": "2025-01-23T10:00:01+00:00",
-                  "completed_at": "2025-01-23T10:00:31+00:00"
+                  "download_url": "https://s3.amazonaws.com/bucket/exports/01jfgxk4nqrst5vwx9yz0abcdg.sql?X-Amz-Expires=3600",
+                  "download_expires_at": "2025-01-15T13:00:00+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:01+00:00",
+                  "completed_at": "2025-01-15T12:00:31+00:00"
               },
               "message": "Export retrieved successfully",
               "http_status": 200
@@ -1851,16 +2098,16 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "status": "processing",
                   "format": "sql",
                   "size_bytes": null,
                   "duration_ms": null,
                   "error_message": null,
                   "download_expires_at": null,
-                  "created_at": "2025-01-23T10:00:00+00:00",
-                  "started_at": "2025-01-23T10:00:01+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:01+00:00",
                   "completed_at": null
               },
               "message": "Export retrieved successfully",
@@ -2042,7 +2289,7 @@ endpoints:
                                   {"name": "level", "type": "string"}
                               ],
                               "rows": [
-                                  ["2025-05-27T09:50:21Z", "Request completed", "info"]
+                                  ["2025-01-15T12:00:00+00:00", "Request completed", "info"]
                               ]
                           }
                       ],
@@ -2107,7 +2354,13 @@ endpoints:
       groupName: Sites
       groupDescription: ''
       subgroup: 'WAF: Referrers'
-      subgroupDescription: ''
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
       title: 'List Allowed Referrers'
       description: 'Retrieves all allowed referrer hostnames for a site.'
       authenticated: true
@@ -2143,7 +2396,7 @@ endpoints:
           {
               "data": [
                   {"hostname": "example.com"},
-                  {"hostname": "*.example.com"}
+                  {"hostname": "*.example.net"}
               ],
               "message": "Allowed referrers retrieved successfully",
               "http_status": 200
@@ -2227,8 +2480,8 @@ endpoints:
         content: |-
           {
               "data": [
-                  {"hostname": "spam.com"},
-                  {"hostname": "*.malicious.net"}
+                  {"hostname": "spam.example.com"},
+                  {"hostname": "*.example.net"}
               ],
               "message": "Blocked referrers retrieved successfully",
               "http_status": 200
@@ -2275,8 +2528,8 @@ endpoints:
         Block specific IP addresses or CIDR ranges from accessing your site.
         Blocked IPs receive a `403 Forbidden` response.
 
-        - Single IPs: `192.168.1.1`
-        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+        - Single IPs: `192.0.2.1`
+        - CIDR ranges: `198.51.100.0/24`
       title: 'List Blocked IPs'
       description: 'Retrieves all blocked IP addresses for a site.'
       authenticated: true
@@ -2311,8 +2564,8 @@ endpoints:
         content: |-
           {
               "data": [
-                  {"ip": "192.168.1.100"},
-                  {"ip": "10.0.0.0"}
+                  {"ip": "192.0.2.1"},
+                  {"ip": "198.51.100.0/24"}
               ],
               "message": "Blocked IPs retrieved successfully",
               "http_status": 200
@@ -2590,7 +2843,13 @@ endpoints:
       groupName: Sites
       groupDescription: ''
       subgroup: 'WAF: Referrers'
-      subgroupDescription: ''
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
       title: 'Add Allowed Referrer'
       description: |-
         Adds a hostname to the allowed referrers list.
@@ -2686,7 +2945,13 @@ endpoints:
       groupName: Sites
       groupDescription: ''
       subgroup: 'WAF: Referrers'
-      subgroupDescription: ''
+      subgroupDescription: |-
+        Control which sites can link to your content using referrer-based rules.
+
+        - **Blocked Referrers**: Block hotlinking from specific domains
+        - **Allowed Referrers**: Restrict access to requests from approved domains only
+
+        Supports wildcards: `*.example.com` matches all subdomains.
       title: 'Remove Allowed Referrer'
       description: 'Removes a hostname from the allowed referrers list.'
       authenticated: true
@@ -2790,7 +3055,7 @@ endpoints:
       title: 'Add Blocked Referrer'
       description: |-
         Adds a hostname to the blocked referrers list.
-        Wildcards are supported (e.g., *.spam.com).
+        Wildcards are supported (e.g., *.example.com).
       authenticated: true
       deprecated: false
     headers:
@@ -2819,14 +3084,14 @@ endpoints:
         name: hostname
         description: 'The hostname to block.'
         required: true
-        example: spam.com
+        example: spam.example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      hostname: spam.com
+      hostname: spam.example.com
     fileParameters: []
     responses:
       -
@@ -2834,7 +3099,7 @@ endpoints:
         status: 201
         content: |-
           {
-              "data": {"hostname": "spam.com"},
+              "data": {"hostname": "spam.example.com"},
               "message": "Blocked referrer added successfully",
               "http_status": 201
           }
@@ -2914,7 +3179,7 @@ endpoints:
         name: hostname
         description: 'The hostname to remove.'
         required: true
-        example: spam.com
+        example: spam.example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -2922,7 +3187,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      hostname: spam.com
+      hostname: spam.example.com
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2934,7 +3199,7 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": {"hostname": "spam.com"},
+              "data": {"hostname": "spam.example.com"},
               "message": "Blocked referrer removed successfully",
               "http_status": 200
           }
@@ -2986,8 +3251,8 @@ endpoints:
         Block specific IP addresses or CIDR ranges from accessing your site.
         Blocked IPs receive a `403 Forbidden` response.
 
-        - Single IPs: `192.168.1.1`
-        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+        - Single IPs: `192.0.2.1`
+        - CIDR ranges: `198.51.100.0/24`
       title: 'Add Blocked IP'
       description: |-
         Adds an IP address to the blocked list.
@@ -3020,14 +3285,14 @@ endpoints:
         name: ip
         description: 'The IP address to block.'
         required: true
-        example: 192.168.1.100
+        example: 192.0.2.1
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      ip: 192.168.1.100
+      ip: 192.0.2.1
     fileParameters: []
     responses:
       -
@@ -3035,7 +3300,7 @@ endpoints:
         status: 201
         content: |-
           {
-              "data": {"ip": "192.168.1.100"},
+              "data": {"ip": "192.0.2.1"},
               "message": "Blocked IP added successfully",
               "http_status": 201
           }
@@ -3087,8 +3352,8 @@ endpoints:
         Block specific IP addresses or CIDR ranges from accessing your site.
         Blocked IPs receive a `403 Forbidden` response.
 
-        - Single IPs: `192.168.1.1`
-        - CIDR ranges: `10.0.0.0/8`, `192.168.0.0/16`
+        - Single IPs: `192.0.2.1`
+        - CIDR ranges: `198.51.100.0/24`
       title: 'Remove Blocked IP'
       description: 'Removes an IP address from the blocked list.'
       authenticated: true
@@ -3114,7 +3379,7 @@ endpoints:
         name: ip
         description: 'The IP address to remove.'
         required: true
-        example: 192.168.1.100
+        example: 192.0.2.1
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3122,7 +3387,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      ip: 192.168.1.100
+      ip: 192.0.2.1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3134,7 +3399,7 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": {"ip": "192.168.1.100"},
+              "data": {"ip": "192.0.2.1"},
               "message": "Blocked IP removed successfully",
               "http_status": 200
           }
@@ -3838,7 +4103,7 @@ endpoints:
         name: url
         description: 'Purge a specific URL.'
         required: false
-        example: 'https://cdn.example.com/style.css'
+        example: 'https://example.com/style.css'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -3846,7 +4111,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       cache_tag: images
-      url: 'https://cdn.example.com/style.css'
+      url: 'https://example.com/style.css'
     fileParameters: []
     responses:
       -
@@ -3876,7 +4141,7 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": {"url": "https://cdn.example.com/style.css"},
+              "data": {"url": "https://example.com/style.css"},
               "message": "URL purged successfully",
               "http_status": 200
           }
@@ -3900,6 +4165,18 @@ endpoints:
         content: '{"data": {}, "message": "Site not found", "http_status": 404}'
         headers: []
         description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"url": ["The url field must be a valid URL."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
@@ -3984,15 +4261,15 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                       "account_id": 1,
-                      "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcdj",
                       "name": "developer key",
                       "fingerprint": "SHA256:abc123def456...",
                       "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                       "is_account_default": false,
-                      "created_at": "2026-01-15T10:00:00+00:00",
-                      "updated_at": "2026-01-15T10:00:00+00:00"
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -4105,15 +4382,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
                   "account_id": 1,
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcdj",
                   "name": "developer key",
                   "fingerprint": "SHA256:abc123def456...",
                   "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                   "is_account_default": false,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSH key added to site successfully",
               "http_status": 201
@@ -4235,15 +4512,15 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDK",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdk",
                   "account_id": 1,
-                  "vector_site_id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcdj",
                   "name": "developer key",
                   "fingerprint": "SHA256:abc123def456...",
                   "public_key_preview": "ssh-rsa AAAAB3NzaC1yc2EA...user@host",
                   "is_account_default": false,
-                  "created_at": "2026-01-15T10:00:00+00:00",
-                  "updated_at": "2026-01-15T10:00:00+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "SSH key removed from site successfully",
               "http_status": 200

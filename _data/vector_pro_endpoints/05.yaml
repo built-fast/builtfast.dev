@@ -119,22 +119,22 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
                       "archivable_type": "vector_site",
-                      "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                      "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "scope": "full",
                       "trigger": "manual",
                       "status": "completed",
-                      "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
+                      "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
                       "search_replace": null,
                       "drop_tables": false,
                       "disable_foreign_keys": false,
                       "error_message": null,
                       "duration_ms": 45200,
-                      "started_at": "2025-05-27T09:50:21+00:00",
-                      "completed_at": "2025-05-27T09:51:06+00:00",
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:51:06+00:00"
+                      "started_at": "2025-01-15T12:00:00+00:00",
+                      "completed_at": "2025-01-15T12:00:00+00:00",
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
@@ -199,14 +199,14 @@ endpoints:
         name: vectorRestore
         description: 'The restore ID.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorRestore: 01jfgxk4nqrst5vwx9yz0abcdg
+      vectorRestore: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -219,22 +219,22 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
                   "archivable_type": "vector_site",
-                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "scope": "full",
                   "trigger": "manual",
                   "status": "completed",
-                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDG",
-                  "search_replace": [{"from": "old-domain.com", "to": "new-domain.com"}],
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "search_replace": [{"from": "example.org", "to": "example.com"}],
                   "drop_tables": false,
                   "disable_foreign_keys": false,
                   "error_message": null,
                   "duration_ms": 45200,
-                  "started_at": "2025-05-27T09:50:21+00:00",
-                  "completed_at": "2025-05-27T09:51:06+00:00",
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:51:06+00:00"
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Restore retrieved successfully",
               "http_status": 200
@@ -309,7 +309,7 @@ endpoints:
         name: backup_id
         description: 'The ID of a completed backup to restore from. Must be a valid ULID.'
         required: true
-        example: 01JFGXK4NQRST5VWX9YZ0ABCDI
+        example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -333,8 +333,8 @@ endpoints:
         required: false
         example:
           -
-            from: old-domain.com
-            to: new-domain.com
+            from: example.org
+            to: example.com
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
@@ -385,12 +385,12 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      backup_id: 01JFGXK4NQRST5VWX9YZ0ABCDI
+      backup_id: 01jfgxk4nqrst5vwx9yz0abcdi
       scope: full
       search_replace:
         -
-          from: old-domain.com
-          to: new-domain.com
+          from: example.org
+          to: example.com
       drop_tables: false
       disable_foreign_keys: false
     fileParameters: []
@@ -401,22 +401,22 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDH",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
                   "archivable_type": "vector_site",
-                  "archivable_id": "01JFGXK4NQRST5VWX9YZ0ABCDE",
+                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "scope": "full",
                   "trigger": "manual",
                   "status": "pending",
-                  "vector_backup_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "search_replace": [{"from": "old-domain.com", "to": "new-domain.com"}],
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdi",
+                  "search_replace": [{"from": "example.org", "to": "example.com"}],
                   "drop_tables": false,
                   "disable_foreign_keys": false,
                   "error_message": null,
                   "duration_ms": null,
                   "started_at": null,
                   "completed_at": null,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Restore initiated successfully",
               "http_status": 202
