@@ -2221,6 +2221,14 @@ paths:
             schema:
               type: object
               properties:
+                scope:
+                  type:
+                    - string
+                    - 'null'
+                  description: ''
+                  example: database
+                  enum:
+                    - database
                 filename:
                   type:
                     - string
@@ -2257,7 +2265,7 @@ paths:
                         - boolean
                         - 'null'
                       description: ''
-                      example: false
+                      example: true
                     search_replace:
                       type:
                         - object
@@ -7752,7 +7760,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -8335,11 +8343,11 @@ paths:
                 drop_tables:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                 disable_foreign_keys:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
     parameters:
       -
         in: path
