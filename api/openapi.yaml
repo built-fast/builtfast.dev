@@ -8556,7 +8556,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -9841,8 +9841,10 @@ paths:
               type: object
               properties:
                 custom_domain:
-                  type: string
-                  description: 'The new custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
+                  type:
+                    - string
+                    - 'null'
+                  description: 'The new custom domain for this environment, or null to remove the custom domain and revert to the platform domain. Must be a valid fully qualified domain name when set. Max 253 chars.'
                   example: example.com
               required:
                 - custom_domain

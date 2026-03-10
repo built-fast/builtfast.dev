@@ -1377,13 +1377,13 @@ endpoints:
       custom_domain:
         custom: []
         name: custom_domain
-        description: 'The new custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
+        description: 'The new custom domain for this environment, or null to remove the custom domain and revert to the platform domain. Must be a valid fully qualified domain name when set. Max 253 chars.'
         required: true
         example: example.com
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
     cleanBodyParameters:
       custom_domain: example.com
@@ -2572,7 +2572,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2580,7 +2580,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: true
+      include_database: false
     fileParameters: []
     responses:
       -
