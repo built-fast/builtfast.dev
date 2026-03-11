@@ -3586,93 +3586,8 @@
                 },
                 {
                     "name": "Domains",
-                    "description": "Change the custom domain for an environment. A domain change runs\nsearch-replace on the database, syncs environment variables, and redeploys.\n\n#### Domain Change Status Lifecycle\n\n- `pending` - Domain change created, waiting to start\n- `search_replacing` - Running search-replace on the database\n- `syncing_env` - Syncing environment variables with new domain\n- `redeploying` - Redeploying the environment\n- `completed` - Domain change finished successfully\n- `failed` - Domain change failed (see `error_message` for details)",
+                    "description": "Check the status of domain change operations for an environment.\nDomain changes are initiated via the environment update endpoint.\n\n#### Domain Change Status Lifecycle\n\n- `pending` - Domain change created, waiting to start\n- `search_replacing` - Running search-replace on the database\n- `syncing_env` - Syncing environment variables with new domain\n- `redeploying` - Redeploying the environment\n- `completed` - Domain change finished successfully\n- `failed` - Domain change failed (see `error_message` for details)",
                     "item": [
-                        {
-                            "name": "Create Domain Change",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/domain-change",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/domain-change",
-                                    "variable": [
-                                        {
-                                            "id": "env",
-                                            "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
-                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                            "description": "The environment ID."
-                                        }
-                                    ]
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"custom_domain\":\"example.com\"}"
-                                },
-                                "description": "Initiate a domain change for this environment. Runs search-replace on\nthe database, syncs environment variables, and redeploys.\n\nOnly one domain change can be in progress per environment at a time.\nThe environment must be in `active` state."
-                            },
-                            "response": [
-                                {
-                                    "header": [],
-                                    "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_environment_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"old_domain\": \"wispy-dust.vectorpages.com\",\n        \"new_domain\": \"wispy-dust.vectorpages.com\",\n        \"old_custom_domain\": \"example.org\",\n        \"new_custom_domain\": \"example.com\",\n        \"error_message\": null,\n        \"duration_ms\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Domain change initiated\",\n    \"http_status\": 202\n}",
-                                    "name": "Accepted"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 401,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
-                                    "name": "Unauthenticated"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 403,
-                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
-                                    "name": "Unauthorized"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 404,
-                                    "body": "{\"data\": {}, \"message\": \"Environment not found\", \"http_status\": 404}",
-                                    "name": "Not Found"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"custom_domain\": [\"The custom domain field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                                    "name": "Validation Error"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"environment\": [\"Environment must be in active state to change domain.\"]},\n    \"message\": \"Environment must be in active state to change domain.\",\n    \"http_status\": 422\n}",
-                                    "name": "Environment Not Active"
-                                },
-                                {
-                                    "header": [],
-                                    "code": 422,
-                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"domain_change\": [\"A domain change is already in progress for this environment.\"]},\n    \"message\": \"A domain change is already in progress for this environment.\",\n    \"http_status\": 422\n}",
-                                    "name": "Already In Progress"
-                                }
-                            ]
-                        },
                         {
                             "name": "Get Domain Change Status",
                             "request": {
@@ -3854,16 +3769,22 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"production\",\"custom_domain\":\"example.com\",\"tags\":[\"live\",\"updated\"]}"
+                            "raw": "{\"custom_domain\":\"example.com\",\"tags\":[\"live\",\"updated\"]}"
                         },
-                        "description": "Updates an existing environment. Only the fields provided will be updated."
+                        "description": "Updates an existing environment. Only the fields provided will be updated.\n\nWhen `custom_domain` changes, a domain change operation is initiated asynchronously\n(search-replace, env sync, SSL, redeployment). The response includes a\n`pending_domain_change` object for polling status. Returns 202 for domain changes\nand 200 for metadata-only updates."
                     },
                     "response": [
                         {
                             "header": [],
                             "code": 200,
                             "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"your_customer_id\": \"cust_12345\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"active\",\n        \"provisioning_step\": \"complete\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.4\",\n        \"tags\": [\"live\", \"updated\"],\n        \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n    },\n    \"message\": \"Environment updated successfully\",\n    \"http_status\": 200\n}",
-                            "name": "Success"
+                            "name": "Metadata Update"
+                        },
+                        {
+                            "header": [],
+                            "code": 202,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n        \"pending_domain_change\": {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n            \"status\": \"pending\",\n            \"old_domain\": \"old.example.com\",\n            \"new_domain\": \"example.com\"\n        }\n    },\n    \"message\": \"Environment update initiated, domain change in progress\",\n    \"http_status\": 202\n}",
+                            "name": "Domain Change Initiated"
                         },
                         {
                             "header": [],
@@ -3886,14 +3807,14 @@
                         {
                             "header": [],
                             "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"An environment with this name already exists for this site.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                            "name": "Validation Error"
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"environment\": [\"Environment must be in active state to change domain.\"]},\n    \"message\": \"Environment must be in active state to change domain.\",\n    \"http_status\": 422\n}",
+                            "name": "Environment Not Active"
                         },
                         {
                             "header": [],
                             "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"Environment name must not contain consecutive hyphens (--).\" ]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
-                            "name": "Consecutive Hyphens"
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"domain_change\": [\"A domain change is already in progress for this environment.\"]},\n    \"message\": \"A domain change is already in progress for this environment.\",\n    \"http_status\": 422\n}",
+                            "name": "Domain Change In Progress"
                         }
                     ]
                 },

@@ -6951,11 +6951,11 @@ paths:
     put:
       summary: 'Update Environment'
       operationId: updateEnvironment
-      description: 'Updates an existing environment. Only the fields provided will be updated.'
+      description: "Updates an existing environment. Only the fields provided will be updated.\n\nWhen `custom_domain` changes, a domain change operation is initiated asynchronously\n(search-replace, env sync, SSL, redeployment). The response includes a\n`pending_domain_change` object for polling status. Returns 202 for domain changes\nand 200 for metadata-only updates."
       parameters: []
       responses:
         200:
-          description: Success
+          description: 'Metadata Update'
           content:
             application/json:
               schema:
@@ -7048,6 +7048,50 @@ paths:
                   http_status:
                     type: integer
                     example: 200
+        202:
+          description: 'Domain Change Initiated'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 01jfgxk4nqrst5vwx9yz0abcdg
+                    pending_domain_change:
+                      id: 01jfgxk4nqrst5vwx9yz0abcdh
+                      status: pending
+                      old_domain: old.example.com
+                      new_domain: example.com
+                  message: 'Environment update initiated, domain change in progress'
+                  http_status: 202
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01jfgxk4nqrst5vwx9yz0abcdg
+                      pending_domain_change:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 01jfgxk4nqrst5vwx9yz0abcdh
+                          status:
+                            type: string
+                            example: pending
+                          old_domain:
+                            type: string
+                            example: old.example.com
+                          new_domain:
+                            type: string
+                            example: example.com
+                  message:
+                    type: string
+                    example: 'Environment update initiated, domain change in progress'
+                  http_status:
+                    type: integer
+                    example: 202
         401:
           description: Unauthenticated
           content:
@@ -7115,14 +7159,14 @@ paths:
               schema:
                 oneOf:
                   -
-                    description: 'Validation Error'
+                    description: 'Environment Not Active'
                     type: object
                     example:
                       data: {  }
                       errors:
-                        name:
-                          - 'An environment with this name already exists for this site.'
-                      message: 'Validation failed'
+                        environment:
+                          - 'Environment must be in active state to change domain.'
+                      message: 'Environment must be in active state to change domain.'
                       http_status: 422
                     properties:
                       data:
@@ -7131,27 +7175,27 @@ paths:
                       errors:
                         type: object
                         properties:
-                          name:
+                          environment:
                             type: array
                             example:
-                              - 'An environment with this name already exists for this site.'
+                              - 'Environment must be in active state to change domain.'
                             items:
                               type: string
                       message:
                         type: string
-                        example: 'Validation failed'
+                        example: 'Environment must be in active state to change domain.'
                       http_status:
                         type: integer
                         example: 422
                   -
-                    description: 'Consecutive Hyphens'
+                    description: 'Domain Change In Progress'
                     type: object
                     example:
                       data: {  }
                       errors:
-                        name:
-                          - 'Environment name must not contain consecutive hyphens (--).'
-                      message: 'Validation failed'
+                        domain_change:
+                          - 'A domain change is already in progress for this environment.'
+                      message: 'A domain change is already in progress for this environment.'
                       http_status: 422
                     properties:
                       data:
@@ -7160,15 +7204,15 @@ paths:
                       errors:
                         type: object
                         properties:
-                          name:
+                          domain_change:
                             type: array
                             example:
-                              - 'Environment name must not contain consecutive hyphens (--).'
+                              - 'A domain change is already in progress for this environment.'
                             items:
                               type: string
                       message:
                         type: string
-                        example: 'Validation failed'
+                        example: 'A domain change is already in progress for this environment.'
                       http_status:
                         type: integer
                         example: 422
@@ -7181,15 +7225,11 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                  description: 'The environment name (slug format: lowercase letters, numbers, hyphens; consecutive hyphens `--` are not allowed). Max 50 chars.'
-                  example: production
                 custom_domain:
                   type:
                     - string
                     - 'null'
-                  description: 'A custom vanity domain for this environment. Must be a valid domain name.'
+                  description: 'A custom vanity domain for this environment. Must be a valid domain name. When changed, triggers infrastructure updates (CDN, DNS, SSL).'
                   example: example.com
                 tags:
                   type: array
@@ -9600,268 +9640,6 @@ paths:
         name: promote
         description: 'The promote ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdf
-        required: true
-        schema:
-          type: string
-  '/api/v1/vector/environments/{env}/domain-change':
-    post:
-      summary: 'Create Domain Change'
-      operationId: environmentsDomainsCreateDomainChange
-      description: "Initiate a domain change for this environment. Runs search-replace on\nthe database, syncs environment variables, and redeploys.\n\nOnly one domain change can be in progress per environment at a time.\nThe environment must be in `active` state."
-      parameters: []
-      responses:
-        202:
-          description: Accepted
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    id: 01jfgxk4nqrst5vwx9yz0abcdh
-                    vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcde
-                    status: pending
-                    old_domain: wispy-dust.vectorpages.com
-                    new_domain: wispy-dust.vectorpages.com
-                    old_custom_domain: example.org
-                    new_custom_domain: example.com
-                    error_message: null
-                    duration_ms: null
-                    created_at: '2025-01-15T12:00:00+00:00'
-                    started_at: null
-                    completed_at: null
-                  message: 'Domain change initiated'
-                  http_status: 202
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 01jfgxk4nqrst5vwx9yz0abcdh
-                      vector_environment_id:
-                        type: string
-                        example: 01jfgxk4nqrst5vwx9yz0abcde
-                      status:
-                        type: string
-                        example: pending
-                      old_domain:
-                        type: string
-                        example: wispy-dust.vectorpages.com
-                      new_domain:
-                        type: string
-                        example: wispy-dust.vectorpages.com
-                      old_custom_domain:
-                        type: string
-                        example: example.org
-                      new_custom_domain:
-                        type: string
-                        example: example.com
-                      error_message:
-                        type: string
-                        example: null
-                      duration_ms:
-                        type: string
-                        example: null
-                      created_at:
-                        type: string
-                        example: '2025-01-15T12:00:00+00:00'
-                      started_at:
-                        type: string
-                        example: null
-                      completed_at:
-                        type: string
-                        example: null
-                  message:
-                    type: string
-                    example: 'Domain change initiated'
-                  http_status:
-                    type: integer
-                    example: 202
-        401:
-          description: Unauthenticated
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthenticated
-                  http_status: 401
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthenticated
-                  http_status:
-                    type: integer
-                    example: 401
-        403:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: Unauthorized
-                  http_status: 403
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: Unauthorized
-                  http_status:
-                    type: integer
-                    example: 403
-        404:
-          description: 'Not Found'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data: {  }
-                  message: 'Environment not found'
-                  http_status: 404
-                properties:
-                  data:
-                    type: object
-                    properties: {  }
-                  message:
-                    type: string
-                    example: 'Environment not found'
-                  http_status:
-                    type: integer
-                    example: 404
-        422:
-          description: ''
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  -
-                    description: 'Validation Error'
-                    type: object
-                    example:
-                      data: {  }
-                      errors:
-                        custom_domain:
-                          - 'The custom domain field is required.'
-                      message: 'Validation failed'
-                      http_status: 422
-                    properties:
-                      data:
-                        type: object
-                        properties: {  }
-                      errors:
-                        type: object
-                        properties:
-                          custom_domain:
-                            type: array
-                            example:
-                              - 'The custom domain field is required.'
-                            items:
-                              type: string
-                      message:
-                        type: string
-                        example: 'Validation failed'
-                      http_status:
-                        type: integer
-                        example: 422
-                  -
-                    description: 'Environment Not Active'
-                    type: object
-                    example:
-                      data: {  }
-                      errors:
-                        environment:
-                          - 'Environment must be in active state to change domain.'
-                      message: 'Environment must be in active state to change domain.'
-                      http_status: 422
-                    properties:
-                      data:
-                        type: object
-                        properties: {  }
-                      errors:
-                        type: object
-                        properties:
-                          environment:
-                            type: array
-                            example:
-                              - 'Environment must be in active state to change domain.'
-                            items:
-                              type: string
-                      message:
-                        type: string
-                        example: 'Environment must be in active state to change domain.'
-                      http_status:
-                        type: integer
-                        example: 422
-                  -
-                    description: 'Already In Progress'
-                    type: object
-                    example:
-                      data: {  }
-                      errors:
-                        domain_change:
-                          - 'A domain change is already in progress for this environment.'
-                      message: 'A domain change is already in progress for this environment.'
-                      http_status: 422
-                    properties:
-                      data:
-                        type: object
-                        properties: {  }
-                      errors:
-                        type: object
-                        properties:
-                          domain_change:
-                            type: array
-                            example:
-                              - 'A domain change is already in progress for this environment.'
-                            items:
-                              type: string
-                      message:
-                        type: string
-                        example: 'A domain change is already in progress for this environment.'
-                      http_status:
-                        type: integer
-                        example: 422
-      tags:
-        - Environments
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                custom_domain:
-                  type:
-                    - string
-                    - 'null'
-                  description: 'The new custom domain for this environment, or null to remove the custom domain and revert to the platform domain. Must be a valid fully qualified domain name when set. Max 253 chars.'
-                  example: example.com
-              required:
-                - custom_domain
-    parameters:
-      -
-        in: path
-        name: env
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: environment
-        description: 'The environment ID.'
-        example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
         schema:
           type: string

@@ -1313,171 +1313,6 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: 'api/v1/vector/environments/{env}/domain-change'
-    metadata:
-      custom: []
-      groupName: Environments
-      groupDescription: ''
-      subgroup: Domains
-      subgroupDescription: |-
-        Change the custom domain for an environment. A domain change runs
-        search-replace on the database, syncs environment variables, and redeploys.
-
-        #### Domain Change Status Lifecycle
-
-        - `pending` - Domain change created, waiting to start
-        - `search_replacing` - Running search-replace on the database
-        - `syncing_env` - Syncing environment variables with new domain
-        - `redeploying` - Redeploying the environment
-        - `completed` - Domain change finished successfully
-        - `failed` - Domain change failed (see `error_message` for details)
-      title: 'Create Domain Change'
-      description: |-
-        Initiate a domain change for this environment. Runs search-replace on
-        the database, syncs environment variables, and redeploys.
-
-        Only one domain change can be in progress per environment at a time.
-        The environment must be in `active` state.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      env:
-        custom: []
-        name: env
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      environment:
-        custom: []
-        name: environment
-        description: 'The environment ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      env: architecto
-      environment: 01jfgxk4nqrst5vwx9yz0abcde
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      custom_domain:
-        custom: []
-        name: custom_domain
-        description: 'The new custom domain for this environment, or null to remove the custom domain and revert to the platform domain. Must be a valid fully qualified domain name when set. Max 253 chars.'
-        required: true
-        example: example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      custom_domain: example.com
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 202
-        content: |-
-          {
-              "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
-                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcde",
-                  "status": "pending",
-                  "old_domain": "wispy-dust.vectorpages.com",
-                  "new_domain": "wispy-dust.vectorpages.com",
-                  "old_custom_domain": "example.org",
-                  "new_custom_domain": "example.com",
-                  "error_message": null,
-                  "duration_ms": null,
-                  "created_at": "2025-01-15T12:00:00+00:00",
-                  "started_at": null,
-                  "completed_at": null
-              },
-              "message": "Domain change initiated",
-              "http_status": 202
-          }
-        headers: []
-        description: Accepted
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"custom_domain": ["The custom domain field is required."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Validation Error'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"environment": ["Environment must be in active state to change domain."]},
-              "message": "Environment must be in active state to change domain.",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Environment Not Active'
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"domain_change": ["A domain change is already in progress for this environment."]},
-              "message": "A domain change is already in progress for this environment.",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Already In Progress'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - GET
     uri: 'api/v1/vector/environments/{env}/domain-changes/{vectorDomainChange}'
     metadata:
@@ -1486,8 +1321,8 @@ endpoints:
       groupDescription: ''
       subgroup: Domains
       subgroupDescription: |-
-        Change the custom domain for an environment. A domain change runs
-        search-replace on the database, syncs environment variables, and redeploys.
+        Check the status of domain change operations for an environment.
+        Domain changes are initiated via the environment update endpoint.
 
         #### Domain Change Status Lifecycle
 
@@ -1855,7 +1690,13 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Update Environment'
-      description: 'Updates an existing environment. Only the fields provided will be updated.'
+      description: |-
+        Updates an existing environment. Only the fields provided will be updated.
+
+        When `custom_domain` changes, a domain change operation is initiated asynchronously
+        (search-replace, env sync, SSL, redeployment). The response includes a
+        `pending_domain_change` object for polling status. Returns 202 for domain changes
+        and 200 for metadata-only updates.
       authenticated: true
       deprecated: false
     headers:
@@ -1879,21 +1720,10 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'The environment name (slug format: lowercase letters, numbers, hyphens; consecutive hyphens `--` are not allowed). Max 50 chars.'
-        required: false
-        example: production
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       custom_domain:
         custom: []
         name: custom_domain
-        description: 'A custom vanity domain for this environment. Must be a valid domain name.'
+        description: 'A custom vanity domain for this environment. Must be a valid domain name. When changed, triggers infrastructure updates (CDN, DNS, SSL).'
         required: false
         example: example.com
         type: string
@@ -1915,7 +1745,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: production
       custom_domain: example.com
       tags:
         - live
@@ -1950,7 +1779,26 @@ endpoints:
               "http_status": 200
           }
         headers: []
-        description: Success
+        description: 'Metadata Update'
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "pending_domain_change": {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "status": "pending",
+                      "old_domain": "old.example.com",
+                      "new_domain": "example.com"
+                  }
+              },
+              "message": "Environment update initiated, domain change in progress",
+              "http_status": 202
+          }
+        headers: []
+        description: 'Domain Change Initiated'
       -
         custom: []
         status: 401
@@ -1975,24 +1823,24 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"name": ["An environment with this name already exists for this site."]},
-              "message": "Validation failed",
+              "errors": {"environment": ["Environment must be in active state to change domain."]},
+              "message": "Environment must be in active state to change domain.",
               "http_status": 422
           }
         headers: []
-        description: 'Validation Error'
+        description: 'Environment Not Active'
       -
         custom: []
         status: 422
         content: |-
           {
               "data": {},
-              "errors": {"name": ["Environment name must not contain consecutive hyphens (--)." ]},
-              "message": "Validation failed",
+              "errors": {"domain_change": ["A domain change is already in progress for this environment."]},
+              "message": "A domain change is already in progress for this environment.",
               "http_status": 422
           }
         headers: []
-        description: 'Consecutive Hyphens'
+        description: 'Domain Change In Progress'
     responseFields: []
     auth:
       - headers
