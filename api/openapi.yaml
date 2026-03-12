@@ -98,8 +98,9 @@ paths:
                           is_production: true
                           status: active
                           php_version: '8.3'
-                          platform_domain: wispy-dust.vectorpages.com
+                          platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
+                          custom_domain_certificate_status: issued
                           created_at: '2025-01-15T12:00:00+00:00'
                           updated_at: '2025-01-15T12:00:00+00:00'
                       created_at: '2025-01-15T12:00:00+00:00'
@@ -129,8 +130,9 @@ paths:
                             is_production: true
                             status: active
                             php_version: '8.3'
-                            platform_domain: wispy-dust.vectorpages.com
+                            platform_domain: wispy-dust--prod.vectorpages.com
                             custom_domain: example.com
+                            custom_domain_certificate_status: issued
                             created_at: '2025-01-15T12:00:00+00:00'
                             updated_at: '2025-01-15T12:00:00+00:00'
                         created_at: '2025-01-15T12:00:00+00:00'
@@ -172,8 +174,9 @@ paths:
                               is_production: true
                               status: active
                               php_version: '8.3'
-                              platform_domain: wispy-dust.vectorpages.com
+                              platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
+                              custom_domain_certificate_status: issued
                               created_at: '2025-01-15T12:00:00+00:00'
                               updated_at: '2025-01-15T12:00:00+00:00'
                           items:
@@ -196,10 +199,13 @@ paths:
                                 example: '8.3'
                               platform_domain:
                                 type: string
-                                example: wispy-dust.vectorpages.com
+                                example: wispy-dust--prod.vectorpages.com
                               custom_domain:
                                 type: string
                                 example: example.com
+                              custom_domain_certificate_status:
+                                type: string
+                                example: issued
                               created_at:
                                 type: string
                                 example: '2025-01-15T12:00:00+00:00'
@@ -297,7 +303,29 @@ paths:
                       password: 'aBcD1234!@#$EfGh5678'
                     dev_db_username: db_01jfgxk4nqrst5vwx9yz0abcde
                     dev_db_password: 'aBcD1234!@#$EfGh5678'
-                    environments: []
+                    environments:
+                      -
+                        id: 01jfgxk4nqrst5vwx9yz0abcdg
+                        name: production
+                        is_production: true
+                        status: pending
+                        php_version: '8.3'
+                        platform_domain: wispy-dust--prod.vectorpages.com
+                        custom_domain: example.com
+                        custom_domain_certificate_status: pending
+                        created_at: '2025-01-15T12:00:00+00:00'
+                        updated_at: '2025-01-15T12:00:00+00:00'
+                      -
+                        id: 01jfgxk4nqrst5vwx9yz0abcdh
+                        name: staging
+                        is_production: false
+                        status: pending
+                        php_version: '8.3'
+                        platform_domain: wispy-dust--staging.vectorpages.com
+                        custom_domain: null
+                        custom_domain_certificate_status: null
+                        created_at: '2025-01-15T12:00:00+00:00'
+                        updated_at: '2025-01-15T12:00:00+00:00'
                     created_at: '2025-01-15T12:00:00+00:00'
                     updated_at: '2025-01-15T12:00:00+00:00'
                   message: 'Vector site creation initiated'
@@ -357,7 +385,62 @@ paths:
                         example: 'aBcD1234!@#$EfGh5678'
                       environments:
                         type: array
-                        example: []
+                        example:
+                          -
+                            id: 01jfgxk4nqrst5vwx9yz0abcdg
+                            name: production
+                            is_production: true
+                            status: pending
+                            php_version: '8.3'
+                            platform_domain: wispy-dust--prod.vectorpages.com
+                            custom_domain: example.com
+                            custom_domain_certificate_status: pending
+                            created_at: '2025-01-15T12:00:00+00:00'
+                            updated_at: '2025-01-15T12:00:00+00:00'
+                          -
+                            id: 01jfgxk4nqrst5vwx9yz0abcdh
+                            name: staging
+                            is_production: false
+                            status: pending
+                            php_version: '8.3'
+                            platform_domain: wispy-dust--staging.vectorpages.com
+                            custom_domain: null
+                            custom_domain_certificate_status: null
+                            created_at: '2025-01-15T12:00:00+00:00'
+                            updated_at: '2025-01-15T12:00:00+00:00'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 01jfgxk4nqrst5vwx9yz0abcdg
+                            name:
+                              type: string
+                              example: production
+                            is_production:
+                              type: boolean
+                              example: true
+                            status:
+                              type: string
+                              example: pending
+                            php_version:
+                              type: string
+                              example: '8.3'
+                            platform_domain:
+                              type: string
+                              example: wispy-dust--prod.vectorpages.com
+                            custom_domain:
+                              type: string
+                              example: example.com
+                            custom_domain_certificate_status:
+                              type: string
+                              example: pending
+                            created_at:
+                              type: string
+                              example: '2025-01-15T12:00:00+00:00'
+                            updated_at:
+                              type: string
+                              example: '2025-01-15T12:00:00+00:00'
                       created_at:
                         type: string
                         example: '2025-01-15T12:00:00+00:00'
@@ -499,6 +582,18 @@ paths:
                     - production
                   items:
                     type: string
+                production_domain:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional custom domain for the production environment. Must be a valid fully qualified domain name, max 253 chars. When provided, SSL certificate provisioning begins automatically. The domain owner must create DNS records to complete provisioning — see the `custom_domain_certificate` and `dns_target` fields on the environment for details.'
+                  example: example.com
+                staging_domain:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional custom domain for the staging environment. Must be a valid fully qualified domain name, max 253 chars. When provided, SSL certificate provisioning begins automatically. The domain owner must create DNS records to complete provisioning — see the `custom_domain_certificate` and `dns_target` fields on the environment for details.'
+                  example: staging.example.com
               required:
                 - your_customer_id
                 - dev_php_version
@@ -533,8 +628,9 @@ paths:
                         is_production: true
                         status: active
                         php_version: '8.3'
-                        platform_domain: wispy-dust.vectorpages.com
+                        platform_domain: wispy-dust--prod.vectorpages.com
                         custom_domain: example.com
+                        custom_domain_certificate_status: issued
                         created_at: '2025-01-15T12:00:00+00:00'
                         updated_at: '2025-01-15T12:00:00+00:00'
                     created_at: '2025-01-15T12:00:00+00:00'
@@ -579,8 +675,9 @@ paths:
                             is_production: true
                             status: active
                             php_version: '8.3'
-                            platform_domain: wispy-dust.vectorpages.com
+                            platform_domain: wispy-dust--prod.vectorpages.com
                             custom_domain: example.com
+                            custom_domain_certificate_status: issued
                             created_at: '2025-01-15T12:00:00+00:00'
                             updated_at: '2025-01-15T12:00:00+00:00'
                         items:
@@ -603,10 +700,13 @@ paths:
                               example: '8.3'
                             platform_domain:
                               type: string
-                              example: wispy-dust.vectorpages.com
+                              example: wispy-dust--prod.vectorpages.com
                             custom_domain:
                               type: string
                               example: example.com
+                            custom_domain_certificate_status:
+                              type: string
+                              example: issued
                             created_at:
                               type: string
                               example: '2025-01-15T12:00:00+00:00'
@@ -6618,8 +6718,12 @@ paths:
                       tags:
                         - live
                         - primary
-                      platform_domain: wispy-dust.vectorpages.com
+                      platform_domain: wispy-dust--prod.vectorpages.com
                       custom_domain: example.com
+                      dns_target: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        status: issued
+                        dns_validation_records: null
                       subdomain: wispy-dust
                       database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                       database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -6646,8 +6750,12 @@ paths:
                         tags:
                           - live
                           - primary
-                        platform_domain: wispy-dust.vectorpages.com
+                        platform_domain: wispy-dust--prod.vectorpages.com
                         custom_domain: example.com
+                        dns_target: site-abc123.b-cdn.net
+                        custom_domain_certificate:
+                          status: issued
+                          dns_validation_records: null
                         subdomain: wispy-dust
                         database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                         database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -6692,10 +6800,22 @@ paths:
                             type: string
                         platform_domain:
                           type: string
-                          example: wispy-dust.vectorpages.com
+                          example: wispy-dust--prod.vectorpages.com
                         custom_domain:
                           type: string
                           example: example.com
+                        dns_target:
+                          type: string
+                          example: site-abc123.b-cdn.net
+                        custom_domain_certificate:
+                          type: object
+                          properties:
+                            status:
+                              type: string
+                              example: issued
+                            dns_validation_records:
+                              type: string
+                              example: null
                         subdomain:
                           type: string
                           example: wispy-dust
@@ -6812,8 +6932,12 @@ paths:
                     tags:
                       - live
                       - primary
-                    platform_domain: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust--prod.vectorpages.com
                     custom_domain: example.com
+                    dns_target: site-abc123.b-cdn.net
+                    custom_domain_certificate:
+                      status: issued
+                      dns_validation_records: null
                     subdomain: wispy-dust
                     database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                     database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -6861,10 +6985,22 @@ paths:
                           type: string
                       platform_domain:
                         type: string
-                        example: wispy-dust.vectorpages.com
+                        example: wispy-dust--prod.vectorpages.com
                       custom_domain:
                         type: string
                         example: example.com
+                      dns_target:
+                        type: string
+                        example: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: issued
+                          dns_validation_records:
+                            type: string
+                            example: null
                       subdomain:
                         type: string
                         example: wispy-dust
@@ -6951,7 +7087,7 @@ paths:
     put:
       summary: 'Update Environment'
       operationId: updateEnvironment
-      description: "Updates an existing environment. Only the fields provided will be updated.\n\nWhen `custom_domain` changes, a domain change operation is initiated asynchronously\n(search-replace, env sync, SSL, redeployment). The response includes a\n`pending_domain_change` object for polling status. Returns 202 for domain changes\nand 200 for metadata-only updates."
+      description: "Updates an existing environment. Only the fields provided will be updated.\n\nWhen `custom_domain` changes, a domain change operation is initiated asynchronously\n(SSL certificate provisioning, search-replace, env sync, redeployment). The response\nincludes a `pending_domain_change` object for polling status. Returns 202 for domain\nchanges and 200 for metadata-only updates.\n\n#### DNS Requirements\n\nAfter setting a custom domain, the domain owner must create two types of DNS records:\n\n1. **CNAME for traffic routing** — Point the custom domain to the `dns_target` value\n   (e.g., `example.com CNAME cdn-hostname.b-cdn.net`).\n2. **CNAME(s) for SSL certificate validation** — Create the DNS records listed in\n   `custom_domain_certificate.dns_validation_records`. These are required by AWS ACM\n   to issue the SSL certificate. Until these records are created, the certificate\n   status will remain `waiting_validation`.\n\nPoll the environment (GET) to check `custom_domain_certificate.status` for progress.\nPossible values: `pending`, `requesting`, `waiting_validation`, `issued`, `failed`, `timed_out`."
       parameters: []
       responses:
         200:
@@ -6976,6 +7112,10 @@ paths:
                       - updated
                     platform_domain: wispy-dust--prod.vectorpages.com
                     custom_domain: example.com
+                    dns_target: site-abc123.b-cdn.net
+                    custom_domain_certificate:
+                      status: issued
+                      dns_validation_records: null
                     subdomain: wispy-dust
                     database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                     database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -7027,6 +7167,18 @@ paths:
                       custom_domain:
                         type: string
                         example: example.com
+                      dns_target:
+                        type: string
+                        example: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: issued
+                          dns_validation_records:
+                            type: string
+                            example: null
                       subdomain:
                         type: string
                         example: wispy-dust
@@ -7057,11 +7209,37 @@ paths:
                 example:
                   data:
                     id: 01jfgxk4nqrst5vwx9yz0abcdg
+                    vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
+                    your_customer_id: cust_12345
+                    name: production
+                    is_production: true
+                    status: active
+                    provisioning_step: complete
+                    failure_reason: null
+                    php_version: '8.3'
+                    tags:
+                      - live
+                      - primary
+                    platform_domain: wispy-dust--prod.vectorpages.com
+                    custom_domain: example.com
+                    dns_target: site-abc123.b-cdn.net
+                    custom_domain_certificate:
+                      status: pending
+                      dns_validation_records:
+                        -
+                          name: _abc123.example.com
+                          type: CNAME
+                          value: _def456.acm-validations.aws
+                    subdomain: wispy-dust
+                    database_host: cluster.abc123.us-east-1.rds.amazonaws.com
+                    database_name: db_01jfgxk4nqrst5vwx9yz0abcde
                     pending_domain_change:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       status: pending
                       old_domain: old.example.com
                       new_domain: example.com
+                    created_at: '2025-01-15T12:00:00+00:00'
+                    updated_at: '2025-01-15T12:00:00+00:00'
                   message: 'Environment update initiated, domain change in progress'
                   http_status: 202
                 properties:
@@ -7071,6 +7249,80 @@ paths:
                       id:
                         type: string
                         example: 01jfgxk4nqrst5vwx9yz0abcdg
+                      vector_site_id:
+                        type: string
+                        example: 01jfgxk4nqrst5vwx9yz0abcde
+                      your_customer_id:
+                        type: string
+                        example: cust_12345
+                      name:
+                        type: string
+                        example: production
+                      is_production:
+                        type: boolean
+                        example: true
+                      status:
+                        type: string
+                        example: active
+                      provisioning_step:
+                        type: string
+                        example: complete
+                      failure_reason:
+                        type: string
+                        example: null
+                      php_version:
+                        type: string
+                        example: '8.3'
+                      tags:
+                        type: array
+                        example:
+                          - live
+                          - primary
+                        items:
+                          type: string
+                      platform_domain:
+                        type: string
+                        example: wispy-dust--prod.vectorpages.com
+                      custom_domain:
+                        type: string
+                        example: example.com
+                      dns_target:
+                        type: string
+                        example: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: pending
+                          dns_validation_records:
+                            type: array
+                            example:
+                              -
+                                name: _abc123.example.com
+                                type: CNAME
+                                value: _def456.acm-validations.aws
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: _abc123.example.com
+                                type:
+                                  type: string
+                                  example: CNAME
+                                value:
+                                  type: string
+                                  example: _def456.acm-validations.aws
+                      subdomain:
+                        type: string
+                        example: wispy-dust
+                      database_host:
+                        type: string
+                        example: cluster.abc123.us-east-1.rds.amazonaws.com
+                      database_name:
+                        type: string
+                        example: db_01jfgxk4nqrst5vwx9yz0abcde
                       pending_domain_change:
                         type: object
                         properties:
@@ -7086,6 +7338,12 @@ paths:
                           new_domain:
                             type: string
                             example: example.com
+                      created_at:
+                        type: string
+                        example: '2025-01-15T12:00:00+00:00'
+                      updated_at:
+                        type: string
+                        example: '2025-01-15T12:00:00+00:00'
                   message:
                     type: string
                     example: 'Environment update initiated, domain change in progress'
@@ -7263,8 +7521,12 @@ paths:
                     failure_reason: null
                     php_version: '8.3'
                     tags: []
-                    platform_domain: wispy-dust.vectorpages.com
+                    platform_domain: wispy-dust--prod.vectorpages.com
                     custom_domain: example.com
+                    dns_target: site-abc123.b-cdn.net
+                    custom_domain_certificate:
+                      status: issued
+                      dns_validation_records: null
                     subdomain: wispy-dust
                     database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                     database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -7308,10 +7570,22 @@ paths:
                         example: []
                       platform_domain:
                         type: string
-                        example: wispy-dust.vectorpages.com
+                        example: wispy-dust--prod.vectorpages.com
                       custom_domain:
                         type: string
                         example: example.com
+                      dns_target:
+                        type: string
+                        example: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: issued
+                          dns_validation_records:
+                            type: string
+                            example: null
                       subdomain:
                         type: string
                         example: wispy-dust
@@ -9842,6 +10116,10 @@ paths:
                       - primary
                     platform_domain: wispy-dust--prod.vectorpages.com
                     custom_domain: example.com
+                    dns_target: site-abc123.b-cdn.net
+                    custom_domain_certificate:
+                      status: pending
+                      dns_validation_records: null
                     subdomain: wispy-dust
                     database_host: cluster.abc123.us-east-1.rds.amazonaws.com
                     database_name: db_01jfgxk4nqrst5vwx9yz0abcde
@@ -9893,6 +10171,18 @@ paths:
                       custom_domain:
                         type: string
                         example: example.com
+                      dns_target:
+                        type: string
+                        example: site-abc123.b-cdn.net
+                      custom_domain_certificate:
+                        type: object
+                        properties:
+                          status:
+                            type: string
+                            example: pending
+                          dns_validation_records:
+                            type: string
+                            example: null
                       subdomain:
                         type: string
                         example: wispy-dust

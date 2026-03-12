@@ -105,8 +105,9 @@ endpoints:
                               "is_production": true,
                               "status": "active",
                               "php_version": "8.3",
-                              "platform_domain": "wispy-dust.vectorpages.com",
+                              "platform_domain": "wispy-dust--prod.vectorpages.com",
                               "custom_domain": "example.com",
+                              "custom_domain_certificate_status": "issued",
                               "created_at": "2025-01-15T12:00:00+00:00",
                               "updated_at": "2025-01-15T12:00:00+00:00"
                           }
@@ -216,8 +217,9 @@ endpoints:
                           "is_production": true,
                           "status": "active",
                           "php_version": "8.3",
-                          "platform_domain": "wispy-dust.vectorpages.com",
+                          "platform_domain": "wispy-dust--prod.vectorpages.com",
                           "custom_domain": "example.com",
+                          "custom_domain_certificate_status": "issued",
                           "created_at": "2025-01-15T12:00:00+00:00",
                           "updated_at": "2025-01-15T12:00:00+00:00"
                       }
@@ -687,12 +689,36 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      production_domain:
+        custom: []
+        name: production_domain
+        description: 'Optional custom domain for the production environment. Must be a valid fully qualified domain name, max 253 chars. When provided, SSL certificate provisioning begins automatically. The domain owner must create DNS records to complete provisioning — see the `custom_domain_certificate` and `dns_target` fields on the environment for details.'
+        required: false
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      staging_domain:
+        custom: []
+        name: staging_domain
+        description: 'Optional custom domain for the staging environment. Must be a valid fully qualified domain name, max 253 chars. When provided, SSL certificate provisioning begins automatically. The domain owner must create DNS records to complete provisioning — see the `custom_domain_certificate` and `dns_target` fields on the environment for details.'
+        required: false
+        example: staging.example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       your_customer_id: cust_12345
       dev_php_version: '8.3'
       tags:
         - wordpress
         - production
+      production_domain: example.com
+      staging_domain: staging.example.com
     fileParameters: []
     responses:
       -
@@ -717,7 +743,32 @@ endpoints:
                   },
                   "dev_db_username": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_db_password": "aBcD1234!@#$EfGh5678",
-                  "environments": [],
+                  "environments": [
+                      {
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                          "name": "production",
+                          "is_production": true,
+                          "status": "pending",
+                          "php_version": "8.3",
+                          "platform_domain": "wispy-dust--prod.vectorpages.com",
+                          "custom_domain": "example.com",
+                          "custom_domain_certificate_status": "pending",
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
+                      },
+                      {
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                          "name": "staging",
+                          "is_production": false,
+                          "status": "pending",
+                          "php_version": "8.3",
+                          "platform_domain": "wispy-dust--staging.vectorpages.com",
+                          "custom_domain": null,
+                          "custom_domain_certificate_status": null,
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
+                      }
+                  ],
                   "created_at": "2025-01-15T12:00:00+00:00",
                   "updated_at": "2025-01-15T12:00:00+00:00"
               },

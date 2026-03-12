@@ -125,8 +125,13 @@ endpoints:
                       "failure_reason": null,
                       "php_version": "8.3",
                       "tags": ["live", "primary"],
-                      "platform_domain": "wispy-dust.vectorpages.com",
+                      "platform_domain": "wispy-dust--prod.vectorpages.com",
                       "custom_domain": "example.com",
+                      "dns_target": "site-abc123.b-cdn.net",
+                      "custom_domain_certificate": {
+                          "status": "issued",
+                          "dns_validation_records": null
+                      },
                       "subdomain": "wispy-dust",
                       "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                       "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
@@ -243,8 +248,13 @@ endpoints:
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
-                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
                   "subdomain": "wispy-dust",
                   "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
@@ -1596,6 +1606,11 @@ endpoints:
                   "tags": ["live", "primary"],
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "pending",
+                      "dns_validation_records": null
+                  },
                   "subdomain": "wispy-dust",
                   "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
@@ -1694,9 +1709,23 @@ endpoints:
         Updates an existing environment. Only the fields provided will be updated.
 
         When `custom_domain` changes, a domain change operation is initiated asynchronously
-        (search-replace, env sync, SSL, redeployment). The response includes a
-        `pending_domain_change` object for polling status. Returns 202 for domain changes
-        and 200 for metadata-only updates.
+        (SSL certificate provisioning, search-replace, env sync, redeployment). The response
+        includes a `pending_domain_change` object for polling status. Returns 202 for domain
+        changes and 200 for metadata-only updates.
+
+        #### DNS Requirements
+
+        After setting a custom domain, the domain owner must create two types of DNS records:
+
+        1. **CNAME for traffic routing** — Point the custom domain to the `dns_target` value
+           (e.g., `example.com CNAME cdn-hostname.b-cdn.net`).
+        2. **CNAME(s) for SSL certificate validation** — Create the DNS records listed in
+           `custom_domain_certificate.dns_validation_records`. These are required by AWS ACM
+           to issue the SSL certificate. Until these records are created, the certificate
+           status will remain `waiting_validation`.
+
+        Poll the environment (GET) to check `custom_domain_certificate.status` for progress.
+        Possible values: `pending`, `requesting`, `waiting_validation`, `issued`, `failed`, `timed_out`.
       authenticated: true
       deprecated: false
     headers:
@@ -1769,6 +1798,11 @@ endpoints:
                   "tags": ["live", "updated"],
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
                   "subdomain": "wispy-dust",
                   "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
@@ -1787,12 +1821,35 @@ endpoints:
           {
               "data": {
                   "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "pending",
+                      "dns_validation_records": [
+                          {"name": "_abc123.example.com", "type": "CNAME", "value": "_def456.acm-validations.aws"}
+                      ]
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "pending_domain_change": {
                       "id": "01jfgxk4nqrst5vwx9yz0abcdh",
                       "status": "pending",
                       "old_domain": "old.example.com",
                       "new_domain": "example.com"
-                  }
+                  },
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
               "message": "Environment update initiated, domain change in progress",
               "http_status": 202
@@ -1930,8 +1987,13 @@ endpoints:
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
-                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
                   "subdomain": "wispy-dust",
                   "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
                   "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
