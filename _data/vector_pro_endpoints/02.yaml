@@ -711,6 +711,39 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      wp_admin_email:
+        custom: []
+        name: wp_admin_email
+        description: 'Optional email address for WordPress auto-install. When provided, WordPress will be automatically installed in the dev container on first boot. The `wp_admin` block containing the generated password is only returned in this creation response.'
+        required: false
+        example: admin@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      wp_admin_user:
+        custom: []
+        name: wp_admin_user
+        description: 'Optional WordPress admin username. Only used when `wp_admin_email` is provided. Defaults to "admin". Max 60 characters.'
+        required: false
+        example: myadmin
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      wp_site_title:
+        custom: []
+        name: wp_site_title
+        description: 'Optional WordPress site title. Only used when `wp_admin_email` is provided. Defaults to "WordPress" in the container. Max 255 characters.'
+        required: false
+        example: 'My Blog'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       your_customer_id: cust_12345
       dev_php_version: '8.3'
@@ -719,6 +752,9 @@ endpoints:
         - production
       production_domain: example.com
       staging_domain: staging.example.com
+      wp_admin_email: admin@example.com
+      wp_admin_user: myadmin
+      wp_site_title: 'My Blog'
     fileParameters: []
     responses:
       -
@@ -743,6 +779,12 @@ endpoints:
                   },
                   "dev_db_username": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "dev_db_password": "aBcD1234!@#$EfGh5678",
+                  "wp_admin": {
+                      "user": "myadmin",
+                      "email": "admin@example.com",
+                      "password": "xYz9876!@#$AbCd5432",
+                      "site_title": "My Blog"
+                  },
                   "environments": [
                       {
                           "id": "01jfgxk4nqrst5vwx9yz0abcdg",

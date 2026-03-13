@@ -303,6 +303,11 @@ paths:
                       password: 'aBcD1234!@#$EfGh5678'
                     dev_db_username: db_01jfgxk4nqrst5vwx9yz0abcde
                     dev_db_password: 'aBcD1234!@#$EfGh5678'
+                    wp_admin:
+                      user: myadmin
+                      email: admin@example.com
+                      password: 'xYz9876!@#$AbCd5432'
+                      site_title: 'My Blog'
                     environments:
                       -
                         id: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -383,6 +388,21 @@ paths:
                       dev_db_password:
                         type: string
                         example: 'aBcD1234!@#$EfGh5678'
+                      wp_admin:
+                        type: object
+                        properties:
+                          user:
+                            type: string
+                            example: myadmin
+                          email:
+                            type: string
+                            example: admin@example.com
+                          password:
+                            type: string
+                            example: 'xYz9876!@#$AbCd5432'
+                          site_title:
+                            type: string
+                            example: 'My Blog'
                       environments:
                         type: array
                         example:
@@ -594,6 +614,24 @@ paths:
                     - 'null'
                   description: 'Optional custom domain for the staging environment. Must be a valid fully qualified domain name, max 253 chars. When provided, SSL certificate provisioning begins automatically. The domain owner must create DNS records to complete provisioning — see the `custom_domain_certificate` and `dns_target` fields on the environment for details.'
                   example: staging.example.com
+                wp_admin_email:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional email address for WordPress auto-install. When provided, WordPress will be automatically installed in the dev container on first boot. The `wp_admin` block containing the generated password is only returned in this creation response.'
+                  example: admin@example.com
+                wp_admin_user:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional WordPress admin username. Only used when `wp_admin_email` is provided. Defaults to "admin". Max 60 characters.'
+                  example: myadmin
+                wp_site_title:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Optional WordPress site title. Only used when `wp_admin_email` is provided. Defaults to "WordPress" in the container. Max 255 characters.'
+                  example: 'My Blog'
               required:
                 - your_customer_id
                 - dev_php_version
@@ -8870,7 +8908,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
     parameters:
       -
         in: path
