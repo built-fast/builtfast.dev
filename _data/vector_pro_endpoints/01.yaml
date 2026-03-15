@@ -771,17 +771,6 @@ endpoints:
       secret:
         custom: []
         name: secret
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
         description: 'The secret ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -791,8 +780,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1037,17 +1025,6 @@ endpoints:
       token:
         custom: []
         name: token
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      tokenId:
-        custom: []
-        name: tokenId
         description: 'The API key ID.'
         required: true
         example: 1
@@ -1057,8 +1034,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      token: architecto
-      tokenId: 1
+      token: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1280,17 +1256,6 @@ endpoints:
       secret:
         custom: []
         name: secret
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
         description: 'The secret ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -1300,8 +1265,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1433,17 +1397,6 @@ endpoints:
       secret:
         custom: []
         name: secret
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      accountSecret:
-        custom: []
-        name: accountSecret
         description: 'The secret ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -1453,8 +1406,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      secret: architecto
-      accountSecret: 01jfgxk4nqrst5vwx9yz0abcde
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -150,7 +150,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/backups/{vectorBackup}'
+    uri: 'api/v1/vector/backups/{backup}'
     metadata:
       custom: []
       groupName: Backups
@@ -175,9 +175,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorBackup:
+      backup:
         custom: []
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -187,7 +187,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      backup: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -249,7 +249,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/backups/{vectorBackup}/downloads/{vectorBackupDownload}'
+    uri: 'api/v1/vector/backups/{backup}/downloads/{download}'
     metadata:
       custom: []
       groupName: Backups
@@ -277,9 +277,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorBackup:
+      backup:
         custom: []
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -288,9 +288,9 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      vectorBackupDownload:
+      download:
         custom: []
-        name: vectorBackupDownload
+        name: download
         description: 'The download ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdh
@@ -300,8 +300,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
-      vectorBackupDownload: 01jfgxk4nqrst5vwx9yz0abcdh
+      backup: 01jfgxk4nqrst5vwx9yz0abcdg
+      download: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -544,7 +544,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/backups/{vectorBackup}/downloads'
+    uri: 'api/v1/vector/backups/{backup}/downloads'
     metadata:
       custom: []
       groupName: Backups
@@ -572,9 +572,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorBackup:
+      backup:
         custom: []
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -584,7 +584,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      backup: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -1797,7 +1797,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/v1/vector/sites/{site}/imports/{vectorImport}/run'
+    uri: 'api/v1/vector/sites/{site}/imports/{import}/run'
     metadata:
       custom: []
       groupName: Sites
@@ -1830,17 +1830,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      vectorImport:
-        custom: []
-        name: vectorImport
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       import:
         custom: []
         name: import
@@ -1854,7 +1843,6 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      vectorImport: architecto
       import: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
@@ -1941,7 +1929,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/sites/{site}/imports/{vectorImport}'
+    uri: 'api/v1/vector/sites/{site}/imports/{import}'
     metadata:
       custom: []
       groupName: Sites
@@ -1972,17 +1960,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      vectorImport:
-        custom: []
-        name: vectorImport
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       import:
         custom: []
         name: import
@@ -1996,7 +1973,6 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      vectorImport: architecto
       import: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
@@ -2834,17 +2810,6 @@ endpoints:
       rule:
         custom: []
         name: rule
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      ruleId:
-        custom: []
-        name: ruleId
         description: 'The rate limit rule ID.'
         required: true
         example: 12345
@@ -2855,8 +2820,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      rule: architecto
-      ruleId: 12345
+      rule: 12345
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3813,17 +3777,6 @@ endpoints:
       rule:
         custom: []
         name: rule
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      ruleId:
-        custom: []
-        name: ruleId
         description: 'The rate limit rule ID.'
         required: true
         example: 12345
@@ -3834,8 +3787,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      rule: architecto
-      ruleId: 12345
+      rule: 12345
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4070,17 +4022,6 @@ endpoints:
       rule:
         custom: []
         name: rule
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      ruleId:
-        custom: []
-        name: ruleId
         description: 'The rate limit rule ID.'
         required: true
         example: 12345
@@ -4091,8 +4032,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       site: 01jfgxk4nqrst5vwx9yz0abcde
-      rule: architecto
-      ruleId: 12345
+      rule: 12345
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

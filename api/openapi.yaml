@@ -2687,7 +2687,7 @@ paths:
         required: true
         schema:
           type: string
-  '/api/v1/vector/sites/{site}/imports/{vectorImport}/run':
+  '/api/v1/vector/sites/{site}/imports/{import}/run':
     post:
       summary: 'Run Import'
       operationId: sitesImportsRunImport
@@ -2939,21 +2939,13 @@ paths:
           type: string
       -
         in: path
-        name: vectorImport
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
         name: import
         description: 'The import ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdh
         required: true
         schema:
           type: string
-  '/api/v1/vector/sites/{site}/imports/{vectorImport}':
+  '/api/v1/vector/sites/{site}/imports/{import}':
     get:
       summary: 'Get Import Status'
       operationId: sitesImportsGetImportStatus
@@ -3252,14 +3244,6 @@ paths:
         name: site
         description: 'The site ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: vectorImport
-        description: ''
-        example: architecto
         required: true
         schema:
           type: string
@@ -5560,14 +5544,6 @@ paths:
       -
         in: path
         name: rule
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: ruleId
         description: 'The rate limit rule ID.'
         example: 12345
         required: true
@@ -9699,20 +9675,12 @@ paths:
       -
         in: path
         name: env
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: environment
         description: 'The environment ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
         schema:
           type: string
-  '/api/v1/vector/environments/{env}/db/promotes/{vectorDbPromote}':
+  '/api/v1/vector/environments/{env}/db/promotes/{promote}':
     get:
       summary: 'Get Promote Status'
       operationId: environmentsDatabasesGetPromoteStatus
@@ -9929,22 +9897,6 @@ paths:
       -
         in: path
         name: env
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: vectorDbPromote
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: environment
         description: 'The environment ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
@@ -9958,7 +9910,7 @@ paths:
         required: true
         schema:
           type: string
-  '/api/v1/vector/environments/{env}/domain-changes/{vectorDomainChange}':
+  '/api/v1/vector/environments/{env}/domain-changes/{domainChange}':
     get:
       summary: 'Get Domain Change Status'
       operationId: environmentsDomainsGetDomainChangeStatus
@@ -10099,22 +10051,6 @@ paths:
       -
         in: path
         name: env
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: vectorDomainChange
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: environment
         description: 'The environment ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
@@ -12613,14 +12549,6 @@ paths:
       -
         in: path
         name: secret
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: accountSecret
         description: 'The secret ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcde
         required: true
@@ -12743,14 +12671,6 @@ paths:
       -
         in: path
         name: token
-        description: ''
-        example: architecto
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: tokenId
         description: 'The API key ID.'
         example: 1
         required: true
@@ -13233,7 +13153,7 @@ paths:
                   example: 'Pre-deployment backup'
               required:
                 - type
-  '/api/v1/vector/backups/{vectorBackup}':
+  '/api/v1/vector/backups/{backup}':
     get:
       summary: 'Get Backup'
       operationId: getBackup
@@ -13377,13 +13297,13 @@ paths:
     parameters:
       -
         in: path
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
         schema:
           type: string
-  '/api/v1/vector/backups/{vectorBackup}/downloads/{vectorBackupDownload}':
+  '/api/v1/vector/backups/{backup}/downloads/{download}':
     get:
       summary: 'Get Backup Download'
       operationId: backupsBackupDownloadsGetBackupDownload
@@ -13599,7 +13519,7 @@ paths:
     parameters:
       -
         in: path
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
@@ -13607,13 +13527,13 @@ paths:
           type: string
       -
         in: path
-        name: vectorBackupDownload
+        name: download
         description: 'The download ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdh
         required: true
         schema:
           type: string
-  '/api/v1/vector/backups/{vectorBackup}/downloads':
+  '/api/v1/vector/backups/{backup}/downloads':
     post:
       summary: 'Create Backup Download'
       operationId: backupsBackupDownloadsCreateBackupDownload
@@ -13757,7 +13677,7 @@ paths:
     parameters:
       -
         in: path
-        name: vectorBackup
+        name: backup
         description: 'The backup ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdg
         required: true
@@ -14514,7 +14434,7 @@ paths:
                   example: false
               required:
                 - backup_id
-  '/api/v1/vector/restores/{vectorRestore}':
+  '/api/v1/vector/restores/{restore}':
     get:
       summary: 'Get Restore'
       operationId: getRestore
@@ -14685,7 +14605,7 @@ paths:
     parameters:
       -
         in: path
-        name: vectorRestore
+        name: restore
         description: 'The restore ID.'
         example: 01jfgxk4nqrst5vwx9yz0abcdh
         required: true

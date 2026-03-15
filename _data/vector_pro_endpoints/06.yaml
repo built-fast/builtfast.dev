@@ -168,7 +168,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/restores/{vectorRestore}'
+    uri: 'api/v1/vector/restores/{restore}'
     metadata:
       custom: []
       groupName: Restores
@@ -194,9 +194,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorRestore:
+      restore:
         custom: []
-        name: vectorRestore
+        name: restore
         description: 'The restore ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdh
@@ -206,7 +206,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorRestore: 01jfgxk4nqrst5vwx9yz0abcdh
+      restore: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

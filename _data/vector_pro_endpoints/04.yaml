@@ -1049,17 +1049,6 @@ endpoints:
       env:
         custom: []
         name: env
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      environment:
-        custom: []
-        name: environment
         description: 'The environment ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -1069,8 +1058,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: architecto
-      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      env: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1169,7 +1157,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/environments/{env}/db/promotes/{vectorDbPromote}'
+    uri: 'api/v1/vector/environments/{env}/db/promotes/{promote}'
     metadata:
       custom: []
       groupName: Environments
@@ -1190,28 +1178,6 @@ endpoints:
       env:
         custom: []
         name: env
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      vectorDbPromote:
-        custom: []
-        name: vectorDbPromote
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      environment:
-        custom: []
-        name: environment
         description: 'The environment ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -1232,9 +1198,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: architecto
-      vectorDbPromote: architecto
-      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      env: 01jfgxk4nqrst5vwx9yz0abcde
       promote: 01jfgxk4nqrst5vwx9yz0abcdf
     queryParameters: []
     cleanQueryParameters: []
@@ -1324,7 +1288,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/environments/{env}/domain-changes/{vectorDomainChange}'
+    uri: 'api/v1/vector/environments/{env}/domain-changes/{domainChange}'
     metadata:
       custom: []
       groupName: Environments
@@ -1354,28 +1318,6 @@ endpoints:
       env:
         custom: []
         name: env
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      vectorDomainChange:
-        custom: []
-        name: vectorDomainChange
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      environment:
-        custom: []
-        name: environment
         description: 'The environment ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcde
@@ -1396,9 +1338,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      env: architecto
-      vectorDomainChange: architecto
-      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      env: 01jfgxk4nqrst5vwx9yz0abcde
       domainChange: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []

@@ -937,21 +937,15 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:vectorImport\/run",
+                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:import\/run",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:vectorImport\/run",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:import\/run",
                                     "variable": [
                                         {
                                             "id": "site",
                                             "key": "site",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "vectorImport",
-                                            "key": "vectorImport",
-                                            "value": "architecto",
-                                            "description": ""
                                         },
                                         {
                                             "id": "import",
@@ -1019,21 +1013,15 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:vectorImport",
+                                    "path": "api\/v1\/vector\/sites\/:site\/imports\/:import",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:vectorImport",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/imports\/:import",
                                     "variable": [
                                         {
                                             "id": "site",
                                             "key": "site",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The site ID."
-                                        },
-                                        {
-                                            "id": "vectorImport",
-                                            "key": "vectorImport",
-                                            "value": "architecto",
-                                            "description": ""
                                         },
                                         {
                                             "id": "import",
@@ -1888,12 +1876,6 @@
                                         {
                                             "id": "rule",
                                             "key": "rule",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "ruleId",
-                                            "key": "ruleId",
                                             "value": "12345",
                                             "description": "The rate limit rule ID."
                                         }
@@ -2037,12 +2019,6 @@
                                         {
                                             "id": "rule",
                                             "key": "rule",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "ruleId",
-                                            "key": "ruleId",
                                             "value": "12345",
                                             "description": "The rate limit rule ID."
                                         }
@@ -2122,12 +2098,6 @@
                                         {
                                             "id": "rule",
                                             "key": "rule",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "ruleId",
-                                            "key": "ruleId",
                                             "value": "12345",
                                             "description": "The rate limit rule ID."
                                         }
@@ -3433,12 +3403,6 @@
                                         {
                                             "id": "env",
                                             "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The environment ID."
                                         }
@@ -3505,25 +3469,13 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/db\/promotes\/:vectorDbPromote",
+                                    "path": "api\/v1\/vector\/environments\/:env\/db\/promotes\/:promote",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/promotes\/:vectorDbPromote",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/db\/promotes\/:promote",
                                     "variable": [
                                         {
                                             "id": "env",
                                             "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "vectorDbPromote",
-                                            "key": "vectorDbPromote",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The environment ID."
                                         },
@@ -3593,25 +3545,13 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/environments\/:env\/domain-changes\/:vectorDomainChange",
+                                    "path": "api\/v1\/vector\/environments\/:env\/domain-changes\/:domainChange",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/domain-changes\/:vectorDomainChange",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/environments\/:env\/domain-changes\/:domainChange",
                                     "variable": [
                                         {
                                             "id": "env",
                                             "key": "env",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "vectorDomainChange",
-                                            "key": "vectorDomainChange",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "environment",
-                                            "key": "environment",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The environment ID."
                                         },
@@ -4278,12 +4218,6 @@
                                         {
                                             "id": "token",
                                             "key": "token",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "tokenId",
-                                            "key": "tokenId",
                                             "value": "1",
                                             "description": "The API key ID."
                                         }
@@ -4405,12 +4339,6 @@
                                         {
                                             "id": "secret",
                                             "key": "secret",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "accountSecret",
-                                            "key": "accountSecret",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The secret ID."
                                         }
@@ -4528,12 +4456,6 @@
                                         {
                                             "id": "secret",
                                             "key": "secret",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "accountSecret",
-                                            "key": "accountSecret",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The secret ID."
                                         }
@@ -4601,12 +4523,6 @@
                                         {
                                             "id": "secret",
                                             "key": "secret",
-                                            "value": "architecto",
-                                            "description": ""
-                                        },
-                                        {
-                                            "id": "accountSecret",
-                                            "key": "accountSecret",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcde",
                                             "description": "The secret ID."
                                         }
@@ -4785,13 +4701,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/backups\/:vectorBackup",
+                            "path": "api\/v1\/vector\/backups\/:backup",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup",
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:backup",
                             "variable": [
                                 {
-                                    "id": "vectorBackup",
-                                    "key": "vectorBackup",
+                                    "id": "backup",
+                                    "key": "backup",
                                     "value": "01jfgxk4nqrst5vwx9yz0abcdg",
                                     "description": "The backup ID."
                                 }
@@ -4847,19 +4763,19 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "path": "api\/v1\/vector\/backups\/:backup\/downloads\/:download",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup\/downloads\/:vectorBackupDownload",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:backup\/downloads\/:download",
                                     "variable": [
                                         {
-                                            "id": "vectorBackup",
-                                            "key": "vectorBackup",
+                                            "id": "backup",
+                                            "key": "backup",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcdg",
                                             "description": "The backup ID."
                                         },
                                         {
-                                            "id": "vectorBackupDownload",
-                                            "key": "vectorBackupDownload",
+                                            "id": "download",
+                                            "key": "download",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcdh",
                                             "description": "The download ID."
                                         }
@@ -4917,13 +4833,13 @@
                             "request": {
                                 "url": {
                                     "host": "{{baseUrl}}",
-                                    "path": "api\/v1\/vector\/backups\/:vectorBackup\/downloads",
+                                    "path": "api\/v1\/vector\/backups\/:backup\/downloads",
                                     "query": [],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:vectorBackup\/downloads",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/backups\/:backup\/downloads",
                                     "variable": [
                                         {
-                                            "id": "vectorBackup",
-                                            "key": "vectorBackup",
+                                            "id": "backup",
+                                            "key": "backup",
                                             "value": "01jfgxk4nqrst5vwx9yz0abcdg",
                                             "description": "The backup ID."
                                         }
@@ -5242,13 +5158,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/vector\/restores\/:vectorRestore",
+                            "path": "api\/v1\/vector\/restores\/:restore",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/restores\/:vectorRestore",
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/restores\/:restore",
                             "variable": [
                                 {
-                                    "id": "vectorRestore",
-                                    "key": "vectorRestore",
+                                    "id": "restore",
+                                    "key": "restore",
                                     "value": "01jfgxk4nqrst5vwx9yz0abcdh",
                                     "description": "The restore ID."
                                 }
