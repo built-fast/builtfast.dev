@@ -1,105 +1,31 @@
-name: Webhooks
-description: |-
-
-  Manage webhooks that receive site event notifications. Webhooks are called when
-  events occur on your sites (deployments, status changes, etc.).
-
-  Supports both HTTP webhooks and Slack webhooks for notifications.
-
-  #### Webhook Signature Verification
-
-  HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-  authenticity. The header format is:
-
-  ```
-  X-Vector-Signature: t=1234567890,v1=abc123...
-  ```
-
-  To verify a webhook:
-
-  1. Parse the timestamp (`t`) and signature (`v1`) from the header
-  2. Construct the signed message: `{timestamp}.{raw_request_body}`
-  3. Compute HMAC-SHA256 using your webhook secret as the key
-  4. Compare with the provided signature using constant-time comparison
-  5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-  Example verification (PHP):
-
-  ```php
-  $header = $request->header('X-Vector-Signature');
-  preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-  $timestamp = $matches[1];
-  $signature = $matches[2];
-
-  $message = $timestamp . '.' . $request->getContent();
-  $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-  if (!hash_equals($expected, $signature)) {
-      throw new Exception('Invalid signature');
-  }
-
-  if (abs(time() - (int)$timestamp) > 300) {
-      throw new Exception('Timestamp too old');
-  }
-  ```
+name: Restores
+description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/vector/webhooks
+    uri: api/v1/vector/restores
     metadata:
       custom: []
-      groupName: Webhooks
-      groupDescription: |-
-
-        Manage webhooks that receive site event notifications. Webhooks are called when
-        events occur on your sites (deployments, status changes, etc.).
-
-        Supports both HTTP webhooks and Slack webhooks for notifications.
-
-        #### Webhook Signature Verification
-
-        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-        authenticity. The header format is:
-
-        ```
-        X-Vector-Signature: t=1234567890,v1=abc123...
-        ```
-
-        To verify a webhook:
-
-        1. Parse the timestamp (`t`) and signature (`v1`) from the header
-        2. Construct the signed message: `{timestamp}.{raw_request_body}`
-        3. Compute HMAC-SHA256 using your webhook secret as the key
-        4. Compare with the provided signature using constant-time comparison
-        5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-        Example verification (PHP):
-
-        ```php
-        $header = $request->header('X-Vector-Signature');
-        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-        $timestamp = $matches[1];
-        $signature = $matches[2];
-
-        $message = $timestamp . '.' . $request->getContent();
-        $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-        if (!hash_equals($expected, $signature)) {
-            throw new Exception('Invalid signature');
-        }
-
-        if (abs(time() - (int)$timestamp) > 300) {
-            throw new Exception('Timestamp too old');
-        }
-        ```
+      groupName: Restores
+      groupDescription: ''
       subgroup: ''
-      subgroupDescription: ''
-      title: 'List Webhooks'
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites and environments.
+        Restores use restic snapshots from a previously completed backup and are orchestrated
+        via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'List Restores'
       description: |-
-        Retrieves a paginated list of all webhooks for the authenticated account.
-        Webhook secrets are never included in list responses.
+        Retrieves a paginated list of restores, optionally filtered by type, site, environment,
+        or backup.
       authenticated: true
       deprecated: false
     headers:
@@ -109,6 +35,50 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
+      type:
+        custom: []
+        name: type
+        description: 'Filter by archivable type (site, environment).'
+        required: false
+        example: site
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      site_id:
+        custom: []
+        name: site_id
+        description: 'Filter by site ID.'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      environment_id:
+        custom: []
+        name: environment_id
+        description: 'Filter by environment ID.'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      backup_id:
+        custom: []
+        name: backup_id
+        description: 'Filter by backup ID.'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       per_page:
         custom: []
         name: per_page
@@ -132,6 +102,10 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
+      type: site
+      site_id: 01jfgxk4nqrst5vwx9yz0abcde
+      environment_id: 01jfgxk4nqrst5vwx9yz0abcde
+      backup_id: 01jfgxk4nqrst5vwx9yz0abcde
       per_page: 25
       page: 1
     bodyParameters: []
@@ -145,19 +119,27 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                      "account_id": 1,
-                      "type": "http",
-                      "url": "https://example.com/webhook",
-                      "events": ["site.created", "deployment.completed"],
-                      "enabled": true,
-                      "created_at": "2025-05-27T09:50:21+00:00",
-                      "updated_at": "2025-05-27T09:50:21+00:00"
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "archivable_type": "vector_site",
+                      "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "scope": "full",
+                      "trigger": "manual",
+                      "status": "completed",
+                      "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "search_replace": null,
+                      "drop_tables": false,
+                      "disable_foreign_keys": false,
+                      "error_message": null,
+                      "duration_ms": 45200,
+                      "started_at": "2025-01-15T12:00:00+00:00",
+                      "completed_at": "2025-01-15T12:00:00+00:00",
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "Webhooks retrieved successfully",
+              "message": "Restores retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -186,59 +168,25 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/webhooks/{webhook}'
+    uri: 'api/v1/vector/restores/{vectorRestore}'
     metadata:
       custom: []
-      groupName: Webhooks
-      groupDescription: |-
-
-        Manage webhooks that receive site event notifications. Webhooks are called when
-        events occur on your sites (deployments, status changes, etc.).
-
-        Supports both HTTP webhooks and Slack webhooks for notifications.
-
-        #### Webhook Signature Verification
-
-        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-        authenticity. The header format is:
-
-        ```
-        X-Vector-Signature: t=1234567890,v1=abc123...
-        ```
-
-        To verify a webhook:
-
-        1. Parse the timestamp (`t`) and signature (`v1`) from the header
-        2. Construct the signed message: `{timestamp}.{raw_request_body}`
-        3. Compute HMAC-SHA256 using your webhook secret as the key
-        4. Compare with the provided signature using constant-time comparison
-        5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-        Example verification (PHP):
-
-        ```php
-        $header = $request->header('X-Vector-Signature');
-        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-        $timestamp = $matches[1];
-        $signature = $matches[2];
-
-        $message = $timestamp . '.' . $request->getContent();
-        $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-        if (!hash_equals($expected, $signature)) {
-            throw new Exception('Invalid signature');
-        }
-
-        if (abs(time() - (int)$timestamp) > 300) {
-            throw new Exception('Timestamp too old');
-        }
-        ```
+      groupName: Restores
+      groupDescription: ''
       subgroup: ''
-      subgroupDescription: ''
-      title: 'Get Webhook'
-      description: |-
-        Retrieves details of a specific webhook. The secret is never included
-        in this response - use the rotate-secret endpoint if you need a new secret.
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites and environments.
+        Restores use restic snapshots from a previously completed backup and are orchestrated
+        via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'Get Restore'
+      description: 'Retrieves details of a specific restore.'
       authenticated: true
       deprecated: false
     headers:
@@ -246,19 +194,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      webhook:
+      vectorRestore:
         custom: []
-        name: webhook
-        description: 'The webhook ID.'
+        name: vectorRestore
+        description: 'The restore ID.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdi
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
+      vectorRestore: 01jfgxk4nqrst5vwx9yz0abcdh
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -271,16 +219,24 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "type": "http",
-                  "url": "https://example.com/webhook",
-                  "events": ["site.created", "deployment.completed"],
-                  "enabled": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "completed",
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "search_replace": [{"from": "example.org", "to": "example.com"}],
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": 45200,
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Webhook retrieved successfully",
+              "message": "Restore retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -300,7 +256,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Restore not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -314,185 +270,29 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/v1/vector/webhooks/{webhook}/logs'
+      - POST
+    uri: api/v1/vector/restores
     metadata:
       custom: []
-      groupName: Webhooks
+      groupName: Restores
       groupDescription: ''
       subgroup: ''
-      subgroupDescription: ''
-      title: 'List Logs'
+      subgroupDescription: |-
+        Manage on-demand restores for Vector sites and environments.
+        Restores use restic snapshots from a previously completed backup and are orchestrated
+        via ECS tasks.
+
+        #### Restore Status Lifecycle
+
+        - `pending` - Restore record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic restore
+        - `completed` - Restore finished successfully
+        - `failed` - Restore failed (see error_message for details)
+      title: 'Create Restore'
       description: |-
-        Retrieves a paginated list of delivery logs for a specific webhook.
-        Logs are returned in reverse chronological order (newest first).
-
-        Each log entry includes the event type, request payload, response details,
-        and latency information. Logs are automatically pruned after 90 days.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      webhook:
-        custom: []
-        name: webhook
-        description: 'The webhook ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdi
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
-    queryParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'Number of items per page (max 100). Default: 15.'
-        required: false
-        example: 25
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      page:
-        custom: []
-        name: page
-        description: 'Page number for pagination. Default: 1.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      per_page: 25
-      page: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": [
-                  {
-                      "id": "01JFGXK4NQRST5VWX9YZ0ABCDJ",
-                      "vector_webhook_delivery_id": "01JFGXK4NQRST5VWX9YZ0ABCDK",
-                      "vector_webhook_id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                      "event": "vector.site.created",
-                      "request_body": {"event": "vector.site.created", "data": {}},
-                      "attempt": 1,
-                      "response_status": 200,
-                      "response_body": "{\"success\": true}",
-                      "response_headers": {"content-type": "application/json"},
-                      "latency_ms": 150,
-                      "created_at": "2025-05-27T09:50:21+00:00"
-                  }
-              ],
-              "links": {},
-              "meta": {},
-              "message": "Webhook logs retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
-        headers: []
-        description: 'Webhook Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/vector/webhooks
-    metadata:
-      custom: []
-      groupName: Webhooks
-      groupDescription: |-
-
-        Manage webhooks that receive site event notifications. Webhooks are called when
-        events occur on your sites (deployments, status changes, etc.).
-
-        Supports both HTTP webhooks and Slack webhooks for notifications.
-
-        #### Webhook Signature Verification
-
-        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-        authenticity. The header format is:
-
-        ```
-        X-Vector-Signature: t=1234567890,v1=abc123...
-        ```
-
-        To verify a webhook:
-
-        1. Parse the timestamp (`t`) and signature (`v1`) from the header
-        2. Construct the signed message: `{timestamp}.{raw_request_body}`
-        3. Compute HMAC-SHA256 using your webhook secret as the key
-        4. Compare with the provided signature using constant-time comparison
-        5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-        Example verification (PHP):
-
-        ```php
-        $header = $request->header('X-Vector-Signature');
-        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-        $timestamp = $matches[1];
-        $signature = $matches[2];
-
-        $message = $timestamp . '.' . $request->getContent();
-        $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-        if (!hash_equals($expected, $signature)) {
-            throw new Exception('Invalid signature');
-        }
-
-        if (abs(time() - (int)$timestamp) > 300) {
-            throw new Exception('Timestamp too old');
-        }
-        ```
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create Webhook'
-      description: |-
-        Creates a new webhook for the current account.
-
-        > [!WARNING]
-        > For HTTP webhooks, the secret is returned ONLY in this response. Store it securely—it cannot be retrieved again (only rotated via the rotate-secret endpoint).
-
-        Slack webhooks do not require secrets as they use URL-based authentication.
+        Creates a new restore from a previously completed backup. The archivable (site or
+        environment) is inferred from the backup. The restore is created with a `pending`
+        status and an async job is dispatched to orchestrate the restic restore via an ECS task.
       authenticated: true
       deprecated: false
     headers:
@@ -504,204 +304,10 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      type:
+      backup_id:
         custom: []
-        name: type
-        description: 'The webhook type. Options: `http`, `slack`. Default: http.'
-        required: false
-        example: http
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      url:
-        custom: []
-        name: url
-        description: 'The webhook URL. For HTTP: must use HTTPS. For Slack: must be a Slack webhook URL.'
-        required: true
-        example: 'https://example.com/webhook'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      events:
-        custom: []
-        name: events
-        description: 'Array of events to subscribe to. See available events below.'
-        required: true
-        example:
-          - site.created
-          - deployment.completed
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      enabled:
-        custom: []
-        name: enabled
-        description: 'Whether the webhook is enabled. Default: true.'
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      type: http
-      url: 'https://example.com/webhook'
-      events:
-        - site.created
-        - deployment.completed
-      enabled: true
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "type": "http",
-                  "url": "https://example.com/webhook",
-                  "events": ["site.created", "deployment.completed"],
-                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
-                  "enabled": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Webhook created successfully. Store the secret securely - it will not be shown again.",
-              "http_status": 201
-          }
-        headers: []
-        description: 'HTTP Webhook Created'
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "type": "slack",
-                  "url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
-                  "events": ["deployment.completed", "deployment.failed"],
-                  "enabled": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Slack webhook created successfully.",
-              "http_status": 201
-          }
-        headers: []
-        description: 'Slack Webhook Created'
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-              "data": {},
-              "errors": {"events": ["At least one event must be specified."]},
-              "message": "Validation failed",
-              "http_status": 422
-          }
-        headers: []
-        description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PUT
-    uri: 'api/v1/vector/webhooks/{webhook}'
-    metadata:
-      custom: []
-      groupName: Webhooks
-      groupDescription: |-
-
-        Manage webhooks that receive site event notifications. Webhooks are called when
-        events occur on your sites (deployments, status changes, etc.).
-
-        Supports both HTTP webhooks and Slack webhooks for notifications.
-
-        #### Webhook Signature Verification
-
-        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-        authenticity. The header format is:
-
-        ```
-        X-Vector-Signature: t=1234567890,v1=abc123...
-        ```
-
-        To verify a webhook:
-
-        1. Parse the timestamp (`t`) and signature (`v1`) from the header
-        2. Construct the signed message: `{timestamp}.{raw_request_body}`
-        3. Compute HMAC-SHA256 using your webhook secret as the key
-        4. Compare with the provided signature using constant-time comparison
-        5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-        Example verification (PHP):
-
-        ```php
-        $header = $request->header('X-Vector-Signature');
-        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-        $timestamp = $matches[1];
-        $signature = $matches[2];
-
-        $message = $timestamp . '.' . $request->getContent();
-        $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-        if (!hash_equals($expected, $signature)) {
-            throw new Exception('Invalid signature');
-        }
-
-        if (abs(time() - (int)$timestamp) > 300) {
-            throw new Exception('Timestamp too old');
-        }
-        ```
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update Webhook'
-      description: |-
-        Updates an existing webhook configuration. The secret cannot be updated
-        through this endpoint - use the rotate-secret endpoint instead.
-
-        The webhook type cannot be changed after creation.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      webhook:
-        custom: []
-        name: webhook
-        description: 'The webhook ID.'
+        name: backup_id
+        description: 'The ID of a completed backup to restore from. Must be a valid ULID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdi
         type: string
@@ -709,39 +315,35 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      url:
+      scope:
         custom: []
-        name: url
-        description: 'The webhook URL. Must use HTTPS for HTTP webhooks.'
+        name: scope
+        description: 'The restore scope (full, database, files). Default: full.'
         required: false
-        example: 'https://example.com/new-webhook'
+        example: full
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      events:
+      search_replace:
         custom: []
-        name: events
-        description: 'Array of events to subscribe to.'
+        name: search_replace
+        description: 'Optional search and replace pairs.'
         required: false
         example:
-          - site.created
-          - site.updated
+          -
+            from: example.org
+            to: example.com
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
-      enabled:
+      drop_tables:
         custom: []
-        name: enabled
-        description: 'Whether the webhook is enabled.'
+        name: drop_tables
+        description: 'Whether to drop existing tables before restore. Default: false.'
         required: false
         example: false
         type: boolean
@@ -749,34 +351,78 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      disable_foreign_keys:
+        custom: []
+        name: disable_foreign_keys
+        description: 'Whether to disable foreign key checks during restore. Default: false.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'search_replace[].from':
+        custom: []
+        name: 'search_replace[].from'
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'search_replace[].to':
+        custom: []
+        name: 'search_replace[].to'
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      url: 'https://example.com/new-webhook'
-      events:
-        - site.created
-        - site.updated
-      enabled: false
+      backup_id: 01jfgxk4nqrst5vwx9yz0abcdi
+      scope: full
+      search_replace:
+        -
+          from: example.org
+          to: example.com
+      drop_tables: false
+      disable_foreign_keys: false
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
+        status: 202
         content: |-
           {
               "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "type": "http",
-                  "url": "https://example.com/new-webhook",
-                  "events": ["site.created", "site.updated"],
-                  "enabled": false,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T10:30:45+00:00"
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "archivable_type": "vector_site",
+                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "scope": "full",
+                  "trigger": "manual",
+                  "status": "pending",
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdi",
+                  "search_replace": [{"from": "example.org", "to": "example.com"}],
+                  "drop_tables": false,
+                  "disable_foreign_keys": false,
+                  "error_message": null,
+                  "duration_ms": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Webhook updated successfully",
-              "http_status": 200
+              "message": "Restore initiated successfully",
+              "http_status": 202
           }
         headers: []
-        description: Success
+        description: Accepted
       -
         custom: []
         status: 401
@@ -789,239 +435,18 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
       -
         custom: []
         status: 422
         content: |-
           {
               "data": {},
-              "errors": {"events": ["At least one event must be specified."]},
+              "errors": {"backup_id": ["A backup ID is required."]},
               "message": "Validation failed",
               "http_status": 422
           }
         headers: []
         description: 'Validation Error'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/vector/webhooks/{webhook}'
-    metadata:
-      custom: []
-      groupName: Webhooks
-      groupDescription: |-
-
-        Manage webhooks that receive site event notifications. Webhooks are called when
-        events occur on your sites (deployments, status changes, etc.).
-
-        Supports both HTTP webhooks and Slack webhooks for notifications.
-
-        #### Webhook Signature Verification
-
-        HTTP webhook payloads include an `X-Vector-Signature` header for verifying
-        authenticity. The header format is:
-
-        ```
-        X-Vector-Signature: t=1234567890,v1=abc123...
-        ```
-
-        To verify a webhook:
-
-        1. Parse the timestamp (`t`) and signature (`v1`) from the header
-        2. Construct the signed message: `{timestamp}.{raw_request_body}`
-        3. Compute HMAC-SHA256 using your webhook secret as the key
-        4. Compare with the provided signature using constant-time comparison
-        5. Validate timestamp is within tolerance (recommended: 5 minutes)
-
-        Example verification (PHP):
-
-        ```php
-        $header = $request->header('X-Vector-Signature');
-        preg_match('/t=(\d+),v1=([a-f0-9]+)/', $header, $matches);
-        $timestamp = $matches[1];
-        $signature = $matches[2];
-
-        $message = $timestamp . '.' . $request->getContent();
-        $expected = hash_hmac('sha256', $message, $webhookSecret);
-
-        if (!hash_equals($expected, $signature)) {
-            throw new Exception('Invalid signature');
-        }
-
-        if (abs(time() - (int)$timestamp) > 300) {
-            throw new Exception('Timestamp too old');
-        }
-        ```
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Delete Webhook'
-      description: |-
-        Deletes a webhook. All associated delivery logs will also be deleted.
-        This operation is irreversible.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      webhook:
-        custom: []
-        name: webhook
-        description: 'The webhook ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdi
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01JFGXK4NQRST5VWX9YZ0ABCDI",
-                  "account_id": 1,
-                  "type": "http",
-                  "url": "https://example.com/webhook",
-                  "events": ["site.created"],
-                  "enabled": true,
-                  "created_at": "2025-05-27T09:50:21+00:00",
-                  "updated_at": "2025-05-27T09:50:21+00:00"
-              },
-              "message": "Webhook deleted successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/vector/webhooks/{webhook}/rotate-secret'
-    metadata:
-      custom: []
-      groupName: Webhooks
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Rotate Secret'
-      description: |-
-        Generates a new secret for the webhook. The old secret is immediately
-        invalidated and any pending deliveries will use the new secret.
-
-        > [!WARNING]
-        > The new secret is returned ONLY in this response. Store it securely—it cannot be retrieved again.
-
-        This endpoint is only available for HTTP webhooks. Slack webhooks do not
-        use secrets.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      webhook:
-        custom: []
-        name: webhook
-        description: 'The webhook ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdi
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      webhook: 01jfgxk4nqrst5vwx9yz0abcdi
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "secret": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd"
-              },
-              "message": "Webhook secret rotated successfully. Store the new secret securely - it will not be shown again.",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-      -
-        custom: []
-        status: 404
-        content: '{"data": {}, "message": "Webhook not found", "http_status": 404}'
-        headers: []
-        description: 'Not Found'
     responseFields: []
     auth:
       - headers

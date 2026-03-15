@@ -1,31 +1,28 @@
-name: Restores
+name: Backups
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/vector/restores
+    uri: api/v1/vector/backups
     metadata:
       custom: []
-      groupName: Restores
+      groupName: Backups
       groupDescription: ''
       subgroup: ''
       subgroupDescription: |-
-        Manage on-demand restores for Vector sites and environments.
-        Restores use restic snapshots from a previously completed backup and are orchestrated
-        via ECS tasks.
+        Manage on-demand and scheduled backups for Vector sites and environments.
+        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
 
-        #### Restore Status Lifecycle
+        #### Backup Status Lifecycle
 
-        - `pending` - Restore record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic restore
-        - `completed` - Restore finished successfully
-        - `failed` - Restore failed (see error_message for details)
-      title: 'List Restores'
-      description: |-
-        Retrieves a paginated list of restores, optionally filtered by type, site, environment,
-        or backup.
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      title: 'List Backups'
+      description: 'Retrieves a paginated list of backups, optionally filtered by type, site, or environment.'
       authenticated: true
       deprecated: false
     headers:
@@ -68,17 +65,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      backup_id:
-        custom: []
-        name: backup_id
-        description: 'Filter by backup ID.'
-        required: false
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       per_page:
         custom: []
         name: per_page
@@ -105,7 +91,6 @@ endpoints:
       type: site
       site_id: 01jfgxk4nqrst5vwx9yz0abcde
       environment_id: 01jfgxk4nqrst5vwx9yz0abcde
-      backup_id: 01jfgxk4nqrst5vwx9yz0abcde
       per_page: 25
       page: 1
     bodyParameters: []
@@ -119,18 +104,15 @@ endpoints:
           {
               "data": [
                   {
-                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
                       "archivable_type": "vector_site",
                       "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "type": "manual",
                       "scope": "full",
-                      "trigger": "manual",
                       "status": "completed",
-                      "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                      "search_replace": null,
-                      "drop_tables": false,
-                      "disable_foreign_keys": false,
-                      "error_message": null,
-                      "duration_ms": 45200,
+                      "description": "Pre-deployment backup",
+                      "file_snapshot_id": "abc123def456",
+                      "database_snapshot_id": "ghi789jkl012",
                       "started_at": "2025-01-15T12:00:00+00:00",
                       "completed_at": "2025-01-15T12:00:00+00:00",
                       "created_at": "2025-01-15T12:00:00+00:00",
@@ -139,7 +121,7 @@ endpoints:
               ],
               "links": {},
               "meta": {},
-              "message": "Restores retrieved successfully",
+              "message": "Backups retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -168,25 +150,24 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/restores/{vectorRestore}'
+    uri: 'api/v1/vector/backups/{vectorBackup}'
     metadata:
       custom: []
-      groupName: Restores
+      groupName: Backups
       groupDescription: ''
       subgroup: ''
       subgroupDescription: |-
-        Manage on-demand restores for Vector sites and environments.
-        Restores use restic snapshots from a previously completed backup and are orchestrated
-        via ECS tasks.
+        Manage on-demand and scheduled backups for Vector sites and environments.
+        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
 
-        #### Restore Status Lifecycle
+        #### Backup Status Lifecycle
 
-        - `pending` - Restore record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic restore
-        - `completed` - Restore finished successfully
-        - `failed` - Restore failed (see error_message for details)
-      title: 'Get Restore'
-      description: 'Retrieves details of a specific restore.'
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      title: 'Get Backup'
+      description: 'Retrieves details of a specific backup.'
       authenticated: true
       deprecated: false
     headers:
@@ -194,19 +175,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorRestore:
+      vectorBackup:
         custom: []
-        name: vectorRestore
-        description: 'The restore ID.'
+        name: vectorBackup
+        description: 'The backup ID.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorRestore: 01jfgxk4nqrst5vwx9yz0abcdh
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -219,24 +200,21 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
                   "archivable_type": "vector_site",
                   "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "type": "manual",
                   "scope": "full",
-                  "trigger": "manual",
                   "status": "completed",
-                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "search_replace": [{"from": "example.org", "to": "example.com"}],
-                  "drop_tables": false,
-                  "disable_foreign_keys": false,
-                  "error_message": null,
-                  "duration_ms": 45200,
+                  "description": "Pre-deployment backup",
+                  "file_snapshot_id": "abc123def456",
+                  "database_snapshot_id": "ghi789jkl012",
                   "started_at": "2025-01-15T12:00:00+00:00",
                   "completed_at": "2025-01-15T12:00:00+00:00",
                   "created_at": "2025-01-15T12:00:00+00:00",
                   "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Restore retrieved successfully",
+              "message": "Backup retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -256,7 +234,146 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Restore not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/backups/{vectorBackup}/downloads/{vectorBackupDownload}'
+    metadata:
+      custom: []
+      groupName: Backups
+      groupDescription: ''
+      subgroup: 'Backup Downloads'
+      subgroupDescription: |-
+        Manage backup download requests. When a download is
+        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
+        complete, a presigned download URL is available for a limited time.
+
+        #### Download Status Lifecycle
+
+        - `pending` - Download record created, waiting for ECS task to start
+        - `processing` - ECS task is archiving the backup snapshots
+        - `completed` - Archive uploaded to S3, presigned URL available
+        - `failed` - Download failed (see error_message for details)
+      title: 'Get Backup Download'
+      description: |-
+        Retrieves the status of a backup download. If the download is complete and
+        not expired, includes a presigned download URL.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorBackupDownload:
+        custom: []
+        name: vectorBackupDownload
+        description: 'The download ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      vectorBackupDownload: 01jfgxk4nqrst5vwx9yz0abcdh
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "completed",
+                  "s3_key": "backups/downloads/01jfgxk4nqrst5vwx9yz0abcdh.tar.gz",
+                  "size_bytes": 52428800,
+                  "duration_ms": 12500,
+                  "error_message": null,
+                  "download_url": "https://s3.amazonaws.com/bucket/backups/downloads/01jfgxk4nqrst5vwx9yz0abcdh.tar.gz?presigned=...",
+                  "download_expires_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "processing",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Backup download retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Pending
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup download not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -271,28 +388,27 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/vector/restores
+    uri: api/v1/vector/backups
     metadata:
       custom: []
-      groupName: Restores
+      groupName: Backups
       groupDescription: ''
       subgroup: ''
       subgroupDescription: |-
-        Manage on-demand restores for Vector sites and environments.
-        Restores use restic snapshots from a previously completed backup and are orchestrated
-        via ECS tasks.
+        Manage on-demand and scheduled backups for Vector sites and environments.
+        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
 
-        #### Restore Status Lifecycle
+        #### Backup Status Lifecycle
 
-        - `pending` - Restore record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic restore
-        - `completed` - Restore finished successfully
-        - `failed` - Restore failed (see error_message for details)
-      title: 'Create Restore'
+        - `pending` - Backup record created, waiting for ECS task to start
+        - `processing` - ECS task is running the restic backup
+        - `completed` - Backup finished successfully, snapshot available
+        - `failed` - Backup failed (see error details in callback logs)
+      title: 'Create Backup'
       description: |-
-        Creates a new restore from a previously completed backup. The archivable (site or
-        environment) is inferred from the backup. The restore is created with a `pending`
-        status and an async job is dispatched to orchestrate the restic restore via an ECS task.
+        Creates a new backup for the specified site or environment. The backup is created with a
+        `pending` status and an async job is dispatched to orchestrate the restic backup via an
+        ECS task.
       authenticated: true
       deprecated: false
     headers:
@@ -304,12 +420,34 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      backup_id:
+      site_id:
         custom: []
-        name: backup_id
-        description: 'The ID of a completed backup to restore from. Must be a valid ULID.'
+        name: site_id
+        description: 'The site ID (required if environment_id not provided).'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      environment_id:
+        custom: []
+        name: environment_id
+        description: 'The environment ID (required if site_id not provided).'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      type:
+        custom: []
+        name: type
+        description: 'The backup type (manual, scheduled).'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdi
+        example: manual
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -318,7 +456,7 @@ endpoints:
       scope:
         custom: []
         name: scope
-        description: 'The restore scope (full, database, files). Default: full.'
+        description: 'The backup scope (full, database, files). Default: full.'
         required: false
         example: full
         type: string
@@ -326,73 +464,23 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      search_replace:
+      description:
         custom: []
-        name: search_replace
-        description: 'Optional search and replace pairs.'
+        name: description
+        description: 'Optional description for the backup. Max 500 characters.'
         required: false
-        example:
-          -
-            from: example.org
-            to: example.com
-        type: 'string[]'
+        example: 'Pre-deployment backup'
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      drop_tables:
-        custom: []
-        name: drop_tables
-        description: 'Whether to drop existing tables before restore. Default: false.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      disable_foreign_keys:
-        custom: []
-        name: disable_foreign_keys
-        description: 'Whether to disable foreign key checks during restore. Default: false.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      'search_replace[].from':
-        custom: []
-        name: 'search_replace[].from'
-        description: 'Must not be greater than 255 characters.'
-        required: true
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'search_replace[].to':
-        custom: []
-        name: 'search_replace[].to'
-        description: 'Must not be greater than 255 characters.'
-        required: true
-        example: g
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanBodyParameters:
-      backup_id: 01jfgxk4nqrst5vwx9yz0abcdi
+      site_id: 01jfgxk4nqrst5vwx9yz0abcde
+      environment_id: 01jfgxk4nqrst5vwx9yz0abcde
+      type: manual
       scope: full
-      search_replace:
-        -
-          from: example.org
-          to: example.com
-      drop_tables: false
-      disable_foreign_keys: false
+      description: 'Pre-deployment backup'
     fileParameters: []
     responses:
       -
@@ -401,24 +489,21 @@ endpoints:
         content: |-
           {
               "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
                   "archivable_type": "vector_site",
                   "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "type": "manual",
                   "scope": "full",
-                  "trigger": "manual",
                   "status": "pending",
-                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdi",
-                  "search_replace": [{"from": "example.org", "to": "example.com"}],
-                  "drop_tables": false,
-                  "disable_foreign_keys": false,
-                  "error_message": null,
-                  "duration_ms": null,
+                  "description": "Pre-deployment backup",
+                  "file_snapshot_id": null,
+                  "database_snapshot_id": null,
                   "started_at": null,
                   "completed_at": null,
                   "created_at": "2025-01-15T12:00:00+00:00",
                   "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Restore initiated successfully",
+              "message": "Backup initiated successfully",
               "http_status": 202
           }
         headers: []
@@ -441,12 +526,114 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"backup_id": ["A backup ID is required."]},
+              "errors": {"site_id": ["Either a site ID or environment ID is required."]},
               "message": "Validation failed",
               "http_status": 422
           }
         headers: []
         description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/backups/{vectorBackup}/downloads'
+    metadata:
+      custom: []
+      groupName: Backups
+      groupDescription: ''
+      subgroup: 'Backup Downloads'
+      subgroupDescription: |-
+        Manage backup download requests. When a download is
+        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
+        complete, a presigned download URL is available for a limited time.
+
+        #### Download Status Lifecycle
+
+        - `pending` - Download record created, waiting for ECS task to start
+        - `processing` - ECS task is archiving the backup snapshots
+        - `completed` - Archive uploaded to S3, presigned URL available
+        - `failed` - Download failed (see error_message for details)
+      title: 'Create Backup Download'
+      description: |-
+        Creates a new download request for the specified backup. The download is created with a
+        `pending` status and an async job is dispatched to archive the backup snapshots.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      vectorBackup:
+        custom: []
+        name: vectorBackup
+        description: 'The backup ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "pending",
+                  "s3_key": null,
+                  "size_bytes": null,
+                  "duration_ms": null,
+                  "error_message": null,
+                  "download_url": null,
+                  "download_expires_at": null,
+                  "started_at": null,
+                  "completed_at": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Backup download initiated",
+              "http_status": 202
+          }
+        headers: []
+        description: Accepted
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth:
       - headers

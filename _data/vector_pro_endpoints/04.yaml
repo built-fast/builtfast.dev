@@ -1,28 +1,63 @@
-name: Backups
-description: ''
+name: Environments
+description: |-
+
+  Manage deployment environments for sites. Each site can have multiple environments
+  with their own domains, PHP versions, and secrets. Environment names use a slug format
+  (lowercase letters, numbers, and hyphens).
+
+  Environments are created with a `pending` status and transition to `active` once
+  container provisioning completes. Each environment gets a unique subdomain under
+  your registered domain.
+
+  #### Environment Status Lifecycle
+
+  - `pending` - Environment creation initiated, provisioning in progress
+  - `active` - Environment is fully operational
+  - `suspended` - Environment is paused
+  - `terminating` - Environment deletion in progress
+  - `terminated` - Environment has been fully removed
+
+  #### Production Environment
+
+  Each site can have at most one production environment (`is_production: true`).
+  The production environment receives CDN integration via Bunny.net.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/vector/backups
+    uri: api/v1/vector/environments
     metadata:
       custom: []
-      groupName: Backups
-      groupDescription: ''
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        #### Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        #### Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
       subgroup: ''
-      subgroupDescription: |-
-        Manage on-demand and scheduled backups for Vector sites and environments.
-        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
-
-        #### Backup Status Lifecycle
-
-        - `pending` - Backup record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic backup
-        - `completed` - Backup finished successfully, snapshot available
-        - `failed` - Backup failed (see error details in callback logs)
-      title: 'List Backups'
-      description: 'Retrieves a paginated list of backups, optionally filtered by type, site, or environment.'
+      subgroupDescription: ''
+      title: 'List Environments'
+      description: |-
+        Retrieves a paginated list of environments. Filter by site using the optional
+        `site` parameter, or list all environments for the authenticated account.
       authenticated: true
       deprecated: false
     headers:
@@ -32,32 +67,10 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
-      type:
+      site:
         custom: []
-        name: type
-        description: 'Filter by archivable type (site, environment).'
-        required: false
-        example: site
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      site_id:
-        custom: []
-        name: site_id
-        description: 'Filter by site ID.'
-        required: false
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      environment_id:
-        custom: []
-        name: environment_id
-        description: 'Filter by environment ID.'
+        name: site
+        description: 'Filter by site ID or subdomain.'
         required: false
         example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
@@ -88,9 +101,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      type: site
-      site_id: 01jfgxk4nqrst5vwx9yz0abcde
-      environment_id: 01jfgxk4nqrst5vwx9yz0abcde
+      site: 01jfgxk4nqrst5vwx9yz0abcde
       per_page: 25
       page: 1
     bodyParameters: []
@@ -105,116 +116,32 @@ endpoints:
               "data": [
                   {
                       "id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                      "archivable_type": "vector_site",
-                      "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
-                      "type": "manual",
-                      "scope": "full",
-                      "status": "completed",
-                      "description": "Pre-deployment backup",
-                      "file_snapshot_id": "abc123def456",
-                      "database_snapshot_id": "ghi789jkl012",
-                      "started_at": "2025-01-15T12:00:00+00:00",
-                      "completed_at": "2025-01-15T12:00:00+00:00",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "provisioning_step": "complete",
+                      "failure_reason": null,
+                      "php_version": "8.3",
+                      "tags": ["live", "primary"],
+                      "platform_domain": "wispy-dust--prod.vectorpages.com",
+                      "custom_domain": "example.com",
+                      "dns_target": "site-abc123.b-cdn.net",
+                      "custom_domain_certificate": {
+                          "status": "issued",
+                          "dns_validation_records": null
+                      },
+                      "subdomain": "wispy-dust",
+                      "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                      "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                       "created_at": "2025-01-15T12:00:00+00:00",
                       "updated_at": "2025-01-15T12:00:00+00:00"
                   }
               ],
               "links": {},
               "meta": {},
-              "message": "Backups retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Success
-      -
-        custom: []
-        status: 401
-        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
-        status: 403
-        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
-        headers: []
-        description: Unauthorized
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/vector/backups/{vectorBackup}'
-    metadata:
-      custom: []
-      groupName: Backups
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: |-
-        Manage on-demand and scheduled backups for Vector sites and environments.
-        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
-
-        #### Backup Status Lifecycle
-
-        - `pending` - Backup record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic backup
-        - `completed` - Backup finished successfully, snapshot available
-        - `failed` - Backup failed (see error details in callback logs)
-      title: 'Get Backup'
-      description: 'Retrieves details of a specific backup.'
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_API_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      vectorBackup:
-        custom: []
-        name: vectorBackup
-        description: 'The backup ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "archivable_type": "vector_site",
-                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
-                  "type": "manual",
-                  "scope": "full",
-                  "status": "completed",
-                  "description": "Pre-deployment backup",
-                  "file_snapshot_id": "abc123def456",
-                  "database_snapshot_id": "ghi789jkl012",
-                  "started_at": "2025-01-15T12:00:00+00:00",
-                  "completed_at": "2025-01-15T12:00:00+00:00",
-                  "created_at": "2025-01-15T12:00:00+00:00",
-                  "updated_at": "2025-01-15T12:00:00+00:00"
-              },
-              "message": "Backup retrieved successfully",
+              "message": "Environments retrieved successfully",
               "http_status": 200
           }
         headers: []
@@ -234,7 +161,127 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        #### Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        #### Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Environment'
+      description: 'Retrieves details of a specific environment.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -249,27 +296,25 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/vector/backups/{vectorBackup}/downloads/{vectorBackupDownload}'
+    uri: 'api/v1/vector/environments/{env}/secrets'
     metadata:
       custom: []
-      groupName: Backups
+      groupName: Environments
       groupDescription: ''
-      subgroup: 'Backup Downloads'
+      subgroup: Secrets
       subgroupDescription: |-
-        Manage backup download requests. When a download is
-        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
-        complete, a presigned download URL is available for a limited time.
+        Manage environment-level secrets and environment variables for a specific environment.
+        These are injected during site deployment and are scoped to a single environment.
 
-        #### Download Status Lifecycle
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
 
-        - `pending` - Download record created, waiting for ECS task to start
-        - `processing` - ECS task is archiving the backup snapshots
-        - `completed` - Archive uploaded to S3, presigned URL available
-        - `failed` - Download failed (see error_message for details)
-      title: 'Get Backup Download'
+        Certain keys are reserved for system use and cannot be used.
+      title: 'List Secrets'
       description: |-
-        Retrieves the status of a backup download. If the download is complete and
-        not expired, includes a presigned download URL.
+        Retrieves a paginated list of all secrets and environment variables for a specific environment.
+        Values are only included for environment variables (`is_secret=false`).
       authenticated: true
       deprecated: false
     headers:
@@ -277,10 +322,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorBackup:
+      env:
         custom: []
-        name: vectorBackup
-        description: 'The backup ID.'
+        name: env
+        description: 'The environment ID.'
         required: true
         example: 01jfgxk4nqrst5vwx9yz0abcdg
         type: string
@@ -288,22 +333,34 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      vectorBackupDownload:
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters:
+      per_page:
         custom: []
-        name: vectorBackupDownload
-        description: 'The download ID.'
-        required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdh
-        type: string
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 10
+        type: integer
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
-      vectorBackupDownload: 01jfgxk4nqrst5vwx9yz0abcdh
-    queryParameters: []
-    cleanQueryParameters: []
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 10
+      page: 1
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -313,51 +370,30 @@ endpoints:
         status: 200
         content: |-
           {
-              "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
-                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "status": "completed",
-                  "s3_key": "backups/downloads/01jfgxk4nqrst5vwx9yz0abcdh.tar.gz",
-                  "size_bytes": 52428800,
-                  "duration_ms": 12500,
-                  "error_message": null,
-                  "download_url": "https://s3.amazonaws.com/bucket/backups/downloads/01jfgxk4nqrst5vwx9yz0abcdh.tar.gz?presigned=...",
-                  "download_expires_at": "2025-01-15T12:00:00+00:00",
-                  "started_at": "2025-01-15T12:00:00+00:00",
-                  "completed_at": "2025-01-15T12:00:00+00:00",
-                  "created_at": "2025-01-15T12:00:00+00:00",
-                  "updated_at": "2025-01-15T12:00:00+00:00"
-              },
-              "message": "Backup download retrieved successfully",
+              "data": [
+                  {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "key": "STRIPE_SECRET_KEY",
+                      "is_secret": true,
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  },
+                  {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                      "key": "APP_ENV",
+                      "is_secret": false,
+                      "value": "production",
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Environment secrets retrieved successfully",
               "http_status": 200
           }
         headers: []
-        description: Completed
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
-                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "status": "processing",
-                  "s3_key": null,
-                  "size_bytes": null,
-                  "duration_ms": null,
-                  "error_message": null,
-                  "download_url": null,
-                  "download_expires_at": null,
-                  "started_at": null,
-                  "completed_at": null,
-                  "created_at": "2025-01-15T12:00:00+00:00",
-                  "updated_at": "2025-01-15T12:00:00+00:00"
-              },
-              "message": "Backup download retrieved successfully",
-              "http_status": 200
-          }
-        headers: []
-        description: Pending
+        description: Success
       -
         custom: []
         status: 401
@@ -373,7 +409,493 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Backup download not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage environment-level secrets and environment variables for a specific environment.
+        These are injected during site deployment and are scoped to a single environment.
+
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
+      title: 'Get Secret'
+      description: |-
+        Retrieves details of a specific environment secret or variable.
+        The value is only included for environment variables (`is_secret=false`).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment secret retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Secret
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "key": "APP_ENV",
+                  "is_secret": false,
+                  "value": "production",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment secret retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Environment Variable'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/deployments'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Deployments
+      subgroupDescription: |-
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        #### Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      title: 'List Deployments'
+      description: |-
+        Retrieves a paginated list of all deployments for a specific environment,
+        ordered by most recent first.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "status": "deployed",
+                      "stdout": "Deployment output...",
+                      "stderr": null,
+                      "actor": "user@example.com",
+                      "environment": {
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                          "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                          "your_customer_id": "cust_12345",
+                          "name": "production",
+                          "is_production": true,
+                          "status": "active",
+                          "php_version": "8.3",
+                          "tags": ["wordpress"],
+                          "fqdn": "example.com",
+                          "custom_domain": "example.com",
+                          "subdomain": "wispy-dust",
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
+                      },
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Deployments retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/deployments/{deployment}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Deployments
+      subgroupDescription: |-
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        #### Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      title: 'Get Deployment'
+      description: 'Retrieves details of a specific deployment including output logs and actor information.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      deployment:
+        custom: []
+        name: deployment
+        description: 'The deployment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      deployment: 01jfgxk4nqrst5vwx9yz0abcdh
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "deployed",
+                  "stdout": "Building project...\nUploading assets...\nDeployment complete.",
+                  "stderr": null,
+                  "actor": "user@example.com",
+                  "environment": {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "php_version": "8.3",
+                      "tags": ["wordpress"],
+                      "fqdn": "example.com",
+                      "custom_domain": "example.com",
+                      "subdomain": "wispy-dust",
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  },
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Deployment retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Deployment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/ssl'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: SSL
+      subgroupDescription: |-
+        Manage SSL provisioning for Vector environments.
+
+        SSL is automatically provisioned when environments are deployed. These endpoints
+        provide visibility into SSL status and manual intervention capabilities when
+        provisioning gets stuck.
+
+        ##### Environment Status
+
+        The main `status` field tracks the environment lifecycle:
+
+        - `pending` - Environment created, awaiting first deploy
+        - `provisioning` - Resources being provisioned (including SSL)
+        - `active` - Environment fully operational
+        - `failed` - Provisioning failed
+
+        ##### Provisioning Step
+
+        The `provisioning_step` field tracks detailed progress during provisioning:
+
+        - `null` - Not started
+        - `requesting_cert` - Requesting AWS ACM certificate
+        - `waiting_cert` - Waiting for certificate validation
+        - `deploying` - Deploying to Ymir
+        - `configuring_dns` - Configuring DNS records
+        - `ready` - Platform SSL complete (terminal for staging)
+        - `waiting_custom_dns` - Waiting for custom domain DNS (production only)
+        - `provisioning_cdn_ssl` - Requesting Let's Encrypt certificate
+        - `complete` - Fully complete (terminal for production with custom domain)
+      title: 'Get Status'
+      description: 'Get the current SSL provisioning status for an environment.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "SSL status retrieved",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -388,99 +910,1065 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/vector/backups
+    uri: 'api/v1/vector/environments/{env}/db/reset-password'
     metadata:
       custom: []
-      groupName: Backups
+      groupName: Environments
       groupDescription: ''
-      subgroup: ''
+      subgroup: Databases
       subgroupDescription: |-
-        Manage on-demand and scheduled backups for Vector sites and environments.
-        Backups use restic snapshots stored in S3 and are orchestrated via ECS tasks.
-
-        #### Backup Status Lifecycle
-
-        - `pending` - Backup record created, waiting for ECS task to start
-        - `processing` - ECS task is running the restic backup
-        - `completed` - Backup finished successfully, snapshot available
-        - `failed` - Backup failed (see error details in callback logs)
-      title: 'Create Backup'
+        Manage database credentials for production environments. Each environment has its
+        own isolated database with credentials that can be rotated for security.
+      title: 'Reset Password'
       description: |-
-        Creates a new backup for the specified site or environment. The backup is created with a
-        `pending` status and an async job is dispatched to orchestrate the restic backup via an
-        ECS task.
+        Rotates the database password for a production environment via Ymir.
+        The old password is immediately invalidated.
+
+        > [!WARNING]
+        > The new password is returned ONLY in this response. Store it securely—it cannot be retrieved again.
+
+        > [!NOTE]
+        > After rotating the password, you must redeploy the environment for your application to pick up the new credentials.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_API_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "database_user": "user_abc123_production",
+                  "database_password": "aBcD1234!@#$EfGh5678",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Database password reset successfully. Store the new password securely - it will not be shown again. Remember to redeploy your environment.",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 400
+        content: '{"data": {}, "message": "Environment does not have a database user configured. Deploy the environment first.", "http_status": 400}'
+        headers: []
+        description: 'No Database User'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 500
+        content: '{"data": {}, "message": "Failed to rotate database password", "http_status": 500}'
+        headers: []
+        description: 'Rotation Failed'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/db/promote'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database promote operations - promote dev database to an environment.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Create Database Promote'
+      description: |-
+        Promote the dev database to this environment. Exports the dev database,
+        then imports it into the environment's database.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      site_id:
+      drop_tables:
         custom: []
-        name: site_id
-        description: 'The site ID (required if environment_id not provided).'
+        name: drop_tables
+        description: 'Whether to drop existing tables before importing. Defaults to true.'
         required: false
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      environment_id:
-        custom: []
-        name: environment_id
-        description: 'The environment ID (required if site_id not provided).'
-        required: false
-        example: 01jfgxk4nqrst5vwx9yz0abcde
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      type:
-        custom: []
-        name: type
-        description: 'The backup type (manual, scheduled).'
-        required: true
-        example: manual
-        type: string
+        example: true
+        type: boolean
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      scope:
+      disable_foreign_keys:
         custom: []
-        name: scope
-        description: 'The backup scope (full, database, files). Default: full.'
+        name: disable_foreign_keys
+        description: 'Whether to disable foreign key checks during import. Defaults to true.'
         required: false
-        example: full
-        type: string
+        example: true
+        type: boolean
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: 'Optional description for the backup. Max 500 characters.'
-        required: false
-        example: 'Pre-deployment backup'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
         deprecated: false
     cleanBodyParameters:
-      site_id: 01jfgxk4nqrst5vwx9yz0abcde
-      environment_id: 01jfgxk4nqrst5vwx9yz0abcde
-      type: manual
-      scope: full
-      description: 'Pre-deployment backup'
+      drop_tables: true
+      disable_foreign_keys: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": null,
+                  "status": "pending",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": null,
+                  "completed_at": null
+              },
+              "message": "Database promote initiated",
+              "http_status": 202
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"environment": ["Environment must be in active state to promote database."]}, "message": "Environment must be in active state to promote database.", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"promote": ["A database promote is already in progress for this environment."]}, "message": "A database promote is already in progress for this environment.", "http_status": 422}'
+        headers: []
+        description: 'Already In Progress'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/db/promotes/{vectorDbPromote}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Database promote operations - promote dev database to an environment.
+      subgroup: Databases
+      subgroupDescription: ''
+      title: 'Get Promote Status'
+      description: 'Get the current status of a database promote operation.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorDbPromote:
+        custom: []
+        name: vectorDbPromote
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      promote:
+        custom: []
+        name: promote
+        description: 'The promote ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdf
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      vectorDbPromote: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      promote: 01jfgxk4nqrst5vwx9yz0abcdf
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "completed",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": 12500,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Database promote retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Completed
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdf",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_db_export_id": null,
+                  "status": "exporting",
+                  "options": {
+                      "drop_tables": true,
+                      "disable_foreign_keys": true,
+                      "search_replace": null
+                  },
+                  "duration_ms": null,
+                  "error_message": null,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": null
+              },
+              "message": "Database promote retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'In Progress'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Promote not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/environments/{env}/domain-changes/{vectorDomainChange}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Domains
+      subgroupDescription: |-
+        Check the status of domain change operations for an environment.
+        Domain changes are initiated via the environment update endpoint.
+
+        #### Domain Change Status Lifecycle
+
+        - `pending` - Domain change created, waiting to start
+        - `search_replacing` - Running search-replace on the database
+        - `syncing_env` - Syncing environment variables with new domain
+        - `redeploying` - Redeploying the environment
+        - `completed` - Domain change finished successfully
+        - `failed` - Domain change failed (see `error_message` for details)
+      title: 'Get Domain Change Status'
+      description: 'Get the current status of a domain change operation.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorDomainChange:
+        custom: []
+        name: vectorDomainChange
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      environment:
+        custom: []
+        name: environment
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      domainChange:
+        custom: []
+        name: domainChange
+        description: 'The domain change ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: architecto
+      vectorDomainChange: architecto
+      environment: 01jfgxk4nqrst5vwx9yz0abcde
+      domainChange: 01jfgxk4nqrst5vwx9yz0abcdh
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "status": "completed",
+                  "old_domain": "wispy-dust.vectorpages.com",
+                  "new_domain": "wispy-dust.vectorpages.com",
+                  "old_custom_domain": "example.org",
+                  "new_custom_domain": "example.com",
+                  "error_message": null,
+                  "duration_ms": 12450,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "started_at": "2025-01-15T12:00:00+00:00",
+                  "completed_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Domain change retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Domain change not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/environments'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        #### Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        #### Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Environment'
+      description: |-
+        Creates a new environment for a site. The environment is created with a
+        `pending` status and will transition to `active` once provisioning completes.
+
+        Each environment gets a unique auto-generated subdomain and uses the site's
+        configured domain.
+
+        **Important:** Only one environment per site can be marked as production
+        (`is_production: true`). The production environment receives CDN integration.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'A unique name for this environment (slug format: lowercase letters, numbers, hyphens; consecutive hyphens `--` are not allowed). Max 50 chars.'
+        required: true
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      custom_domain:
+        custom: []
+        name: custom_domain
+        description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
+        required: true
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      is_production:
+        custom: []
+        name: is_production
+        description: 'Whether this is the production environment. Only one per site. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      php_version:
+        custom: []
+        name: php_version
+        description: 'The PHP version for this environment. Options: 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5.'
+        required: true
+        example: '8.3'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Optional array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique.'
+        required: false
+        example:
+          - live
+          - primary
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: production
+      custom_domain: example.com
+      is_production: true
+      php_version: '8.3'
+      tags:
+        - live
+        - primary
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "pending",
+                  "provisioning_step": "pending",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "pending",
+                      "dns_validation_records": null
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment creation initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["Environment name must be lowercase letters, numbers, and hyphens only."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["Environment name must not contain consecutive hyphens (--)." ]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Consecutive Hyphens'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        #### Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        #### Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Environment'
+      description: |-
+        Updates an existing environment. Only the fields provided will be updated.
+
+        When `custom_domain` changes, a domain change operation is initiated asynchronously
+        (SSL certificate provisioning, search-replace, env sync, redeployment). The response
+        includes a `pending_domain_change` object for polling status. Returns 202 for domain
+        changes and 200 for metadata-only updates.
+
+        #### DNS Requirements
+
+        After setting a custom domain, the domain owner must create two types of DNS records:
+
+        1. **CNAME for traffic routing** — Point the custom domain to the `dns_target` value
+           (e.g., `example.com CNAME cdn-hostname.b-cdn.net`).
+        2. **CNAME(s) for SSL certificate validation** — Create the DNS records listed in
+           `custom_domain_certificate.dns_validation_records`. These are required by AWS ACM
+           to issue the SSL certificate. Until these records are created, the certificate
+           status will remain `waiting_validation`.
+
+        Poll the environment (GET) to check `custom_domain_certificate.status` for progress.
+        Possible values: `pending`, `requesting`, `waiting_validation`, `issued`, `failed`, `timed_out`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      custom_domain:
+        custom: []
+        name: custom_domain
+        description: 'A custom vanity domain for this environment. Must be a valid domain name. When changed, triggers infrastructure updates (CDN, DNS, SSL).'
+        required: false
+        example: example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      tags:
+        custom: []
+        name: tags
+        description: 'Array of tags for categorizing the environment. Each tag must be slug format (lowercase letters, numbers, hyphens), max 100 characters, and unique. Pass `null` to clear tags.'
+        required: false
+        example:
+          - live
+          - updated
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      custom_domain: example.com
+      tags:
+        - live
+        - updated
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.4",
+                  "tags": ["live", "updated"],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Metadata Update'
+      -
+        custom: []
+        status: 202
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "active",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": ["live", "primary"],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "pending",
+                      "dns_validation_records": [
+                          {"name": "_abc123.example.com", "type": "CNAME", "value": "_def456.acm-validations.aws"}
+                      ]
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                  "pending_domain_change": {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "status": "pending",
+                      "old_domain": "old.example.com",
+                      "new_domain": "example.com"
+                  },
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment update initiated, domain change in progress",
+              "http_status": 202
+          }
+        headers: []
+        description: 'Domain Change Initiated'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"environment": ["Environment must be in active state to change domain."]},
+              "message": "Environment must be in active state to change domain.",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Environment Not Active'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"domain_change": ["A domain change is already in progress for this environment."]},
+              "message": "A domain change is already in progress for this environment.",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Domain Change In Progress'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/environments/{env}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: |-
+
+        Manage deployment environments for sites. Each site can have multiple environments
+        with their own domains, PHP versions, and secrets. Environment names use a slug format
+        (lowercase letters, numbers, and hyphens).
+
+        Environments are created with a `pending` status and transition to `active` once
+        container provisioning completes. Each environment gets a unique subdomain under
+        your registered domain.
+
+        #### Environment Status Lifecycle
+
+        - `pending` - Environment creation initiated, provisioning in progress
+        - `active` - Environment is fully operational
+        - `suspended` - Environment is paused
+        - `terminating` - Environment deletion in progress
+        - `terminated` - Environment has been fully removed
+
+        #### Production Environment
+
+        Each site can have at most one production environment (`is_production: true`).
+        The production environment receives CDN integration via Bunny.net.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Environment'
+      description: |-
+        Initiates deletion of an environment. This terminates all associated
+        containers, deployments, and CDN resources. The environment status
+        transitions to `terminating` and eventually `terminated`.
+
+        This operation is irreversible. All environment data will be permanently removed.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
@@ -490,20 +1978,29 @@ endpoints:
           {
               "data": {
                   "id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "archivable_type": "vector_site",
-                  "archivable_id": "01jfgxk4nqrst5vwx9yz0abcde",
-                  "type": "manual",
-                  "scope": "full",
-                  "status": "pending",
-                  "description": "Pre-deployment backup",
-                  "file_snapshot_id": null,
-                  "database_snapshot_id": null,
-                  "started_at": null,
-                  "completed_at": null,
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "terminating",
+                  "provisioning_step": "complete",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust--prod.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "dns_target": "site-abc123.b-cdn.net",
+                  "custom_domain_certificate": {
+                      "status": "issued",
+                      "dns_validation_records": null
+                  },
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
                   "created_at": "2025-01-15T12:00:00+00:00",
                   "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Backup initiated successfully",
+              "message": "Environment deletion initiated",
               "http_status": 202
           }
         headers: []
@@ -522,11 +2019,153 @@ endpoints:
         description: Unauthorized
       -
         custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/secrets'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage environment-level secrets and environment variables for a specific environment.
+        These are injected during site deployment and are scoped to a single environment.
+
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
+      title: 'Create Secret'
+      description: |-
+        Creates a new secret or environment variable for a specific environment.
+        It will be available to this environment during deployment.
+
+        Set `is_secret` to `false` to create a plain environment variable instead of a secret.
+        Environment variables are stored as Lambda env vars (cheaper) and their values are
+        returned in API responses. Secrets are stored in AWS Secrets Manager and their values
+        are never returned.
+
+        The following keys are reserved and cannot be used:
+        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: true
+        example: STRIPE_SECRET_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The secret value.'
+        required: true
+        example: sk_live_xxxx
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      is_secret:
+        custom: []
+        name: is_secret
+        description: 'Whether this is a secret (stored in AWS Secrets Manager) or a plain environment variable. Default: true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_SECRET_KEY
+      value: sk_live_xxxx
+      is_secret: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment secret created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
         status: 422
         content: |-
           {
               "data": {},
-              "errors": {"site_id": ["Either a site ID or environment ID is required."]},
+              "errors": {"key": ["The secret key is required."]},
               "message": "Validation failed",
               "http_status": 422
           }
@@ -543,28 +2182,29 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: 'api/v1/vector/backups/{vectorBackup}/downloads'
+      - PUT
+    uri: 'api/v1/vector/secrets/{secret}'
     metadata:
       custom: []
-      groupName: Backups
+      groupName: Environments
       groupDescription: ''
-      subgroup: 'Backup Downloads'
+      subgroup: Secrets
       subgroupDescription: |-
-        Manage backup download requests. When a download is
-        requested, an async job archives the backup snapshots and uploads the archive to S3. Once
-        complete, a presigned download URL is available for a limited time.
+        Manage environment-level secrets and environment variables for a specific environment.
+        These are injected during site deployment and are scoped to a single environment.
 
-        #### Download Status Lifecycle
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
 
-        - `pending` - Download record created, waiting for ECS task to start
-        - `processing` - ECS task is archiving the backup snapshots
-        - `completed` - Archive uploaded to S3, presigned URL available
-        - `failed` - Download failed (see error_message for details)
-      title: 'Create Backup Download'
+        Certain keys are reserved for system use and cannot be used.
+      title: 'Update Secret'
       description: |-
-        Creates a new download request for the specified backup. The download is created with a
-        `pending` status and an async job is dispatched to archive the backup snapshots.
+        Updates an existing environment secret or variable. You can update the key, value,
+        is_secret flag, or any combination.
+
+        The following keys are reserved and cannot be used:
+        <kbd>AUTH_KEY</kbd>, <kbd>SECURE_AUTH_KEY</kbd>, <kbd>LOGGED_IN_KEY</kbd>, <kbd>NONCE_KEY</kbd>, <kbd>AUTH_SALT</kbd>, <kbd>SECURE_AUTH_SALT</kbd>, <kbd>LOGGED_IN_SALT</kbd>, <kbd>NONCE_SALT</kbd>, <kbd>AUTOMATIC_UPDATER_DISABLED</kbd>, <kbd>DISABLE_WP_CRON</kbd>, <kbd>DISALLOW_FILE_EDIT</kbd>, <kbd>DISALLOW_FILE_MODS</kbd>, <kbd>DOMAIN_CURRENT_SITE</kbd>, <kbd>WP_HOME</kbd>, <kbd>WP_SITEURL</kbd>, <kbd>YMIR_ASSETS_PATH</kbd>, <kbd>YMIR_ASSETS_URL</kbd>, <kbd>YMIR_CACHE_PREFIX</kbd>, <kbd>YMIR_CACHE_TABLE</kbd>, <kbd>YMIR_CDN_IMAGE_PROCESSING_ENABLED</kbd>, <kbd>YMIR_DISTRIBUTION_ID</kbd>, <kbd>YMIR_DOMAIN_NAMES</kbd>, <kbd>YMIR_ENVIRONMENT</kbd>, <kbd>YMIR_MAX_EXECUTION_TIME</kbd>, <kbd>YMIR_PRIMARY_DOMAIN_NAME</kbd>, <kbd>YMIR_PROJECT_TYPE</kbd>, <kbd>YMIR_PUBLIC_STORE</kbd>, <kbd>YMIR_REDIS_ENDPOINT</kbd>, <kbd>YMIR_SECRETS_PATH</kbd>, <kbd>YMIR_UPLOAD_URL</kbd>, <kbd>_HANDLER</kbd>, <kbd>AWS_ACCESS_KEY_ID</kbd>, <kbd>AWS_EXECUTION_ENV</kbd>, <kbd>AWS_LAMBDA_FUNCTION_MEMORY_SIZE</kbd>, <kbd>AWS_LAMBDA_FUNCTION_NAME</kbd>, <kbd>AWS_LAMBDA_FUNCTION_VERSION</kbd>, <kbd>AWS_LAMBDA_LOG_GROUP_NAME</kbd>, <kbd>AWS_LAMBDA_LOG_STREAM_NAME</kbd>, <kbd>AWS_LAMBDA_RUNTIME_API</kbd>, <kbd>AWS_REGION</kbd>, <kbd>AWS_SECRET_ACCESS_KEY</kbd>, <kbd>AWS_SESSION_TOKEN</kbd>, <kbd>LAMBDA_RUNTIME_DIR</kbd>, <kbd>LAMBDA_TASK_ROOT</kbd>, <kbd>TZ</kbd>
       authenticated: true
       deprecated: false
     headers:
@@ -572,50 +2212,78 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      vectorBackup:
+      secret:
         custom: []
-        name: vectorBackup
-        description: 'The backup ID.'
+        name: secret
+        description: 'The secret ID.'
         required: true
-        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      vectorBackup: 01jfgxk4nqrst5vwx9yz0abcdg
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      key:
+        custom: []
+        name: key
+        description: 'The new secret key name. Must start with a letter and contain only uppercase letters, numbers, and underscores.'
+        required: false
+        example: STRIPE_API_KEY
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      value:
+        custom: []
+        name: value
+        description: 'The new secret value.'
+        required: false
+        example: sk_live_yyyy
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      is_secret:
+        custom: []
+        name: is_secret
+        description: 'Whether this is a secret or a plain environment variable.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      key: STRIPE_API_KEY
+      value: sk_live_yyyy
+      is_secret: true
     fileParameters: []
     responses:
       -
         custom: []
-        status: 202
+        status: 200
         content: |-
           {
               "data": {
-                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
-                  "vector_backup_id": "01jfgxk4nqrst5vwx9yz0abcdg",
-                  "status": "pending",
-                  "s3_key": null,
-                  "size_bytes": null,
-                  "duration_ms": null,
-                  "error_message": null,
-                  "download_url": null,
-                  "download_expires_at": null,
-                  "started_at": null,
-                  "completed_at": null,
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "key": "STRIPE_API_KEY",
+                  "is_secret": true,
                   "created_at": "2025-01-15T12:00:00+00:00",
                   "updated_at": "2025-01-15T12:00:00+00:00"
               },
-              "message": "Backup download initiated",
-              "http_status": 202
+              "message": "Environment secret updated successfully",
+              "http_status": 200
           }
         headers: []
-        description: Accepted
+        description: Success
       -
         custom: []
         status: 401
@@ -631,7 +2299,494 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"data": {}, "message": "Backup not found", "http_status": 404}'
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"key": ["The secret key must start with a letter and contain only uppercase letters, numbers, and underscores."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/secrets/{secret}'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Secrets
+      subgroupDescription: |-
+        Manage environment-level secrets and environment variables for a specific environment.
+        These are injected during site deployment and are scoped to a single environment.
+
+        Items with `is_secret=true` (the default) are stored in AWS Secrets Manager and their values
+        are never returned in API responses. Items with `is_secret=false` are stored as Lambda
+        environment variables and their values ARE returned in API responses.
+
+        Certain keys are reserved for system use and cannot be used.
+      title: 'Delete Secret'
+      description: 'Deletes an environment secret.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      secret:
+        custom: []
+        name: secret
+        description: 'The secret ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      secret: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "key": "STRIPE_SECRET_KEY",
+                  "is_secret": true,
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment secret deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment secret not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/deployments'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Deployments
+      subgroupDescription: |-
+        Manage code deployments to environments. Each deployment represents a release of
+        your WordPress site to a specific environment (staging or production).
+
+        Deployments are created with a `pending` status and progress through `deploying`
+        to either `deployed` (success) or `failed`. Each deployment records the actor
+        who initiated it and timing information.
+
+        #### Deployment Status Lifecycle
+
+        - `pending` - Deployment created, waiting to start
+        - `deploying` - Deployment in progress
+        - `deployed` - Deployment completed successfully
+        - `failed` - Deployment failed (check stdout/stderr for details)
+      title: 'Create Deployment'
+      description: |-
+        Triggers a new deployment for the environment. The deployment starts with
+        `pending` status and progresses through `deploying` to either `deployed`
+        or `failed`.
+
+        The authenticated user is recorded as the deployment actor.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      include_uploads:
+        custom: []
+        name: include_uploads
+        description: 'Whether to include wp-content/uploads in the deployment. Defaults to false.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      include_database:
+        custom: []
+        name: include_database
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      include_uploads: false
+      include_database: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "pending",
+                  "stdout": null,
+                  "stderr": null,
+                  "actor": "user@example.com",
+                  "environment": {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                      "your_customer_id": "cust_12345",
+                      "name": "production",
+                      "is_production": true,
+                      "status": "active",
+                      "php_version": "8.3",
+                      "tags": ["wordpress"],
+                      "fqdn": "example.com",
+                      "custom_domain": "example.com",
+                      "subdomain": "wispy-dust",
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  },
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Deployment initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/rollback'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: Deployments
+      subgroupDescription: ''
+      title: 'Rollback Deployment'
+      description: |-
+        Triggers a rollback for the environment. By default, rolls back to the last
+        successful deployment. Optionally, you can specify a target_deployment_id to
+        rollback to a specific previous deployment.
+
+        The rollback creates a new deployment record with `pending` status that progresses
+        through `running` to either `completed` or `failed`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      target_deployment_id:
+        custom: []
+        name: target_deployment_id
+        description: 'Optional deployment ID to rollback to. Must be a previous successful deployment.'
+        required: false
+        example: 01jfgxk4nqrst5vwx9yz0abcdh
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      target_deployment_id: 01jfgxk4nqrst5vwx9yz0abcdh
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdi",
+                  "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "status": "pending",
+                  "stdout": null,
+                  "stderr": null,
+                  "actor": "user@example.com",
+                  "environment": {"id": "01jfgxk4nqrst5vwx9yz0abcdg", "name": "production", "is_production": true},
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Rollback initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Environment Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"target_deployment_id": ["The specified deployment does not exist for this environment or has no Ymir deployment ID."]}, "message": "Validation failed", "http_status": 422}'
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/ssl/nudge'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: SSL
+      subgroupDescription: ''
+      title: Nudge
+      description: |-
+        Manually nudge SSL provisioning for an environment. Use this when SSL
+        provisioning appears to be stuck or to retry after a failure.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      retry:
+        custom: []
+        name: retry
+        description: 'Whether to retry from a failed state. Default: false.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      retry: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "deploying",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "SSL provisioning advanced from waiting_cert to deploying",
+              "http_status": 200
+          }
+        headers: []
+        description: 'Provisioning Progressed'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "production",
+                  "is_production": true,
+                  "status": "provisioning",
+                  "provisioning_step": "waiting_custom_dns",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust.vectorpages.com",
+                  "custom_domain": "example.com",
+                  "subdomain": "wispy-dust",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "SSL provisioning is waiting and cannot advance yet. Current step: waiting_custom_dns",
+              "http_status": 200
+          }
+        headers: []
+        description: Waiting
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
     responseFields: []

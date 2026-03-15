@@ -22,6 +22,9 @@ tags:
     name: Account
     description: "\nManage your Vector Pro account settings including API keys, SSH keys, and global secrets."
   -
+    name: Authentication
+    description: ''
+  -
     name: Backups
     description: ''
   -
@@ -8908,7 +8911,7 @@ paths:
                 include_database:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -12753,6 +12756,99 @@ paths:
         required: true
         schema:
           type: integer
+  /api/v1/auth/whoami:
+    get:
+      summary: 'Get authenticated user details'
+      operationId: getAuthenticatedUserDetails
+      description: 'Returns the current user, active API token, and current account.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    user:
+                      id: 1
+                      name: 'John Doe'
+                      email: john@example.com
+                    token:
+                      name: vector-cli
+                      abilities:
+                        - '*'
+                      expires_at: null
+                      last_used_at: '2026-03-14T12:00:00.000000Z'
+                    account:
+                      id: 1
+                      name: 'Acme Inc'
+                  message: Success
+                  http_status: 200
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'John Doe'
+                          email:
+                            type: string
+                            example: john@example.com
+                      token:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: vector-cli
+                          abilities:
+                            type: array
+                            example:
+                              - '*'
+                            items:
+                              type: string
+                          expires_at:
+                            type: string
+                            example: null
+                          last_used_at:
+                            type: string
+                            example: '2026-03-14T12:00:00.000000Z'
+                      account:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'Acme Inc'
+                  message:
+                    type: string
+                    example: Success
+                  http_status:
+                    type: integer
+                    example: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Authentication
   /api/v1/vector/backups:
     get:
       summary: 'List Backups'

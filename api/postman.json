@@ -3116,7 +3116,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -4652,6 +4652,50 @@
                                     "name": "Not Found"
                                 }
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
+                {
+                    "name": "Get authenticated user details",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/whoami",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/whoami"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Returns the current user, active API token, and current account."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"John Doe\",\n            \"email\": \"john@example.com\"\n        },\n        \"token\": {\n            \"name\": \"vector-cli\",\n            \"abilities\": [\"*\"],\n            \"expires_at\": null,\n            \"last_used_at\": \"2026-03-14T12:00:00.000000Z\"\n        },\n        \"account\": {\n            \"id\": 1,\n            \"name\": \"Acme Inc\"\n        }\n    },\n    \"message\": \"Success\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n    \"message\": \"Unauthenticated.\"\n}",
+                            "name": "Unauthenticated"
                         }
                     ]
                 }
