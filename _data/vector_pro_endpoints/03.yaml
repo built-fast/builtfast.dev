@@ -1578,8 +1578,9 @@ endpoints:
         per-cluster on request.
 
         For files larger than the multipart threshold (~100MB), returns multiple
-        presigned URLs (one per part) along with an `upload_id`. Each part has a
-        maximum size of 5GB. For smaller files, returns a single presigned upload URL.
+        presigned URLs (one per part) along with an `upload_id`. Parts are 5GB each
+        (the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,
+        returns a single presigned upload URL.
 
         After uploading, call the "Run Import" endpoint to execute the import.
       authenticated: true
@@ -1633,7 +1634,7 @@ endpoints:
         name: content_length
         description: 'The file size in bytes.'
         required: true
-        example: 52428800
+        example: 104857600
         type: integer
         enumValues: []
         exampleWasSpecified: true
@@ -1719,7 +1720,7 @@ endpoints:
     cleanBodyParameters:
       scope: database
       filename: backup.sql.gz
-      content_length: 52428800
+      content_length: 104857600
       content_md5: d41d8cd98f00b204e9800998ecf8427e
       options:
         drop_tables: true
@@ -1760,7 +1761,7 @@ endpoints:
                   "started_at": null,
                   "completed_at": null,
                   "upload_url": "https://s3.amazonaws.com/bucket/imports/...",
-                  "upload_expires_at": "2025-01-15T13:00:00+00:00"
+                  "upload_expires_at": "2025-01-16T12:00:00+00:00"
               },
               "message": "Import session created successfully",
               "http_status": 201
@@ -1778,9 +1779,9 @@ endpoints:
                   "status": "pending",
                   "scope": null,
                   "filename": "backup.tar.gz",
-                  "content_length": 5368709120,
+                  "content_length": 161061273600,
                   "is_multipart": true,
-                  "part_count": 52,
+                  "part_count": 30,
                   "checksum": {
                       "provided_md5": null,
                       "s3_etag": null
@@ -1799,7 +1800,7 @@ endpoints:
                   "completed_at": null,
                   "upload_id": "abc123",
                   "upload_parts": [{"part_number": 1, "url": "https://s3.amazonaws.com/..."}],
-                  "upload_expires_at": "2025-01-15T13:00:00+00:00"
+                  "upload_expires_at": "2025-01-16T12:00:00+00:00"
               },
               "message": "Import session created successfully",
               "http_status": 201
@@ -2102,7 +2103,7 @@ endpoints:
                   "started_at": null,
                   "completed_at": null,
                   "upload_url": "https://s3.amazonaws.com/bucket/imports/...",
-                  "upload_expires_at": "2025-01-15T13:00:00+00:00"
+                  "upload_expires_at": "2025-01-16T12:00:00+00:00"
               },
               "message": "Import retrieved successfully",
               "http_status": 200
