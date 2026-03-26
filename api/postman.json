@@ -897,7 +897,7 @@
                                     "mode": "raw",
                                     "raw": "{\"scope\":\"database\",\"filename\":\"backup.sql.gz\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"example.org\",\"to\":\"example.com\"}}}"
                                 },
-                                "description": "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~100MB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 5GB each\n(the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,\nreturns a single presigned upload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                                "description": "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~5GB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 5GB each\n(the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,\nreturns a single presigned upload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
                             "response": [
                                 {
@@ -3101,7 +3101,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },

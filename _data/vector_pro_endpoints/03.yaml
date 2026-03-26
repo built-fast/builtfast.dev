@@ -1577,7 +1577,7 @@ endpoints:
         The maximum file size is 50GB by default. Higher limits can be configured
         per-cluster on request.
 
-        For files larger than the multipart threshold (~100MB), returns multiple
+        For files larger than the multipart threshold (~5GB), returns multiple
         presigned URLs (one per part) along with an `upload_id`. Parts are 5GB each
         (the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,
         returns a single presigned upload URL.
