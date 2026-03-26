@@ -897,14 +897,20 @@
                                     "mode": "raw",
                                     "raw": "{\"scope\":\"database\",\"filename\":\"backup.sql.gz\",\"content_length\":52428800,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"example.org\",\"to\":\"example.com\"}}}"
                                 },
-                                "description": "Create an archive import session. Returns a presigned S3 upload URL\nthat can be used to upload the archive file directly to storage.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                                "description": "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~100MB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Each part has a\nmaximum size of 5GB. For smaller files, returns a single presigned upload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
                             "response": [
                                 {
                                     "header": [],
                                     "code": 201,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": {\n                \"from\": \"example.org\",\n                \"to\": \"example.com\"\n            }\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/01jfgxk4nqrst5vwx9yz0abcdh.sql.gz?X-Amz-Expires=3600\",\n        \"upload_expires_at\": \"2025-01-15T13:00:00+00:00\"\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
-                                    "name": "Created"
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"is_multipart\": false,\n        \"part_count\": null,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": null\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-15T13:00:00+00:00\"\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created (single upload)"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 201,
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"scope\": null,\n        \"filename\": \"backup.tar.gz\",\n        \"content_length\": 5368709120,\n        \"is_multipart\": true,\n        \"part_count\": 52,\n        \"checksum\": {\n            \"provided_md5\": null,\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": null\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"upload_id\": \"abc123\",\n        \"upload_parts\": [{\"part_number\": 1, \"url\": \"https:\/\/s3.amazonaws.com\/...\"}],\n        \"upload_expires_at\": \"2025-01-15T13:00:00+00:00\"\n    },\n    \"message\": \"Import session created successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created (multipart upload)"
                                 },
                                 {
                                     "header": [],
@@ -927,7 +933,7 @@
                                 {
                                     "header": [],
                                     "code": 422,
-                                    "body": "{\"data\": {}, \"errors\": {\"site\": [\"Site must be in active state to import archive.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
+                                    "body": "{\"data\": {}, \"errors\": {\"site\": [\"Site must be in active state to import.\"]}, \"message\": \"Validation failed\", \"http_status\": 422}",
                                     "name": "Validation Error"
                                 }
                             ]
@@ -966,14 +972,17 @@
                                         "value": "application\/json"
                                     }
                                 ],
-                                "body": null,
-                                "description": "Execute an archive import from S3 after the file has been uploaded via the\npresigned URL. Dispatches an async job to perform the import.\n\nThe import must be in `pending` or `uploaded` status and not expired."
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"parts\":[\"architecto\"]}"
+                                },
+                                "description": "Execute an archive import from S3 after the file has been uploaded via the\npresigned URL(s). Dispatches an async job to perform the import.\n\nFor multipart uploads, provide the `parts` array containing the\n`part_number` and `etag` for each uploaded part. Each part can be up to\n5GB. The server will finalize the multipart upload before starting the\nimport job.\n\nThe import must be in `pending` or `uploaded` status and not expired."
                             },
                             "response": [
                                 {
                                     "header": [],
                                     "code": 202,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"uploaded\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": {\n                \"from\": \"example.org\",\n                \"to\": \"example.com\"\n            }\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-15T12:00:01+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Archive import started\",\n    \"http_status\": 202\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"uploaded\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"is_multipart\": false,\n        \"part_count\": null,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": null\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-15T12:00:01+00:00\",\n        \"started_at\": null,\n        \"completed_at\": null\n    },\n    \"message\": \"Archive import started\",\n    \"http_status\": 202\n}",
                                     "name": "Accepted"
                                 },
                                 {
@@ -1005,6 +1014,12 @@
                                     "code": 422,
                                     "body": "{\"data\": {}, \"errors\": {\"expires_at\": [\"Please create a new import session\"]}, \"message\": \"Import session has expired\", \"http_status\": 422}",
                                     "name": "Expired"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\"data\": {}, \"errors\": {\"parts\": [\"Failed to complete multipart upload\"]}, \"message\": \"Failed to finalize upload\", \"http_status\": 422}",
+                                    "name": "Multipart Failed"
                                 }
                             ]
                         },
@@ -1043,19 +1058,19 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Get the current status of an archive import operation. If the import is still\npending and not expired, includes a fresh presigned upload URL."
+                                "description": "Get the current status of an archive import operation. If the import is still\npending and not expired, includes fresh presigned upload URL(s)."
                             },
                             "response": [
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": {\n                \"from\": \"example.org\",\n                \"to\": \"example.com\"\n            }\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/01jfgxk4nqrst5vwx9yz0abcdh.sql.gz?X-Amz-Expires=3600\",\n        \"upload_expires_at\": \"2025-01-15T13:00:00+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"pending\",\n        \"scope\": null,\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"is_multipart\": false,\n        \"part_count\": null,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": null\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": null\n        },\n        \"duration_ms\": null,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": null,\n        \"started_at\": null,\n        \"completed_at\": null,\n        \"upload_url\": \"https:\/\/s3.amazonaws.com\/bucket\/imports\/...\",\n        \"upload_expires_at\": \"2025-01-15T13:00:00+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Pending"
                                 },
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"completed\",\n        \"scope\": \"full\",\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": {\n                \"from\": \"example.org\",\n                \"to\": \"example.com\"\n            }\n        },\n        \"duration_ms\": 30000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-15T12:00:01+00:00\",\n        \"started_at\": \"2025-01-15T12:00:02+00:00\",\n        \"completed_at\": \"2025-01-15T12:00:32+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"status\": \"completed\",\n        \"scope\": \"full\",\n        \"filename\": \"backup.sql.gz\",\n        \"content_length\": 52428800,\n        \"is_multipart\": false,\n        \"part_count\": null,\n        \"checksum\": {\n            \"provided_md5\": \"d41d8cd98f00b204e9800998ecf8427e\",\n            \"s3_etag\": \"d41d8cd98f00b204e9800998ecf8427e\"\n        },\n        \"metadata\": null,\n        \"options\": {\n            \"drop_tables\": true,\n            \"disable_foreign_keys\": true,\n            \"search_replace\": null\n        },\n        \"duration_ms\": 30000,\n        \"error_message\": null,\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"uploaded_at\": \"2025-01-15T12:00:01+00:00\",\n        \"started_at\": \"2025-01-15T12:00:02+00:00\",\n        \"completed_at\": \"2025-01-15T12:00:32+00:00\"\n    },\n    \"message\": \"Import retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Completed"
                                 },
                                 {
