@@ -46,6 +46,11 @@ endpoints:
       description: |-
         Retrieves a paginated list of all sites for the authenticated account.
         Results include each site's environments and their associated domains.
+
+        Use `search` to filter by customer ID or subdomain, `status` to filter by
+        site lifecycle state, and `sort`/`direction` to control ordering. The
+        `last_deployed_at` field is computed from the most recent completed
+        deployment across all environments and can also be used as a sort field.
       authenticated: true
       deprecated: false
     headers:
@@ -66,6 +71,50 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      search:
+        custom: []
+        name: search
+        description: 'Search by `your_customer_id` or `subdomain` (partial, case-insensitive).'
+        required: false
+        example: acme
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Filter by site status. Must be one of: `pending`, `activation_requested`, `active`, `suspension_requested`, `suspended`, `unsuspension_requested`, `termination_requested`, `terminated`, `canceled`.'
+        required: false
+        example: active
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Sort results by the given field. Must be one of: `created_at`, `updated_at`, `status`, `your_customer_id`, `last_deployed_at`. Default: `created_at`.'
+        required: false
+        example: your_customer_id
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      direction:
+        custom: []
+        name: direction
+        description: 'Sort direction. Must be `asc` or `desc`. Default: `desc`.'
+        required: false
+        example: asc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       page:
         custom: []
         name: page
@@ -79,6 +128,10 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       per_page: 25
+      search: acme
+      status: active
+      sort: your_customer_id
+      direction: asc
       page: 1
     bodyParameters: []
     cleanBodyParameters: []
@@ -94,10 +147,17 @@ endpoints:
                       "id": "01jfgxk4nqrst5vwx9yz0abcde",
                       "your_customer_id": "cust_12345",
                       "status": "active",
+                      "dev_php_version": "8.3",
                       "tags": ["wordpress", "production"],
                       "dev_domain": "dev.wispy-dust.vectorpages.com",
                       "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
                       "dev_db_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                      "dev_sftp": {
+                          "hostname": "ssh.vectorpages.com",
+                          "port": 22,
+                          "username": "wispy-dust"
+                      },
+                      "last_deployed_at": "2025-06-10T14:30:00+00:00",
                       "environments": [
                           {
                               "id": "01jfgxk4nqrst5vwx9yz0abcdg",
@@ -135,6 +195,18 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"status": ["The status must be a valid site status."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers
@@ -1577,10 +1649,10 @@ endpoints:
         The maximum file size is 50GB by default. Higher limits can be configured
         per-cluster on request.
 
-        For files larger than the multipart threshold (~5GB), returns multiple
-        presigned URLs (one per part) along with an `upload_id`. Parts are 5GB each
-        (the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,
-        returns a single presigned upload URL.
+        For files larger than the multipart threshold (~100MB), returns multiple
+        presigned URLs (one per part) along with an `upload_id`. Parts are 100MB each,
+        so a 1GB file requires 10 parts. For smaller files, returns a single presigned
+        upload URL.
 
         After uploading, call the "Run Import" endpoint to execute the import.
       authenticated: true

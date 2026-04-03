@@ -34,13 +34,37 @@
                                     "disabled": false
                                 },
                                 {
+                                    "key": "search",
+                                    "value": "acme",
+                                    "description": "Search by `your_customer_id` or `subdomain` (partial, case-insensitive).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "description": "Filter by site status. Must be one of: `pending`, `activation_requested`, `active`, `suspension_requested`, `suspended`, `unsuspension_requested`, `termination_requested`, `terminated`, `canceled`.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "your_customer_id",
+                                    "description": "Sort results by the given field. Must be one of: `created_at`, `updated_at`, `status`, `your_customer_id`, `last_deployed_at`. Default: `created_at`.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "direction",
+                                    "value": "asc",
+                                    "description": "Sort direction. Must be `asc` or `desc`. Default: `desc`.",
+                                    "disabled": false
+                                },
+                                {
                                     "key": "page",
                                     "value": "1",
                                     "description": "Page number for pagination. Default: 1.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites?per_page=25&page=1"
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/sites?per_page=25&search=acme&status=active&sort=your_customer_id&direction=asc&page=1"
                         },
                         "method": "GET",
                         "header": [
@@ -54,13 +78,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "Retrieves a paginated list of all sites for the authenticated account.\nResults include each site's environments and their associated domains."
+                        "description": "Retrieves a paginated list of all sites for the authenticated account.\nResults include each site's environments and their associated domains.\n\nUse `search` to filter by customer ID or subdomain, `status` to filter by\nsite lifecycle state, and `sort`\/`direction` to control ordering. The\n`last_deployed_at` field is computed from the most recent completed\ndeployment across all environments and can also be used as a sort field."
                     },
                     "response": [
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"dev.wispy-dust.vectorpages.com\",\n            \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n            \"environments\": [\n                {\n                    \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n                    \"custom_domain\": \"example.com\",\n                    \"custom_domain_certificate_status\": \"issued\",\n                    \"created_at\": \"2025-01-15T12:00:00+00:00\",\n                    \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-01-15T12:00:00+00:00\",\n            \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Sites retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": [\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n            \"your_customer_id\": \"cust_12345\",\n            \"status\": \"active\",\n            \"dev_php_version\": \"8.3\",\n            \"tags\": [\"wordpress\", \"production\"],\n            \"dev_domain\": \"dev.wispy-dust.vectorpages.com\",\n            \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n            \"dev_sftp\": {\n                \"hostname\": \"ssh.vectorpages.com\",\n                \"port\": 22,\n                \"username\": \"wispy-dust\"\n            },\n            \"last_deployed_at\": \"2025-06-10T14:30:00+00:00\",\n            \"environments\": [\n                {\n                    \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n                    \"name\": \"production\",\n                    \"is_production\": true,\n                    \"status\": \"active\",\n                    \"php_version\": \"8.3\",\n                    \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n                    \"custom_domain\": \"example.com\",\n                    \"custom_domain_certificate_status\": \"issued\",\n                    \"created_at\": \"2025-01-15T12:00:00+00:00\",\n                    \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n                }\n            ],\n            \"created_at\": \"2025-01-15T12:00:00+00:00\",\n            \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Sites retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -74,6 +98,12 @@
                             "code": 403,
                             "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
                             "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"status\": [\"The status must be a valid site status.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Validation Error"
                         }
                     ]
                 },
@@ -897,7 +927,7 @@
                                     "mode": "raw",
                                     "raw": "{\"scope\":\"database\",\"filename\":\"backup.sql.gz\",\"content_length\":104857600,\"content_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"options\":{\"drop_tables\":true,\"disable_foreign_keys\":true,\"search_replace\":{\"from\":\"example.org\",\"to\":\"example.com\"}}}"
                                 },
-                                "description": "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~5GB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 5GB each\n(the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,\nreturns a single presigned upload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+                                "description": "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~100MB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 100MB each,\nso a 1GB file requires 10 parts. For smaller files, returns a single presigned\nupload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
                             },
                             "response": [
                                 {
@@ -3858,13 +3888,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains, and\nsite\/environment counts grouped by status."
+                        "description": "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains,\nsite\/environment counts grouped by status, deployment metrics, backup counts,\nand recent activity."
                     },
                     "response": [
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"user@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"example.com\", \"example.org\"],\n        \"sites\": {\n            \"total\": 5,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0,\n                \"termination_requested\": 0,\n                \"terminated\": 1,\n                \"canceled\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 8,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"terminating\": 0,\n                \"terminated\": 1,\n                \"failed\": 0\n            }\n        }\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"user@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"example.com\", \"example.org\"],\n        \"sites\": {\n            \"total\": 5,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0,\n                \"termination_requested\": 0,\n                \"terminated\": 1,\n                \"canceled\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 8,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"terminating\": 0,\n                \"terminated\": 1,\n                \"failed\": 0\n            }\n        },\n        \"total_sites\": 5,\n        \"pending_sites\": 0,\n        \"total_environments\": 8,\n        \"production_environments\": 3,\n        \"deployments_30d\": 12,\n        \"failed_deployments_30d\": 1,\n        \"active_backups\": 4,\n        \"recent_activity\": [],\n        \"recent_deployments\": []\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {

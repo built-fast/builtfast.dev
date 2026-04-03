@@ -19,8 +19,9 @@ endpoints:
       title: 'Get Account Summary'
       description: |-
         Retrieves a summary of the authenticated account's Vector Pro information
-        including owner details, cluster DNS endpoints, verified domains, and
-        site/environment counts grouped by status.
+        including owner details, cluster DNS endpoints, verified domains,
+        site/environment counts grouped by status, deployment metrics, backup counts,
+        and recent activity.
       authenticated: true
       deprecated: false
     headers:
@@ -82,7 +83,16 @@ endpoints:
                           "terminated": 1,
                           "failed": 0
                       }
-                  }
+                  },
+                  "total_sites": 5,
+                  "pending_sites": 0,
+                  "total_environments": 8,
+                  "production_environments": 3,
+                  "deployments_30d": 12,
+                  "failed_deployments_30d": 1,
+                  "active_backups": 4,
+                  "recent_activity": [],
+                  "recent_deployments": []
               },
               "message": "Account summary retrieved successfully",
               "http_status": 200

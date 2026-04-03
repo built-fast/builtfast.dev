@@ -53,7 +53,7 @@ paths:
     get:
       summary: 'List Sites'
       operationId: listSites
-      description: "Retrieves a paginated list of all sites for the authenticated account.\nResults include each site's environments and their associated domains."
+      description: "Retrieves a paginated list of all sites for the authenticated account.\nResults include each site's environments and their associated domains.\n\nUse `search` to filter by customer ID or subdomain, `status` to filter by\nsite lifecycle state, and `sort`/`direction` to control ordering. The\n`last_deployed_at` field is computed from the most recent completed\ndeployment across all environments and can also be used as a sort field."
       parameters:
         -
           in: query
@@ -65,6 +65,48 @@ paths:
             description: 'Number of items per page (max 100). Default: 15.'
             examples:
               - 25
+        -
+          in: query
+          name: search
+          description: 'Search by `your_customer_id` or `subdomain` (partial, case-insensitive).'
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            description: 'Search by `your_customer_id` or `subdomain` (partial, case-insensitive).'
+            examples:
+              - acme
+        -
+          in: query
+          name: status
+          description: 'Filter by site status. Must be one of: `pending`, `activation_requested`, `active`, `suspension_requested`, `suspended`, `unsuspension_requested`, `termination_requested`, `terminated`, `canceled`.'
+          required: false
+          schema:
+            type: string
+            description: 'Filter by site status. Must be one of: `pending`, `activation_requested`, `active`, `suspension_requested`, `suspended`, `unsuspension_requested`, `termination_requested`, `terminated`, `canceled`.'
+            examples:
+              - active
+        -
+          in: query
+          name: sort
+          description: 'Sort results by the given field. Must be one of: `created_at`, `updated_at`, `status`, `your_customer_id`, `last_deployed_at`. Default: `created_at`.'
+          required: false
+          schema:
+            type: string
+            description: 'Sort results by the given field. Must be one of: `created_at`, `updated_at`, `status`, `your_customer_id`, `last_deployed_at`. Default: `created_at`.'
+            examples:
+              - your_customer_id
+        -
+          in: query
+          name: direction
+          description: 'Sort direction. Must be `asc` or `desc`. Default: `desc`.'
+          required: false
+          schema:
+            type: string
+            description: 'Sort direction. Must be `asc` or `desc`. Default: `desc`.'
+            examples:
+              - asc
         -
           in: query
           name: page
@@ -100,6 +142,10 @@ paths:
                           type: string
                           examples:
                             - active
+                        dev_php_version:
+                          type: string
+                          examples:
+                            - '8.3'
                         tags:
                           type: array
                           items:
@@ -120,6 +166,25 @@ paths:
                           type: string
                           examples:
                             - db_01jfgxk4nqrst5vwx9yz0abcde
+                        dev_sftp:
+                          type: object
+                          properties:
+                            hostname:
+                              type: string
+                              examples:
+                                - ssh.vectorpages.com
+                            port:
+                              type: integer
+                              examples:
+                                - 22
+                            username:
+                              type: string
+                              examples:
+                                - wispy-dust
+                        last_deployed_at:
+                          type: string
+                          examples:
+                            - '2025-06-10T14:30:00+00:00'
                         environments:
                           type: array
                           items:
@@ -192,12 +257,18 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcde
                           your_customer_id: cust_12345
                           status: active
+                          dev_php_version: '8.3'
                           tags:
                             - wordpress
                             - production
                           dev_domain: dev.wispy-dust.vectorpages.com
                           dev_db_host: dev-cluster.abc123.us-east-1.rds.amazonaws.com
                           dev_db_name: db_01jfgxk4nqrst5vwx9yz0abcde
+                          dev_sftp:
+                            hostname: ssh.vectorpages.com
+                            port: 22
+                            username: wispy-dust
+                          last_deployed_at: '2025-06-10T14:30:00+00:00'
                           environments:
                             -
                               id: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -233,12 +304,18 @@ paths:
                         id: 01jfgxk4nqrst5vwx9yz0abcde
                         your_customer_id: cust_12345
                         status: active
+                        dev_php_version: '8.3'
                         tags:
                           - wordpress
                           - production
                         dev_domain: dev.wispy-dust.vectorpages.com
                         dev_db_host: dev-cluster.abc123.us-east-1.rds.amazonaws.com
                         dev_db_name: db_01jfgxk4nqrst5vwx9yz0abcde
+                        dev_sftp:
+                          hostname: ssh.vectorpages.com
+                          port: 22
+                          username: wispy-dust
+                        last_deployed_at: '2025-06-10T14:30:00+00:00'
                         environments:
                           -
                             id: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -303,6 +380,42 @@ paths:
                     data: {  }
                     message: Unauthorized
                     http_status: 403
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      status:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The status must be a valid site status.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      status:
+                        - 'The status must be a valid site status.'
+                    message: 'Validation failed'
+                    http_status: 422
       tags:
         - Sites
     post:
@@ -2774,7 +2887,7 @@ paths:
     post:
       summary: 'Create Import Session'
       operationId: sitesImportsCreateImportSession
-      description: "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~5GB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 5GB each\n(the S3 maximum), so a 150GB file requires only 30 parts. For smaller files,\nreturns a single presigned upload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
+      description: "Create an archive import session. Returns presigned S3 upload URL(s)\nthat can be used to upload the archive file directly to storage.\n\nThe maximum file size is 50GB by default. Higher limits can be configured\nper-cluster on request.\n\nFor files larger than the multipart threshold (~100MB), returns multiple\npresigned URLs (one per part) along with an `upload_id`. Parts are 100MB each,\nso a 1GB file requires 10 parts. For smaller files, returns a single presigned\nupload URL.\n\nAfter uploading, call the \"Run Import\" endpoint to execute the import."
       parameters: []
       responses:
         201:
@@ -12849,7 +12962,7 @@ paths:
     get:
       summary: 'Get Account Summary'
       operationId: getAccountSummary
-      description: "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains, and\nsite/environment counts grouped by status."
+      description: "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains,\nsite/environment counts grouped by status, deployment metrics, backup counts,\nand recent activity."
       parameters: []
       responses:
         200:
@@ -12999,6 +13112,42 @@ paths:
                                 type: integer
                                 examples:
                                   - 0
+                      total_sites:
+                        type: integer
+                        examples:
+                          - 5
+                      pending_sites:
+                        type: integer
+                        examples:
+                          - 0
+                      total_environments:
+                        type: integer
+                        examples:
+                          - 8
+                      production_environments:
+                        type: integer
+                        examples:
+                          - 3
+                      deployments_30d:
+                        type: integer
+                        examples:
+                          - 12
+                      failed_deployments_30d:
+                        type: integer
+                        examples:
+                          - 1
+                      active_backups:
+                        type: integer
+                        examples:
+                          - 4
+                      recent_activity:
+                        type: array
+                        examples:
+                          - []
+                      recent_deployments:
+                        type: array
+                        examples:
+                          - []
                   message:
                     type: string
                     examples:
@@ -13047,6 +13196,15 @@ paths:
                           terminating: 0
                           terminated: 1
                           failed: 0
+                      total_sites: 5
+                      pending_sites: 0
+                      total_environments: 8
+                      production_environments: 3
+                      deployments_30d: 12
+                      failed_deployments_30d: 1
+                      active_backups: 4
+                      recent_activity: []
+                      recent_deployments: []
                     message: 'Account summary retrieved successfully'
                     http_status: 200
         401:
