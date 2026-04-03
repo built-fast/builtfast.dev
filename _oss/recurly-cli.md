@@ -25,6 +25,12 @@ filtering, and watch mode for polling resources.
 
 ## Installation
 
+### Homebrew
+
+```bash
+brew install built-fast/devtools/recurly-cli
+```
+
 ### Go install
 
 ```bash
