@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Automating API Documentation with Scribe and GitHub Actions"
-date: "Wed Apr  8 22:40:00 -0500 2026"
+date: "Wed Apr  8 22:40:00 -0400 2026"
 categories: [development]
 tags: [laravel, php, github-actions, documentation, automation]
 author: Josh Priddle
