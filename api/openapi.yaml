@@ -15247,7 +15247,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - false
+                    - true
     parameters:
       -
         in: path

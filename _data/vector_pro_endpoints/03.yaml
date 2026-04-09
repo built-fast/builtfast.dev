@@ -3976,7 +3976,10 @@ endpoints:
       groupName: Sites
       groupDescription: ''
       subgroup: 'WAF: Access Lists'
-      subgroupDescription: 'Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
       title: 'Get Access List Enums'
       description: 'Retrieves available enum values for access list types, actions, and categories.'
       authenticated: true
@@ -7515,7 +7518,10 @@ endpoints:
       groupName: Sites
       groupDescription: ''
       subgroup: 'WAF: Access Lists'
-      subgroupDescription: 'Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
       title: 'Update Access List Configuration'
       description: |-
         Updates the configuration (enable/disable and action) for any access list (managed or custom).
