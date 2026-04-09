@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Automating API Documentation with Scribe and GitHub Actions"
-date: "Thu Jan 23 18:00:00 -0500 2026"
+date: "Wed Apr  8 22:40:00 -0500 2026"
 categories: [development]
 tags: [laravel, php, github-actions, documentation, automation]
 author: Josh Priddle
@@ -12,13 +12,13 @@ One of the less glamorous but critically important aspects of building an API is
 
 ## The problem
 
-We use [Scribe](https://scribe.knuckles.wtf) to generate API documentation from our Laravel codebase. It's excellent—it reads your routes, controllers, form requests, and docblocks to produce comprehensive docs. But the generated output lives in our private API repository, while our public developer portal is a separate Jekyll site.
+We use [Scribe](https://scribe.knuckles.wtf) to generate API documentation from our Laravel codebase. It's excellent---it reads your routes, controllers, form requests, and docblocks to produce comprehensive docs. But the generated output lives in our private API repository, while our public developer portal is a separate Jekyll site.
 
 Manually copying files after every API change? Not sustainable.
 
 ## The solution: cross-repository GitHub Actions
 
-The workflow triggers whenever relevant files change—controllers, requests, resources, routes, or the Scribe config itself:
+The workflow triggers whenever relevant files change---controllers, requests, resources, routes, or the Scribe config itself:
 
 ```yaml
 on:
@@ -35,7 +35,7 @@ on:
 
 ## Generating the docs
 
-Scribe needs a working Laravel environment with database access—it actually boots your app and introspects routes. The workflow sets up MySQL and runs:
+Scribe needs a working Laravel environment with database access---it actually boots your app and introspects routes. The workflow sets up MySQL and runs:
 
 ```bash
 php artisan scribe:generate
@@ -70,7 +70,7 @@ cp public/vector-pro/openapi.yaml builtfast.dev/vector-pro/api/
 
 ## Why YAML endpoint data?
 
-Scribe generates structured YAML files in `.scribe/endpoints/` that contain all the endpoint metadata—parameters, responses, examples. By syncing these to Jekyll's `_data` directory rather than the rendered HTML, our developer portal can:
+Scribe generates structured YAML files in `.scribe/endpoints/` that contain all the endpoint metadata---parameters, responses, examples. By syncing these to Jekyll's `_data` directory rather than the rendered HTML, our developer portal can:
 
 - Apply its own theme and styling
 - Build custom navigation
@@ -257,6 +257,6 @@ jobs:
 
 ## The result
 
-Every merge to main that touches API-related code now automatically updates our public developer portal. No manual steps, no stale documentation, no "I'll update the docs later" that never happens.
+Every merge to main that touches API-related code now automatically updates our public developer portal. No "I'll update the docs later" that never happens.
 
-The internal Scribe-generated docs remain available for development, while the public portal maintains its own styling and navigation structure—all powered by the same source data.
+The internal Scribe-generated docs remain available for development, while the public portal maintains its own styling and navigation structure---all powered by the same source data.
