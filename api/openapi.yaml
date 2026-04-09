@@ -1275,7 +1275,7 @@ paths:
     delete:
       summary: 'Delete Site'
       operationId: deleteSite
-      description: "Initiates deletion of a site. This terminates the site's development container\nand CDN resources. The site status transitions to `terminating` and eventually\n`terminated`.\n\n**Important:** All environments must be terminated before the site can be deleted.\nUse the environment delete endpoint to terminate each environment first.\n\nThis operation is irreversible. All site data and configurations will be\npermanently removed."
+      description: "Initiates deletion of a site. This terminates the site's development container\nand CDN resources. The site status transitions to `terminating` and eventually\n`terminated`.\n\n**Important:** By default, all environments must be terminated before the site\ncan be deleted — use the environment delete endpoint to terminate each\nenvironment first, or pass `delete_environments: true` to have any remaining\ndeployed environments terminated inline as part of the site deletion job.\n\nThis operation is irreversible. All site data and configurations will be\npermanently removed."
       parameters: []
       responses:
         202:
@@ -1439,7 +1439,362 @@ paths:
                           type: string
                         examples:
                           -
-                            - 'Cannot delete site that has active environments. Please terminate all environments first.'
+                            - 'Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      site:
+                        - 'Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.'
+                    message: 'Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                delete_environments:
+                  type: boolean
+                  description: 'Optional. When true, any remaining deployed environments are terminated as part of the site deletion job (each environment is terminated in sequence before the dev container and Ymir project are removed). When omitted or false, the request is rejected with 422 if deployed environments still exist.'
+                  examples:
+                    - true
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/deployments':
+    get:
+      summary: 'List Site Deployments'
+      operationId: "sitesDeployments\n\nListdeploymentsacrossallenvironmentsofasite.ListSiteDeployments"
+      description: "Retrieves a paginated list of deployments across all non-terminated\nenvironments belonging to the given site, ordered by most recent first.\n\nOptionally filter by environment name to narrow results to a single\nenvironment (e.g. `production` or `staging`).\n\nDeployments attached to terminated environments are always excluded,\neven when an explicit `environment` filter matches one."
+      parameters:
+        -
+          in: query
+          name: environment
+          description: 'Filter deployments to a specific environment by name.'
+          required: false
+          schema:
+            type: string
+            description: 'Filter deployments to a specific environment by name.'
+            examples:
+              - production
+        -
+          in: query
+          name: per_page
+          description: 'Number of items per page (max 100). Default: 15.'
+          required: false
+          schema:
+            type: integer
+            description: 'Number of items per page (max 100). Default: 15.'
+            examples:
+              - 25
+        -
+          in: query
+          name: page
+          description: 'Page number for pagination. Default: 1.'
+          required: false
+          schema:
+            type: integer
+            description: 'Page number for pagination. Default: 1.'
+            examples:
+              - 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          examples:
+                            - 01jfgxk4nqrst5vwx9yz0abcdh
+                        vector_environment_id:
+                          type: string
+                          examples:
+                            - 01jfgxk4nqrst5vwx9yz0abcdg
+                        is_auto_deploy:
+                          type: boolean
+                          examples:
+                            - false
+                        status:
+                          type: string
+                          examples:
+                            - deployed
+                        stdout:
+                          type: string
+                          examples:
+                            - 'Deployment output...'
+                        stderr:
+                          type:
+                            - string
+                            - 'null'
+                          examples:
+                            - null
+                        build_output:
+                          type:
+                            - string
+                            - 'null'
+                          examples:
+                            - null
+                        actor:
+                          type: string
+                          examples:
+                            - user@example.com
+                        environment:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              examples:
+                                - 01jfgxk4nqrst5vwx9yz0abcdg
+                            vector_site_id:
+                              type: string
+                              examples:
+                                - 01jfgxk4nqrst5vwx9yz0abcde
+                            your_customer_id:
+                              type: string
+                              examples:
+                                - cust_12345
+                            name:
+                              type: string
+                              examples:
+                                - production
+                            is_production:
+                              type: boolean
+                              examples:
+                                - true
+                            status:
+                              type: string
+                              examples:
+                                - active
+                            php_version:
+                              type: string
+                              examples:
+                                - '8.3'
+                            tags:
+                              type: array
+                              items:
+                                type: string
+                              examples:
+                                -
+                                  - wordpress
+                            fqdn:
+                              type: string
+                              examples:
+                                - example.com
+                            custom_domain:
+                              type: string
+                              examples:
+                                - example.com
+                            subdomain:
+                              type: string
+                              examples:
+                                - wispy-dust
+                            created_at:
+                              type: string
+                              examples:
+                                - '2025-01-15T12:00:00+00:00'
+                            updated_at:
+                              type: string
+                              examples:
+                                - '2025-01-15T12:00:00+00:00'
+                        created_at:
+                          type: string
+                          examples:
+                            - '2025-01-15T12:00:00+00:00'
+                        updated_at:
+                          type: string
+                          examples:
+                            - '2025-01-15T12:00:00+00:00'
+                    examples:
+                      -
+                        -
+                          id: 01jfgxk4nqrst5vwx9yz0abcdh
+                          vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
+                          is_auto_deploy: false
+                          status: deployed
+                          stdout: 'Deployment output...'
+                          stderr: null
+                          build_output: null
+                          actor: user@example.com
+                          environment:
+                            id: 01jfgxk4nqrst5vwx9yz0abcdg
+                            vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
+                            your_customer_id: cust_12345
+                            name: production
+                            is_production: true
+                            status: active
+                            php_version: '8.3'
+                            tags:
+                              - wordpress
+                            fqdn: example.com
+                            custom_domain: example.com
+                            subdomain: wispy-dust
+                            created_at: '2025-01-15T12:00:00+00:00'
+                            updated_at: '2025-01-15T12:00:00+00:00'
+                          created_at: '2025-01-15T12:00:00+00:00'
+                          updated_at: '2025-01-15T12:00:00+00:00'
+                  links:
+                    type: object
+                    properties: {  }
+                  meta:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Deployments retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      -
+                        id: 01jfgxk4nqrst5vwx9yz0abcdh
+                        vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
+                        is_auto_deploy: false
+                        status: deployed
+                        stdout: 'Deployment output...'
+                        stderr: null
+                        build_output: null
+                        actor: user@example.com
+                        environment:
+                          id: 01jfgxk4nqrst5vwx9yz0abcdg
+                          vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
+                          your_customer_id: cust_12345
+                          name: production
+                          is_production: true
+                          status: active
+                          php_version: '8.3'
+                          tags:
+                            - wordpress
+                          fqdn: example.com
+                          custom_domain: example.com
+                          subdomain: wispy-dust
+                          created_at: '2025-01-15T12:00:00+00:00'
+                          updated_at: '2025-01-15T12:00:00+00:00'
+                        created_at: '2025-01-15T12:00:00+00:00'
+                        updated_at: '2025-01-15T12:00:00+00:00'
+                    links: {  }
+                    meta: {  }
+                    message: 'Deployments retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      per_page:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'Maximum items per page is 100.'
                   message:
                     type: string
                     examples:
@@ -1452,8 +1807,8 @@ paths:
                   -
                     data: {  }
                     errors:
-                      site:
-                        - 'Cannot delete site that has active environments. Please terminate all environments first.'
+                      per_page:
+                        - 'Maximum items per page is 100.'
                     message: 'Validation failed'
                     http_status: 422
       tags:
@@ -1462,7 +1817,16 @@ paths:
       -
         in: path
         name: site
-        description: 'The site ID.'
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID or subdomain.'
         required: true
         schema:
           type: string
@@ -15247,7 +15611,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - true
+                    - false
     parameters:
       -
         in: path

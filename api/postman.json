@@ -166,6 +166,101 @@
                     ]
                 },
                 {
+                    "name": "Deployments\n\nList deployments across all environments of a site.",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "List Site Deployments",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/deployments",
+                                    "query": [
+                                        {
+                                            "key": "environment",
+                                            "value": "production",
+                                            "description": "Filter deployments to a specific environment by name.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "per_page",
+                                            "value": "25",
+                                            "description": "Number of items per page (max 100). Default: 15.",
+                                            "disabled": false
+                                        },
+                                        {
+                                            "key": "page",
+                                            "value": "1",
+                                            "description": "Page number for pagination. Default: 1.",
+                                            "disabled": false
+                                        }
+                                    ],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/deployments?environment=production&per_page=25&page=1",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID or subdomain."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a paginated list of deployments across all non-terminated\nenvironments belonging to the given site, ordered by most recent first.\n\nOptionally filter by environment name to narrow results to a single\nenvironment (e.g. `production` or `staging`).\n\nDeployments attached to terminated environments are always excluded,\neven when an explicit `environment` filter matches one."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcdh\",\n            \"vector_environment_id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n            \"is_auto_deploy\": false,\n            \"status\": \"deployed\",\n            \"stdout\": \"Deployment output...\",\n            \"stderr\": null,\n            \"build_output\": null,\n            \"actor\": \"user@example.com\",\n            \"environment\": {\n                \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n                \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n                \"your_customer_id\": \"cust_12345\",\n                \"name\": \"production\",\n                \"is_production\": true,\n                \"status\": \"active\",\n                \"php_version\": \"8.3\",\n                \"tags\": [\"wordpress\"],\n                \"fqdn\": \"example.com\",\n                \"custom_domain\": \"example.com\",\n                \"subdomain\": \"wispy-dust\",\n                \"created_at\": \"2025-01-15T12:00:00+00:00\",\n                \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n            },\n            \"created_at\": \"2025-01-15T12:00:00+00:00\",\n            \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"Deployments retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"per_page\": [\"Maximum items per page is 100.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "Update Site",
                     "request": {
                         "url": {
@@ -447,8 +542,11 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
-                        "description": "Initiates deletion of a site. This terminates the site's development container\nand CDN resources. The site status transitions to `terminating` and eventually\n`terminated`.\n\n**Important:** All environments must be terminated before the site can be deleted.\nUse the environment delete endpoint to terminate each environment first.\n\nThis operation is irreversible. All site data and configurations will be\npermanently removed."
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"delete_environments\":true}"
+                        },
+                        "description": "Initiates deletion of a site. This terminates the site's development container\nand CDN resources. The site status transitions to `terminating` and eventually\n`terminated`.\n\n**Important:** By default, all environments must be terminated before the site\ncan be deleted \u2014 use the environment delete endpoint to terminate each\nenvironment first, or pass `delete_environments: true` to have any remaining\ndeployed environments terminated inline as part of the site deletion job.\n\nThis operation is irreversible. All site data and configurations will be\npermanently removed."
                     },
                     "response": [
                         {
@@ -478,7 +576,7 @@
                         {
                             "header": [],
                             "code": 422,
-                            "body": "{\n    \"data\": {},\n    \"errors\": {\"site\": [\"Cannot delete site that has active environments. Please terminate all environments first.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"site\": [\"Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.\"]},\n    \"message\": \"Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.\",\n    \"http_status\": 422\n}",
                             "name": "Active Environments"
                         }
                     ]
@@ -4747,7 +4845,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },

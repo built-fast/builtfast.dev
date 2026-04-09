@@ -333,6 +333,183 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/deployments'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: |-
+        Deployments
+
+        List deployments across all environments of a site.
+      subgroupDescription: ''
+      title: 'List Site Deployments'
+      description: |-
+        Retrieves a paginated list of deployments across all non-terminated
+        environments belonging to the given site, ordered by most recent first.
+
+        Optionally filter by environment name to narrow results to a single
+        environment (e.g. `production` or `staging`).
+
+        Deployments attached to terminated environments are always excluded,
+        even when an explicit `environment` filter matches one.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID or subdomain.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters:
+      environment:
+        custom: []
+        name: environment
+        description: 'Filter deployments to a specific environment by name.'
+        required: false
+        example: production
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (max 100). Default: 15.'
+        required: false
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination. Default: 1.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      environment: production
+      per_page: 25
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdh",
+                      "vector_environment_id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                      "is_auto_deploy": false,
+                      "status": "deployed",
+                      "stdout": "Deployment output...",
+                      "stderr": null,
+                      "build_output": null,
+                      "actor": "user@example.com",
+                      "environment": {
+                          "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                          "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                          "your_customer_id": "cust_12345",
+                          "name": "production",
+                          "is_production": true,
+                          "status": "active",
+                          "php_version": "8.3",
+                          "tags": ["wordpress"],
+                          "fqdn": "example.com",
+                          "custom_domain": "example.com",
+                          "subdomain": "wispy-dust",
+                          "created_at": "2025-01-15T12:00:00+00:00",
+                          "updated_at": "2025-01-15T12:00:00+00:00"
+                      },
+                      "created_at": "2025-01-15T12:00:00+00:00",
+                      "updated_at": "2025-01-15T12:00:00+00:00"
+                  }
+              ],
+              "links": {},
+              "meta": {},
+              "message": "Deployments retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"per_page": ["Maximum items per page is 100."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PUT
     uri: 'api/v1/vector/sites/{site}'
     metadata:
@@ -967,8 +1144,10 @@ endpoints:
         and CDN resources. The site status transitions to `terminating` and eventually
         `terminated`.
 
-        **Important:** All environments must be terminated before the site can be deleted.
-        Use the environment delete endpoint to terminate each environment first.
+        **Important:** By default, all environments must be terminated before the site
+        can be deleted — use the environment delete endpoint to terminate each
+        environment first, or pass `delete_environments: true` to have any remaining
+        deployed environments terminated inline as part of the site deletion job.
 
         This operation is irreversible. All site data and configurations will be
         permanently removed.
@@ -994,8 +1173,20 @@ endpoints:
       site: 01jfgxk4nqrst5vwx9yz0abcde
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      delete_environments:
+        custom: []
+        name: delete_environments
+        description: 'Optional. When true, any remaining deployed environments are terminated as part of the site deletion job (each environment is terminated in sequence before the dev container and Ymir project are removed). When omitted or false, the request is rejected with 422 if deployed environments still exist.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      delete_environments: true
     fileParameters: []
     responses:
       -
@@ -1044,8 +1235,8 @@ endpoints:
         content: |-
           {
               "data": {},
-              "errors": {"site": ["Cannot delete site that has active environments. Please terminate all environments first."]},
-              "message": "Validation failed",
+              "errors": {"site": ["Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion."]},
+              "message": "Cannot delete site with deployed environments. Please terminate all deployed environments first, or pass delete_environments=true to terminate them as part of the site deletion.",
               "http_status": 422
           }
         headers: []
