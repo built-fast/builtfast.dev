@@ -6810,6 +6810,4388 @@ paths:
           type: integer
           examples:
             - 12345
+  '/api/v1/vector/sites/{site}/cdn/caching':
+    get:
+      summary: 'Get Caching Settings'
+      operationId: 'sitesCDN:CachingGetCachingSettings'
+      description: 'Retrieves the current CDN caching configuration for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enable_smart_cache:
+                        type: boolean
+                        examples:
+                          - true
+                      cache_control_max_age_override:
+                        type: integer
+                        examples:
+                          - 2592000
+                      cache_control_public_max_age_override:
+                        type: integer
+                        examples:
+                          - 0
+                      disable_cookies:
+                        type: boolean
+                        examples:
+                          - true
+                      cache_error_responses:
+                        type: boolean
+                        examples:
+                          - false
+                      enable_query_string_ordering:
+                        type: boolean
+                        examples:
+                          - true
+                      ignore_query_strings:
+                        type: boolean
+                        examples:
+                          - false
+                      query_string_vary_parameters:
+                        type: array
+                        examples:
+                          - []
+                      enable_hostname_vary:
+                        type: boolean
+                        examples:
+                          - false
+                      enable_mobile_vary:
+                        type: boolean
+                        examples:
+                          - false
+                      enable_webp_vary:
+                        type: boolean
+                        examples:
+                          - true
+                      enable_avif_vary:
+                        type: boolean
+                        examples:
+                          - true
+                      enable_country_code_vary:
+                        type: boolean
+                        examples:
+                          - false
+                      enable_cookie_vary:
+                        type: boolean
+                        examples:
+                          - false
+                      cookie_vary_parameters:
+                        type: array
+                        examples:
+                          - []
+                      enable_origin_shield:
+                        type: boolean
+                        examples:
+                          - false
+                      origin_shield_zone_code:
+                        type: string
+                        examples:
+                          - ''
+                      origin_shield_enable_concurrency_limit:
+                        type: boolean
+                        examples:
+                          - false
+                      origin_shield_max_concurrent_requests:
+                        type: integer
+                        examples:
+                          - 5000
+                      origin_shield_queue_max_wait_time:
+                        type: integer
+                        examples:
+                          - 30
+                      origin_shield_max_queued_requests:
+                        type: integer
+                        examples:
+                          - 1000
+                      enable_request_coalescing:
+                        type: boolean
+                        examples:
+                          - false
+                      request_coalescing_timeout:
+                        type: integer
+                        examples:
+                          - 30
+                      use_stale_while_updating:
+                        type: boolean
+                        examples:
+                          - true
+                      use_stale_while_offline:
+                        type: boolean
+                        examples:
+                          - true
+                      use_background_update:
+                        type: boolean
+                        examples:
+                          - true
+                      enable_cache_slice:
+                        type: boolean
+                        examples:
+                          - false
+                  message:
+                    type: string
+                    examples:
+                      - 'Caching settings retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enable_smart_cache: true
+                      cache_control_max_age_override: 2592000
+                      cache_control_public_max_age_override: 0
+                      disable_cookies: true
+                      cache_error_responses: false
+                      enable_query_string_ordering: true
+                      ignore_query_strings: false
+                      query_string_vary_parameters: []
+                      enable_hostname_vary: false
+                      enable_mobile_vary: false
+                      enable_webp_vary: true
+                      enable_avif_vary: true
+                      enable_country_code_vary: false
+                      enable_cookie_vary: false
+                      cookie_vary_parameters: []
+                      enable_origin_shield: false
+                      origin_shield_zone_code: ''
+                      origin_shield_enable_concurrency_limit: false
+                      origin_shield_max_concurrent_requests: 5000
+                      origin_shield_queue_max_wait_time: 30
+                      origin_shield_max_queued_requests: 1000
+                      enable_request_coalescing: false
+                      request_coalescing_timeout: 30
+                      use_stale_while_updating: true
+                      use_stale_while_offline: true
+                      use_background_update: true
+                      enable_cache_slice: false
+                    message: 'Caching settings retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update Caching Settings'
+      operationId: 'sitesCDN:CachingUpdateCachingSettings'
+      description: "Updates CDN caching configuration for a site. All fields are optional — only include\nfields you want to change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enable_smart_cache:
+                        type: boolean
+                        examples:
+                          - true
+                      cache_control_max_age_override:
+                        type: integer
+                        examples:
+                          - 2592000
+                      disable_cookies:
+                        type: boolean
+                        examples:
+                          - true
+                  message:
+                    type: string
+                    examples:
+                      - 'Caching settings updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enable_smart_cache: true
+                      cache_control_max_age_override: 2592000
+                      disable_cookies: true
+                    message: 'Caching settings updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      origin_shield_max_concurrent_requests:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The max concurrent requests must not exceed 10,000.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      origin_shield_max_concurrent_requests:
+                        - 'The max concurrent requests must not exceed 10,000.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enable_smart_cache:
+                  type: boolean
+                  description: 'Enable smart cache.'
+                  examples:
+                    - true
+                cache_control_max_age_override:
+                  type: integer
+                  description: 'Server cache expiration in seconds. Use -1 to respect origin headers.'
+                  examples:
+                    - 2592000
+                cache_control_public_max_age_override:
+                  type: integer
+                  description: 'Browser cache expiration in seconds.'
+                  examples:
+                    - 0
+                disable_cookies:
+                  type: boolean
+                  description: 'Automatically strip cookies from responses.'
+                  examples:
+                    - true
+                cache_error_responses:
+                  type: boolean
+                  description: 'Cache error responses from origin.'
+                  examples:
+                    - false
+                enable_query_string_ordering:
+                  type: boolean
+                  description: 'Sort query string parameters for better cache hit rates.'
+                  examples:
+                    - true
+                ignore_query_strings:
+                  type: boolean
+                  description: 'Ignore query strings when serving cached objects.'
+                  examples:
+                    - false
+                query_string_vary_parameters:
+                  type: array
+                  description: 'Query string parameters to vary cache by.'
+                  items:
+                    type: string
+                  examples:
+                    -
+                      - utm_source
+                      - ref
+                enable_hostname_vary:
+                  type: boolean
+                  description: 'Vary cache by hostname.'
+                  examples:
+                    - false
+                enable_mobile_vary:
+                  type: boolean
+                  description: 'Vary cache by device type (mobile/desktop).'
+                  examples:
+                    - false
+                enable_webp_vary:
+                  type: boolean
+                  description: 'Vary cache by WebP support.'
+                  examples:
+                    - true
+                enable_avif_vary:
+                  type: boolean
+                  description: 'Vary cache by AVIF support.'
+                  examples:
+                    - true
+                enable_country_code_vary:
+                  type: boolean
+                  description: 'Vary cache by country code.'
+                  examples:
+                    - false
+                enable_cookie_vary:
+                  type: boolean
+                  description: 'Vary cache by cookie values.'
+                  examples:
+                    - false
+                cookie_vary_parameters:
+                  type: array
+                  description: 'Cookie names to vary cache by.'
+                  items:
+                    type: string
+                  examples:
+                    -
+                      - wordpress_logged_in
+                enable_origin_shield:
+                  type: boolean
+                  description: 'Enable origin shield.'
+                  examples:
+                    - false
+                origin_shield_zone_code:
+                  type: string
+                  description: 'Origin shield zone code (e.g., "FR", "NY").'
+                  examples:
+                    - FR
+                origin_shield_enable_concurrency_limit:
+                  type: boolean
+                  description: 'Enable origin shield concurrency limit.'
+                  examples:
+                    - false
+                origin_shield_max_concurrent_requests:
+                  type: integer
+                  description: 'Max concurrent requests to origin (1-10000).'
+                  examples:
+                    - 5000
+                origin_shield_queue_max_wait_time:
+                  type: integer
+                  description: 'Max queue wait time in seconds.'
+                  examples:
+                    - 30
+                origin_shield_max_queued_requests:
+                  type: integer
+                  description: 'Max queued origin requests (0-30000).'
+                  examples:
+                    - 1000
+                enable_request_coalescing:
+                  type: boolean
+                  description: 'Enable request coalescing.'
+                  examples:
+                    - false
+                request_coalescing_timeout:
+                  type: integer
+                  description: 'Request coalescing lock time in seconds.'
+                  examples:
+                    - 30
+                use_stale_while_updating:
+                  type: boolean
+                  description: 'Serve stale content while cache is updating.'
+                  examples:
+                    - true
+                use_stale_while_offline:
+                  type: boolean
+                  description: 'Serve stale content while origin is offline.'
+                  examples:
+                    - true
+                use_background_update:
+                  type: boolean
+                  description: 'Update cache in background.'
+                  examples:
+                    - true
+                enable_cache_slice:
+                  type: boolean
+                  description: 'Enable cache slicing (optimize for video).'
+                  examples:
+                    - false
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/cdn/optimizer':
+    get:
+      summary: 'Get Optimizer Settings'
+      operationId: 'sitesCDN:OptimizerGetOptimizerSettings'
+      description: 'Retrieves the current CDN optimizer configuration for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      optimizer_enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_enable_webp:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_automatic_optimization_enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_enable_manipulation_engine:
+                        type: boolean
+                        examples:
+                          - false
+                      optimizer_watermark_enabled:
+                        type: boolean
+                        examples:
+                          - false
+                      optimizer_minify_css:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_minify_javascript:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_image_quality:
+                        type: integer
+                        examples:
+                          - 85
+                      optimizer_mobile_image_quality:
+                        type: integer
+                        examples:
+                          - 70
+                      optimizer_desktop_max_width:
+                        type: integer
+                        examples:
+                          - 1600
+                      optimizer_mobile_max_width:
+                        type: integer
+                        examples:
+                          - 800
+                  message:
+                    type: string
+                    examples:
+                      - 'Optimizer settings retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      optimizer_enabled: true
+                      optimizer_enable_webp: true
+                      optimizer_automatic_optimization_enabled: true
+                      optimizer_enable_manipulation_engine: false
+                      optimizer_watermark_enabled: false
+                      optimizer_minify_css: true
+                      optimizer_minify_javascript: true
+                      optimizer_image_quality: 85
+                      optimizer_mobile_image_quality: 70
+                      optimizer_desktop_max_width: 1600
+                      optimizer_mobile_max_width: 800
+                    message: 'Optimizer settings retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update Optimizer Settings'
+      operationId: 'sitesCDN:OptimizerUpdateOptimizerSettings'
+      description: "Updates CDN optimizer configuration for a site. All fields are optional — only include\nfields you want to change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      optimizer_enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_minify_css:
+                        type: boolean
+                        examples:
+                          - true
+                      optimizer_image_quality:
+                        type: integer
+                        examples:
+                          - 85
+                  message:
+                    type: string
+                    examples:
+                      - 'Optimizer settings updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      optimizer_enabled: true
+                      optimizer_minify_css: true
+                      optimizer_image_quality: 85
+                    message: 'Optimizer settings updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      optimizer_image_quality:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The image quality must not exceed 100.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      optimizer_image_quality:
+                        - 'The image quality must not exceed 100.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                optimizer_enabled:
+                  type: boolean
+                  description: 'Enable Bunny Optimizer.'
+                  examples:
+                    - true
+                optimizer_enable_webp:
+                  type: boolean
+                  description: 'Enable WebP image compression.'
+                  examples:
+                    - true
+                optimizer_automatic_optimization_enabled:
+                  type: boolean
+                  description: 'Enable automatic smart image optimization.'
+                  examples:
+                    - true
+                optimizer_enable_manipulation_engine:
+                  type: boolean
+                  description: 'Enable dynamic image processing engine.'
+                  examples:
+                    - false
+                optimizer_watermark_enabled:
+                  type: boolean
+                  description: 'Enable image watermarking.'
+                  examples:
+                    - false
+                optimizer_minify_css:
+                  type: boolean
+                  description: 'Enable CSS minification.'
+                  examples:
+                    - true
+                optimizer_minify_javascript:
+                  type: boolean
+                  description: 'Enable JavaScript minification.'
+                  examples:
+                    - true
+                optimizer_image_quality:
+                  type: integer
+                  description: 'Desktop image quality (1-100).'
+                  examples:
+                    - 85
+                optimizer_mobile_image_quality:
+                  type: integer
+                  description: 'Mobile image quality (1-100).'
+                  examples:
+                    - 70
+                optimizer_desktop_max_width:
+                  type: integer
+                  description: 'Max automatic image width for desktop (0-5000).'
+                  examples:
+                    - 1600
+                optimizer_mobile_max_width:
+                  type: integer
+                  description: 'Max automatic image width for mobile (0-5000).'
+                  examples:
+                    - 800
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/cdn/edge-rules':
+    get:
+      summary: 'List Edge Rules'
+      operationId: 'sitesCDN:EdgeRulesListEdgeRules'
+      description: 'Retrieves all edge rules configured for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        guid:
+                          type: string
+                          examples:
+                            - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                        description:
+                          type: string
+                          examples:
+                            - 'Force SSL'
+                        enabled:
+                          type: boolean
+                          examples:
+                            - true
+                        action_type:
+                          type: string
+                          examples:
+                            - force-ssl
+                        action_parameter_1:
+                          type:
+                            - string
+                            - 'null'
+                          examples:
+                            - null
+                        action_parameter_2:
+                          type:
+                            - string
+                            - 'null'
+                          examples:
+                            - null
+                        trigger_matching_type:
+                          type: string
+                          examples:
+                            - match-any
+                        triggers:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                examples:
+                                  - url
+                              pattern_matching_type:
+                                type: string
+                                examples:
+                                  - match-any
+                              pattern_matches:
+                                type: array
+                                items:
+                                  type: string
+                                examples:
+                                  -
+                                    - '*'
+                              parameter_1:
+                                type:
+                                  - string
+                                  - 'null'
+                                examples:
+                                  - null
+                          examples:
+                            -
+                              -
+                                type: url
+                                pattern_matching_type: match-any
+                                pattern_matches:
+                                  - '*'
+                                parameter_1: null
+                        extra_actions:
+                          type: array
+                          examples:
+                            - []
+                    examples:
+                      -
+                        -
+                          guid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                          description: 'Force SSL'
+                          enabled: true
+                          action_type: force-ssl
+                          action_parameter_1: null
+                          action_parameter_2: null
+                          trigger_matching_type: match-any
+                          triggers:
+                            -
+                              type: url
+                              pattern_matching_type: match-any
+                              pattern_matches:
+                                - '*'
+                              parameter_1: null
+                          extra_actions: []
+                  message:
+                    type: string
+                    examples:
+                      - 'Edge rules retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      -
+                        guid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                        description: 'Force SSL'
+                        enabled: true
+                        action_type: force-ssl
+                        action_parameter_1: null
+                        action_parameter_2: null
+                        trigger_matching_type: match-any
+                        triggers:
+                          -
+                            type: url
+                            pattern_matching_type: match-any
+                            pattern_matches:
+                              - '*'
+                            parameter_1: null
+                        extra_actions: []
+                    message: 'Edge rules retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    post:
+      summary: 'Create Edge Rule'
+      operationId: 'sitesCDN:EdgeRulesCreateEdgeRule'
+      description: 'Creates a new edge rule for a site.'
+      parameters: []
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      guid:
+                        type: string
+                        examples:
+                          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description:
+                        type: string
+                        examples:
+                          - 'Force SSL on all requests'
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      action_type:
+                        type: string
+                        examples:
+                          - force-ssl
+                      action_parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      action_parameter_2:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      trigger_matching_type:
+                        type: string
+                        examples:
+                          - match-any
+                      triggers:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              examples:
+                                - url
+                            pattern_matching_type:
+                              type: string
+                              examples:
+                                - match-any
+                            pattern_matches:
+                              type: array
+                              items:
+                                type: string
+                              examples:
+                                -
+                                  - '*'
+                            parameter_1:
+                              type:
+                                - string
+                                - 'null'
+                              examples:
+                                - null
+                        examples:
+                          -
+                            -
+                              type: url
+                              pattern_matching_type: match-any
+                              pattern_matches:
+                                - '*'
+                              parameter_1: null
+                      extra_actions:
+                        type: array
+                        examples:
+                          - []
+                  message:
+                    type: string
+                    examples:
+                      - 'Edge rule created successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 201
+                examples:
+                  -
+                    data:
+                      guid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description: 'Force SSL on all requests'
+                      enabled: true
+                      action_type: force-ssl
+                      action_parameter_1: null
+                      action_parameter_2: null
+                      trigger_matching_type: match-any
+                      triggers:
+                        -
+                          type: url
+                          pattern_matching_type: match-any
+                          pattern_matches:
+                            - '*'
+                          parameter_1: null
+                      extra_actions: []
+                    message: 'Edge rule created successfully'
+                    http_status: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      action_type:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The action type must be a valid edge rule action type.'
+                      triggers:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The triggers field is required.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      action_type:
+                        - 'The action type must be a valid edge rule action type.'
+                      triggers:
+                        - 'The triggers field is required.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: 'The rule description (max 255 characters).'
+                  examples:
+                    - 'Force SSL on all requests'
+                enabled:
+                  type: boolean
+                  description: 'Whether the rule is enabled. Defaults to true.'
+                  examples:
+                    - true
+                action_type:
+                  type: string
+                  description: 'The primary action type. Must be a valid edge rule action type (e.g., force-ssl, redirect, set-response-header, block-request, override-cache-time).'
+                  examples:
+                    - force-ssl
+                action_parameter_1:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Action parameter 1 (usage depends on action type).'
+                  examples:
+                    - 'https://example.com/'
+                action_parameter_2:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Action parameter 2 (usage depends on action type).'
+                  examples:
+                    - architecto
+                trigger_matching_type:
+                  type: string
+                  description: 'How triggers are combined. Must be match-any, match-all, or match-none.'
+                  examples:
+                    - match-any
+                triggers:
+                  type: array
+                  description: 'At least one trigger condition.'
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: 'The trigger type.'
+                        examples:
+                          - url
+                      pattern_matching_type:
+                        type: string
+                        description: 'How patterns are matched.'
+                        examples:
+                          - match-any
+                      pattern_matches:
+                        type: array
+                        description: 'Patterns to match against.'
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - '*'
+                      parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Optional trigger parameter.'
+                        examples:
+                          - architecto
+                    required:
+                      - type
+                      - pattern_matching_type
+                      - pattern_matches
+                  examples:
+                    -
+                      -
+                        type: url
+                        pattern_matching_type: match-any
+                        pattern_matches:
+                          - '*'
+                extra_actions:
+                  type: array
+                  description: 'Additional actions to perform.'
+                  items:
+                    type: object
+                    properties:
+                      action_type:
+                        type: string
+                        description: 'The extra action type.'
+                        examples:
+                          - set-response-header
+                      action_parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Action parameter 1.'
+                        examples:
+                          - X-Custom-Header
+                      action_parameter_2:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Action parameter 2.'
+                        examples:
+                          - custom-value
+                    required:
+                      - action_type
+                  examples:
+                    -
+                      - []
+              required:
+                - description
+                - action_type
+                - trigger_matching_type
+                - triggers
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/cdn/edge-rules/{rule}':
+    get:
+      summary: 'Get Edge Rule'
+      operationId: 'sitesCDN:EdgeRulesGetEdgeRule'
+      description: 'Retrieves a specific edge rule by GUID.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      guid:
+                        type: string
+                        examples:
+                          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description:
+                        type: string
+                        examples:
+                          - 'Force SSL'
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      action_type:
+                        type: string
+                        examples:
+                          - force-ssl
+                      action_parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      action_parameter_2:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      trigger_matching_type:
+                        type: string
+                        examples:
+                          - match-any
+                      triggers:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              examples:
+                                - url
+                            pattern_matching_type:
+                              type: string
+                              examples:
+                                - match-any
+                            pattern_matches:
+                              type: array
+                              items:
+                                type: string
+                              examples:
+                                -
+                                  - '*'
+                            parameter_1:
+                              type:
+                                - string
+                                - 'null'
+                              examples:
+                                - null
+                        examples:
+                          -
+                            -
+                              type: url
+                              pattern_matching_type: match-any
+                              pattern_matches:
+                                - '*'
+                              parameter_1: null
+                      extra_actions:
+                        type: array
+                        examples:
+                          - []
+                  message:
+                    type: string
+                    examples:
+                      - 'Edge rule retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      guid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description: 'Force SSL'
+                      enabled: true
+                      action_type: force-ssl
+                      action_parameter_1: null
+                      action_parameter_2: null
+                      trigger_matching_type: match-any
+                      triggers:
+                        -
+                          type: url
+                          pattern_matching_type: match-any
+                          pattern_matches:
+                            - '*'
+                          parameter_1: null
+                      extra_actions: []
+                    message: 'Edge rule retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Not Found'
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        examples:
+                          - 'Edge rule not found'
+                      http_status:
+                        type: integer
+                        examples:
+                          - 404
+                    examples:
+                      -
+                        data: {  }
+                        message: 'Edge rule not found'
+                        http_status: 404
+                  -
+                    description: 'Site Not Found'
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties: {  }
+                      message:
+                        type: string
+                        examples:
+                          - 'Site not found'
+                      http_status:
+                        type: integer
+                        examples:
+                          - 404
+                    examples:
+                      -
+                        data: {  }
+                        message: 'Site not found'
+                        http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update Edge Rule'
+      operationId: 'sitesCDN:EdgeRulesUpdateEdgeRule'
+      description: "Updates an existing edge rule. All fields are optional — only include fields you want\nto change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      guid:
+                        type: string
+                        examples:
+                          - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description:
+                        type: string
+                        examples:
+                          - 'Updated description'
+                      enabled:
+                        type: boolean
+                        examples:
+                          - false
+                      action_type:
+                        type: string
+                        examples:
+                          - redirect
+                      action_parameter_1:
+                        type: string
+                        examples:
+                          - 'https://example.com/new-location'
+                      action_parameter_2:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      trigger_matching_type:
+                        type: string
+                        examples:
+                          - match-all
+                      triggers:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              examples:
+                                - url
+                            pattern_matching_type:
+                              type: string
+                              examples:
+                                - match-any
+                            pattern_matches:
+                              type: array
+                              items:
+                                type: string
+                              examples:
+                                -
+                                  - /old-page
+                            parameter_1:
+                              type:
+                                - string
+                                - 'null'
+                              examples:
+                                - null
+                        examples:
+                          -
+                            -
+                              type: url
+                              pattern_matching_type: match-any
+                              pattern_matches:
+                                - /old-page
+                              parameter_1: null
+                      extra_actions:
+                        type: array
+                        examples:
+                          - []
+                  message:
+                    type: string
+                    examples:
+                      - 'Edge rule updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      guid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      description: 'Updated description'
+                      enabled: false
+                      action_type: redirect
+                      action_parameter_1: 'https://example.com/new-location'
+                      action_parameter_2: null
+                      trigger_matching_type: match-all
+                      triggers:
+                        -
+                          type: url
+                          pattern_matching_type: match-any
+                          pattern_matches:
+                            - /old-page
+                          parameter_1: null
+                      extra_actions: []
+                    message: 'Edge rule updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      action_type:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The action type must be a valid edge rule action type.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      action_type:
+                        - 'The action type must be a valid edge rule action type.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: 'The rule description (max 255 characters).'
+                  examples:
+                    - 'Updated description'
+                enabled:
+                  type: boolean
+                  description: 'Whether the rule is enabled.'
+                  examples:
+                    - false
+                action_type:
+                  type: string
+                  description: 'The primary action type.'
+                  examples:
+                    - redirect
+                action_parameter_1:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Action parameter 1.'
+                  examples:
+                    - 'https://example.com/new-location'
+                action_parameter_2:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'Action parameter 2.'
+                  examples:
+                    - architecto
+                trigger_matching_type:
+                  type: string
+                  description: 'How triggers are combined. Must be match-any, match-all, or match-none.'
+                  examples:
+                    - match-all
+                triggers:
+                  type: array
+                  description: 'Trigger conditions (replaces all existing triggers).'
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: 'The trigger type.'
+                        examples:
+                          - url
+                      pattern_matching_type:
+                        type: string
+                        description: 'How patterns are matched.'
+                        examples:
+                          - match-any
+                      pattern_matches:
+                        type: array
+                        description: 'Patterns to match against.'
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - /old-page
+                      parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Optional trigger parameter.'
+                        examples:
+                          - architecto
+                    required:
+                      - type
+                      - pattern_matching_type
+                      - pattern_matches
+                  examples:
+                    -
+                      - []
+                extra_actions:
+                  type: array
+                  description: 'Extra actions (replaces all existing extra actions).'
+                  items:
+                    type: object
+                    properties:
+                      action_type:
+                        type: string
+                        description: 'The extra action type.'
+                        examples:
+                          - set-response-header
+                      action_parameter_1:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Action parameter 1.'
+                        examples:
+                          - X-Redirect
+                      action_parameter_2:
+                        type:
+                          - string
+                          - 'null'
+                        description: 'Action parameter 2.'
+                        examples:
+                          - 'true'
+                    required:
+                      - action_type
+                  examples:
+                    -
+                      - []
+    delete:
+      summary: 'Delete Edge Rule'
+      operationId: 'sitesCDN:EdgeRulesDeleteEdgeRule'
+      description: 'Permanently deletes an edge rule. This action cannot be undone.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Edge rule deleted successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data: {  }
+                    message: 'Edge rule deleted successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+      -
+        in: path
+        name: rule
+        description: ''
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: ruleId
+        description: 'The edge rule GUID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - a1b2c3d4-e5f6-7890-abcd-ef1234567890
+  '/api/v1/vector/sites/{site}/waf/settings':
+    get:
+      summary: 'Get WAF Settings'
+      operationId: 'sitesWAF:SettingsGetWAFSettings'
+      description: 'Retrieves the current WAF configuration for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      learning_mode:
+                        type: boolean
+                        examples:
+                          - false
+                      profile_id:
+                        type: integer
+                        examples:
+                          - 1
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                      disabled_rule_groups:
+                        type: array
+                        examples:
+                          - []
+                      disabled_rules:
+                        type: array
+                        examples:
+                          - []
+                      log_only_rules:
+                        type: array
+                        examples:
+                          - []
+                      request_header_logging:
+                        type: boolean
+                        examples:
+                          - false
+                      request_body_limit_action:
+                        type: integer
+                        examples:
+                          - 0
+                      response_body_limit_action:
+                        type: integer
+                        examples:
+                          - 0
+                      realtime_threat_intelligence:
+                        type: boolean
+                        examples:
+                          - true
+                  message:
+                    type: string
+                    examples:
+                      - 'WAF settings retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enabled: true
+                      learning_mode: false
+                      profile_id: 1
+                      execution_mode: 1
+                      disabled_rule_groups: []
+                      disabled_rules: []
+                      log_only_rules: []
+                      request_header_logging: false
+                      request_body_limit_action: 0
+                      response_body_limit_action: 0
+                      realtime_threat_intelligence: true
+                    message: 'WAF settings retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update WAF Settings'
+      operationId: 'sitesWAF:SettingsUpdateWAFSettings'
+      description: "Updates WAF configuration for a site. All fields are optional — only include\nfields you want to change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      learning_mode:
+                        type: boolean
+                        examples:
+                          - false
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                  message:
+                    type: string
+                    examples:
+                      - 'WAF settings updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enabled: true
+                      learning_mode: false
+                      execution_mode: 1
+                    message: 'WAF settings updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      execution_mode:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The execution mode must be 0 (Log) or 1 (Block).'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      execution_mode:
+                        - 'The execution mode must be 0 (Log) or 1 (Block).'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: 'Enable or disable WAF.'
+                  examples:
+                    - true
+                learning_mode:
+                  type: boolean
+                  description: 'Enable learning mode (log without blocking).'
+                  examples:
+                    - false
+                profile_id:
+                  type: integer
+                  description: 'WAF profile ID.'
+                  examples:
+                    - 1
+                execution_mode:
+                  type: integer
+                  description: 'WAF execution mode (0=Log, 1=Block).'
+                  examples:
+                    - 1
+                disabled_rule_groups:
+                  type: array
+                  description: 'Array of disabled rule group IDs.'
+                  items:
+                    type: string
+                  examples:
+                    -
+                      - group-1
+                disabled_rules:
+                  type: array
+                  description: 'Array of individual disabled rule IDs.'
+                  items:
+                    type: string
+                  examples:
+                    -
+                      - rule-1
+                log_only_rules:
+                  type: array
+                  description: 'Array of rules set to log-only mode.'
+                  items:
+                    type: string
+                  examples:
+                    -
+                      - rule-2
+                request_header_logging:
+                  type: boolean
+                  description: 'Log request headers.'
+                  examples:
+                    - false
+                request_body_limit_action:
+                  type: integer
+                  description: 'Request body limit action (0=ProcessPartial, 1=Reject, 2=Ignore).'
+                  examples:
+                    - 0
+                response_body_limit_action:
+                  type: integer
+                  description: 'Response body limit action (0=ProcessPartial, 1=Reject, 2=Ignore).'
+                  examples:
+                    - 0
+                realtime_threat_intelligence:
+                  type: boolean
+                  description: 'Enable realtime threat intelligence feeds.'
+                  examples:
+                    - true
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/profiles':
+    get:
+      summary: 'List WAF Profiles'
+      operationId: 'sitesWAF:ProfilesListWAFProfiles'
+      description: 'Retrieves the available WAF profiles that can be assigned to a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          type: integer
+                          examples:
+                            - 1
+                        Name:
+                          type: string
+                          examples:
+                            - Default
+                    examples:
+                      -
+                        -
+                          Id: 1
+                          Name: Default
+                        -
+                          Id: 2
+                          Name: WordPress
+                  message:
+                    type: string
+                    examples:
+                      - 'WAF profiles retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      -
+                        Id: 1
+                        Name: Default
+                      -
+                        Id: 2
+                        Name: WordPress
+                    message: 'WAF profiles retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/ddos':
+    get:
+      summary: 'Get DDoS Protection Settings'
+      operationId: 'sitesWAF:DDoSProtectionGetDDoSProtectionSettings'
+      description: 'Retrieves the current DDoS protection configuration for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      protection_type:
+                        type: integer
+                        examples:
+                          - 1
+                      sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                      challenge_window:
+                        type: integer
+                        examples:
+                          - 30
+                  message:
+                    type: string
+                    examples:
+                      - 'DDoS protection settings retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enabled: true
+                      protection_type: 1
+                      sensitivity: 2
+                      execution_mode: 1
+                      challenge_window: 30
+                    message: 'DDoS protection settings retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update DDoS Protection Settings'
+      operationId: 'sitesWAF:DDoSProtectionUpdateDDoSProtectionSettings'
+      description: "Updates DDoS protection configuration for a site. All fields are optional — only include\nfields you want to change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        examples:
+                          - true
+                      protection_type:
+                        type: integer
+                        examples:
+                          - 1
+                      sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                      challenge_window:
+                        type: integer
+                        examples:
+                          - 30
+                  message:
+                    type: string
+                    examples:
+                      - 'DDoS protection settings updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      enabled: true
+                      protection_type: 1
+                      sensitivity: 2
+                      execution_mode: 1
+                      challenge_window: 30
+                    message: 'DDoS protection settings updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      sensitivity:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The sensitivity must be 0 (Off), 1 (Low), 2 (Medium), 3 (High), or 4 (VeryHigh).'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      sensitivity:
+                        - 'The sensitivity must be 0 (Off), 1 (Low), 2 (Medium), 3 (High), or 4 (VeryHigh).'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: 'Enable or disable DDoS protection.'
+                  examples:
+                    - true
+                protection_type:
+                  type: integer
+                  description: 'Protection type (0=DetectOnly, 1=ActiveStandard, 2=ActiveAggressive).'
+                  examples:
+                    - 1
+                sensitivity:
+                  type: integer
+                  description: 'Shield sensitivity (0=Off, 1=Low, 2=Medium, 3=High, 4=VeryHigh).'
+                  examples:
+                    - 2
+                execution_mode:
+                  type: integer
+                  description: 'Execution mode (0=Off, 1=On).'
+                  examples:
+                    - 1
+                challenge_window:
+                  type: integer
+                  description: 'Challenge window in seconds.'
+                  examples:
+                    - 30
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/bot-detection':
+    get:
+      summary: 'Get Bot Detection Settings'
+      operationId: 'sitesWAF:BotDetectionGetBotDetectionSettings'
+      description: 'Retrieves the current bot detection configuration for a site.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                      request_integrity_sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      ip_address_sensitivity:
+                        type: integer
+                        examples:
+                          - 1
+                      browser_fingerprint_sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      browser_fingerprint_aggression:
+                        type: integer
+                        examples:
+                          - 1
+                      browser_fingerprint_complex_enabled:
+                        type: boolean
+                        examples:
+                          - false
+                  message:
+                    type: string
+                    examples:
+                      - 'Bot detection settings retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      execution_mode: 1
+                      request_integrity_sensitivity: 2
+                      ip_address_sensitivity: 1
+                      browser_fingerprint_sensitivity: 2
+                      browser_fingerprint_aggression: 1
+                      browser_fingerprint_complex_enabled: false
+                    message: 'Bot detection settings retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    put:
+      summary: 'Update Bot Detection Settings'
+      operationId: 'sitesWAF:BotDetectionUpdateBotDetectionSettings'
+      description: "Updates bot detection configuration for a site. All fields are optional — only include\nfields you want to change. Omitted fields retain their current values."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      execution_mode:
+                        type: integer
+                        examples:
+                          - 1
+                      request_integrity_sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      ip_address_sensitivity:
+                        type: integer
+                        examples:
+                          - 1
+                      browser_fingerprint_sensitivity:
+                        type: integer
+                        examples:
+                          - 2
+                      browser_fingerprint_aggression:
+                        type: integer
+                        examples:
+                          - 1
+                      browser_fingerprint_complex_enabled:
+                        type: boolean
+                        examples:
+                          - false
+                  message:
+                    type: string
+                    examples:
+                      - 'Bot detection settings updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      execution_mode: 1
+                      request_integrity_sensitivity: 2
+                      ip_address_sensitivity: 1
+                      browser_fingerprint_sensitivity: 2
+                      browser_fingerprint_aggression: 1
+                      browser_fingerprint_complex_enabled: false
+                    message: 'Bot detection settings updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      execution_mode:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The execution mode must be 0 (Off) or 1 (On).'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      execution_mode:
+                        - 'The execution mode must be 0 (Off) or 1 (On).'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                execution_mode:
+                  type: integer
+                  description: 'Execution mode (0=Off, 1=On).'
+                  examples:
+                    - 1
+                request_integrity_sensitivity:
+                  type: integer
+                  description: 'Request integrity sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+                  examples:
+                    - 2
+                ip_address_sensitivity:
+                  type: integer
+                  description: 'IP address sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+                  examples:
+                    - 1
+                browser_fingerprint_sensitivity:
+                  type: integer
+                  description: 'Browser fingerprint sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+                  examples:
+                    - 2
+                browser_fingerprint_aggression:
+                  type: integer
+                  description: 'Browser fingerprint aggression (0=Off, 1=Low, 2=Medium, 3=High, 4=VeryHigh).'
+                  examples:
+                    - 1
+                browser_fingerprint_complex_enabled:
+                  type: boolean
+                  description: 'Enable complex browser fingerprinting.'
+                  examples:
+                    - false
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/access-lists':
+    get:
+      summary: 'List Access Lists'
+      operationId: 'sitesWAF:AccessListsListAccessLists'
+      description: 'Retrieves all access lists (managed and custom) for a site, including usage limits.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      managed_lists:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            list_id:
+                              type: integer
+                              examples:
+                                - 1
+                            configuration_id:
+                              type: integer
+                              examples:
+                                - 42
+                            name:
+                              type: string
+                              examples:
+                                - 'TOR Exit Nodes'
+                            description:
+                              type: string
+                              examples:
+                                - 'Known TOR exit node IP addresses'
+                            is_enabled:
+                              type: boolean
+                              examples:
+                                - true
+                            type:
+                              type: integer
+                              examples:
+                                - 0
+                            category:
+                              type: integer
+                              examples:
+                                - 32
+                            action:
+                              type: integer
+                              examples:
+                                - 0
+                            required_plan:
+                              type: integer
+                              examples:
+                                - 0
+                            entry_count:
+                              type: integer
+                              examples:
+                                - 12345
+                            update_frequency:
+                              type: string
+                              examples:
+                                - '1.00:00:00'
+                            last_updated:
+                              type: string
+                              examples:
+                                - '2026-04-01T00:00:00Z'
+                        examples:
+                          -
+                            -
+                              list_id: 1
+                              configuration_id: 42
+                              name: 'TOR Exit Nodes'
+                              description: 'Known TOR exit node IP addresses'
+                              is_enabled: true
+                              type: 0
+                              category: 32
+                              action: 0
+                              required_plan: 0
+                              entry_count: 12345
+                              update_frequency: '1.00:00:00'
+                              last_updated: '2026-04-01T00:00:00Z'
+                      custom_lists:
+                        type: array
+                        examples:
+                          - []
+                      custom_entry_count:
+                        type: integer
+                        examples:
+                          - 0
+                      custom_entry_limit:
+                        type: integer
+                        examples:
+                          - 10000
+                      custom_list_count:
+                        type: integer
+                        examples:
+                          - 0
+                      custom_list_limit:
+                        type: integer
+                        examples:
+                          - 25
+                  message:
+                    type: string
+                    examples:
+                      - 'Access lists retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      managed_lists:
+                        -
+                          list_id: 1
+                          configuration_id: 42
+                          name: 'TOR Exit Nodes'
+                          description: 'Known TOR exit node IP addresses'
+                          is_enabled: true
+                          type: 0
+                          category: 32
+                          action: 0
+                          required_plan: 0
+                          entry_count: 12345
+                          update_frequency: '1.00:00:00'
+                          last_updated: '2026-04-01T00:00:00Z'
+                      custom_lists: []
+                      custom_entry_count: 0
+                      custom_entry_limit: 10000
+                      custom_list_count: 0
+                      custom_list_limit: 25
+                    message: 'Access lists retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    post:
+      summary: 'Create Custom Access List'
+      operationId: 'sitesWAF:AccessListsCreateCustomAccessList'
+      description: 'Creates a new custom access list with the provided entries.'
+      parameters: []
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        examples:
+                          - 1
+                      name:
+                        type: string
+                        examples:
+                          - 'Office IPs'
+                      description:
+                        type: string
+                        examples:
+                          - 'Trusted office IP ranges'
+                      type:
+                        type: integer
+                        examples:
+                          - 0
+                      content:
+                        type: string
+                        examples:
+                          - "203.0.113.0/24\n198.51.100.1"
+                      checksum:
+                        type: string
+                        examples:
+                          - abc123
+                      entry_count:
+                        type: integer
+                        examples:
+                          - 2
+                      last_modified:
+                        type: string
+                        examples:
+                          - '2026-04-01T00:00:00Z'
+                  message:
+                    type: string
+                    examples:
+                      - 'Custom access list created successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 201
+                examples:
+                  -
+                    data:
+                      id: 1
+                      name: 'Office IPs'
+                      description: 'Trusted office IP ranges'
+                      type: 0
+                      content: "203.0.113.0/24\n198.51.100.1"
+                      checksum: abc123
+                      entry_count: 2
+                      last_modified: '2026-04-01T00:00:00Z'
+                    message: 'Custom access list created successfully'
+                    http_status: 201
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The name field is required.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      name:
+                        - 'The name field is required.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The list name (max 255 characters).'
+                  examples:
+                    - 'Office IPs'
+                description:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'A description of the list (max 1000 characters).'
+                  examples:
+                    - 'Trusted office IP ranges'
+                type:
+                  type: integer
+                  description: 'The list type (0=IP, 1=CIDR, 2=ASN, 3=Country, 4=Domain, 5=Header).'
+                  examples:
+                    - 0
+                content:
+                  type: string
+                  description: 'Newline-separated list entries.'
+                  examples:
+                    - 203.0.113.0/24\n198.51.100.1
+              required:
+                - name
+                - type
+                - content
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/access-lists/enums':
+    get:
+      summary: 'Get Access List Enums'
+      operationId: 'sitesWAF:AccessListsGetAccessListEnums'
+      description: 'Retrieves available enum values for access list types, actions, and categories.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Access list enums retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data: {  }
+                    message: 'Access list enums retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
+  '/api/v1/vector/sites/{site}/waf/access-lists/{listId}':
+    get:
+      summary: 'Get Custom Access List'
+      operationId: 'sitesWAF:AccessListsGetCustomAccessList'
+      description: 'Retrieves a single custom access list with its content.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        examples:
+                          - 1
+                      name:
+                        type: string
+                        examples:
+                          - 'Office IPs'
+                      description:
+                        type: string
+                        examples:
+                          - 'Trusted office IP ranges'
+                      type:
+                        type: integer
+                        examples:
+                          - 0
+                      content:
+                        type: string
+                        examples:
+                          - "203.0.113.0/24\n198.51.100.1"
+                      checksum:
+                        type: string
+                        examples:
+                          - abc123
+                      entry_count:
+                        type: integer
+                        examples:
+                          - 2
+                      last_modified:
+                        type: string
+                        examples:
+                          - '2026-04-01T00:00:00Z'
+                  message:
+                    type: string
+                    examples:
+                      - 'Custom access list retrieved successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      id: 1
+                      name: 'Office IPs'
+                      description: 'Trusted office IP ranges'
+                      type: 0
+                      content: "203.0.113.0/24\n198.51.100.1"
+                      checksum: abc123
+                      entry_count: 2
+                      last_modified: '2026-04-01T00:00:00Z'
+                    message: 'Custom access list retrieved successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    patch:
+      summary: 'Update Custom Access List'
+      operationId: 'sitesWAF:AccessListsUpdateCustomAccessList'
+      description: "Updates a custom access list's name and/or content. Only include fields you want to change."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        examples:
+                          - 1
+                      name:
+                        type: string
+                        examples:
+                          - 'Updated Office IPs'
+                      description:
+                        type: string
+                        examples:
+                          - 'Trusted office IP ranges'
+                      type:
+                        type: integer
+                        examples:
+                          - 0
+                      content:
+                        type: string
+                        examples:
+                          - "203.0.113.0/24\n198.51.100.1\n10.0.0.0/8"
+                      checksum:
+                        type: string
+                        examples:
+                          - def456
+                      entry_count:
+                        type: integer
+                        examples:
+                          - 3
+                      last_modified:
+                        type: string
+                        examples:
+                          - '2026-04-07T00:00:00Z'
+                  message:
+                    type: string
+                    examples:
+                      - 'Custom access list updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      id: 1
+                      name: 'Updated Office IPs'
+                      description: 'Trusted office IP ranges'
+                      type: 0
+                      content: "203.0.113.0/24\n198.51.100.1\n10.0.0.0/8"
+                      checksum: def456
+                      entry_count: 3
+                      last_modified: '2026-04-07T00:00:00Z'
+                    message: 'Custom access list updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The name must be a string.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      name:
+                        - 'The name must be a string.'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The list name (max 255 characters).'
+                  examples:
+                    - 'Updated Office IPs'
+                content:
+                  type: string
+                  description: 'Newline-separated list entries.'
+                  examples:
+                    - 203.0.113.0/24\n198.51.100.1\n10.0.0.0/8
+    delete:
+      summary: 'Delete Custom Access List'
+      operationId: 'sitesWAF:AccessListsDeleteCustomAccessList'
+      description: 'Permanently deletes a custom access list. This action cannot be undone.'
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Custom access list deleted successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data: {  }
+                    message: 'Custom access list deleted successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+      tags:
+        - Sites
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: listId
+        description: 'The access list ID.'
+        required: true
+        schema:
+          type: integer
+          examples:
+            - 1
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
   '/api/v1/vector/sites/{site}/waf/allowed-referrers/{hostname}':
     delete:
       summary: 'Remove Allowed Referrer'
@@ -7254,6 +11636,188 @@ paths:
           type: string
           examples:
             - 192.0.2.1
+  '/api/v1/vector/sites/{site}/waf/access-lists/configurations/{configId}':
+    patch:
+      summary: 'Update Access List Configuration'
+      operationId: 'sitesWAF:AccessListsUpdateAccessListConfiguration'
+      description: "Updates the configuration (enable/disable and action) for any access list (managed or custom).\nUse the `configuration_id` from the index response, not the `list_id`."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Access list configuration updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data: {  }
+                    message: 'Access list configuration updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Site Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Site not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Site not found'
+                    http_status: 404
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      action:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'The action must be 0 (Block), 1 (Log), 2 (Allow), 3 (Challenge), 4 (Captcha), or 5 (Bypass).'
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      action:
+                        - 'The action must be 0 (Block), 1 (Log), 2 (Allow), 3 (Challenge), 4 (Captcha), or 5 (Bypass).'
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Sites
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_enabled:
+                  type: boolean
+                  description: 'Whether the list is enabled.'
+                  examples:
+                    - true
+                action:
+                  type: integer
+                  description: 'The action to take (0=Block, 1=Log, 2=Allow, 3=Challenge, 4=Captcha, 5=Bypass).'
+                  examples:
+                    - 0
+    parameters:
+      -
+        in: path
+        name: site
+        description: 'The site.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - architecto
+      -
+        in: path
+        name: configId
+        description: 'The access list configuration ID.'
+        required: true
+        schema:
+          type: integer
+          examples:
+            - 42
+      -
+        in: path
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcde
   '/api/v1/vector/sites/{site}/purge-cache':
     post:
       summary: 'Purge Cache'

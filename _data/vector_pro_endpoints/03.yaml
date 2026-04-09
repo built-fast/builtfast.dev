@@ -3055,6 +3055,1120 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/cdn/caching'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Caching'
+      subgroupDescription: 'Manage CDN caching configuration including smart cache, vary headers, origin shield, request coalescing, and stale content settings.'
+      title: 'Get Caching Settings'
+      description: 'Retrieves the current CDN caching configuration for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enable_smart_cache": true,
+                  "cache_control_max_age_override": 2592000,
+                  "cache_control_public_max_age_override": 0,
+                  "disable_cookies": true,
+                  "cache_error_responses": false,
+                  "enable_query_string_ordering": true,
+                  "ignore_query_strings": false,
+                  "query_string_vary_parameters": [],
+                  "enable_hostname_vary": false,
+                  "enable_mobile_vary": false,
+                  "enable_webp_vary": true,
+                  "enable_avif_vary": true,
+                  "enable_country_code_vary": false,
+                  "enable_cookie_vary": false,
+                  "cookie_vary_parameters": [],
+                  "enable_origin_shield": false,
+                  "origin_shield_zone_code": "",
+                  "origin_shield_enable_concurrency_limit": false,
+                  "origin_shield_max_concurrent_requests": 5000,
+                  "origin_shield_queue_max_wait_time": 30,
+                  "origin_shield_max_queued_requests": 1000,
+                  "enable_request_coalescing": false,
+                  "request_coalescing_timeout": 30,
+                  "use_stale_while_updating": true,
+                  "use_stale_while_offline": true,
+                  "use_background_update": true,
+                  "enable_cache_slice": false
+              },
+              "message": "Caching settings retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/cdn/optimizer'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Optimizer'
+      subgroupDescription: 'Manage CDN optimizer configuration including image optimization, asset minification, and quality settings.'
+      title: 'Get Optimizer Settings'
+      description: 'Retrieves the current CDN optimizer configuration for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "optimizer_enabled": true,
+                  "optimizer_enable_webp": true,
+                  "optimizer_automatic_optimization_enabled": true,
+                  "optimizer_enable_manipulation_engine": false,
+                  "optimizer_watermark_enabled": false,
+                  "optimizer_minify_css": true,
+                  "optimizer_minify_javascript": true,
+                  "optimizer_image_quality": 85,
+                  "optimizer_mobile_image_quality": 70,
+                  "optimizer_desktop_max_width": 1600,
+                  "optimizer_mobile_max_width": 800
+              },
+              "message": "Optimizer settings retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/cdn/edge-rules'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Edge Rules'
+      subgroupDescription: |-
+        Manage CDN edge rules for request/response manipulation, redirects, caching overrides, and security controls.
+
+        Each edge rule defines:
+        - **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)
+        - **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)
+        - **Extra Actions**: Additional actions to perform alongside the primary action
+      title: 'List Edge Rules'
+      description: 'Retrieves all edge rules configured for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {
+                      "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "description": "Force SSL",
+                      "enabled": true,
+                      "action_type": "force-ssl",
+                      "action_parameter_1": null,
+                      "action_parameter_2": null,
+                      "trigger_matching_type": "match-any",
+                      "triggers": [
+                          {
+                              "type": "url",
+                              "pattern_matching_type": "match-any",
+                              "pattern_matches": ["*"],
+                              "parameter_1": null
+                          }
+                      ],
+                      "extra_actions": []
+                  }
+              ],
+              "message": "Edge rules retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/cdn/edge-rules/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Edge Rules'
+      subgroupDescription: |-
+        Manage CDN edge rules for request/response manipulation, redirects, caching overrides, and security controls.
+
+        Each edge rule defines:
+        - **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)
+        - **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)
+        - **Extra Actions**: Additional actions to perform alongside the primary action
+      title: 'Get Edge Rule'
+      description: 'Retrieves a specific edge rule by GUID.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The edge rule GUID.'
+        required: true
+        example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      rule: architecto
+      ruleId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "description": "Force SSL",
+                  "enabled": true,
+                  "action_type": "force-ssl",
+                  "action_parameter_1": null,
+                  "action_parameter_2": null,
+                  "trigger_matching_type": "match-any",
+                  "triggers": [
+                      {
+                          "type": "url",
+                          "pattern_matching_type": "match-any",
+                          "pattern_matches": ["*"],
+                          "parameter_1": null
+                      }
+                  ],
+                  "extra_actions": []
+              },
+              "message": "Edge rule retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+              "data": {},
+              "message": "Edge rule not found",
+              "http_status": 404
+          }
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/settings'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Settings'
+      subgroupDescription: 'Manage WAF core configuration including execution mode, profiles, rule groups, and payload limits.'
+      title: 'Get WAF Settings'
+      description: 'Retrieves the current WAF configuration for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enabled": true,
+                  "learning_mode": false,
+                  "profile_id": 1,
+                  "execution_mode": 1,
+                  "disabled_rule_groups": [],
+                  "disabled_rules": [],
+                  "log_only_rules": [],
+                  "request_header_logging": false,
+                  "request_body_limit_action": 0,
+                  "response_body_limit_action": 0,
+                  "realtime_threat_intelligence": true
+              },
+              "message": "WAF settings retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/profiles'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Profiles'
+      subgroupDescription: 'List available WAF profiles that can be assigned to a site.'
+      title: 'List WAF Profiles'
+      description: 'Retrieves the available WAF profiles that can be assigned to a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": [
+                  {"Id": 1, "Name": "Default"},
+                  {"Id": 2, "Name": "WordPress"}
+              ],
+              "message": "WAF profiles retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/ddos'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: DDoS Protection'
+      subgroupDescription: 'Manage DDoS protection settings including sensitivity, execution mode, and challenge window.'
+      title: 'Get DDoS Protection Settings'
+      description: 'Retrieves the current DDoS protection configuration for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enabled": true,
+                  "protection_type": 1,
+                  "sensitivity": 2,
+                  "execution_mode": 1,
+                  "challenge_window": 30
+              },
+              "message": "DDoS protection settings retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/bot-detection'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Bot Detection'
+      subgroupDescription: 'Manage bot detection settings including execution mode, sensitivity levels, and browser fingerprint configuration.'
+      title: 'Get Bot Detection Settings'
+      description: 'Retrieves the current bot detection configuration for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "execution_mode": 1,
+                  "request_integrity_sensitivity": 2,
+                  "ip_address_sensitivity": 1,
+                  "browser_fingerprint_sensitivity": 2,
+                  "browser_fingerprint_aggression": 1,
+                  "browser_fingerprint_complex_enabled": false
+              },
+              "message": "Bot detection settings retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
+      title: 'List Access Lists'
+      description: 'Retrieves all access lists (managed and custom) for a site, including usage limits.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "managed_lists": [
+                      {
+                          "list_id": 1,
+                          "configuration_id": 42,
+                          "name": "TOR Exit Nodes",
+                          "description": "Known TOR exit node IP addresses",
+                          "is_enabled": true,
+                          "type": 0,
+                          "category": 32,
+                          "action": 0,
+                          "required_plan": 0,
+                          "entry_count": 12345,
+                          "update_frequency": "1.00:00:00",
+                          "last_updated": "2026-04-01T00:00:00Z"
+                      }
+                  ],
+                  "custom_lists": [],
+                  "custom_entry_count": 0,
+                  "custom_entry_limit": 10000,
+                  "custom_list_count": 0,
+                  "custom_list_limit": 25
+              },
+              "message": "Access lists retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists/enums'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: 'Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.'
+      title: 'Get Access List Enums'
+      description: 'Retrieves available enum values for access list types, actions, and categories.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Access list enums retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists/{listId}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
+      title: 'Get Custom Access List'
+      description: 'Retrieves a single custom access list with its content.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      listId:
+        custom: []
+        name: listId
+        description: 'The access list ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      listId: 1
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 1,
+                  "name": "Office IPs",
+                  "description": "Trusted office IP ranges",
+                  "type": 0,
+                  "content": "203.0.113.0/24\n198.51.100.1",
+                  "checksum": "abc123",
+                  "entry_count": 2,
+                  "last_modified": "2026-04-01T00:00:00Z"
+              },
+              "message": "Custom access list retrieved successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - POST
     uri: 'api/v1/vector/sites/{site}/waf/allowed-referrers'
     metadata:
@@ -4230,6 +5344,2542 @@ endpoints:
         content: '{"data": {}, "message": "Rate limit not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/cdn/caching'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Caching'
+      subgroupDescription: 'Manage CDN caching configuration including smart cache, vary headers, origin shield, request coalescing, and stale content settings.'
+      title: 'Update Caching Settings'
+      description: |-
+        Updates CDN caching configuration for a site. All fields are optional — only include
+        fields you want to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      enable_smart_cache:
+        custom: []
+        name: enable_smart_cache
+        description: 'Enable smart cache.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cache_control_max_age_override:
+        custom: []
+        name: cache_control_max_age_override
+        description: 'Server cache expiration in seconds. Use -1 to respect origin headers.'
+        required: false
+        example: 2592000
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cache_control_public_max_age_override:
+        custom: []
+        name: cache_control_public_max_age_override
+        description: 'Browser cache expiration in seconds.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      disable_cookies:
+        custom: []
+        name: disable_cookies
+        description: 'Automatically strip cookies from responses.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cache_error_responses:
+        custom: []
+        name: cache_error_responses
+        description: 'Cache error responses from origin.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_query_string_ordering:
+        custom: []
+        name: enable_query_string_ordering
+        description: 'Sort query string parameters for better cache hit rates.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ignore_query_strings:
+        custom: []
+        name: ignore_query_strings
+        description: 'Ignore query strings when serving cached objects.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      query_string_vary_parameters:
+        custom: []
+        name: query_string_vary_parameters
+        description: 'Query string parameters to vary cache by.'
+        required: false
+        example:
+          - utm_source
+          - ref
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_hostname_vary:
+        custom: []
+        name: enable_hostname_vary
+        description: 'Vary cache by hostname.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_mobile_vary:
+        custom: []
+        name: enable_mobile_vary
+        description: 'Vary cache by device type (mobile/desktop).'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_webp_vary:
+        custom: []
+        name: enable_webp_vary
+        description: 'Vary cache by WebP support.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_avif_vary:
+        custom: []
+        name: enable_avif_vary
+        description: 'Vary cache by AVIF support.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_country_code_vary:
+        custom: []
+        name: enable_country_code_vary
+        description: 'Vary cache by country code.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_cookie_vary:
+        custom: []
+        name: enable_cookie_vary
+        description: 'Vary cache by cookie values.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      cookie_vary_parameters:
+        custom: []
+        name: cookie_vary_parameters
+        description: 'Cookie names to vary cache by.'
+        required: false
+        example:
+          - wordpress_logged_in
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_origin_shield:
+        custom: []
+        name: enable_origin_shield
+        description: 'Enable origin shield.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      origin_shield_zone_code:
+        custom: []
+        name: origin_shield_zone_code
+        description: 'Origin shield zone code (e.g., "FR", "NY").'
+        required: false
+        example: FR
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      origin_shield_enable_concurrency_limit:
+        custom: []
+        name: origin_shield_enable_concurrency_limit
+        description: 'Enable origin shield concurrency limit.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      origin_shield_max_concurrent_requests:
+        custom: []
+        name: origin_shield_max_concurrent_requests
+        description: 'Max concurrent requests to origin (1-10000).'
+        required: false
+        example: 5000
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      origin_shield_queue_max_wait_time:
+        custom: []
+        name: origin_shield_queue_max_wait_time
+        description: 'Max queue wait time in seconds.'
+        required: false
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      origin_shield_max_queued_requests:
+        custom: []
+        name: origin_shield_max_queued_requests
+        description: 'Max queued origin requests (0-30000).'
+        required: false
+        example: 1000
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_request_coalescing:
+        custom: []
+        name: enable_request_coalescing
+        description: 'Enable request coalescing.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      request_coalescing_timeout:
+        custom: []
+        name: request_coalescing_timeout
+        description: 'Request coalescing lock time in seconds.'
+        required: false
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      use_stale_while_updating:
+        custom: []
+        name: use_stale_while_updating
+        description: 'Serve stale content while cache is updating.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      use_stale_while_offline:
+        custom: []
+        name: use_stale_while_offline
+        description: 'Serve stale content while origin is offline.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      use_background_update:
+        custom: []
+        name: use_background_update
+        description: 'Update cache in background.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enable_cache_slice:
+        custom: []
+        name: enable_cache_slice
+        description: 'Enable cache slicing (optimize for video).'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      enable_smart_cache: true
+      cache_control_max_age_override: 2592000
+      cache_control_public_max_age_override: 0
+      disable_cookies: true
+      cache_error_responses: false
+      enable_query_string_ordering: true
+      ignore_query_strings: false
+      query_string_vary_parameters:
+        - utm_source
+        - ref
+      enable_hostname_vary: false
+      enable_mobile_vary: false
+      enable_webp_vary: true
+      enable_avif_vary: true
+      enable_country_code_vary: false
+      enable_cookie_vary: false
+      cookie_vary_parameters:
+        - wordpress_logged_in
+      enable_origin_shield: false
+      origin_shield_zone_code: FR
+      origin_shield_enable_concurrency_limit: false
+      origin_shield_max_concurrent_requests: 5000
+      origin_shield_queue_max_wait_time: 30
+      origin_shield_max_queued_requests: 1000
+      enable_request_coalescing: false
+      request_coalescing_timeout: 30
+      use_stale_while_updating: true
+      use_stale_while_offline: true
+      use_background_update: true
+      enable_cache_slice: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enable_smart_cache": true,
+                  "cache_control_max_age_override": 2592000,
+                  "disable_cookies": true
+              },
+              "message": "Caching settings updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "origin_shield_max_concurrent_requests": ["The max concurrent requests must not exceed 10,000."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/cdn/optimizer'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Optimizer'
+      subgroupDescription: 'Manage CDN optimizer configuration including image optimization, asset minification, and quality settings.'
+      title: 'Update Optimizer Settings'
+      description: |-
+        Updates CDN optimizer configuration for a site. All fields are optional — only include
+        fields you want to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      optimizer_enabled:
+        custom: []
+        name: optimizer_enabled
+        description: 'Enable Bunny Optimizer.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_enable_webp:
+        custom: []
+        name: optimizer_enable_webp
+        description: 'Enable WebP image compression.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_automatic_optimization_enabled:
+        custom: []
+        name: optimizer_automatic_optimization_enabled
+        description: 'Enable automatic smart image optimization.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_enable_manipulation_engine:
+        custom: []
+        name: optimizer_enable_manipulation_engine
+        description: 'Enable dynamic image processing engine.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_watermark_enabled:
+        custom: []
+        name: optimizer_watermark_enabled
+        description: 'Enable image watermarking.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_minify_css:
+        custom: []
+        name: optimizer_minify_css
+        description: 'Enable CSS minification.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_minify_javascript:
+        custom: []
+        name: optimizer_minify_javascript
+        description: 'Enable JavaScript minification.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_image_quality:
+        custom: []
+        name: optimizer_image_quality
+        description: 'Desktop image quality (1-100).'
+        required: false
+        example: 85
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_mobile_image_quality:
+        custom: []
+        name: optimizer_mobile_image_quality
+        description: 'Mobile image quality (1-100).'
+        required: false
+        example: 70
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_desktop_max_width:
+        custom: []
+        name: optimizer_desktop_max_width
+        description: 'Max automatic image width for desktop (0-5000).'
+        required: false
+        example: 1600
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      optimizer_mobile_max_width:
+        custom: []
+        name: optimizer_mobile_max_width
+        description: 'Max automatic image width for mobile (0-5000).'
+        required: false
+        example: 800
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      optimizer_enabled: true
+      optimizer_enable_webp: true
+      optimizer_automatic_optimization_enabled: true
+      optimizer_enable_manipulation_engine: false
+      optimizer_watermark_enabled: false
+      optimizer_minify_css: true
+      optimizer_minify_javascript: true
+      optimizer_image_quality: 85
+      optimizer_mobile_image_quality: 70
+      optimizer_desktop_max_width: 1600
+      optimizer_mobile_max_width: 800
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "optimizer_enabled": true,
+                  "optimizer_minify_css": true,
+                  "optimizer_image_quality": 85
+              },
+              "message": "Optimizer settings updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "optimizer_image_quality": ["The image quality must not exceed 100."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/cdn/edge-rules'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Edge Rules'
+      subgroupDescription: |-
+        Manage CDN edge rules for request/response manipulation, redirects, caching overrides, and security controls.
+
+        Each edge rule defines:
+        - **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)
+        - **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)
+        - **Extra Actions**: Additional actions to perform alongside the primary action
+      title: 'Create Edge Rule'
+      description: 'Creates a new edge rule for a site.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      description:
+        custom: []
+        name: description
+        description: 'The rule description (max 255 characters).'
+        required: true
+        example: 'Force SSL on all requests'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the rule is enabled. Defaults to true.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      action_type:
+        custom: []
+        name: action_type
+        description: 'The primary action type. Must be a valid edge rule action type (e.g., force-ssl, redirect, set-response-header, block-request, override-cache-time).'
+        required: true
+        example: force-ssl
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      action_parameter_1:
+        custom: []
+        name: action_parameter_1
+        description: 'Action parameter 1 (usage depends on action type).'
+        required: false
+        example: 'https://example.com/'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      action_parameter_2:
+        custom: []
+        name: action_parameter_2
+        description: 'Action parameter 2 (usage depends on action type).'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      trigger_matching_type:
+        custom: []
+        name: trigger_matching_type
+        description: 'How triggers are combined. Must be match-any, match-all, or match-none.'
+        required: true
+        example: match-any
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      triggers:
+        custom: []
+        name: triggers
+        description: 'At least one trigger condition.'
+        required: true
+        example:
+          -
+            type: url
+            pattern_matching_type: match-any
+            pattern_matches:
+              - '*'
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      extra_actions:
+        custom: []
+        name: extra_actions
+        description: 'Additional actions to perform.'
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'triggers[].type':
+        custom: []
+        name: 'triggers[].type'
+        description: 'The trigger type.'
+        required: true
+        example: url
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].pattern_matching_type':
+        custom: []
+        name: 'triggers[].pattern_matching_type'
+        description: 'How patterns are matched.'
+        required: true
+        example: match-any
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].pattern_matches':
+        custom: []
+        name: 'triggers[].pattern_matches'
+        description: 'Patterns to match against.'
+        required: true
+        example:
+          - '*'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].parameter_1':
+        custom: []
+        name: 'triggers[].parameter_1'
+        description: 'Optional trigger parameter.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'extra_actions[].action_type':
+        custom: []
+        name: 'extra_actions[].action_type'
+        description: 'The extra action type.'
+        required: true
+        example: set-response-header
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'extra_actions[].action_parameter_1':
+        custom: []
+        name: 'extra_actions[].action_parameter_1'
+        description: 'Action parameter 1.'
+        required: false
+        example: X-Custom-Header
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      'extra_actions[].action_parameter_2':
+        custom: []
+        name: 'extra_actions[].action_parameter_2'
+        description: 'Action parameter 2.'
+        required: false
+        example: custom-value
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      description: 'Force SSL on all requests'
+      enabled: true
+      action_type: force-ssl
+      action_parameter_1: 'https://example.com/'
+      action_parameter_2: architecto
+      trigger_matching_type: match-any
+      triggers:
+        -
+          type: url
+          pattern_matching_type: match-any
+          pattern_matches:
+            - '*'
+      extra_actions:
+        -
+          action_type: set-response-header
+          action_parameter_1: X-Custom-Header
+          action_parameter_2: custom-value
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "description": "Force SSL on all requests",
+                  "enabled": true,
+                  "action_type": "force-ssl",
+                  "action_parameter_1": null,
+                  "action_parameter_2": null,
+                  "trigger_matching_type": "match-any",
+                  "triggers": [
+                      {
+                          "type": "url",
+                          "pattern_matching_type": "match-any",
+                          "pattern_matches": ["*"],
+                          "parameter_1": null
+                      }
+                  ],
+                  "extra_actions": []
+              },
+              "message": "Edge rule created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "action_type": ["The action type must be a valid edge rule action type."],
+                  "triggers": ["The triggers field is required."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/cdn/edge-rules/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Edge Rules'
+      subgroupDescription: |-
+        Manage CDN edge rules for request/response manipulation, redirects, caching overrides, and security controls.
+
+        Each edge rule defines:
+        - **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)
+        - **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)
+        - **Extra Actions**: Additional actions to perform alongside the primary action
+      title: 'Update Edge Rule'
+      description: |-
+        Updates an existing edge rule. All fields are optional — only include fields you want
+        to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The edge rule GUID.'
+        required: true
+        example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      rule: architecto
+      ruleId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      description:
+        custom: []
+        name: description
+        description: 'The rule description (max 255 characters).'
+        required: false
+        example: 'Updated description'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Whether the rule is enabled.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      action_type:
+        custom: []
+        name: action_type
+        description: 'The primary action type.'
+        required: false
+        example: redirect
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      action_parameter_1:
+        custom: []
+        name: action_parameter_1
+        description: 'Action parameter 1.'
+        required: false
+        example: 'https://example.com/new-location'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      action_parameter_2:
+        custom: []
+        name: action_parameter_2
+        description: 'Action parameter 2.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      trigger_matching_type:
+        custom: []
+        name: trigger_matching_type
+        description: 'How triggers are combined. Must be match-any, match-all, or match-none.'
+        required: false
+        example: match-all
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      triggers:
+        custom: []
+        name: triggers
+        description: 'Trigger conditions (replaces all existing triggers).'
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      extra_actions:
+        custom: []
+        name: extra_actions
+        description: 'Extra actions (replaces all existing extra actions).'
+        required: false
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'triggers[].type':
+        custom: []
+        name: 'triggers[].type'
+        description: 'The trigger type.'
+        required: true
+        example: url
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].pattern_matching_type':
+        custom: []
+        name: 'triggers[].pattern_matching_type'
+        description: 'How patterns are matched.'
+        required: true
+        example: match-any
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].pattern_matches':
+        custom: []
+        name: 'triggers[].pattern_matches'
+        description: 'Patterns to match against.'
+        required: true
+        example:
+          - /old-page
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'triggers[].parameter_1':
+        custom: []
+        name: 'triggers[].parameter_1'
+        description: 'Optional trigger parameter.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'extra_actions[].action_type':
+        custom: []
+        name: 'extra_actions[].action_type'
+        description: 'The extra action type.'
+        required: true
+        example: set-response-header
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'extra_actions[].action_parameter_1':
+        custom: []
+        name: 'extra_actions[].action_parameter_1'
+        description: 'Action parameter 1.'
+        required: false
+        example: X-Redirect
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      'extra_actions[].action_parameter_2':
+        custom: []
+        name: 'extra_actions[].action_parameter_2'
+        description: 'Action parameter 2.'
+        required: false
+        example: 'true'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      description: 'Updated description'
+      enabled: false
+      action_type: redirect
+      action_parameter_1: 'https://example.com/new-location'
+      action_parameter_2: architecto
+      trigger_matching_type: match-all
+      triggers:
+        -
+          type: url
+          pattern_matching_type: match-any
+          pattern_matches:
+            - /old-page
+          parameter_1: architecto
+      extra_actions:
+        -
+          action_type: set-response-header
+          action_parameter_1: X-Redirect
+          action_parameter_2: 'true'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "description": "Updated description",
+                  "enabled": false,
+                  "action_type": "redirect",
+                  "action_parameter_1": "https://example.com/new-location",
+                  "action_parameter_2": null,
+                  "trigger_matching_type": "match-all",
+                  "triggers": [
+                      {
+                          "type": "url",
+                          "pattern_matching_type": "match-any",
+                          "pattern_matches": ["/old-page"],
+                          "parameter_1": null
+                      }
+                  ],
+                  "extra_actions": []
+              },
+              "message": "Edge rule updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "action_type": ["The action type must be a valid edge rule action type."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/cdn/edge-rules/{rule}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'CDN: Edge Rules'
+      subgroupDescription: |-
+        Manage CDN edge rules for request/response manipulation, redirects, caching overrides, and security controls.
+
+        Each edge rule defines:
+        - **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)
+        - **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)
+        - **Extra Actions**: Additional actions to perform alongside the primary action
+      title: 'Delete Edge Rule'
+      description: 'Permanently deletes an edge rule. This action cannot be undone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rule:
+        custom: []
+        name: rule
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ruleId:
+        custom: []
+        name: ruleId
+        description: 'The edge rule GUID.'
+        required: true
+        example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: 01jfgxk4nqrst5vwx9yz0abcde
+      rule: architecto
+      ruleId: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Edge rule deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/waf/settings'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Settings'
+      subgroupDescription: 'Manage WAF core configuration including execution mode, profiles, rule groups, and payload limits.'
+      title: 'Update WAF Settings'
+      description: |-
+        Updates WAF configuration for a site. All fields are optional — only include
+        fields you want to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Enable or disable WAF.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      learning_mode:
+        custom: []
+        name: learning_mode
+        description: 'Enable learning mode (log without blocking).'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      profile_id:
+        custom: []
+        name: profile_id
+        description: 'WAF profile ID.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      execution_mode:
+        custom: []
+        name: execution_mode
+        description: 'WAF execution mode (0=Log, 1=Block).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      disabled_rule_groups:
+        custom: []
+        name: disabled_rule_groups
+        description: 'Array of disabled rule group IDs.'
+        required: false
+        example:
+          - group-1
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      disabled_rules:
+        custom: []
+        name: disabled_rules
+        description: 'Array of individual disabled rule IDs.'
+        required: false
+        example:
+          - rule-1
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      log_only_rules:
+        custom: []
+        name: log_only_rules
+        description: 'Array of rules set to log-only mode.'
+        required: false
+        example:
+          - rule-2
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      request_header_logging:
+        custom: []
+        name: request_header_logging
+        description: 'Log request headers.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      request_body_limit_action:
+        custom: []
+        name: request_body_limit_action
+        description: 'Request body limit action (0=ProcessPartial, 1=Reject, 2=Ignore).'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      response_body_limit_action:
+        custom: []
+        name: response_body_limit_action
+        description: 'Response body limit action (0=ProcessPartial, 1=Reject, 2=Ignore).'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      realtime_threat_intelligence:
+        custom: []
+        name: realtime_threat_intelligence
+        description: 'Enable realtime threat intelligence feeds.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      enabled: true
+      learning_mode: false
+      profile_id: 1
+      execution_mode: 1
+      disabled_rule_groups:
+        - group-1
+      disabled_rules:
+        - rule-1
+      log_only_rules:
+        - rule-2
+      request_header_logging: false
+      request_body_limit_action: 0
+      response_body_limit_action: 0
+      realtime_threat_intelligence: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enabled": true,
+                  "learning_mode": false,
+                  "execution_mode": 1
+              },
+              "message": "WAF settings updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "execution_mode": ["The execution mode must be 0 (Log) or 1 (Block)."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/waf/ddos'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: DDoS Protection'
+      subgroupDescription: 'Manage DDoS protection settings including sensitivity, execution mode, and challenge window.'
+      title: 'Update DDoS Protection Settings'
+      description: |-
+        Updates DDoS protection configuration for a site. All fields are optional — only include
+        fields you want to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      enabled:
+        custom: []
+        name: enabled
+        description: 'Enable or disable DDoS protection.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      protection_type:
+        custom: []
+        name: protection_type
+        description: 'Protection type (0=DetectOnly, 1=ActiveStandard, 2=ActiveAggressive).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sensitivity:
+        custom: []
+        name: sensitivity
+        description: 'Shield sensitivity (0=Off, 1=Low, 2=Medium, 3=High, 4=VeryHigh).'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      execution_mode:
+        custom: []
+        name: execution_mode
+        description: 'Execution mode (0=Off, 1=On).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      challenge_window:
+        custom: []
+        name: challenge_window
+        description: 'Challenge window in seconds.'
+        required: false
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      enabled: true
+      protection_type: 1
+      sensitivity: 2
+      execution_mode: 1
+      challenge_window: 30
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "enabled": true,
+                  "protection_type": 1,
+                  "sensitivity": 2,
+                  "execution_mode": 1,
+                  "challenge_window": 30
+              },
+              "message": "DDoS protection settings updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "sensitivity": ["The sensitivity must be 0 (Off), 1 (Low), 2 (Medium), 3 (High), or 4 (VeryHigh)."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/v1/vector/sites/{site}/waf/bot-detection'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Bot Detection'
+      subgroupDescription: 'Manage bot detection settings including execution mode, sensitivity levels, and browser fingerprint configuration.'
+      title: 'Update Bot Detection Settings'
+      description: |-
+        Updates bot detection configuration for a site. All fields are optional — only include
+        fields you want to change. Omitted fields retain their current values.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      execution_mode:
+        custom: []
+        name: execution_mode
+        description: 'Execution mode (0=Off, 1=On).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      request_integrity_sensitivity:
+        custom: []
+        name: request_integrity_sensitivity
+        description: 'Request integrity sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      ip_address_sensitivity:
+        custom: []
+        name: ip_address_sensitivity
+        description: 'IP address sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      browser_fingerprint_sensitivity:
+        custom: []
+        name: browser_fingerprint_sensitivity
+        description: 'Browser fingerprint sensitivity (0=Off, 1=Low, 2=Medium, 3=High).'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      browser_fingerprint_aggression:
+        custom: []
+        name: browser_fingerprint_aggression
+        description: 'Browser fingerprint aggression (0=Off, 1=Low, 2=Medium, 3=High, 4=VeryHigh).'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      browser_fingerprint_complex_enabled:
+        custom: []
+        name: browser_fingerprint_complex_enabled
+        description: 'Enable complex browser fingerprinting.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      execution_mode: 1
+      request_integrity_sensitivity: 2
+      ip_address_sensitivity: 1
+      browser_fingerprint_sensitivity: 2
+      browser_fingerprint_aggression: 1
+      browser_fingerprint_complex_enabled: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "execution_mode": 1,
+                  "request_integrity_sensitivity": 2,
+                  "ip_address_sensitivity": 1,
+                  "browser_fingerprint_sensitivity": 2,
+                  "browser_fingerprint_aggression": 1,
+                  "browser_fingerprint_complex_enabled": false
+              },
+              "message": "Bot detection settings updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {
+                  "execution_mode": ["The execution mode must be 0 (Off) or 1 (On)."]
+              },
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
+      title: 'Create Custom Access List'
+      description: 'Creates a new custom access list with the provided entries.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The list name (max 255 characters).'
+        required: true
+        example: 'Office IPs'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'A description of the list (max 1000 characters).'
+        required: false
+        example: 'Trusted office IP ranges'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      type:
+        custom: []
+        name: type
+        description: 'The list type (0=IP, 1=CIDR, 2=ASN, 3=Country, 4=Domain, 5=Header).'
+        required: true
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: 'Newline-separated list entries.'
+        required: true
+        example: 203.0.113.0/24\n198.51.100.1
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Office IPs'
+      description: 'Trusted office IP ranges'
+      type: 0
+      content: 203.0.113.0/24\n198.51.100.1
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": 1,
+                  "name": "Office IPs",
+                  "description": "Trusted office IP ranges",
+                  "type": 0,
+                  "content": "203.0.113.0/24\n198.51.100.1",
+                  "checksum": "abc123",
+                  "entry_count": 2,
+                  "last_modified": "2026-04-01T00:00:00Z"
+              },
+              "message": "Custom access list created successfully",
+              "http_status": 201
+          }
+        headers: []
+        description: Created
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["The name field is required."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists/configurations/{configId}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: 'Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.'
+      title: 'Update Access List Configuration'
+      description: |-
+        Updates the configuration (enable/disable and action) for any access list (managed or custom).
+        Use the `configuration_id` from the index response, not the `list_id`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      configId:
+        custom: []
+        name: configId
+        description: 'The access list configuration ID.'
+        required: true
+        example: 42
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      configId: 42
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      is_enabled:
+        custom: []
+        name: is_enabled
+        description: 'Whether the list is enabled.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      action:
+        custom: []
+        name: action
+        description: 'The action to take (0=Block, 1=Log, 2=Allow, 3=Challenge, 4=Captcha, 5=Bypass).'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      is_enabled: true
+      action: 0
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Access list configuration updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"action": ["The action must be 0 (Block), 1 (Log), 2 (Allow), 3 (Challenge), 4 (Captcha), or 5 (Bypass)."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists/{listId}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
+      title: 'Update Custom Access List'
+      description: "Updates a custom access list's name and/or content. Only include fields you want to change."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      listId:
+        custom: []
+        name: listId
+        description: 'The access list ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      listId: 1
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'The list name (max 255 characters).'
+        required: false
+        example: 'Updated Office IPs'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: 'Newline-separated list entries.'
+        required: false
+        example: 203.0.113.0/24\n198.51.100.1\n10.0.0.0/8
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Updated Office IPs'
+      content: 203.0.113.0/24\n198.51.100.1\n10.0.0.0/8
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "id": 1,
+                  "name": "Updated Office IPs",
+                  "description": "Trusted office IP ranges",
+                  "type": 0,
+                  "content": "203.0.113.0/24\n198.51.100.1\n10.0.0.0/8",
+                  "checksum": "def456",
+                  "entry_count": 3,
+                  "last_modified": "2026-04-07T00:00:00Z"
+              },
+              "message": "Custom access list updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Site not found", "http_status": 404}'
+        headers: []
+        description: 'Site Not Found'
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"name": ["The name must be a string."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/vector/sites/{site}/waf/access-lists/{listId}'
+    metadata:
+      custom: []
+      groupName: Sites
+      groupDescription: ''
+      subgroup: 'WAF: Access Lists'
+      subgroupDescription: |-
+        Manage WAF access lists including managed threat feeds and custom IP/CIDR/ASN/domain lists.
+        Managed lists are curated threat intelligence feeds that can be enabled/disabled.
+        Custom lists allow you to create your own allowlists or blocklists.
+      title: 'Delete Custom Access List'
+      description: 'Permanently deletes a custom access list. This action cannot be undone.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      site:
+        custom: []
+        name: site
+        description: 'The site.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      listId:
+        custom: []
+        name: listId
+        description: 'The access list ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      vectorSite:
+        custom: []
+        name: vectorSite
+        description: 'The site ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcde
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      site: architecto
+      listId: 1
+      vectorSite: 01jfgxk4nqrst5vwx9yz0abcde
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {},
+              "message": "Custom access list deleted successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
       -
         custom: []
         status: 404

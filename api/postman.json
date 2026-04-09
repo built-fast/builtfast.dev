@@ -2198,6 +2198,1622 @@
                     ]
                 },
                 {
+                    "name": "CDN: Caching",
+                    "description": "Manage CDN caching configuration including smart cache, vary headers, origin shield, request coalescing, and stale content settings.",
+                    "item": [
+                        {
+                            "name": "Get Caching Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/caching",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/caching",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the current CDN caching configuration for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enable_smart_cache\": true,\n        \"cache_control_max_age_override\": 2592000,\n        \"cache_control_public_max_age_override\": 0,\n        \"disable_cookies\": true,\n        \"cache_error_responses\": false,\n        \"enable_query_string_ordering\": true,\n        \"ignore_query_strings\": false,\n        \"query_string_vary_parameters\": [],\n        \"enable_hostname_vary\": false,\n        \"enable_mobile_vary\": false,\n        \"enable_webp_vary\": true,\n        \"enable_avif_vary\": true,\n        \"enable_country_code_vary\": false,\n        \"enable_cookie_vary\": false,\n        \"cookie_vary_parameters\": [],\n        \"enable_origin_shield\": false,\n        \"origin_shield_zone_code\": \"\",\n        \"origin_shield_enable_concurrency_limit\": false,\n        \"origin_shield_max_concurrent_requests\": 5000,\n        \"origin_shield_queue_max_wait_time\": 30,\n        \"origin_shield_max_queued_requests\": 1000,\n        \"enable_request_coalescing\": false,\n        \"request_coalescing_timeout\": 30,\n        \"use_stale_while_updating\": true,\n        \"use_stale_while_offline\": true,\n        \"use_background_update\": true,\n        \"enable_cache_slice\": false\n    },\n    \"message\": \"Caching settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Caching Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/caching",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/caching",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"enable_smart_cache\":true,\"cache_control_max_age_override\":2592000,\"cache_control_public_max_age_override\":0,\"disable_cookies\":true,\"cache_error_responses\":false,\"enable_query_string_ordering\":true,\"ignore_query_strings\":false,\"query_string_vary_parameters\":[\"utm_source\",\"ref\"],\"enable_hostname_vary\":false,\"enable_mobile_vary\":false,\"enable_webp_vary\":true,\"enable_avif_vary\":true,\"enable_country_code_vary\":false,\"enable_cookie_vary\":false,\"cookie_vary_parameters\":[\"wordpress_logged_in\"],\"enable_origin_shield\":false,\"origin_shield_zone_code\":\"FR\",\"origin_shield_enable_concurrency_limit\":false,\"origin_shield_max_concurrent_requests\":5000,\"origin_shield_queue_max_wait_time\":30,\"origin_shield_max_queued_requests\":1000,\"enable_request_coalescing\":false,\"request_coalescing_timeout\":30,\"use_stale_while_updating\":true,\"use_stale_while_offline\":true,\"use_background_update\":true,\"enable_cache_slice\":false}"
+                                },
+                                "description": "Updates CDN caching configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enable_smart_cache\": true,\n        \"cache_control_max_age_override\": 2592000,\n        \"disable_cookies\": true\n    },\n    \"message\": \"Caching settings updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"origin_shield_max_concurrent_requests\": [\"The max concurrent requests must not exceed 10,000.\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "CDN: Optimizer",
+                    "description": "Manage CDN optimizer configuration including image optimization, asset minification, and quality settings.",
+                    "item": [
+                        {
+                            "name": "Get Optimizer Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/optimizer",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/optimizer",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the current CDN optimizer configuration for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"optimizer_enabled\": true,\n        \"optimizer_enable_webp\": true,\n        \"optimizer_automatic_optimization_enabled\": true,\n        \"optimizer_enable_manipulation_engine\": false,\n        \"optimizer_watermark_enabled\": false,\n        \"optimizer_minify_css\": true,\n        \"optimizer_minify_javascript\": true,\n        \"optimizer_image_quality\": 85,\n        \"optimizer_mobile_image_quality\": 70,\n        \"optimizer_desktop_max_width\": 1600,\n        \"optimizer_mobile_max_width\": 800\n    },\n    \"message\": \"Optimizer settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Optimizer Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/optimizer",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/optimizer",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"optimizer_enabled\":true,\"optimizer_enable_webp\":true,\"optimizer_automatic_optimization_enabled\":true,\"optimizer_enable_manipulation_engine\":false,\"optimizer_watermark_enabled\":false,\"optimizer_minify_css\":true,\"optimizer_minify_javascript\":true,\"optimizer_image_quality\":85,\"optimizer_mobile_image_quality\":70,\"optimizer_desktop_max_width\":1600,\"optimizer_mobile_max_width\":800}"
+                                },
+                                "description": "Updates CDN optimizer configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"optimizer_enabled\": true,\n        \"optimizer_minify_css\": true,\n        \"optimizer_image_quality\": 85\n    },\n    \"message\": \"Optimizer settings updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"optimizer_image_quality\": [\"The image quality must not exceed 100.\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "CDN: Edge Rules",
+                    "description": "Manage CDN edge rules for request\/response manipulation, redirects, caching overrides, and security controls.\n\nEach edge rule defines:\n- **Action**: What to do when triggered (redirect, set header, block, override cache, etc.)\n- **Triggers**: Conditions to match against (URL, headers, country, IP, cookies, etc.)\n- **Extra Actions**: Additional actions to perform alongside the primary action",
+                    "item": [
+                        {
+                            "name": "List Edge Rules",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/edge-rules",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/edge-rules",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves all edge rules configured for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\n            \"guid\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n            \"description\": \"Force SSL\",\n            \"enabled\": true,\n            \"action_type\": \"force-ssl\",\n            \"action_parameter_1\": null,\n            \"action_parameter_2\": null,\n            \"trigger_matching_type\": \"match-any\",\n            \"triggers\": [\n                {\n                    \"type\": \"url\",\n                    \"pattern_matching_type\": \"match-any\",\n                    \"pattern_matches\": [\"*\"],\n                    \"parameter_1\": null\n                }\n            ],\n            \"extra_actions\": []\n        }\n    ],\n    \"message\": \"Edge rules retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Edge Rule",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "rule",
+                                            "key": "rule",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "ruleId",
+                                            "key": "ruleId",
+                                            "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                                            "description": "The edge rule GUID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a specific edge rule by GUID."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"guid\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n        \"description\": \"Force SSL\",\n        \"enabled\": true,\n        \"action_type\": \"force-ssl\",\n        \"action_parameter_1\": null,\n        \"action_parameter_2\": null,\n        \"trigger_matching_type\": \"match-any\",\n        \"triggers\": [\n            {\n                \"type\": \"url\",\n                \"pattern_matching_type\": \"match-any\",\n                \"pattern_matches\": [\"*\"],\n                \"parameter_1\": null\n            }\n        ],\n        \"extra_actions\": []\n    },\n    \"message\": \"Edge rule retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Edge rule not found\",\n    \"http_status\": 404\n}",
+                                    "name": "Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Edge Rule",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/edge-rules",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/edge-rules",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"description\":\"Force SSL on all requests\",\"enabled\":true,\"action_type\":\"force-ssl\",\"action_parameter_1\":\"https:\\\/\\\/example.com\\\/\",\"action_parameter_2\":\"architecto\",\"trigger_matching_type\":\"match-any\",\"triggers\":[{\"type\":\"url\",\"pattern_matching_type\":\"match-any\",\"pattern_matches\":[\"*\"]}],\"extra_actions\":[{\"action_type\":\"set-response-header\",\"action_parameter_1\":\"X-Custom-Header\",\"action_parameter_2\":\"custom-value\"}]}"
+                                },
+                                "description": "Creates a new edge rule for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 201,
+                                    "body": "{\n    \"data\": {\n        \"guid\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n        \"description\": \"Force SSL on all requests\",\n        \"enabled\": true,\n        \"action_type\": \"force-ssl\",\n        \"action_parameter_1\": null,\n        \"action_parameter_2\": null,\n        \"trigger_matching_type\": \"match-any\",\n        \"triggers\": [\n            {\n                \"type\": \"url\",\n                \"pattern_matching_type\": \"match-any\",\n                \"pattern_matches\": [\"*\"],\n                \"parameter_1\": null\n            }\n        ],\n        \"extra_actions\": []\n    },\n    \"message\": \"Edge rule created successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"action_type\": [\"The action type must be a valid edge rule action type.\"],\n        \"triggers\": [\"The triggers field is required.\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Edge Rule",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "rule",
+                                            "key": "rule",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "ruleId",
+                                            "key": "ruleId",
+                                            "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                                            "description": "The edge rule GUID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"description\":\"Updated description\",\"enabled\":false,\"action_type\":\"redirect\",\"action_parameter_1\":\"https:\\\/\\\/example.com\\\/new-location\",\"action_parameter_2\":\"architecto\",\"trigger_matching_type\":\"match-all\",\"triggers\":[{\"type\":\"url\",\"pattern_matching_type\":\"match-any\",\"pattern_matches\":[\"\\\/old-page\"],\"parameter_1\":\"architecto\"}],\"extra_actions\":[{\"action_type\":\"set-response-header\",\"action_parameter_1\":\"X-Redirect\",\"action_parameter_2\":\"true\"}]}"
+                                },
+                                "description": "Updates an existing edge rule. All fields are optional \u2014 only include fields you want\nto change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"guid\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n        \"description\": \"Updated description\",\n        \"enabled\": false,\n        \"action_type\": \"redirect\",\n        \"action_parameter_1\": \"https:\/\/example.com\/new-location\",\n        \"action_parameter_2\": null,\n        \"trigger_matching_type\": \"match-all\",\n        \"triggers\": [\n            {\n                \"type\": \"url\",\n                \"pattern_matching_type\": \"match-any\",\n                \"pattern_matches\": [\"\/old-page\"],\n                \"parameter_1\": null\n            }\n        ],\n        \"extra_actions\": []\n    },\n    \"message\": \"Edge rule updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"action_type\": [\"The action type must be a valid edge rule action type.\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Delete Edge Rule",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/cdn\/edge-rules\/:rule",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        },
+                                        {
+                                            "id": "rule",
+                                            "key": "rule",
+                                            "value": "architecto",
+                                            "description": ""
+                                        },
+                                        {
+                                            "id": "ruleId",
+                                            "key": "ruleId",
+                                            "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                                            "description": "The edge rule GUID."
+                                        }
+                                    ]
+                                },
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Permanently deletes an edge rule. This action cannot be undone."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Edge rule deleted successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Settings",
+                    "description": "Manage WAF core configuration including execution mode, profiles, rule groups, and payload limits.",
+                    "item": [
+                        {
+                            "name": "Get WAF Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/settings",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/settings",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the current WAF configuration for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"learning_mode\": false,\n        \"profile_id\": 1,\n        \"execution_mode\": 1,\n        \"disabled_rule_groups\": [],\n        \"disabled_rules\": [],\n        \"log_only_rules\": [],\n        \"request_header_logging\": false,\n        \"request_body_limit_action\": 0,\n        \"response_body_limit_action\": 0,\n        \"realtime_threat_intelligence\": true\n    },\n    \"message\": \"WAF settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update WAF Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/settings",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/settings",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"enabled\":true,\"learning_mode\":false,\"profile_id\":1,\"execution_mode\":1,\"disabled_rule_groups\":[\"group-1\"],\"disabled_rules\":[\"rule-1\"],\"log_only_rules\":[\"rule-2\"],\"request_header_logging\":false,\"request_body_limit_action\":0,\"response_body_limit_action\":0,\"realtime_threat_intelligence\":true}"
+                                },
+                                "description": "Updates WAF configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"learning_mode\": false,\n        \"execution_mode\": 1\n    },\n    \"message\": \"WAF settings updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"execution_mode\": [\"The execution mode must be 0 (Log) or 1 (Block).\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Profiles",
+                    "description": "List available WAF profiles that can be assigned to a site.",
+                    "item": [
+                        {
+                            "name": "List WAF Profiles",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/profiles",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/profiles",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the available WAF profiles that can be assigned to a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": [\n        {\"Id\": 1, \"Name\": \"Default\"},\n        {\"Id\": 2, \"Name\": \"WordPress\"}\n    ],\n    \"message\": \"WAF profiles retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: DDoS Protection",
+                    "description": "Manage DDoS protection settings including sensitivity, execution mode, and challenge window.",
+                    "item": [
+                        {
+                            "name": "Get DDoS Protection Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/ddos",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/ddos",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the current DDoS protection configuration for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"protection_type\": 1,\n        \"sensitivity\": 2,\n        \"execution_mode\": 1,\n        \"challenge_window\": 30\n    },\n    \"message\": \"DDoS protection settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update DDoS Protection Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/ddos",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/ddos",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"enabled\":true,\"protection_type\":1,\"sensitivity\":2,\"execution_mode\":1,\"challenge_window\":30}"
+                                },
+                                "description": "Updates DDoS protection configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"protection_type\": 1,\n        \"sensitivity\": 2,\n        \"execution_mode\": 1,\n        \"challenge_window\": 30\n    },\n    \"message\": \"DDoS protection settings updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"sensitivity\": [\"The sensitivity must be 0 (Off), 1 (Low), 2 (Medium), 3 (High), or 4 (VeryHigh).\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Bot Detection",
+                    "description": "Manage bot detection settings including execution mode, sensitivity levels, and browser fingerprint configuration.",
+                    "item": [
+                        {
+                            "name": "Get Bot Detection Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/bot-detection",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/bot-detection",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves the current bot detection configuration for a site."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"execution_mode\": 1,\n        \"request_integrity_sensitivity\": 2,\n        \"ip_address_sensitivity\": 1,\n        \"browser_fingerprint_sensitivity\": 2,\n        \"browser_fingerprint_aggression\": 1,\n        \"browser_fingerprint_complex_enabled\": false\n    },\n    \"message\": \"Bot detection settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Bot Detection Settings",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/bot-detection",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/bot-detection",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"execution_mode\":1,\"request_integrity_sensitivity\":2,\"ip_address_sensitivity\":1,\"browser_fingerprint_sensitivity\":2,\"browser_fingerprint_aggression\":1,\"browser_fingerprint_complex_enabled\":false}"
+                                },
+                                "description": "Updates bot detection configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"execution_mode\": 1,\n        \"request_integrity_sensitivity\": 2,\n        \"ip_address_sensitivity\": 1,\n        \"browser_fingerprint_sensitivity\": 2,\n        \"browser_fingerprint_aggression\": 1,\n        \"browser_fingerprint_complex_enabled\": false\n    },\n    \"message\": \"Bot detection settings updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\n        \"execution_mode\": [\"The execution mode must be 0 (Off) or 1 (On).\"]\n    },\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "WAF: Access Lists",
+                    "description": "Manage WAF access lists including managed threat feeds and custom IP\/CIDR\/ASN\/domain lists.\nManaged lists are curated threat intelligence feeds that can be enabled\/disabled.\nCustom lists allow you to create your own allowlists or blocklists.",
+                    "item": [
+                        {
+                            "name": "List Access Lists",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves all access lists (managed and custom) for a site, including usage limits."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"managed_lists\": [\n            {\n                \"list_id\": 1,\n                \"configuration_id\": 42,\n                \"name\": \"TOR Exit Nodes\",\n                \"description\": \"Known TOR exit node IP addresses\",\n                \"is_enabled\": true,\n                \"type\": 0,\n                \"category\": 32,\n                \"action\": 0,\n                \"required_plan\": 0,\n                \"entry_count\": 12345,\n                \"update_frequency\": \"1.00:00:00\",\n                \"last_updated\": \"2026-04-01T00:00:00Z\"\n            }\n        ],\n        \"custom_lists\": [],\n        \"custom_entry_count\": 0,\n        \"custom_entry_limit\": 10000,\n        \"custom_list_count\": 0,\n        \"custom_list_limit\": 25\n    },\n    \"message\": \"Access lists retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Access List Enums",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists\/enums",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists\/enums",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves available enum values for access list types, actions, and categories."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Access list enums retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Get Custom Access List",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "listId",
+                                            "key": "listId",
+                                            "value": "1",
+                                            "description": "The access list ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Retrieves a single custom access list with its content."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Office IPs\",\n        \"description\": \"Trusted office IP ranges\",\n        \"type\": 0,\n        \"content\": \"203.0.113.0\/24\\n198.51.100.1\",\n        \"checksum\": \"abc123\",\n        \"entry_count\": 2,\n        \"last_modified\": \"2026-04-01T00:00:00Z\"\n    },\n    \"message\": \"Custom access list retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Create Custom Access List",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"name\":\"Office IPs\",\"description\":\"Trusted office IP ranges\",\"type\":0,\"content\":\"203.0.113.0\\\/24\\\\n198.51.100.1\"}"
+                                },
+                                "description": "Creates a new custom access list with the provided entries."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 201,
+                                    "body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Office IPs\",\n        \"description\": \"Trusted office IP ranges\",\n        \"type\": 0,\n        \"content\": \"203.0.113.0\/24\\n198.51.100.1\",\n        \"checksum\": \"abc123\",\n        \"entry_count\": 2,\n        \"last_modified\": \"2026-04-01T00:00:00Z\"\n    },\n    \"message\": \"Custom access list created successfully\",\n    \"http_status\": 201\n}",
+                                    "name": "Created"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"The name field is required.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Access List Configuration",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists\/configurations\/:configId",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists\/configurations\/:configId",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "configId",
+                                            "key": "configId",
+                                            "value": "42",
+                                            "description": "The access list configuration ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PATCH",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"is_enabled\":true,\"action\":0}"
+                                },
+                                "description": "Updates the configuration (enable\/disable and action) for any access list (managed or custom).\nUse the `configuration_id` from the index response, not the `list_id`."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Access list configuration updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"action\": [\"The action must be 0 (Block), 1 (Log), 2 (Allow), 3 (Challenge), 4 (Captcha), or 5 (Bypass).\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Update Custom Access List",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "listId",
+                                            "key": "listId",
+                                            "value": "1",
+                                            "description": "The access list ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "PATCH",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\"name\":\"Updated Office IPs\",\"content\":\"203.0.113.0\\\/24\\\\n198.51.100.1\\\\n10.0.0.0\\\/8\"}"
+                                },
+                                "description": "Updates a custom access list's name and\/or content. Only include fields you want to change."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Updated Office IPs\",\n        \"description\": \"Trusted office IP ranges\",\n        \"type\": 0,\n        \"content\": \"203.0.113.0\/24\\n198.51.100.1\\n10.0.0.0\/8\",\n        \"checksum\": \"def456\",\n        \"entry_count\": 3,\n        \"last_modified\": \"2026-04-07T00:00:00Z\"\n    },\n    \"message\": \"Custom access list updated successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 422,
+                                    "body": "{\n    \"data\": {},\n    \"errors\": {\"name\": [\"The name must be a string.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                                    "name": "Validation Error"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Delete Custom Access List",
+                            "request": {
+                                "url": {
+                                    "host": "{{baseUrl}}",
+                                    "path": "api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "query": [],
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/waf\/access-lists\/:listId",
+                                    "variable": [
+                                        {
+                                            "id": "site",
+                                            "key": "site",
+                                            "value": "architecto",
+                                            "description": "The site."
+                                        },
+                                        {
+                                            "id": "listId",
+                                            "key": "listId",
+                                            "value": "1",
+                                            "description": "The access list ID."
+                                        },
+                                        {
+                                            "id": "vectorSite",
+                                            "key": "vectorSite",
+                                            "value": "01jfgxk4nqrst5vwx9yz0abcde",
+                                            "description": "The site ID."
+                                        }
+                                    ]
+                                },
+                                "method": "DELETE",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application\/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application\/json"
+                                    }
+                                ],
+                                "body": null,
+                                "description": "Permanently deletes a custom access list. This action cannot be undone."
+                            },
+                            "response": [
+                                {
+                                    "header": [],
+                                    "code": 200,
+                                    "body": "{\n    \"data\": {},\n    \"message\": \"Custom access list deleted successfully\",\n    \"http_status\": 200\n}",
+                                    "name": "Success"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 401,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                                    "name": "Unauthenticated"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 403,
+                                    "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                                    "name": "Unauthorized"
+                                },
+                                {
+                                    "header": [],
+                                    "code": 404,
+                                    "body": "{\"data\": {}, \"message\": \"Site not found\", \"http_status\": 404}",
+                                    "name": "Site Not Found"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "CDN",
                     "description": "Purge CDN cache for a site. Supports full cache purge, purge by cache tag, or purge of specific URLs.",
                     "item": [
