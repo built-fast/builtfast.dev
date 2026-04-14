@@ -142,6 +142,10 @@ paths:
                           type: string
                           examples:
                             - active
+                        status_label:
+                          type: string
+                          examples:
+                            - Active
                         dev_php_version:
                           type: string
                           examples:
@@ -206,6 +210,10 @@ paths:
                                 type: string
                                 examples:
                                   - active
+                              status_label:
+                                type: string
+                                examples:
+                                  - Active
                               php_version:
                                 type: string
                                 examples:
@@ -237,6 +245,7 @@ paths:
                                 name: production
                                 is_production: true
                                 status: active
+                                status_label: Active
                                 php_version: '8.3'
                                 platform_domain: wispy-dust--prod.vectorpages.com
                                 custom_domain: example.com
@@ -257,6 +266,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcde
                           your_customer_id: cust_12345
                           status: active
+                          status_label: Active
                           dev_php_version: '8.3'
                           tags:
                             - wordpress
@@ -275,6 +285,7 @@ paths:
                               name: production
                               is_production: true
                               status: active
+                              status_label: Active
                               php_version: '8.3'
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
@@ -304,6 +315,7 @@ paths:
                         id: 01jfgxk4nqrst5vwx9yz0abcde
                         your_customer_id: cust_12345
                         status: active
+                        status_label: Active
                         dev_php_version: '8.3'
                         tags:
                           - wordpress
@@ -322,6 +334,7 @@ paths:
                             name: production
                             is_production: true
                             status: active
+                            status_label: Active
                             php_version: '8.3'
                             platform_domain: wispy-dust--prod.vectorpages.com
                             custom_domain: example.com
@@ -446,6 +459,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       dev_php_version:
                         type: string
                         examples:
@@ -537,6 +554,10 @@ paths:
                               type: string
                               examples:
                                 - pending
+                            status_label:
+                              type: string
+                              examples:
+                                - Pending
                             php_version:
                               type: string
                               examples:
@@ -568,6 +589,7 @@ paths:
                               name: production
                               is_production: true
                               status: pending
+                              status_label: Pending
                               php_version: '8.3'
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
@@ -579,6 +601,7 @@ paths:
                               name: staging
                               is_production: false
                               status: pending
+                              status_label: Pending
                               php_version: '8.3'
                               platform_domain: wispy-dust--staging.vectorpages.com
                               custom_domain: null
@@ -607,6 +630,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
                       status: pending
+                      status_label: Pending
                       dev_php_version: '8.3'
                       tags:
                         - wordpress
@@ -632,6 +656,7 @@ paths:
                           name: production
                           is_production: true
                           status: pending
+                          status_label: Pending
                           php_version: '8.3'
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
@@ -643,6 +668,7 @@ paths:
                           name: staging
                           is_production: false
                           status: pending
+                          status_label: Pending
                           php_version: '8.3'
                           platform_domain: wispy-dust--staging.vectorpages.com
                           custom_domain: null
@@ -866,6 +892,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       tags:
                         type: array
                         items:
@@ -907,6 +937,10 @@ paths:
                               type: string
                               examples:
                                 - active
+                            status_label:
+                              type: string
+                              examples:
+                                - Active
                             php_version:
                               type: string
                               examples:
@@ -938,6 +972,7 @@ paths:
                               name: production
                               is_production: true
                               status: active
+                              status_label: Active
                               php_version: '8.3'
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
@@ -966,6 +1001,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
                       status: active
+                      status_label: Active
                       tags:
                         - wordpress
                         - production
@@ -978,6 +1014,7 @@ paths:
                           name: production
                           is_production: true
                           status: active
+                          status_label: Active
                           php_version: '8.3'
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
@@ -1087,6 +1124,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       tags:
                         type: array
                         items:
@@ -1133,6 +1174,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_67890
                       status: active
+                      status_label: Active
                       tags:
                         - wordpress
                         - staging
@@ -1300,6 +1342,10 @@ paths:
                         type: string
                         examples:
                           - terminating
+                      status_label:
+                        type: string
+                        examples:
+                          - Terminating
                       tags:
                         type: array
                         examples:
@@ -1342,6 +1388,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
                       status: terminating
+                      status_label: Terminating
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
                       dev_db_host: dev-cluster.abc123.us-east-1.rds.amazonaws.com
@@ -1545,6 +1592,10 @@ paths:
                           type: string
                           examples:
                             - deployed
+                        status_label:
+                          type: string
+                          examples:
+                            - Deployed
                         stdout:
                           type: string
                           examples:
@@ -1592,6 +1643,10 @@ paths:
                               type: string
                               examples:
                                 - active
+                            status_label:
+                              type: string
+                              examples:
+                                - Active
                             php_version:
                               type: string
                               examples:
@@ -1638,6 +1693,7 @@ paths:
                           vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           is_auto_deploy: false
                           status: deployed
+                          status_label: Deployed
                           stdout: 'Deployment output...'
                           stderr: null
                           build_output: null
@@ -1649,6 +1705,7 @@ paths:
                             name: production
                             is_production: true
                             status: active
+                            status_label: Active
                             php_version: '8.3'
                             tags:
                               - wordpress
@@ -1681,6 +1738,7 @@ paths:
                         vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                         is_auto_deploy: false
                         status: deployed
+                        status_label: Deployed
                         stdout: 'Deployment output...'
                         stderr: null
                         build_output: null
@@ -1692,6 +1750,7 @@ paths:
                           name: production
                           is_production: true
                           status: active
+                          status_label: Active
                           php_version: '8.3'
                           tags:
                             - wordpress
@@ -1861,6 +1920,10 @@ paths:
                         type: string
                         examples:
                           - suspended
+                      status_label:
+                        type: string
+                        examples:
+                          - Suspended
                       tags:
                         type: array
                         examples:
@@ -1895,6 +1958,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
                       status: suspended
+                      status_label: Suspended
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
                       environments: []
@@ -2048,6 +2112,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       tags:
                         type: array
                         examples:
@@ -2082,6 +2150,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
                       status: active
+                      status_label: Active
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
                       environments: []
@@ -2235,6 +2304,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       tags:
                         type: array
                         items:
@@ -2281,6 +2354,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdf
                       your_customer_id: cust_12345
                       status: pending
+                      status_label: Pending
                       tags:
                         - wordpress
                         - clone
@@ -2506,6 +2580,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       dev_php_version:
                         type: string
                         examples:
@@ -2563,6 +2641,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: null
                       status: active
+                      status_label: Active
                       dev_php_version: '8.3'
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
@@ -2688,6 +2767,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       dev_php_version:
                         type: string
                         examples:
@@ -2734,6 +2817,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: null
                       status: active
+                      status_label: Active
                       dev_php_version: '8.3'
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
@@ -2856,6 +2940,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       dev_php_version:
                         type: string
                         examples:
@@ -2894,6 +2982,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: null
                       status: active
+                      status_label: Active
                       dev_php_version: '8.3'
                       tags: []
                       dev_domain: wispy-dust.vectorpages.com
@@ -3048,6 +3137,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       format:
                         type: string
                         examples:
@@ -3106,6 +3199,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdg
                       vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                       status: pending
+                      status_label: Pending
                       format: sql
                       size_bytes: null
                       duration_ms: null
@@ -3279,6 +3373,10 @@ paths:
                             type: string
                             examples:
                               - pending
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
                           scope:
                             type:
                               - string
@@ -3395,6 +3493,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: pending
+                          status_label: Pending
                           scope: null
                           filename: backup.sql.gz
                           content_length: 52428800
@@ -3437,6 +3536,10 @@ paths:
                             type: string
                             examples:
                               - pending
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
                           scope:
                             type:
                               - string
@@ -3571,6 +3674,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: pending
+                          status_label: Pending
                           scope: null
                           filename: backup.tar.gz
                           content_length: 161061273600
@@ -3825,6 +3929,10 @@ paths:
                         type: string
                         examples:
                           - uploaded
+                      status_label:
+                        type: string
+                        examples:
+                          - Uploaded
                       scope:
                         type:
                           - string
@@ -3931,6 +4039,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                       status: uploaded
+                      status_label: Uploaded
                       scope: null
                       filename: backup.sql.gz
                       content_length: 52428800
@@ -4194,6 +4303,10 @@ paths:
                             type: string
                             examples:
                               - pending
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
                           scope:
                             type:
                               - string
@@ -4310,6 +4423,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: pending
+                          status_label: Pending
                           scope: null
                           filename: backup.sql.gz
                           content_length: 52428800
@@ -4352,10 +4466,18 @@ paths:
                             type: string
                             examples:
                               - completed
+                          status_label:
+                            type: string
+                            examples:
+                              - Completed
                           scope:
                             type: string
                             examples:
                               - full
+                          scope_label:
+                            type: string
+                            examples:
+                              - Full
                           filename:
                             type: string
                             examples:
@@ -4448,7 +4570,9 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: completed
+                          status_label: Completed
                           scope: full
+                          scope_label: Full
                           filename: backup.sql.gz
                           content_length: 52428800
                           is_multipart: false
@@ -4591,6 +4715,10 @@ paths:
                             type: string
                             examples:
                               - completed
+                          status_label:
+                            type: string
+                            examples:
+                              - Completed
                           format:
                             type: string
                             examples:
@@ -4643,6 +4771,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdg
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: completed
+                          status_label: Completed
                           format: sql
                           size_bytes: 52428800
                           duration_ms: 30000
@@ -4673,6 +4802,10 @@ paths:
                             type: string
                             examples:
                               - processing
+                          status_label:
+                            type: string
+                            examples:
+                              - Processing
                           format:
                             type: string
                             examples:
@@ -4729,6 +4862,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdg
                           vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: processing
+                          status_label: Processing
                           format: sql
                           size_bytes: null
                           duration_ms: null
@@ -13100,6 +13234,10 @@ paths:
                           type: string
                           examples:
                             - active
+                        status_label:
+                          type: string
+                          examples:
+                            - Active
                         provisioning_step:
                           type: string
                           examples:
@@ -13176,6 +13314,7 @@ paths:
                           name: production
                           is_production: true
                           status: active
+                          status_label: Active
                           provisioning_step: complete
                           failure_reason: null
                           php_version: '8.3'
@@ -13217,6 +13356,7 @@ paths:
                         name: production
                         is_production: true
                         status: active
+                        status_label: Active
                         provisioning_step: complete
                         failure_reason: null
                         php_version: '8.3'
@@ -13350,6 +13490,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       provisioning_step:
                         type: string
                         examples:
@@ -13434,6 +13578,7 @@ paths:
                       name: production
                       is_production: true
                       status: active
+                      status_label: Active
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.3'
@@ -13564,6 +13709,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       provisioning_step:
                         type: string
                         examples:
@@ -13648,6 +13797,7 @@ paths:
                       name: production
                       is_production: true
                       status: active
+                      status_label: Active
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.4'
@@ -13701,6 +13851,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       provisioning_step:
                         type: string
                         examples:
@@ -13788,6 +13942,10 @@ paths:
                             type: string
                             examples:
                               - pending
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
                           old_domain:
                             type: string
                             examples:
@@ -13821,6 +13979,7 @@ paths:
                       name: production
                       is_production: true
                       status: active
+                      status_label: Active
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.3'
@@ -13843,6 +14002,7 @@ paths:
                       pending_domain_change:
                         id: 01jfgxk4nqrst5vwx9yz0abcdh
                         status: pending
+                        status_label: Pending
                         old_domain: old.example.com
                         new_domain: example.com
                       created_at: '2025-01-15T12:00:00+00:00'
@@ -14055,6 +14215,10 @@ paths:
                         type: string
                         examples:
                           - terminating
+                      status_label:
+                        type: string
+                        examples:
+                          - Terminating
                       provisioning_step:
                         type: string
                         examples:
@@ -14135,6 +14299,7 @@ paths:
                       name: production
                       is_production: true
                       status: terminating
+                      status_label: Terminating
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.3'
@@ -15156,6 +15321,10 @@ paths:
                           type: string
                           examples:
                             - deployed
+                        status_label:
+                          type: string
+                          examples:
+                            - Deployed
                         stdout:
                           type: string
                           examples:
@@ -15197,6 +15366,10 @@ paths:
                               type: string
                               examples:
                                 - active
+                            status_label:
+                              type: string
+                              examples:
+                                - Active
                             php_version:
                               type: string
                               examples:
@@ -15242,6 +15415,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           status: deployed
+                          status_label: Deployed
                           stdout: 'Deployment output...'
                           stderr: null
                           actor: user@example.com
@@ -15252,6 +15426,7 @@ paths:
                             name: production
                             is_production: true
                             status: active
+                            status_label: Active
                             php_version: '8.3'
                             tags:
                               - wordpress
@@ -15283,6 +15458,7 @@ paths:
                         id: 01jfgxk4nqrst5vwx9yz0abcdh
                         vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                         status: deployed
+                        status_label: Deployed
                         stdout: 'Deployment output...'
                         stderr: null
                         actor: user@example.com
@@ -15293,6 +15469,7 @@ paths:
                           name: production
                           is_production: true
                           status: active
+                          status_label: Active
                           php_version: '8.3'
                           tags:
                             - wordpress
@@ -15406,6 +15583,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       stdout:
                         type:
                           - string
@@ -15449,6 +15630,10 @@ paths:
                             type: string
                             examples:
                               - active
+                          status_label:
+                            type: string
+                            examples:
+                              - Active
                           php_version:
                             type: string
                             examples:
@@ -15502,6 +15687,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       status: pending
+                      status_label: Pending
                       stdout: null
                       stderr: null
                       actor: user@example.com
@@ -15512,6 +15698,7 @@ paths:
                         name: production
                         is_production: true
                         status: active
+                        status_label: Active
                         php_version: '8.3'
                         tags:
                           - wordpress
@@ -15651,6 +15838,10 @@ paths:
                         type: string
                         examples:
                           - deployed
+                      status_label:
+                        type: string
+                        examples:
+                          - Deployed
                       stdout:
                         type: string
                         examples:
@@ -15692,6 +15883,10 @@ paths:
                             type: string
                             examples:
                               - active
+                          status_label:
+                            type: string
+                            examples:
+                              - Active
                           php_version:
                             type: string
                             examples:
@@ -15745,6 +15940,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       status: deployed
+                      status_label: Deployed
                       stdout: "Building project...\nUploading assets...\nDeployment complete."
                       stderr: null
                       actor: user@example.com
@@ -15755,6 +15951,7 @@ paths:
                         name: production
                         is_production: true
                         status: active
+                        status_label: Active
                         php_version: '8.3'
                         tags:
                           - wordpress
@@ -15889,6 +16086,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       provisioning_step:
                         type: string
                         examples:
@@ -15944,6 +16145,7 @@ paths:
                       name: production
                       is_production: true
                       status: active
+                      status_label: Active
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.3'
@@ -16077,6 +16279,10 @@ paths:
                         type: string
                         examples:
                           - active
+                      status_label:
+                        type: string
+                        examples:
+                          - Active
                       provisioning_step:
                         type: string
                         examples:
@@ -16140,6 +16346,7 @@ paths:
                       name: production
                       is_production: true
                       status: active
+                      status_label: Active
                       provisioning_step: complete
                       failure_reason: null
                       php_version: '8.3'
@@ -16315,6 +16522,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       options:
                         type: object
                         properties:
@@ -16375,6 +16586,7 @@ paths:
                       vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       vector_db_export_id: null
                       status: pending
+                      status_label: Pending
                       options:
                         drop_tables: true
                         disable_foreign_keys: true
@@ -16592,6 +16804,10 @@ paths:
                             type: string
                             examples:
                               - completed
+                          status_label:
+                            type: string
+                            examples:
+                              - Completed
                           options:
                             type: object
                             properties:
@@ -16646,6 +16862,7 @@ paths:
                           vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           vector_db_export_id: 01jfgxk4nqrst5vwx9yz0abcde
                           status: completed
+                          status_label: Completed
                           options:
                             drop_tables: true
                             disable_foreign_keys: true
@@ -16682,6 +16899,10 @@ paths:
                             type: string
                             examples:
                               - exporting
+                          status_label:
+                            type: string
+                            examples:
+                              - Exporting
                           options:
                             type: object
                             properties:
@@ -16740,6 +16961,7 @@ paths:
                           vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           vector_db_export_id: null
                           status: exporting
+                          status_label: Exporting
                           options:
                             drop_tables: true
                             disable_foreign_keys: true
@@ -16870,6 +17092,10 @@ paths:
                         type: string
                         examples:
                           - completed
+                      status_label:
+                        type: string
+                        examples:
+                          - Completed
                       old_domain:
                         type: string
                         examples:
@@ -16922,6 +17148,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcde
                       status: completed
+                      status_label: Completed
                       old_domain: wispy-dust.vectorpages.com
                       new_domain: wispy-dust.vectorpages.com
                       old_custom_domain: example.org
@@ -17064,6 +17291,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       provisioning_step:
                         type: string
                         examples:
@@ -17148,6 +17379,7 @@ paths:
                       name: production
                       is_production: true
                       status: pending
+                      status_label: Pending
                       provisioning_step: pending
                       failure_reason: null
                       php_version: '8.3'
@@ -17391,6 +17623,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       stdout:
                         type:
                           - string
@@ -17444,6 +17680,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdi
                       vector_environment_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       status: pending
+                      status_label: Pending
                       stdout: null
                       stderr: null
                       actor: user@example.com
@@ -17630,6 +17867,10 @@ paths:
                             type: string
                             examples:
                               - provisioning
+                          status_label:
+                            type: string
+                            examples:
+                              - Provisioning
                           provisioning_step:
                             type: string
                             examples:
@@ -17685,6 +17926,7 @@ paths:
                           name: production
                           is_production: true
                           status: provisioning
+                          status_label: Provisioning
                           provisioning_step: deploying
                           failure_reason: null
                           php_version: '8.3'
@@ -17727,6 +17969,10 @@ paths:
                             type: string
                             examples:
                               - provisioning
+                          status_label:
+                            type: string
+                            examples:
+                              - Provisioning
                           provisioning_step:
                             type: string
                             examples:
@@ -17782,6 +18028,7 @@ paths:
                           name: production
                           is_production: true
                           status: provisioning
+                          status_label: Provisioning
                           provisioning_step: waiting_custom_dns
                           failure_reason: null
                           php_version: '8.3'
@@ -17890,7 +18137,7 @@ paths:
     get:
       summary: 'Get Account Summary'
       operationId: getAccountSummary
-      description: "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains,\nsite/environment counts grouped by status, deployment metrics, backup counts,\nand recent activity."
+      description: "Retrieves a summary of the authenticated account's Vector Pro information\nincluding owner details, cluster DNS endpoints, verified domains,\nsite/environment counts grouped by status, deployment metrics, backup counts,\nand recent activity.\n\nSite counts exclude sites in a terminal state (`terminated`, `termination_requested`,\n`canceled`). Environment counts exclude environments in a terminal state (`terminated`,\n`terminating`). Those statuses are therefore omitted from the `by_status` breakdowns\nand are not included in any of the total/convenience counts."
       parameters: []
       responses:
         200:
@@ -17954,7 +18201,7 @@ paths:
                           total:
                             type: integer
                             examples:
-                              - 5
+                              - 4
                           by_status:
                             type: object
                             properties:
@@ -17982,25 +18229,13 @@ paths:
                                 type: integer
                                 examples:
                                   - 0
-                              termination_requested:
-                                type: integer
-                                examples:
-                                  - 0
-                              terminated:
-                                type: integer
-                                examples:
-                                  - 1
-                              canceled:
-                                type: integer
-                                examples:
-                                  - 0
                       environments:
                         type: object
                         properties:
                           total:
                             type: integer
                             examples:
-                              - 8
+                              - 7
                           by_status:
                             type: object
                             properties:
@@ -18028,14 +18263,6 @@ paths:
                                 type: integer
                                 examples:
                                   - 0
-                              terminating:
-                                type: integer
-                                examples:
-                                  - 0
-                              terminated:
-                                type: integer
-                                examples:
-                                  - 1
                               failed:
                                 type: integer
                                 examples:
@@ -18043,7 +18270,7 @@ paths:
                       total_sites:
                         type: integer
                         examples:
-                          - 5
+                          - 4
                       pending_sites:
                         type: integer
                         examples:
@@ -18051,7 +18278,7 @@ paths:
                       total_environments:
                         type: integer
                         examples:
-                          - 8
+                          - 7
                       production_environments:
                         type: integer
                         examples:
@@ -18101,7 +18328,7 @@ paths:
                         - example.com
                         - example.org
                       sites:
-                        total: 5
+                        total: 4
                         by_status:
                           pending: 0
                           activation_requested: 0
@@ -18109,11 +18336,8 @@ paths:
                           suspension_requested: 0
                           suspended: 1
                           unsuspension_requested: 0
-                          termination_requested: 0
-                          terminated: 1
-                          canceled: 0
                       environments:
-                        total: 8
+                        total: 7
                         by_status:
                           pending: 1
                           provisioning: 0
@@ -18121,12 +18345,10 @@ paths:
                           suspending: 0
                           suspended: 1
                           unsuspending: 0
-                          terminating: 0
-                          terminated: 1
                           failed: 0
-                      total_sites: 5
+                      total_sites: 4
                       pending_sites: 0
-                      total_environments: 8
+                      total_environments: 7
                       production_environments: 3
                       deployments_30d: 12
                       failed_deployments_30d: 1
@@ -20301,14 +20523,26 @@ paths:
                           type: string
                           examples:
                             - manual
+                        type_label:
+                          type: string
+                          examples:
+                            - Manual
                         scope:
                           type: string
                           examples:
                             - full
+                        scope_label:
+                          type: string
+                          examples:
+                            - Full
                         status:
                           type: string
                           examples:
                             - completed
+                        status_label:
+                          type: string
+                          examples:
+                            - Completed
                         description:
                           type: string
                           examples:
@@ -20344,8 +20578,11 @@ paths:
                           archivable_type: vector_site
                           archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                           type: manual
+                          type_label: Manual
                           scope: full
+                          scope_label: Full
                           status: completed
+                          status_label: Completed
                           description: 'Pre-deployment backup'
                           file_snapshot_id: abc123def456
                           database_snapshot_id: ghi789jkl012
@@ -20375,8 +20612,11 @@ paths:
                         archivable_type: vector_site
                         archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                         type: manual
+                        type_label: Manual
                         scope: full
+                        scope_label: Full
                         status: completed
+                        status_label: Completed
                         description: 'Pre-deployment backup'
                         file_snapshot_id: abc123def456
                         database_snapshot_id: ghi789jkl012
@@ -20468,14 +20708,26 @@ paths:
                         type: string
                         examples:
                           - manual
+                      type_label:
+                        type: string
+                        examples:
+                          - Manual
                       scope:
                         type: string
                         examples:
                           - full
+                      scope_label:
+                        type: string
+                        examples:
+                          - Full
                       status:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       description:
                         type: string
                         examples:
@@ -20527,8 +20779,11 @@ paths:
                       archivable_type: vector_site
                       archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                       type: manual
+                      type_label: Manual
                       scope: full
+                      scope_label: Full
                       status: pending
+                      status_label: Pending
                       description: 'Pre-deployment backup'
                       file_snapshot_id: null
                       database_snapshot_id: null
@@ -20695,14 +20950,26 @@ paths:
                         type: string
                         examples:
                           - manual
+                      type_label:
+                        type: string
+                        examples:
+                          - Manual
                       scope:
                         type: string
                         examples:
                           - full
+                      scope_label:
+                        type: string
+                        examples:
+                          - Full
                       status:
                         type: string
                         examples:
                           - completed
+                      status_label:
+                        type: string
+                        examples:
+                          - Completed
                       description:
                         type: string
                         examples:
@@ -20746,8 +21013,11 @@ paths:
                       archivable_type: vector_site
                       archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                       type: manual
+                      type_label: Manual
                       scope: full
+                      scope_label: Full
                       status: completed
+                      status_label: Completed
                       description: 'Pre-deployment backup'
                       file_snapshot_id: abc123def456
                       database_snapshot_id: ghi789jkl012
@@ -20870,6 +21140,10 @@ paths:
                             type: string
                             examples:
                               - completed
+                          status_label:
+                            type: string
+                            examples:
+                              - Completed
                           s3_key:
                             type: string
                             examples:
@@ -20926,6 +21200,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           status: completed
+                          status_label: Completed
                           s3_key: backups/downloads/01jfgxk4nqrst5vwx9yz0abcdh.tar.gz
                           size_bytes: 52428800
                           duration_ms: 12500
@@ -20957,6 +21232,10 @@ paths:
                             type: string
                             examples:
                               - processing
+                          status_label:
+                            type: string
+                            examples:
+                              - Processing
                           s3_key:
                             type:
                               - string
@@ -21027,6 +21306,7 @@ paths:
                           id: 01jfgxk4nqrst5vwx9yz0abcdh
                           vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           status: processing
+                          status_label: Processing
                           s3_key: null
                           size_bytes: null
                           duration_ms: null
@@ -21158,6 +21438,10 @@ paths:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       s3_key:
                         type:
                           - string
@@ -21228,6 +21512,7 @@ paths:
                       id: 01jfgxk4nqrst5vwx9yz0abcdh
                       vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       status: pending
+                      status_label: Pending
                       s3_key: null
                       size_bytes: null
                       duration_ms: null
@@ -21762,14 +22047,26 @@ paths:
                           type: string
                           examples:
                             - full
+                        scope_label:
+                          type: string
+                          examples:
+                            - Full
                         trigger:
                           type: string
                           examples:
                             - manual
+                        trigger_label:
+                          type: string
+                          examples:
+                            - Manual
                         status:
                           type: string
                           examples:
                             - completed
+                        status_label:
+                          type: string
+                          examples:
+                            - Completed
                         vector_backup_id:
                           type: string
                           examples:
@@ -21821,8 +22118,11 @@ paths:
                           archivable_type: vector_site
                           archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                           scope: full
+                          scope_label: Full
                           trigger: manual
+                          trigger_label: Manual
                           status: completed
+                          status_label: Completed
                           vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                           search_replace: null
                           drop_tables: false
@@ -21855,8 +22155,11 @@ paths:
                         archivable_type: vector_site
                         archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                         scope: full
+                        scope_label: Full
                         trigger: manual
+                        trigger_label: Manual
                         status: completed
+                        status_label: Completed
                         vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                         search_replace: null
                         drop_tables: false
@@ -21951,14 +22254,26 @@ paths:
                         type: string
                         examples:
                           - full
+                      scope_label:
+                        type: string
+                        examples:
+                          - Full
                       trigger:
                         type: string
                         examples:
                           - manual
+                      trigger_label:
+                        type: string
+                        examples:
+                          - Manual
                       status:
                         type: string
                         examples:
                           - pending
+                      status_label:
+                        type: string
+                        examples:
+                          - Pending
                       vector_backup_id:
                         type: string
                         examples:
@@ -22036,8 +22351,11 @@ paths:
                       archivable_type: vector_site
                       archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                       scope: full
+                      scope_label: Full
                       trigger: manual
+                      trigger_label: Manual
                       status: pending
+                      status_label: Pending
                       vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdi
                       search_replace:
                         -
@@ -22211,14 +22529,26 @@ paths:
                         type: string
                         examples:
                           - full
+                      scope_label:
+                        type: string
+                        examples:
+                          - Full
                       trigger:
                         type: string
                         examples:
                           - manual
+                      trigger_label:
+                        type: string
+                        examples:
+                          - Manual
                       status:
                         type: string
                         examples:
                           - completed
+                      status_label:
+                        type: string
+                        examples:
+                          - Completed
                       vector_backup_id:
                         type: string
                         examples:
@@ -22290,8 +22620,11 @@ paths:
                       archivable_type: vector_site
                       archivable_id: 01jfgxk4nqrst5vwx9yz0abcde
                       scope: full
+                      scope_label: Full
                       trigger: manual
+                      trigger_label: Manual
                       status: completed
+                      status_label: Completed
                       vector_backup_id: 01jfgxk4nqrst5vwx9yz0abcdg
                       search_replace:
                         -
@@ -22439,6 +22772,10 @@ paths:
                           type: string
                           examples:
                             - http
+                        type_label:
+                          type: string
+                          examples:
+                            - Http
                         url:
                           type: string
                           examples:
@@ -22469,6 +22806,7 @@ paths:
                           id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                           account_id: 1
                           type: http
+                          type_label: Http
                           url: 'https://example.com/webhook'
                           events:
                             - site.created
@@ -22497,6 +22835,7 @@ paths:
                         id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                         account_id: 1
                         type: http
+                        type_label: Http
                         url: 'https://example.com/webhook'
                         events:
                           - site.created
@@ -22587,6 +22926,10 @@ paths:
                             type: string
                             examples:
                               - http
+                          type_label:
+                            type: string
+                            examples:
+                              - Http
                           url:
                             type: string
                             examples:
@@ -22629,6 +22972,7 @@ paths:
                           id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                           account_id: 1
                           type: http
+                          type_label: Http
                           url: 'https://example.com/webhook'
                           events:
                             - site.created
@@ -22658,6 +23002,10 @@ paths:
                             type: string
                             examples:
                               - slack
+                          type_label:
+                            type: string
+                            examples:
+                              - Slack
                           url:
                             type: string
                             examples:
@@ -22696,6 +23044,7 @@ paths:
                           id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                           account_id: 1
                           type: slack
+                          type_label: Slack
                           url: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
                           events:
                             - deployment.completed
@@ -22852,6 +23201,10 @@ paths:
                         type: string
                         examples:
                           - http
+                      type_label:
+                        type: string
+                        examples:
+                          - Http
                       url:
                         type: string
                         examples:
@@ -22890,6 +23243,7 @@ paths:
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                       account_id: 1
                       type: http
+                      type_label: Http
                       url: 'https://example.com/webhook'
                       events:
                         - site.created
@@ -22998,6 +23352,10 @@ paths:
                         type: string
                         examples:
                           - http
+                      type_label:
+                        type: string
+                        examples:
+                          - Http
                       url:
                         type: string
                         examples:
@@ -23036,6 +23394,7 @@ paths:
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                       account_id: 1
                       type: http
+                      type_label: Http
                       url: 'https://example.com/new-webhook'
                       events:
                         - site.created
@@ -23206,6 +23565,10 @@ paths:
                         type: string
                         examples:
                           - http
+                      type_label:
+                        type: string
+                        examples:
+                          - Http
                       url:
                         type: string
                         examples:
@@ -23243,6 +23606,7 @@ paths:
                       id: 01JFGXK4NQRST5VWX9YZ0ABCDI
                       account_id: 1
                       type: http
+                      type_label: Http
                       url: 'https://example.com/webhook'
                       events:
                         - site.created

@@ -22,6 +22,11 @@ endpoints:
         including owner details, cluster DNS endpoints, verified domains,
         site/environment counts grouped by status, deployment metrics, backup counts,
         and recent activity.
+
+        Site counts exclude sites in a terminal state (`terminated`, `termination_requested`,
+        `canceled`). Environment counts exclude environments in a terminal state (`terminated`,
+        `terminating`). Those statuses are therefore omitted from the `by_status` breakdowns
+        and are not included in any of the total/convenience counts.
       authenticated: true
       deprecated: false
     headers:
@@ -57,21 +62,18 @@ endpoints:
                   },
                   "domains": ["example.com", "example.org"],
                   "sites": {
-                      "total": 5,
+                      "total": 4,
                       "by_status": {
                           "pending": 0,
                           "activation_requested": 0,
                           "active": 3,
                           "suspension_requested": 0,
                           "suspended": 1,
-                          "unsuspension_requested": 0,
-                          "termination_requested": 0,
-                          "terminated": 1,
-                          "canceled": 0
+                          "unsuspension_requested": 0
                       }
                   },
                   "environments": {
-                      "total": 8,
+                      "total": 7,
                       "by_status": {
                           "pending": 1,
                           "provisioning": 0,
@@ -79,14 +81,12 @@ endpoints:
                           "suspending": 0,
                           "suspended": 1,
                           "unsuspending": 0,
-                          "terminating": 0,
-                          "terminated": 1,
                           "failed": 0
                       }
                   },
-                  "total_sites": 5,
+                  "total_sites": 4,
                   "pending_sites": 0,
-                  "total_environments": 8,
+                  "total_environments": 7,
                   "production_environments": 3,
                   "deployments_30d": 12,
                   "failed_deployments_30d": 1,
