@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dark mode images in GitHub READMEs"
-date: "Sat Jan 24 00:00:00 -0500 2026"
+date: "Wed Apr 15 10:50:00 -0400 2026"
 categories: [github]
 tags: [github, readme, dark-mode, tips]
 author: Josh Priddle
