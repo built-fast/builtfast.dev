@@ -55,6 +55,9 @@ endpoints:
                       "name": "My Account",
                       "company": "Acme Corp"
                   },
+                  "partner": {
+                      "external_customer_url": "https://myapp.com/customers/YOUR_ID"
+                  },
                   "cluster": {
                       "alb_dns_name": "alb-abc123.us-west-2.elb.amazonaws.com",
                       "aurora_cluster_endpoint": "cluster.abc123.us-east-1.rds.amazonaws.com",
@@ -111,6 +114,106 @@ endpoints:
         content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
         headers: []
         description: Unauthorized
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: api/v1/vector/account
+    metadata:
+      custom: []
+      groupName: Account
+      groupDescription: |-
+
+        Update partner-level account settings such as the external customer URL template.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Account Settings'
+      description: |-
+        Update partner-level configuration on the authenticated account. The most
+        important setting today is `external_customer_url`, a URL template containing
+        the literal token `YOUR_ID`. When a site's `your_customer_id` is rendered in
+        the Vector Pro control panel, that token is substituted with the value and
+        the customer ID is shown as a link to the partner's own system.
+
+        On success this endpoint returns the same shape as `GET /vector/account` so
+        clients can refresh their cached account state in a single round trip.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      external_customer_url:
+        custom: []
+        name: external_customer_url
+        description: 'nullable A URL template that must contain the literal token `YOUR_ID`. Pass `null` to clear it.'
+        required: false
+        example: 'https://myapp.com/customers/YOUR_ID'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      external_customer_url: 'https://myapp.com/customers/YOUR_ID'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "data": {
+                  "owner": {"name": "John Doe", "email": "user@example.com"},
+                  "account": {"name": "My Account", "company": "Acme Corp"},
+                  "partner": {"external_customer_url": "https://myapp.com/customers/YOUR_ID"},
+                  "cluster": null,
+                  "domains": [],
+                  "sites": {"total": 0, "by_status": {}},
+                  "environments": {"total": 0, "by_status": {}}
+              },
+              "message": "Account updated successfully",
+              "http_status": 200
+          }
+        headers: []
+        description: Success
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "data": {},
+              "errors": {"external_customer_url": ["The external customer URL must contain the literal token YOUR_ID, which is replaced with each site's your_customer_id when the link is rendered."]},
+              "message": "Validation failed",
+              "http_status": 422
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth:
       - headers

@@ -552,7 +552,7 @@
                         {
                             "header": [],
                             "code": 202,
-                            "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"terminating\",\n        \"status_label\": \"Terminating\",\n        \"tags\": [],\n        \"dev_domain\": \"dev.wispy-dust.vectorpages.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"environments\": [],\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 202\n}",
+                            "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"your_customer_id\": \"cust_12345\",\n        \"status\": \"termination_requested\",\n        \"status_label\": \"Termination Requested\",\n        \"tags\": [],\n        \"dev_domain\": \"dev.wispy-dust.vectorpages.com\",\n        \"dev_db_host\": \"dev-cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"dev_db_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"environments\": [],\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n    },\n    \"message\": \"Vector site deletion initiated\",\n    \"http_status\": 202\n}",
                             "name": "Accepted"
                         },
                         {
@@ -2958,7 +2958,7 @@
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"learning_mode\": false,\n        \"profile_id\": 1,\n        \"execution_mode\": 1,\n        \"disabled_rule_groups\": [],\n        \"disabled_rules\": [],\n        \"log_only_rules\": [],\n        \"request_header_logging\": false,\n        \"request_body_limit_action\": 0,\n        \"response_body_limit_action\": 0,\n        \"realtime_threat_intelligence\": true\n    },\n    \"message\": \"WAF settings retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": {\n        \"enabled\": true,\n        \"learning_mode\": false,\n        \"profile_id\": 1,\n        \"execution_mode\": 1,\n        \"disabled_rules\": [],\n        \"log_only_rules\": [],\n        \"request_header_logging\": false,\n        \"request_body_limit_action\": 0,\n        \"response_body_limit_action\": 0,\n        \"realtime_threat_intelligence\": true\n    },\n    \"message\": \"WAF settings retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -3017,7 +3017,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"enabled\":true,\"learning_mode\":false,\"profile_id\":1,\"execution_mode\":1,\"disabled_rule_groups\":[\"group-1\"],\"disabled_rules\":[\"rule-1\"],\"log_only_rules\":[\"rule-2\"],\"request_header_logging\":false,\"request_body_limit_action\":0,\"response_body_limit_action\":0,\"realtime_threat_intelligence\":true}"
+                                    "raw": "{\"enabled\":true,\"learning_mode\":false,\"profile_id\":1,\"execution_mode\":1,\"disabled_rules\":[\"rule-1\"],\"log_only_rules\":[\"rule-2\"],\"request_header_logging\":false,\"request_body_limit_action\":0,\"response_body_limit_action\":0,\"realtime_threat_intelligence\":true}"
                                 },
                                 "description": "Updates WAF configuration for a site. All fields are optional \u2014 only include\nfields you want to change. Omitted fields retain their current values."
                             },
@@ -5608,7 +5608,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"user@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"example.com\", \"example.org\"],\n        \"sites\": {\n            \"total\": 4,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 7,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"failed\": 0\n            }\n        },\n        \"total_sites\": 4,\n        \"pending_sites\": 0,\n        \"total_environments\": 7,\n        \"production_environments\": 3,\n        \"deployments_30d\": 12,\n        \"failed_deployments_30d\": 1,\n        \"active_backups\": 4,\n        \"recent_activity\": [],\n        \"recent_deployments\": []\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
+                            "body": "{\n    \"data\": {\n        \"owner\": {\n            \"name\": \"John Doe\",\n            \"email\": \"user@example.com\"\n        },\n        \"account\": {\n            \"name\": \"My Account\",\n            \"company\": \"Acme Corp\"\n        },\n        \"partner\": {\n            \"external_customer_url\": \"https:\/\/myapp.com\/customers\/YOUR_ID\"\n        },\n        \"cluster\": {\n            \"alb_dns_name\": \"alb-abc123.us-west-2.elb.amazonaws.com\",\n            \"aurora_cluster_endpoint\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n            \"ssh_nlb_dns\": \"nlb-abc123.us-west-2.elb.amazonaws.com\"\n        },\n        \"domains\": [\"example.com\", \"example.org\"],\n        \"sites\": {\n            \"total\": 4,\n            \"by_status\": {\n                \"pending\": 0,\n                \"activation_requested\": 0,\n                \"active\": 3,\n                \"suspension_requested\": 0,\n                \"suspended\": 1,\n                \"unsuspension_requested\": 0\n            }\n        },\n        \"environments\": {\n            \"total\": 7,\n            \"by_status\": {\n                \"pending\": 1,\n                \"provisioning\": 0,\n                \"active\": 5,\n                \"suspending\": 0,\n                \"suspended\": 1,\n                \"unsuspending\": 0,\n                \"failed\": 0\n            }\n        },\n        \"total_sites\": 4,\n        \"pending_sites\": 0,\n        \"total_environments\": 7,\n        \"production_environments\": 3,\n        \"deployments_30d\": 12,\n        \"failed_deployments_30d\": 1,\n        \"active_backups\": 4,\n        \"recent_activity\": [],\n        \"recent_deployments\": []\n    },\n    \"message\": \"Account summary retrieved successfully\",\n    \"http_status\": 200\n}",
                             "name": "Success"
                         },
                         {
@@ -5622,6 +5622,59 @@
                             "code": 403,
                             "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
                             "name": "Unauthorized"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Account Settings",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/vector\/account",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/vector\/account"
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"external_customer_url\":\"https:\\\/\\\/myapp.com\\\/customers\\\/YOUR_ID\"}"
+                        },
+                        "description": "Update partner-level configuration on the authenticated account. The most\nimportant setting today is `external_customer_url`, a URL template containing\nthe literal token `YOUR_ID`. When a site's `your_customer_id` is rendered in\nthe Vector Pro control panel, that token is substituted with the value and\nthe customer ID is shown as a link to the partner's own system.\n\nOn success this endpoint returns the same shape as `GET \/vector\/account` so\nclients can refresh their cached account state in a single round trip."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"data\": {\n        \"owner\": {\"name\": \"John Doe\", \"email\": \"user@example.com\"},\n        \"account\": {\"name\": \"My Account\", \"company\": \"Acme Corp\"},\n        \"partner\": {\"external_customer_url\": \"https:\/\/myapp.com\/customers\/YOUR_ID\"},\n        \"cluster\": null,\n        \"domains\": [],\n        \"sites\": {\"total\": 0, \"by_status\": {}},\n        \"environments\": {\"total\": 0, \"by_status\": {}}\n    },\n    \"message\": \"Account updated successfully\",\n    \"http_status\": 200\n}",
+                            "name": "Success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"data\": {}, \"message\": \"Unauthenticated\", \"http_status\": 401}",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"data\": {}, \"message\": \"Unauthorized\", \"http_status\": 403}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"data\": {},\n    \"errors\": {\"external_customer_url\": [\"The external customer URL must contain the literal token YOUR_ID, which is replaced with each site's your_customer_id when the link is rendered.\"]},\n    \"message\": \"Validation failed\",\n    \"http_status\": 422\n}",
+                            "name": "Validation Error"
                         }
                     ]
                 },

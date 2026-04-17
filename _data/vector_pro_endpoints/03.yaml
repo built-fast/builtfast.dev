@@ -1209,8 +1209,8 @@ endpoints:
               "data": {
                   "id": "01jfgxk4nqrst5vwx9yz0abcde",
                   "your_customer_id": "cust_12345",
-                  "status": "terminating",
-                  "status_label": "Terminating",
+                  "status": "termination_requested",
+                  "status_label": "Termination Requested",
                   "tags": [],
                   "dev_domain": "dev.wispy-dust.vectorpages.com",
                   "dev_db_host": "dev-cluster.abc123.us-east-1.rds.amazonaws.com",
@@ -3757,7 +3757,6 @@ endpoints:
                   "learning_mode": false,
                   "profile_id": 1,
                   "execution_mode": 1,
-                  "disabled_rule_groups": [],
                   "disabled_rules": [],
                   "log_only_rules": [],
                   "request_header_logging": false,
@@ -7060,18 +7059,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      disabled_rule_groups:
-        custom: []
-        name: disabled_rule_groups
-        description: 'Array of disabled rule group IDs.'
-        required: false
-        example:
-          - group-1
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
       disabled_rules:
         custom: []
         name: disabled_rules
@@ -7145,8 +7132,6 @@ endpoints:
       learning_mode: false
       profile_id: 1
       execution_mode: 1
-      disabled_rule_groups:
-        - group-1
       disabled_rules:
         - rule-1
       log_only_rules:

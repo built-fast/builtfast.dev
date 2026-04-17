@@ -1341,11 +1341,11 @@ paths:
                       status:
                         type: string
                         examples:
-                          - terminating
+                          - termination_requested
                       status_label:
                         type: string
                         examples:
-                          - Terminating
+                          - 'Termination Requested'
                       tags:
                         type: array
                         examples:
@@ -1387,8 +1387,8 @@ paths:
                     data:
                       id: 01jfgxk4nqrst5vwx9yz0abcde
                       your_customer_id: cust_12345
-                      status: terminating
-                      status_label: Terminating
+                      status: termination_requested
+                      status_label: 'Termination Requested'
                       tags: []
                       dev_domain: dev.wispy-dust.vectorpages.com
                       dev_db_host: dev-cluster.abc123.us-east-1.rds.amazonaws.com
@@ -9496,10 +9496,6 @@ paths:
                         type: integer
                         examples:
                           - 1
-                      disabled_rule_groups:
-                        type: array
-                        examples:
-                          - []
                       disabled_rules:
                         type: array
                         examples:
@@ -9539,7 +9535,6 @@ paths:
                       learning_mode: false
                       profile_id: 1
                       execution_mode: 1
-                      disabled_rule_groups: []
                       disabled_rules: []
                       log_only_rules: []
                       request_header_logging: false
@@ -9797,14 +9792,6 @@ paths:
                   description: 'WAF execution mode (0=Log, 1=Block).'
                   examples:
                     - 1
-                disabled_rule_groups:
-                  type: array
-                  description: 'Array of disabled rule group IDs.'
-                  items:
-                    type: string
-                  examples:
-                    -
-                      - group-1
                 disabled_rules:
                   type: array
                   description: 'Array of individual disabled rule IDs.'
@@ -18172,6 +18159,13 @@ paths:
                             type: string
                             examples:
                               - 'Acme Corp'
+                      partner:
+                        type: object
+                        properties:
+                          external_customer_url:
+                            type: string
+                            examples:
+                              - 'https://myapp.com/customers/YOUR_ID'
                       cluster:
                         type: object
                         properties:
@@ -18320,6 +18314,8 @@ paths:
                       account:
                         name: 'My Account'
                         company: 'Acme Corp'
+                      partner:
+                        external_customer_url: 'https://myapp.com/customers/YOUR_ID'
                       cluster:
                         alb_dns_name: alb-abc123.us-west-2.elb.amazonaws.com
                         aurora_cluster_endpoint: cluster.abc123.us-east-1.rds.amazonaws.com
@@ -18405,6 +18401,208 @@ paths:
                     http_status: 403
       tags:
         - Account
+    patch:
+      summary: 'Update Account Settings'
+      operationId: updateAccountSettings
+      description: "Update partner-level configuration on the authenticated account. The most\nimportant setting today is `external_customer_url`, a URL template containing\nthe literal token `YOUR_ID`. When a site's `your_customer_id` is rendered in\nthe Vector Pro control panel, that token is substituted with the value and\nthe customer ID is shown as a link to the partner's own system.\n\nOn success this endpoint returns the same shape as `GET /vector/account` so\nclients can refresh their cached account state in a single round trip."
+      parameters: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      owner:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            examples:
+                              - 'John Doe'
+                          email:
+                            type: string
+                            examples:
+                              - user@example.com
+                      account:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            examples:
+                              - 'My Account'
+                          company:
+                            type: string
+                            examples:
+                              - 'Acme Corp'
+                      partner:
+                        type: object
+                        properties:
+                          external_customer_url:
+                            type: string
+                            examples:
+                              - 'https://myapp.com/customers/YOUR_ID'
+                      cluster:
+                        type:
+                          - string
+                          - 'null'
+                        examples:
+                          - null
+                      domains:
+                        type: array
+                        examples:
+                          - []
+                      sites:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                            examples:
+                              - 0
+                          by_status:
+                            type: object
+                            properties: {  }
+                      environments:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                            examples:
+                              - 0
+                          by_status:
+                            type: object
+                            properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Account updated successfully'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 200
+                examples:
+                  -
+                    data:
+                      owner:
+                        name: 'John Doe'
+                        email: user@example.com
+                      account:
+                        name: 'My Account'
+                        company: 'Acme Corp'
+                      partner:
+                        external_customer_url: 'https://myapp.com/customers/YOUR_ID'
+                      cluster: null
+                      domains: []
+                      sites:
+                        total: 0
+                        by_status: {  }
+                      environments:
+                        total: 0
+                        by_status: {  }
+                    message: 'Account updated successfully'
+                    http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        422:
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      external_customer_url:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - "The external customer URL must contain the literal token YOUR_ID, which is replaced with each site's your_customer_id when the link is rendered."
+                  message:
+                    type: string
+                    examples:
+                      - 'Validation failed'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      external_customer_url:
+                        - "The external customer URL must contain the literal token YOUR_ID, which is replaced with each site's your_customer_id when the link is rendered."
+                    message: 'Validation failed'
+                    http_status: 422
+      tags:
+        - Account
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                external_customer_url:
+                  type:
+                    - string
+                    - 'null'
+                  description: 'nullable A URL template that must contain the literal token `YOUR_ID`. Pass `null` to clear it.'
+                  examples:
+                    - 'https://myapp.com/customers/YOUR_ID'
   /api/v1/vector/ssh-keys:
     get:
       summary: 'List SSH Keys'
