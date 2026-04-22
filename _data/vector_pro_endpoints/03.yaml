@@ -8253,10 +8253,21 @@ endpoints:
         deployed to the site's container and grant SSH access.
 
         When a new dev site is created, account-level default SSH keys are
-        automatically copied to the site. Use these endpoints to manage keys
-        on existing sites.
+        automatically installed on the site. Use these endpoints to manage
+        site-specific keys. Account-level defaults are returned by the list
+        endpoint (flagged with `is_account_default: true`) but must be managed
+        via the account-level SSH key endpoints.
       title: 'List SSH Keys'
-      description: 'Retrieves all SSH keys installed on a specific dev site.'
+      description: |-
+        Retrieves all SSH keys installed on a specific dev site. The response
+        includes site-specific keys plus any account-level default keys
+        (flagged with `is_account_default: true`), which are automatically
+        installed on every site in the account. Account-level defaults are
+        read-only from this endpoint — use the account SSH key endpoints to
+        manage them.
+
+        Results are ordered with site-specific keys first, then account-level
+        defaults, each group sorted alphabetically by name.
       authenticated: true
       deprecated: false
     headers:
@@ -8323,6 +8334,17 @@ endpoints:
                       "is_account_default": false,
                       "created_at": "2025-01-15T12:00:00+00:00",
                       "updated_at": "2025-01-15T12:00:00+00:00"
+                  },
+                  {
+                      "id": "01jfgxk4nqrst5vwx9yz0abcdl",
+                      "account_id": 1,
+                      "vector_site_id": null,
+                      "name": "account default key",
+                      "fingerprint": "SHA256:def789abc012...",
+                      "public_key_preview": "ssh-ed25519 AAAAC3NzaC1l...team@account",
+                      "is_account_default": true,
+                      "created_at": "2025-01-10T09:00:00+00:00",
+                      "updated_at": "2025-01-10T09:00:00+00:00"
                   }
               ],
               "links": {},
@@ -8373,8 +8395,10 @@ endpoints:
         deployed to the site's container and grant SSH access.
 
         When a new dev site is created, account-level default SSH keys are
-        automatically copied to the site. Use these endpoints to manage keys
-        on existing sites.
+        automatically installed on the site. Use these endpoints to manage
+        site-specific keys. Account-level defaults are returned by the list
+        endpoint (flagged with `is_account_default: true`) but must be managed
+        via the account-level SSH key endpoints.
       title: 'Add SSH Key'
       description: |-
         Adds a new SSH key to a specific dev site. The key will be deployed to the
@@ -8515,12 +8539,20 @@ endpoints:
         deployed to the site's container and grant SSH access.
 
         When a new dev site is created, account-level default SSH keys are
-        automatically copied to the site. Use these endpoints to manage keys
-        on existing sites.
+        automatically installed on the site. Use these endpoints to manage
+        site-specific keys. Account-level defaults are returned by the list
+        endpoint (flagged with `is_account_default: true`) but must be managed
+        via the account-level SSH key endpoints.
       title: 'Remove SSH Key'
       description: |-
-        Removes an SSH key from a specific dev site. The key will be removed from
-        the site's container and SSH access will be revoked.
+        Removes a site-specific SSH key from a dev site. The key will be
+        removed from the site's container and SSH access will be revoked.
+
+        Only keys that belong to this specific site may be removed here —
+        account-level default keys (`is_account_default: true`) are scoped
+        out and will return 404 via this endpoint. Manage those via the
+        account SSH key endpoints; removing an account-level key propagates
+        to every site in the account.
       authenticated: true
       deprecated: false
     headers:

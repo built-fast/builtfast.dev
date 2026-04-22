@@ -3998,7 +3998,7 @@
                 },
                 {
                     "name": "SSH Keys",
-                    "description": "Manage SSH keys installed on specific dev sites. These keys are actually\ndeployed to the site's container and grant SSH access.\n\nWhen a new dev site is created, account-level default SSH keys are\nautomatically copied to the site. Use these endpoints to manage keys\non existing sites.",
+                    "description": "Manage SSH keys installed on specific dev sites. These keys are actually\ndeployed to the site's container and grant SSH access.\n\nWhen a new dev site is created, account-level default SSH keys are\nautomatically installed on the site. Use these endpoints to manage\nsite-specific keys. Account-level defaults are returned by the list\nendpoint (flagged with `is_account_default: true`) but must be managed\nvia the account-level SSH key endpoints.",
                     "item": [
                         {
                             "name": "List SSH Keys",
@@ -4042,13 +4042,13 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Retrieves all SSH keys installed on a specific dev site."
+                                "description": "Retrieves all SSH keys installed on a specific dev site. The response\nincludes site-specific keys plus any account-level default keys\n(flagged with `is_account_default: true`), which are automatically\ninstalled on every site in the account. Account-level defaults are\nread-only from this endpoint \u2014 use the account SSH key endpoints to\nmanage them.\n\nResults are ordered with site-specific keys first, then account-level\ndefaults, each group sorted alphabetically by name."
                             },
                             "response": [
                                 {
                                     "header": [],
                                     "code": 200,
-                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcdi\",\n            \"account_id\": 1,\n            \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcdj\",\n            \"name\": \"developer key\",\n            \"fingerprint\": \"SHA256:abc123def456...\",\n            \"public_key_preview\": \"ssh-rsa AAAAB3NzaC1yc2EA...user@host\",\n            \"is_account_default\": false,\n            \"created_at\": \"2025-01-15T12:00:00+00:00\",\n            \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"SSH keys retrieved successfully\",\n    \"http_status\": 200\n}",
+                                    "body": "{\n    \"data\": [\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcdi\",\n            \"account_id\": 1,\n            \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcdj\",\n            \"name\": \"developer key\",\n            \"fingerprint\": \"SHA256:abc123def456...\",\n            \"public_key_preview\": \"ssh-rsa AAAAB3NzaC1yc2EA...user@host\",\n            \"is_account_default\": false,\n            \"created_at\": \"2025-01-15T12:00:00+00:00\",\n            \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n        },\n        {\n            \"id\": \"01jfgxk4nqrst5vwx9yz0abcdl\",\n            \"account_id\": 1,\n            \"vector_site_id\": null,\n            \"name\": \"account default key\",\n            \"fingerprint\": \"SHA256:def789abc012...\",\n            \"public_key_preview\": \"ssh-ed25519 AAAAC3NzaC1l...team@account\",\n            \"is_account_default\": true,\n            \"created_at\": \"2025-01-10T09:00:00+00:00\",\n            \"updated_at\": \"2025-01-10T09:00:00+00:00\"\n        }\n    ],\n    \"links\": {},\n    \"meta\": {},\n    \"message\": \"SSH keys retrieved successfully\",\n    \"http_status\": 200\n}",
                                     "name": "Success"
                                 },
                                 {
@@ -4179,7 +4179,7 @@
                                     }
                                 ],
                                 "body": null,
-                                "description": "Removes an SSH key from a specific dev site. The key will be removed from\nthe site's container and SSH access will be revoked."
+                                "description": "Removes a site-specific SSH key from a dev site. The key will be\nremoved from the site's container and SSH access will be revoked.\n\nOnly keys that belong to this specific site may be removed here \u2014\naccount-level default keys (`is_account_default: true`) are scoped\nout and will return 404 via this endpoint. Manage those via the\naccount SSH key endpoints; removing an account-level key propagates\nto every site in the account."
                             },
                             "response": [
                                 {
@@ -4845,7 +4845,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -6449,7 +6449,7 @@
                                 {
                                     "key": "site_id",
                                     "value": "01jfgxk4nqrst5vwx9yz0abcde",
-                                    "description": "Filter by site ID.",
+                                    "description": "Filter by site ID. Returns backups for the site and all of its environments.",
                                     "disabled": false
                                 },
                                 {

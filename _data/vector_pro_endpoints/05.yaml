@@ -46,7 +46,7 @@ endpoints:
       site_id:
         custom: []
         name: site_id
-        description: 'Filter by site ID.'
+        description: 'Filter by site ID. Returns backups for the site and all of its environments.'
         required: false
         example: 01jfgxk4nqrst5vwx9yz0abcde
         type: string

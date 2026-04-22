@@ -12528,7 +12528,7 @@ paths:
     get:
       summary: 'List SSH Keys'
       operationId: sitesSSHKeysListSSHKeys
-      description: 'Retrieves all SSH keys installed on a specific dev site.'
+      description: "Retrieves all SSH keys installed on a specific dev site. The response\nincludes site-specific keys plus any account-level default keys\n(flagged with `is_account_default: true`), which are automatically\ninstalled on every site in the account. Account-level defaults are\nread-only from this endpoint — use the account SSH key endpoints to\nmanage them.\n\nResults are ordered with site-specific keys first, then account-level\ndefaults, each group sorted alphabetically by name."
       parameters:
         -
           in: query
@@ -12611,6 +12611,16 @@ paths:
                           is_account_default: false
                           created_at: '2025-01-15T12:00:00+00:00'
                           updated_at: '2025-01-15T12:00:00+00:00'
+                        -
+                          id: 01jfgxk4nqrst5vwx9yz0abcdl
+                          account_id: 1
+                          vector_site_id: null
+                          name: 'account default key'
+                          fingerprint: 'SHA256:def789abc012...'
+                          public_key_preview: 'ssh-ed25519 AAAAC3NzaC1l...team@account'
+                          is_account_default: true
+                          created_at: '2025-01-10T09:00:00+00:00'
+                          updated_at: '2025-01-10T09:00:00+00:00'
                   links:
                     type: object
                     properties: {  }
@@ -12638,6 +12648,16 @@ paths:
                         is_account_default: false
                         created_at: '2025-01-15T12:00:00+00:00'
                         updated_at: '2025-01-15T12:00:00+00:00'
+                      -
+                        id: 01jfgxk4nqrst5vwx9yz0abcdl
+                        account_id: 1
+                        vector_site_id: null
+                        name: 'account default key'
+                        fingerprint: 'SHA256:def789abc012...'
+                        public_key_preview: 'ssh-ed25519 AAAAC3NzaC1l...team@account'
+                        is_account_default: true
+                        created_at: '2025-01-10T09:00:00+00:00'
+                        updated_at: '2025-01-10T09:00:00+00:00'
                     links: {  }
                     meta: {  }
                     message: 'SSH keys retrieved successfully'
@@ -12964,7 +12984,7 @@ paths:
     delete:
       summary: 'Remove SSH Key'
       operationId: sitesSSHKeysRemoveSSHKey
-      description: "Removes an SSH key from a specific dev site. The key will be removed from\nthe site's container and SSH access will be revoked."
+      description: "Removes a site-specific SSH key from a dev site. The key will be\nremoved from the site's container and SSH access will be revoked.\n\nOnly keys that belong to this specific site may be removed here —\naccount-level default keys (`is_account_default: true`) are scoped\nout and will return 404 via this endpoint. Manage those via the\naccount SSH key endpoints; removing an account-level key propagates\nto every site in the account."
       parameters: []
       responses:
         200:
@@ -15785,7 +15805,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - false
+                    - true
     parameters:
       -
         in: path
@@ -20655,11 +20675,11 @@ paths:
         -
           in: query
           name: site_id
-          description: 'Filter by site ID.'
+          description: 'Filter by site ID. Returns backups for the site and all of its environments.'
           required: false
           schema:
             type: string
-            description: 'Filter by site ID.'
+            description: 'Filter by site ID. Returns backups for the site and all of its environments.'
             examples:
               - 01jfgxk4nqrst5vwx9yz0abcde
         -
