@@ -123,6 +123,7 @@ endpoints:
                       "status": "active",
                       "status_label": "Active",
                       "provisioning_step": "complete",
+                      "provisioning_step_label": "Complete",
                       "failure_reason": null,
                       "php_version": "8.3",
                       "tags": ["live", "primary"],
@@ -247,6 +248,7 @@ endpoints:
                   "status": "active",
                   "status_label": "Active",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
@@ -820,16 +822,25 @@ endpoints:
 
         ##### Provisioning Step
 
-        The `provisioning_step` field tracks detailed progress during provisioning:
+        The `provisioning_step` field tracks detailed progress during provisioning.
+        A companion `provisioning_step_label` field returns the human-readable label.
 
         - `null` - Not started
-        - `requesting_cert` - Requesting AWS ACM certificate
-        - `waiting_cert` - Waiting for certificate validation
-        - `deploying` - Deploying to Ymir
-        - `configuring_dns` - Configuring DNS records
+        - `pending` - Queued
+        - `creating_ymir_project` - Creating Ymir project
+        - `creating_ymir_environment` - Creating Ymir environment
+        - `creating_database` - Creating database
+        - `creating_redis_user` - Creating Redis user
+        - `creating_cdn` - Creating CDN (production only)
+        - `creating_dns` - Creating DNS records
+        - `generating_salts` - Generating WordPress salts
+        - `requesting_cert` - Requesting SSL certificate
+        - `waiting_cert` - Waiting for SSL certificate
+        - `deploying` - Deploying
+        - `configuring_dns` - Verifying DNS propagation
         - `ready` - Platform SSL complete (terminal for staging)
         - `waiting_custom_dns` - Waiting for custom domain DNS (production only)
-        - `provisioning_cdn_ssl` - Requesting Let's Encrypt certificate
+        - `provisioning_cdn_ssl` - Provisioning CDN SSL
         - `complete` - Fully complete (terminal for production with custom domain)
       title: 'Get Status'
       description: 'Get the current SSL provisioning status for an environment.'
@@ -873,6 +884,7 @@ endpoints:
                   "status": "active",
                   "status_label": "Active",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
@@ -976,6 +988,7 @@ endpoints:
                   "status": "active",
                   "status_label": "Active",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
@@ -1562,6 +1575,7 @@ endpoints:
                   "status": "pending",
                   "status_label": "Pending",
                   "provisioning_step": "pending",
+                  "provisioning_step_label": "Queued",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
@@ -1597,6 +1611,7 @@ endpoints:
                   "status": "pending",
                   "status_label": "Pending",
                   "provisioning_step": "pending",
+                  "provisioning_step_label": "Queued",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
@@ -1787,6 +1802,7 @@ endpoints:
                   "status": "active",
                   "status_label": "Active",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.4",
                   "tags": ["live", "updated"],
@@ -1822,6 +1838,7 @@ endpoints:
                   "status": "active",
                   "status_label": "Active",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": ["live", "primary"],
@@ -1981,6 +1998,7 @@ endpoints:
                   "status": "terminating",
                   "status_label": "Terminating",
                   "provisioning_step": "complete",
+                  "provisioning_step_label": "Complete",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
@@ -2479,7 +2497,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2487,7 +2505,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: false
+      include_database: true
     fileParameters: []
     responses:
       -
@@ -2731,6 +2749,7 @@ endpoints:
                   "status": "provisioning",
                   "status_label": "Provisioning",
                   "provisioning_step": "deploying",
+                  "provisioning_step_label": "Deploying",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
@@ -2759,6 +2778,7 @@ endpoints:
                   "status": "provisioning",
                   "status_label": "Provisioning",
                   "provisioning_step": "waiting_custom_dns",
+                  "provisioning_step_label": "Waiting for custom domain DNS",
                   "failure_reason": null,
                   "php_version": "8.3",
                   "tags": [],
