@@ -4845,7 +4845,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },
@@ -5397,7 +5397,7 @@
                             "mode": "raw",
                             "raw": "{\"name\":\"production\",\"custom_domain\":\"example.com\",\"is_production\":true,\"php_version\":\"8.3\",\"tags\":[\"live\",\"primary\"]}"
                         },
-                        "description": "Creates a new environment for a site. The environment is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nEach environment gets a unique auto-generated subdomain and uses the site's\nconfigured domain.\n\n**Important:** Only one environment per site can be marked as production\n(`is_production: true`). The production environment receives CDN integration."
+                        "description": "Creates a new environment for a site. The environment is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nEach environment gets a unique auto-generated subdomain and uses the site's\nconfigured domain.\n\n**Production environments:** Only one environment per site can be marked as\nproduction (`is_production: true`). Production environments receive CDN\nintegration via Bunny.net when a `custom_domain` is supplied.\n\n**Custom domain:** Optional for any environment. When supplied, ACM certificate\nprovisioning is initiated asynchronously and \u2014 for production environments \u2014\nthe hostname is attached to the Bunny pull zone. The DNS validation records\nand the CDN target are not available in the create response; poll the\nenvironment (GET) to retrieve `custom_domain_certificate.dns_validation_records`\nand `dns_target` once they become available."
                     },
                     "response": [
                         {
@@ -5405,6 +5405,12 @@
                             "code": 201,
                             "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"your_customer_id\": \"cust_12345\",\n        \"name\": \"production\",\n        \"is_production\": true,\n        \"status\": \"pending\",\n        \"status_label\": \"Pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [\"live\", \"primary\"],\n        \"platform_domain\": \"wispy-dust--prod.vectorpages.com\",\n        \"custom_domain\": \"example.com\",\n        \"dns_target\": \"site-abc123.b-cdn.net\",\n        \"custom_domain_certificate\": {\n            \"status\": \"pending\",\n            \"dns_validation_records\": null\n        },\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
                             "name": "Created"
+                        },
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n    \"data\": {\n        \"id\": \"01jfgxk4nqrst5vwx9yz0abcdg\",\n        \"vector_site_id\": \"01jfgxk4nqrst5vwx9yz0abcde\",\n        \"your_customer_id\": \"cust_12345\",\n        \"name\": \"staging-2\",\n        \"is_production\": false,\n        \"status\": \"pending\",\n        \"status_label\": \"Pending\",\n        \"provisioning_step\": \"pending\",\n        \"failure_reason\": null,\n        \"php_version\": \"8.3\",\n        \"tags\": [],\n        \"platform_domain\": \"wispy-dust--staging-2.vectorpages.com\",\n        \"custom_domain\": null,\n        \"dns_target\": \"wispy-dust--staging-2.vectorpages.com\",\n        \"custom_domain_certificate\": null,\n        \"subdomain\": \"wispy-dust\",\n        \"database_host\": \"cluster.abc123.us-east-1.rds.amazonaws.com\",\n        \"database_name\": \"db_01jfgxk4nqrst5vwx9yz0abcde\",\n        \"created_at\": \"2025-01-15T12:00:00+00:00\",\n        \"updated_at\": \"2025-01-15T12:00:00+00:00\"\n    },\n    \"message\": \"Environment creation initiated\",\n    \"http_status\": 201\n}",
+                            "name": "Created without custom domain"
                         },
                         {
                             "header": [],

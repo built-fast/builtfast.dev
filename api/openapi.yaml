@@ -15805,7 +15805,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - true
+                    - false
     parameters:
       -
         in: path
@@ -17261,151 +17261,280 @@ paths:
     post:
       summary: 'Create Environment'
       operationId: createEnvironment
-      description: "Creates a new environment for a site. The environment is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nEach environment gets a unique auto-generated subdomain and uses the site's\nconfigured domain.\n\n**Important:** Only one environment per site can be marked as production\n(`is_production: true`). The production environment receives CDN integration."
+      description: "Creates a new environment for a site. The environment is created with a\n`pending` status and will transition to `active` once provisioning completes.\n\nEach environment gets a unique auto-generated subdomain and uses the site's\nconfigured domain.\n\n**Production environments:** Only one environment per site can be marked as\nproduction (`is_production: true`). Production environments receive CDN\nintegration via Bunny.net when a `custom_domain` is supplied.\n\n**Custom domain:** Optional for any environment. When supplied, ACM certificate\nprovisioning is initiated asynchronously and — for production environments —\nthe hostname is attached to the Bunny pull zone. The DNS validation records\nand the CDN target are not available in the create response; poll the\nenvironment (GET) to retrieve `custom_domain_certificate.dns_validation_records`\nand `dns_target` once they become available."
       parameters: []
       responses:
         201:
-          description: Created
+          description: ''
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
+                oneOf:
+                  -
+                    description: Created
                     type: object
                     properties:
-                      id:
-                        type: string
-                        examples:
-                          - 01jfgxk4nqrst5vwx9yz0abcdg
-                      vector_site_id:
-                        type: string
-                        examples:
-                          - 01jfgxk4nqrst5vwx9yz0abcde
-                      your_customer_id:
-                        type: string
-                        examples:
-                          - cust_12345
-                      name:
-                        type: string
-                        examples:
-                          - production
-                      is_production:
-                        type: boolean
-                        examples:
-                          - true
-                      status:
-                        type: string
-                        examples:
-                          - pending
-                      status_label:
-                        type: string
-                        examples:
-                          - Pending
-                      provisioning_step:
-                        type: string
-                        examples:
-                          - pending
-                      failure_reason:
-                        type:
-                          - string
-                          - 'null'
-                        examples:
-                          - null
-                      php_version:
-                        type: string
-                        examples:
-                          - '8.3'
-                      tags:
-                        type: array
-                        items:
-                          type: string
-                        examples:
-                          -
-                            - live
-                            - primary
-                      platform_domain:
-                        type: string
-                        examples:
-                          - wispy-dust--prod.vectorpages.com
-                      custom_domain:
-                        type: string
-                        examples:
-                          - example.com
-                      dns_target:
-                        type: string
-                        examples:
-                          - site-abc123.b-cdn.net
-                      custom_domain_certificate:
+                      data:
                         type: object
                         properties:
+                          id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcdg
+                          vector_site_id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcde
+                          your_customer_id:
+                            type: string
+                            examples:
+                              - cust_12345
+                          name:
+                            type: string
+                            examples:
+                              - production
+                          is_production:
+                            type: boolean
+                            examples:
+                              - true
                           status:
                             type: string
                             examples:
                               - pending
-                          dns_validation_records:
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
+                          provisioning_step:
+                            type: string
+                            examples:
+                              - pending
+                          failure_reason:
                             type:
                               - string
                               - 'null'
                             examples:
                               - null
-                      subdomain:
+                          php_version:
+                            type: string
+                            examples:
+                              - '8.3'
+                          tags:
+                            type: array
+                            items:
+                              type: string
+                            examples:
+                              -
+                                - live
+                                - primary
+                          platform_domain:
+                            type: string
+                            examples:
+                              - wispy-dust--prod.vectorpages.com
+                          custom_domain:
+                            type: string
+                            examples:
+                              - example.com
+                          dns_target:
+                            type: string
+                            examples:
+                              - site-abc123.b-cdn.net
+                          custom_domain_certificate:
+                            type: object
+                            properties:
+                              status:
+                                type: string
+                                examples:
+                                  - pending
+                              dns_validation_records:
+                                type:
+                                  - string
+                                  - 'null'
+                                examples:
+                                  - null
+                          subdomain:
+                            type: string
+                            examples:
+                              - wispy-dust
+                          database_host:
+                            type: string
+                            examples:
+                              - cluster.abc123.us-east-1.rds.amazonaws.com
+                          database_name:
+                            type: string
+                            examples:
+                              - db_01jfgxk4nqrst5vwx9yz0abcde
+                          created_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:00:00+00:00'
+                          updated_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:00:00+00:00'
+                      message:
                         type: string
                         examples:
-                          - wispy-dust
-                      database_host:
-                        type: string
+                          - 'Environment creation initiated'
+                      http_status:
+                        type: integer
                         examples:
-                          - cluster.abc123.us-east-1.rds.amazonaws.com
-                      database_name:
-                        type: string
-                        examples:
-                          - db_01jfgxk4nqrst5vwx9yz0abcde
-                      created_at:
-                        type: string
-                        examples:
-                          - '2025-01-15T12:00:00+00:00'
-                      updated_at:
-                        type: string
-                        examples:
-                          - '2025-01-15T12:00:00+00:00'
-                  message:
-                    type: string
+                          - 201
                     examples:
-                      - 'Environment creation initiated'
-                  http_status:
-                    type: integer
-                    examples:
-                      - 201
-                examples:
+                      -
+                        data:
+                          id: 01jfgxk4nqrst5vwx9yz0abcdg
+                          vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
+                          your_customer_id: cust_12345
+                          name: production
+                          is_production: true
+                          status: pending
+                          status_label: Pending
+                          provisioning_step: pending
+                          failure_reason: null
+                          php_version: '8.3'
+                          tags:
+                            - live
+                            - primary
+                          platform_domain: wispy-dust--prod.vectorpages.com
+                          custom_domain: example.com
+                          dns_target: site-abc123.b-cdn.net
+                          custom_domain_certificate:
+                            status: pending
+                            dns_validation_records: null
+                          subdomain: wispy-dust
+                          database_host: cluster.abc123.us-east-1.rds.amazonaws.com
+                          database_name: db_01jfgxk4nqrst5vwx9yz0abcde
+                          created_at: '2025-01-15T12:00:00+00:00'
+                          updated_at: '2025-01-15T12:00:00+00:00'
+                        message: 'Environment creation initiated'
+                        http_status: 201
                   -
-                    data:
-                      id: 01jfgxk4nqrst5vwx9yz0abcdg
-                      vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
-                      your_customer_id: cust_12345
-                      name: production
-                      is_production: true
-                      status: pending
-                      status_label: Pending
-                      provisioning_step: pending
-                      failure_reason: null
-                      php_version: '8.3'
-                      tags:
-                        - live
-                        - primary
-                      platform_domain: wispy-dust--prod.vectorpages.com
-                      custom_domain: example.com
-                      dns_target: site-abc123.b-cdn.net
-                      custom_domain_certificate:
-                        status: pending
-                        dns_validation_records: null
-                      subdomain: wispy-dust
-                      database_host: cluster.abc123.us-east-1.rds.amazonaws.com
-                      database_name: db_01jfgxk4nqrst5vwx9yz0abcde
-                      created_at: '2025-01-15T12:00:00+00:00'
-                      updated_at: '2025-01-15T12:00:00+00:00'
-                    message: 'Environment creation initiated'
-                    http_status: 201
+                    description: 'Created without custom domain'
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcdg
+                          vector_site_id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcde
+                          your_customer_id:
+                            type: string
+                            examples:
+                              - cust_12345
+                          name:
+                            type: string
+                            examples:
+                              - staging-2
+                          is_production:
+                            type: boolean
+                            examples:
+                              - false
+                          status:
+                            type: string
+                            examples:
+                              - pending
+                          status_label:
+                            type: string
+                            examples:
+                              - Pending
+                          provisioning_step:
+                            type: string
+                            examples:
+                              - pending
+                          failure_reason:
+                            type:
+                              - string
+                              - 'null'
+                            examples:
+                              - null
+                          php_version:
+                            type: string
+                            examples:
+                              - '8.3'
+                          tags:
+                            type: array
+                            examples:
+                              - []
+                          platform_domain:
+                            type: string
+                            examples:
+                              - wispy-dust--staging-2.vectorpages.com
+                          custom_domain:
+                            type:
+                              - string
+                              - 'null'
+                            examples:
+                              - null
+                          dns_target:
+                            type: string
+                            examples:
+                              - wispy-dust--staging-2.vectorpages.com
+                          custom_domain_certificate:
+                            type:
+                              - string
+                              - 'null'
+                            examples:
+                              - null
+                          subdomain:
+                            type: string
+                            examples:
+                              - wispy-dust
+                          database_host:
+                            type: string
+                            examples:
+                              - cluster.abc123.us-east-1.rds.amazonaws.com
+                          database_name:
+                            type: string
+                            examples:
+                              - db_01jfgxk4nqrst5vwx9yz0abcde
+                          created_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:00:00+00:00'
+                          updated_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:00:00+00:00'
+                      message:
+                        type: string
+                        examples:
+                          - 'Environment creation initiated'
+                      http_status:
+                        type: integer
+                        examples:
+                          - 201
+                    examples:
+                      -
+                        data:
+                          id: 01jfgxk4nqrst5vwx9yz0abcdg
+                          vector_site_id: 01jfgxk4nqrst5vwx9yz0abcde
+                          your_customer_id: cust_12345
+                          name: staging-2
+                          is_production: false
+                          status: pending
+                          status_label: Pending
+                          provisioning_step: pending
+                          failure_reason: null
+                          php_version: '8.3'
+                          tags: []
+                          platform_domain: wispy-dust--staging-2.vectorpages.com
+                          custom_domain: null
+                          dns_target: wispy-dust--staging-2.vectorpages.com
+                          custom_domain_certificate: null
+                          subdomain: wispy-dust
+                          database_host: cluster.abc123.us-east-1.rds.amazonaws.com
+                          database_name: db_01jfgxk4nqrst5vwx9yz0abcde
+                          created_at: '2025-01-15T12:00:00+00:00'
+                          updated_at: '2025-01-15T12:00:00+00:00'
+                        message: 'Environment creation initiated'
+                        http_status: 201
         401:
           description: Unauthenticated
           content:
@@ -17565,7 +17694,7 @@ paths:
                   type:
                     - string
                     - 'null'
-                  description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
+                  description: 'Optional custom domain for this environment. When supplied, triggers asynchronous ACM certificate provisioning and Bunny hostname attachment (production only). Must be a valid fully qualified domain name. Max 253 chars.'
                   examples:
                     - example.com
                 is_production:
@@ -17589,7 +17718,6 @@ paths:
                       - primary
               required:
                 - name
-                - custom_domain
                 - php_version
     parameters:
       -

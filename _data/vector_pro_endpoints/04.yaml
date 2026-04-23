@@ -1448,8 +1448,16 @@ endpoints:
         Each environment gets a unique auto-generated subdomain and uses the site's
         configured domain.
 
-        **Important:** Only one environment per site can be marked as production
-        (`is_production: true`). The production environment receives CDN integration.
+        **Production environments:** Only one environment per site can be marked as
+        production (`is_production: true`). Production environments receive CDN
+        integration via Bunny.net when a `custom_domain` is supplied.
+
+        **Custom domain:** Optional for any environment. When supplied, ACM certificate
+        provisioning is initiated asynchronously and — for production environments —
+        the hostname is attached to the Bunny pull zone. The DNS validation records
+        and the CDN target are not available in the create response; poll the
+        environment (GET) to retrieve `custom_domain_certificate.dns_validation_records`
+        and `dns_target` once they become available.
       authenticated: true
       deprecated: false
     headers:
@@ -1487,8 +1495,8 @@ endpoints:
       custom_domain:
         custom: []
         name: custom_domain
-        description: 'The custom domain for this environment. Must be a valid fully qualified domain name. Max 253 chars.'
-        required: true
+        description: 'Optional custom domain for this environment. When supplied, triggers asynchronous ACM certificate provisioning and Bunny hostname attachment (production only). Must be a valid fully qualified domain name. Max 253 chars.'
+        required: false
         example: example.com
         type: string
         enumValues: []
@@ -1575,6 +1583,38 @@ endpoints:
           }
         headers: []
         description: Created
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+              "data": {
+                  "id": "01jfgxk4nqrst5vwx9yz0abcdg",
+                  "vector_site_id": "01jfgxk4nqrst5vwx9yz0abcde",
+                  "your_customer_id": "cust_12345",
+                  "name": "staging-2",
+                  "is_production": false,
+                  "status": "pending",
+                  "status_label": "Pending",
+                  "provisioning_step": "pending",
+                  "failure_reason": null,
+                  "php_version": "8.3",
+                  "tags": [],
+                  "platform_domain": "wispy-dust--staging-2.vectorpages.com",
+                  "custom_domain": null,
+                  "dns_target": "wispy-dust--staging-2.vectorpages.com",
+                  "custom_domain_certificate": null,
+                  "subdomain": "wispy-dust",
+                  "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
+                  "database_name": "db_01jfgxk4nqrst5vwx9yz0abcde",
+                  "created_at": "2025-01-15T12:00:00+00:00",
+                  "updated_at": "2025-01-15T12:00:00+00:00"
+              },
+              "message": "Environment creation initiated",
+              "http_status": 201
+          }
+        headers: []
+        description: 'Created without custom domain'
       -
         custom: []
         status: 401
@@ -2439,7 +2479,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2447,7 +2487,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: true
+      include_database: false
     fileParameters: []
     responses:
       -
