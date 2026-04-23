@@ -27,6 +27,8 @@ endpoints:
         `canceled`). Environment counts exclude environments in a terminal state (`terminated`,
         `terminating`). Those statuses are therefore omitted from the `by_status` breakdowns
         and are not included in any of the total/convenience counts.
+
+        Responses are cached for 5 minutes per account.
       authenticated: true
       deprecated: false
     headers:
@@ -91,8 +93,8 @@ endpoints:
                   "pending_sites": 0,
                   "total_environments": 7,
                   "production_environments": 3,
-                  "deployments_30d": 12,
-                  "failed_deployments_30d": 1,
+                  "deployments_7d": 12,
+                  "failed_deployments_7d": 1,
                   "active_backups": 4,
                   "recent_activity": [],
                   "recent_deployments": []
