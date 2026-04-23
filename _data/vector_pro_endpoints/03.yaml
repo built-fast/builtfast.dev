@@ -446,7 +446,6 @@ endpoints:
                       "status_label": "Deployed",
                       "stdout": "Deployment output...",
                       "stderr": null,
-                      "build_output": null,
                       "actor": "user@example.com",
                       "environment": {
                           "id": "01jfgxk4nqrst5vwx9yz0abcdg",

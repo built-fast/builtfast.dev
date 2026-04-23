@@ -1606,12 +1606,6 @@ paths:
                             - 'null'
                           examples:
                             - null
-                        build_output:
-                          type:
-                            - string
-                            - 'null'
-                          examples:
-                            - null
                         actor:
                           type: string
                           examples:
@@ -1696,7 +1690,6 @@ paths:
                           status_label: Deployed
                           stdout: 'Deployment output...'
                           stderr: null
-                          build_output: null
                           actor: user@example.com
                           environment:
                             id: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -1741,7 +1734,6 @@ paths:
                         status_label: Deployed
                         stdout: 'Deployment output...'
                         stderr: null
-                        build_output: null
                         actor: user@example.com
                         environment:
                           id: 01jfgxk4nqrst5vwx9yz0abcdg
@@ -15831,7 +15823,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - true
+                    - false
     parameters:
       -
         in: path
