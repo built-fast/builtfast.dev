@@ -1254,8 +1254,8 @@
                                         },
                                         {
                                             "key": "environment",
-                                            "value": "production",
-                                            "description": "Filter by environment name (e.g., production, staging).",
+                                            "value": "prod",
+                                            "description": "The environment name (e.g., prod, staging, dev). Must be an environment that belongs to the site.",
                                             "disabled": false
                                         },
                                         {
@@ -1277,7 +1277,7 @@
                                             "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=production&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh&level=error&cursor=abc123xyz",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=prod&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh&level=error&cursor=abc123xyz",
                                     "variable": [
                                         {
                                             "id": "site",

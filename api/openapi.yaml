@@ -5000,15 +5000,13 @@ paths:
         -
           in: query
           name: environment
-          description: 'Filter by environment name (e.g., production, staging).'
-          required: false
+          description: 'The environment name (e.g., prod, staging, dev). Must be an environment that belongs to the site.'
+          required: true
           schema:
-            type:
-              - string
-              - 'null'
-            description: 'Filter by environment name (e.g., production, staging).'
+            type: string
+            description: 'The environment name (e.g., prod, staging, dev). Must be an environment that belongs to the site.'
             examples:
-              - production
+              - prod
         -
           in: query
           name: deployment_id

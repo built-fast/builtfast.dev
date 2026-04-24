@@ -2667,13 +2667,13 @@ endpoints:
       environment:
         custom: []
         name: environment
-        description: 'Filter by environment name (e.g., production, staging).'
-        required: false
-        example: production
+        description: 'The environment name (e.g., prod, staging, dev). Must be an environment that belongs to the site.'
+        required: true
+        example: prod
         type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: true
+        nullable: false
         deprecated: false
       deployment_id:
         custom: []
@@ -2712,7 +2712,7 @@ endpoints:
       start_time: now-24h
       end_time: now
       limit: 500
-      environment: production
+      environment: prod
       deployment_id: 01jfgxk4nqrst5vwx9yz0abcdh
       level: error
       cursor: abc123xyz
