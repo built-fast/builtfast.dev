@@ -5021,18 +5021,6 @@ paths:
               - 01jfgxk4nqrst5vwx9yz0abcdh
         -
           in: query
-          name: level
-          description: 'Filter by log level (e.g., error, warning, info).'
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
-            description: 'Filter by log level (e.g., error, warning, info).'
-            examples:
-              - error
-        -
-          in: query
           name: cursor
           description: 'Pagination cursor from previous response.'
           required: false
@@ -5043,6 +5031,16 @@ paths:
             description: 'Pagination cursor from previous response.'
             examples:
               - abc123xyz
+        -
+          in: query
+          name: level
+          description: 'Filter by log level (e.g., error, warning, info).'
+          required: false
+          schema:
+            type: string
+            description: 'Filter by log level (e.g., error, warning, info).'
+            examples:
+              - error
       responses:
         200:
           description: Success
@@ -15821,7 +15819,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - false
+                    - true
     parameters:
       -
         in: path

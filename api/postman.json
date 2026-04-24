@@ -1265,19 +1265,19 @@
                                             "disabled": false
                                         },
                                         {
-                                            "key": "level",
-                                            "value": "error",
-                                            "description": "Filter by log level (e.g., error, warning, info).",
-                                            "disabled": false
-                                        },
-                                        {
                                             "key": "cursor",
                                             "value": "abc123xyz",
                                             "description": "Pagination cursor from previous response.",
                                             "disabled": false
+                                        },
+                                        {
+                                            "key": "level",
+                                            "value": "error",
+                                            "description": "Filter by log level (e.g., error, warning, info).",
+                                            "disabled": false
                                         }
                                     ],
-                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=prod&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh&level=error&cursor=abc123xyz",
+                                    "raw": "{{baseUrl}}\/api\/v1\/vector\/sites\/:site\/logs?start_time=now-24h&end_time=now&limit=500&environment=prod&deployment_id=01jfgxk4nqrst5vwx9yz0abcdh&cursor=abc123xyz&level=error",
                                     "variable": [
                                         {
                                             "id": "site",
@@ -4845,7 +4845,7 @@
                                 ],
                                 "body": {
                                     "mode": "raw",
-                                    "raw": "{\"include_uploads\":false,\"include_database\":false}"
+                                    "raw": "{\"include_uploads\":false,\"include_database\":true}"
                                 },
                                 "description": "Triggers a new deployment for the environment. The deployment starts with\n`pending` status and progresses through `deploying` to either `deployed`\nor `failed`.\n\nThe authenticated user is recorded as the deployment actor."
                             },

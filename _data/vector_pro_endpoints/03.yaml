@@ -2686,17 +2686,6 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      level:
-        custom: []
-        name: level
-        description: 'Filter by log level (e.g., error, warning, info).'
-        required: false
-        example: error
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
       cursor:
         custom: []
         name: cursor
@@ -2708,14 +2697,25 @@ endpoints:
         exampleWasSpecified: true
         nullable: true
         deprecated: false
+      level:
+        custom: []
+        name: level
+        description: 'Filter by log level (e.g., error, warning, info).'
+        required: false
+        example: error
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanQueryParameters:
       start_time: now-24h
       end_time: now
       limit: 500
       environment: prod
       deployment_id: 01jfgxk4nqrst5vwx9yz0abcdh
-      level: error
       cursor: abc123xyz
+      level: error
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
