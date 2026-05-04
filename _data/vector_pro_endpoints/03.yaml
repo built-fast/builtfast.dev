@@ -170,6 +170,8 @@ endpoints:
                               "platform_domain": "wispy-dust--prod.vectorpages.com",
                               "custom_domain": "example.com",
                               "custom_domain_certificate_status": "issued",
+                              "dns_status_state": "verified",
+                              "requires_dns_action": false,
                               "created_at": "2025-01-15T12:00:00+00:00",
                               "updated_at": "2025-01-15T12:00:00+00:00"
                           }
@@ -296,6 +298,8 @@ endpoints:
                           "platform_domain": "wispy-dust--prod.vectorpages.com",
                           "custom_domain": "example.com",
                           "custom_domain_certificate_status": "issued",
+                          "dns_status_state": "verified",
+                          "requires_dns_action": false,
                           "created_at": "2025-01-15T12:00:00+00:00",
                           "updated_at": "2025-01-15T12:00:00+00:00"
                       }
@@ -1054,6 +1058,8 @@ endpoints:
                           "platform_domain": "wispy-dust--prod.vectorpages.com",
                           "custom_domain": "example.com",
                           "custom_domain_certificate_status": "pending",
+                          "dns_status_state": "pending",
+                          "requires_dns_action": true,
                           "created_at": "2025-01-15T12:00:00+00:00",
                           "updated_at": "2025-01-15T12:00:00+00:00"
                       },
@@ -1067,6 +1073,8 @@ endpoints:
                           "platform_domain": "wispy-dust--staging.vectorpages.com",
                           "custom_domain": null,
                           "custom_domain_certificate_status": null,
+                          "dns_status_state": "not_required",
+                          "requires_dns_action": false,
                           "created_at": "2025-01-15T12:00:00+00:00",
                           "updated_at": "2025-01-15T12:00:00+00:00"
                       }

@@ -230,6 +230,14 @@ paths:
                                 type: string
                                 examples:
                                   - issued
+                              dns_status_state:
+                                type: string
+                                examples:
+                                  - verified
+                              requires_dns_action:
+                                type: boolean
+                                examples:
+                                  - false
                               created_at:
                                 type: string
                                 examples:
@@ -250,6 +258,8 @@ paths:
                                 platform_domain: wispy-dust--prod.vectorpages.com
                                 custom_domain: example.com
                                 custom_domain_certificate_status: issued
+                                dns_status_state: verified
+                                requires_dns_action: false
                                 created_at: '2025-01-15T12:00:00+00:00'
                                 updated_at: '2025-01-15T12:00:00+00:00'
                         created_at:
@@ -290,6 +300,8 @@ paths:
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
                               custom_domain_certificate_status: issued
+                              dns_status_state: verified
+                              requires_dns_action: false
                               created_at: '2025-01-15T12:00:00+00:00'
                               updated_at: '2025-01-15T12:00:00+00:00'
                           created_at: '2025-01-15T12:00:00+00:00'
@@ -339,6 +351,8 @@ paths:
                             platform_domain: wispy-dust--prod.vectorpages.com
                             custom_domain: example.com
                             custom_domain_certificate_status: issued
+                            dns_status_state: verified
+                            requires_dns_action: false
                             created_at: '2025-01-15T12:00:00+00:00'
                             updated_at: '2025-01-15T12:00:00+00:00'
                         created_at: '2025-01-15T12:00:00+00:00'
@@ -574,6 +588,14 @@ paths:
                               type: string
                               examples:
                                 - pending
+                            dns_status_state:
+                              type: string
+                              examples:
+                                - pending
+                            requires_dns_action:
+                              type: boolean
+                              examples:
+                                - true
                             created_at:
                               type: string
                               examples:
@@ -594,6 +616,8 @@ paths:
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
                               custom_domain_certificate_status: pending
+                              dns_status_state: pending
+                              requires_dns_action: true
                               created_at: '2025-01-15T12:00:00+00:00'
                               updated_at: '2025-01-15T12:00:00+00:00'
                             -
@@ -606,6 +630,8 @@ paths:
                               platform_domain: wispy-dust--staging.vectorpages.com
                               custom_domain: null
                               custom_domain_certificate_status: null
+                              dns_status_state: not_required
+                              requires_dns_action: false
                               created_at: '2025-01-15T12:00:00+00:00'
                               updated_at: '2025-01-15T12:00:00+00:00'
                       created_at:
@@ -661,6 +687,8 @@ paths:
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
                           custom_domain_certificate_status: pending
+                          dns_status_state: pending
+                          requires_dns_action: true
                           created_at: '2025-01-15T12:00:00+00:00'
                           updated_at: '2025-01-15T12:00:00+00:00'
                         -
@@ -673,6 +701,8 @@ paths:
                           platform_domain: wispy-dust--staging.vectorpages.com
                           custom_domain: null
                           custom_domain_certificate_status: null
+                          dns_status_state: not_required
+                          requires_dns_action: false
                           created_at: '2025-01-15T12:00:00+00:00'
                           updated_at: '2025-01-15T12:00:00+00:00'
                       created_at: '2025-01-15T12:00:00+00:00'
@@ -957,6 +987,14 @@ paths:
                               type: string
                               examples:
                                 - issued
+                            dns_status_state:
+                              type: string
+                              examples:
+                                - verified
+                            requires_dns_action:
+                              type: boolean
+                              examples:
+                                - false
                             created_at:
                               type: string
                               examples:
@@ -977,6 +1015,8 @@ paths:
                               platform_domain: wispy-dust--prod.vectorpages.com
                               custom_domain: example.com
                               custom_domain_certificate_status: issued
+                              dns_status_state: verified
+                              requires_dns_action: false
                               created_at: '2025-01-15T12:00:00+00:00'
                               updated_at: '2025-01-15T12:00:00+00:00'
                       created_at:
@@ -1019,6 +1059,8 @@ paths:
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
                           custom_domain_certificate_status: issued
+                          dns_status_state: verified
+                          requires_dns_action: false
                           created_at: '2025-01-15T12:00:00+00:00'
                           updated_at: '2025-01-15T12:00:00+00:00'
                       created_at: '2025-01-15T12:00:00+00:00'
@@ -13271,6 +13313,21 @@ paths:
                           type: string
                           examples:
                             - site-abc123.b-cdn.net
+                        dns_status:
+                          type: object
+                          properties:
+                            state:
+                              type: string
+                              examples:
+                                - verified
+                            records:
+                              type: array
+                              examples:
+                                - []
+                            last_checked_at:
+                              type: string
+                              examples:
+                                - '2025-01-15T12:05:00+00:00'
                         custom_domain_certificate:
                           type: object
                           properties:
@@ -13324,6 +13381,10 @@ paths:
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
                           dns_target: site-abc123.b-cdn.net
+                          dns_status:
+                            state: verified
+                            records: []
+                            last_checked_at: '2025-01-15T12:05:00+00:00'
                           custom_domain_certificate:
                             status: issued
                             dns_validation_records: null
@@ -13367,6 +13428,10 @@ paths:
                         platform_domain: wispy-dust--prod.vectorpages.com
                         custom_domain: example.com
                         dns_target: site-abc123.b-cdn.net
+                        dns_status:
+                          state: verified
+                          records: []
+                          last_checked_at: '2025-01-15T12:05:00+00:00'
                         custom_domain_certificate:
                           status: issued
                           dns_validation_records: null
@@ -13533,6 +13598,21 @@ paths:
                         type: string
                         examples:
                           - site-abc123.b-cdn.net
+                      dns_status:
+                        type: object
+                        properties:
+                          state:
+                            type: string
+                            examples:
+                              - verified
+                          records:
+                            type: array
+                            examples:
+                              - []
+                          last_checked_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         type: object
                         properties:
@@ -13594,6 +13674,10 @@ paths:
                       platform_domain: wispy-dust--prod.vectorpages.com
                       custom_domain: example.com
                       dns_target: site-abc123.b-cdn.net
+                      dns_status:
+                        state: verified
+                        records: []
+                        last_checked_at: '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         status: issued
                         dns_validation_records: null
@@ -13757,6 +13841,21 @@ paths:
                         type: string
                         examples:
                           - site-abc123.b-cdn.net
+                      dns_status:
+                        type: object
+                        properties:
+                          state:
+                            type: string
+                            examples:
+                              - verified
+                          records:
+                            type: array
+                            examples:
+                              - []
+                          last_checked_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         type: object
                         properties:
@@ -13818,6 +13917,10 @@ paths:
                       platform_domain: wispy-dust--prod.vectorpages.com
                       custom_domain: example.com
                       dns_target: site-abc123.b-cdn.net
+                      dns_status:
+                        state: verified
+                        records: []
+                        last_checked_at: '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         status: issued
                         dns_validation_records: null
@@ -13904,6 +14007,52 @@ paths:
                         type: string
                         examples:
                           - site-abc123.b-cdn.net
+                      dns_status:
+                        type: object
+                        properties:
+                          state:
+                            type: string
+                            examples:
+                              - pending
+                          records:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  examples:
+                                    - CNAME
+                                host:
+                                  type: string
+                                  examples:
+                                    - _abc123.example.com
+                                value:
+                                  type: string
+                                  examples:
+                                    - _def456.acm-validations.aws
+                                purpose:
+                                  type: string
+                                  examples:
+                                    - validation
+                            examples:
+                              -
+                                -
+                                  type: CNAME
+                                  host: _abc123.example.com
+                                  value: _def456.acm-validations.aws
+                                  purpose: validation
+                                -
+                                  type: CNAME
+                                  host: example.com
+                                  value: site-abc123.b-cdn.net
+                                  purpose: traffic
+                          last_checked_at:
+                            type:
+                              - string
+                              - 'null'
+                            examples:
+                              - null
                       custom_domain_certificate:
                         type: object
                         properties:
@@ -14005,6 +14154,20 @@ paths:
                       platform_domain: wispy-dust--prod.vectorpages.com
                       custom_domain: example.com
                       dns_target: site-abc123.b-cdn.net
+                      dns_status:
+                        state: pending
+                        records:
+                          -
+                            type: CNAME
+                            host: _abc123.example.com
+                            value: _def456.acm-validations.aws
+                            purpose: validation
+                          -
+                            type: CNAME
+                            host: example.com
+                            value: site-abc123.b-cdn.net
+                            purpose: traffic
+                        last_checked_at: null
                       custom_domain_certificate:
                         status: pending
                         dns_validation_records:
@@ -14269,6 +14432,21 @@ paths:
                         type: string
                         examples:
                           - site-abc123.b-cdn.net
+                      dns_status:
+                        type: object
+                        properties:
+                          state:
+                            type: string
+                            examples:
+                              - verified
+                          records:
+                            type: array
+                            examples:
+                              - []
+                          last_checked_at:
+                            type: string
+                            examples:
+                              - '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         type: object
                         properties:
@@ -14328,6 +14506,10 @@ paths:
                       platform_domain: wispy-dust--prod.vectorpages.com
                       custom_domain: example.com
                       dns_target: site-abc123.b-cdn.net
+                      dns_status:
+                        state: verified
+                        records: []
+                        last_checked_at: '2025-01-15T12:05:00+00:00'
                       custom_domain_certificate:
                         status: issued
                         dns_validation_records: null
@@ -15819,7 +16001,7 @@ paths:
                   type: boolean
                   description: ''
                   examples:
-                    - true
+                    - false
     parameters:
       -
         in: path
@@ -17367,6 +17549,43 @@ paths:
                             type: string
                             examples:
                               - site-abc123.b-cdn.net
+                          dns_status:
+                            type: object
+                            properties:
+                              state:
+                                type: string
+                                examples:
+                                  - pending
+                              records:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      examples: [CNAME]
+                                    host:
+                                      type: string
+                                      examples: [example.com]
+                                    value:
+                                      type: string
+                                      examples: [site-abc123.b-cdn.net]
+                                    purpose:
+                                      type: string
+                                      examples: [traffic]
+                                examples:
+                                  -
+                                    -
+                                      type: CNAME
+                                      host: example.com
+                                      value: site-abc123.b-cdn.net
+                                      purpose: traffic
+                              last_checked_at:
+                                type:
+                                  - string
+                                  - 'null'
+                                examples:
+                                  - null
                           custom_domain_certificate:
                             type: object
                             properties:
@@ -17428,6 +17647,15 @@ paths:
                           platform_domain: wispy-dust--prod.vectorpages.com
                           custom_domain: example.com
                           dns_target: site-abc123.b-cdn.net
+                          dns_status:
+                            state: pending
+                            records:
+                              -
+                                type: CNAME
+                                host: example.com
+                                value: site-abc123.b-cdn.net
+                                purpose: traffic
+                            last_checked_at: null
                           custom_domain_certificate:
                             status: pending
                             dns_validation_records: null
@@ -17509,6 +17737,23 @@ paths:
                             type: string
                             examples:
                               - wispy-dust--staging-2.vectorpages.com
+                          dns_status:
+                            type: object
+                            properties:
+                              state:
+                                type: string
+                                examples:
+                                  - not_required
+                              records:
+                                type: array
+                                examples:
+                                  - []
+                              last_checked_at:
+                                type:
+                                  - string
+                                  - 'null'
+                                examples:
+                                  - null
                           custom_domain_certificate:
                             type:
                               - string
@@ -17561,6 +17806,10 @@ paths:
                           platform_domain: wispy-dust--staging-2.vectorpages.com
                           custom_domain: null
                           dns_target: wispy-dust--staging-2.vectorpages.com
+                          dns_status:
+                            state: not_required
+                            records: []
+                            last_checked_at: null
                           custom_domain_certificate: null
                           subdomain: wispy-dust
                           database_host: cluster.abc123.us-east-1.rds.amazonaws.com
@@ -18302,6 +18551,186 @@ paths:
                   description: 'Whether to retry from a failed state. Default: false.'
                   examples:
                     - true
+    parameters:
+      -
+        in: path
+        name: env
+        description: 'The environment ID.'
+        required: true
+        schema:
+          type: string
+          examples:
+            - 01jfgxk4nqrst5vwx9yz0abcdg
+  '/api/v1/vector/environments/{env}/dns/recheck':
+    post:
+      summary: 'Recheck DNS'
+      operationId: environmentsDNSRecheckDNS
+      description: "Re-verifies the custom domain DNS configuration on demand. Resolves the\ncustomer's CNAME, compares against the expected target (Bunny CDN\nhostname for production with CDN, otherwise the Ymir vanity domain),\nand marks the environment as DNS-verified when matched."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'DNS Verified'
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcdg
+                      message:
+                        type: string
+                        examples:
+                          - 'DNS verified'
+                      http_status:
+                        type: integer
+                        examples:
+                          - 200
+                    examples:
+                      -
+                        data:
+                          id: 01jfgxk4nqrst5vwx9yz0abcdg
+                        message: 'DNS verified'
+                        http_status: 200
+                  -
+                    description: 'Still Pending'
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            examples:
+                              - 01jfgxk4nqrst5vwx9yz0abcdg
+                      message:
+                        type: string
+                        examples:
+                          - 'DNS not yet propagating to expected target'
+                      http_status:
+                        type: integer
+                        examples:
+                          - 200
+                    examples:
+                      -
+                        data:
+                          id: 01jfgxk4nqrst5vwx9yz0abcdg
+                        message: 'DNS not yet propagating to expected target'
+                        http_status: 200
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthenticated
+                  http_status:
+                    type: integer
+                    examples:
+                      - 401
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthenticated
+                    http_status: 401
+        403:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - Unauthorized
+                  http_status:
+                    type: integer
+                    examples:
+                      - 403
+                examples:
+                  -
+                    data: {  }
+                    message: Unauthorized
+                    http_status: 403
+        404:
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  message:
+                    type: string
+                    examples:
+                      - 'Environment not found'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 404
+                examples:
+                  -
+                    data: {  }
+                    message: 'Environment not found'
+                    http_status: 404
+        422:
+          description: 'No Custom Domain'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {  }
+                  errors:
+                    type: object
+                    properties:
+                      environment:
+                        type: array
+                        items:
+                          type: string
+                        examples:
+                          -
+                            - 'Environment has no custom domain to verify.'
+                  message:
+                    type: string
+                    examples:
+                      - 'Environment has no custom domain to verify.'
+                  http_status:
+                    type: integer
+                    examples:
+                      - 422
+                examples:
+                  -
+                    data: {  }
+                    errors:
+                      environment:
+                        - 'Environment has no custom domain to verify.'
+                    message: 'Environment has no custom domain to verify.'
+                    http_status: 422
+      tags:
+        - Environments
     parameters:
       -
         in: path

@@ -130,6 +130,11 @@ endpoints:
                       "platform_domain": "wispy-dust--prod.vectorpages.com",
                       "custom_domain": "example.com",
                       "dns_target": "site-abc123.b-cdn.net",
+                      "dns_status": {
+                          "state": "verified",
+                          "records": [],
+                          "last_checked_at": "2025-01-15T12:05:00+00:00"
+                      },
                       "custom_domain_certificate": {
                           "status": "issued",
                           "dns_validation_records": null
@@ -255,6 +260,11 @@ endpoints:
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
                   "dns_target": "site-abc123.b-cdn.net",
+                  "dns_status": {
+                      "state": "verified",
+                      "records": [],
+                      "last_checked_at": "2025-01-15T12:05:00+00:00"
+                  },
                   "custom_domain_certificate": {
                       "status": "issued",
                       "dns_validation_records": null
@@ -1582,6 +1592,13 @@ endpoints:
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
                   "dns_target": "site-abc123.b-cdn.net",
+                  "dns_status": {
+                      "state": "pending",
+                      "records": [
+                          {"type": "CNAME", "host": "example.com", "value": "site-abc123.b-cdn.net", "purpose": "traffic"}
+                      ],
+                      "last_checked_at": null
+                  },
                   "custom_domain_certificate": {
                       "status": "pending",
                       "dns_validation_records": null
@@ -1618,6 +1635,11 @@ endpoints:
                   "platform_domain": "wispy-dust--staging-2.vectorpages.com",
                   "custom_domain": null,
                   "dns_target": "wispy-dust--staging-2.vectorpages.com",
+                  "dns_status": {
+                      "state": "not_required",
+                      "records": [],
+                      "last_checked_at": null
+                  },
                   "custom_domain_certificate": null,
                   "subdomain": "wispy-dust",
                   "database_host": "cluster.abc123.us-east-1.rds.amazonaws.com",
@@ -1809,6 +1831,11 @@ endpoints:
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
                   "dns_target": "site-abc123.b-cdn.net",
+                  "dns_status": {
+                      "state": "verified",
+                      "records": [],
+                      "last_checked_at": "2025-01-15T12:05:00+00:00"
+                  },
                   "custom_domain_certificate": {
                       "status": "issued",
                       "dns_validation_records": null
@@ -1845,6 +1872,14 @@ endpoints:
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
                   "dns_target": "site-abc123.b-cdn.net",
+                  "dns_status": {
+                      "state": "pending",
+                      "records": [
+                          {"type": "CNAME", "host": "_abc123.example.com", "value": "_def456.acm-validations.aws", "purpose": "validation"},
+                          {"type": "CNAME", "host": "example.com", "value": "site-abc123.b-cdn.net", "purpose": "traffic"}
+                      ],
+                      "last_checked_at": null
+                  },
                   "custom_domain_certificate": {
                       "status": "pending",
                       "dns_validation_records": [
@@ -2005,6 +2040,11 @@ endpoints:
                   "platform_domain": "wispy-dust--prod.vectorpages.com",
                   "custom_domain": "example.com",
                   "dns_target": "site-abc123.b-cdn.net",
+                  "dns_status": {
+                      "state": "verified",
+                      "records": [],
+                      "last_checked_at": "2025-01-15T12:05:00+00:00"
+                  },
                   "custom_domain_certificate": {
                       "status": "issued",
                       "dns_validation_records": null
@@ -2497,7 +2537,7 @@ endpoints:
         name: include_database
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2505,7 +2545,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       include_uploads: false
-      include_database: true
+      include_database: false
     fileParameters: []
     responses:
       -
@@ -2811,6 +2851,93 @@ endpoints:
         content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
         headers: []
         description: 'Not Found'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/vector/environments/{env}/dns/recheck'
+    metadata:
+      custom: []
+      groupName: Environments
+      groupDescription: ''
+      subgroup: DNS
+      subgroupDescription: ''
+      title: 'Recheck DNS'
+      description: |-
+        Re-verifies the custom domain DNS configuration on demand. Resolves the
+        customer's CNAME, compares against the expected target (Bunny CDN
+        hostname for production with CDN, otherwise the Ymir vanity domain),
+        and marks the environment as DNS-verified when matched.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_API_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      env:
+        custom: []
+        name: env
+        description: 'The environment ID.'
+        required: true
+        example: 01jfgxk4nqrst5vwx9yz0abcdg
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      env: 01jfgxk4nqrst5vwx9yz0abcdg
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"data": {"id": "01jfgxk4nqrst5vwx9yz0abcdg"}, "message": "DNS verified", "http_status": 200}'
+        headers: []
+        description: 'DNS Verified'
+      -
+        custom: []
+        status: 200
+        content: '{"data": {"id": "01jfgxk4nqrst5vwx9yz0abcdg"}, "message": "DNS not yet propagating to expected target", "http_status": 200}'
+        headers: []
+        description: 'Still Pending'
+      -
+        custom: []
+        status: 401
+        content: '{"data": {}, "message": "Unauthenticated", "http_status": 401}'
+        headers: []
+        description: Unauthenticated
+      -
+        custom: []
+        status: 403
+        content: '{"data": {}, "message": "Unauthorized", "http_status": 403}'
+        headers: []
+        description: Unauthorized
+      -
+        custom: []
+        status: 404
+        content: '{"data": {}, "message": "Environment not found", "http_status": 404}'
+        headers: []
+        description: 'Not Found'
+      -
+        custom: []
+        status: 422
+        content: '{"data": {}, "errors": {"environment": ["Environment has no custom domain to verify."]}, "message": "Environment has no custom domain to verify.", "http_status": 422}'
+        headers: []
+        description: 'No Custom Domain'
     responseFields: []
     auth:
       - headers
