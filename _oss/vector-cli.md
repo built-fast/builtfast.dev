@@ -1,7 +1,7 @@
 ---
 title: Vector CLI
 period: 2025-Present
-date: 2026-01-17
+date: 2026-05-22
 featured: true
 github: https://github.com/built-fast/vector-cli
 license: MIT
@@ -11,8 +11,8 @@ tags:
   - devops
   - infrastructure
 languages:
-  - name: Rust
-    icon: rust
+  - name: Go
+    icon: go
 tagline: CLI for the Vector Pro API
 excerpt: |
   Official command-line interface for the Vector Pro API. Manage sites,
@@ -20,7 +20,7 @@ excerpt: |
 ---
 
 The official CLI for the [Vector Pro API](https://builtfast.dev/api). Built in
-Rust for speed and reliability, with automatic JSON output for scripting and
+Go for speed and reliability, with automatic JSON output for scripting and
 human-readable tables for interactive use.
 
 ## Installation
@@ -37,29 +37,44 @@ Download from [Releases](https://github.com/built-fast/vector-cli/releases):
 
 | Platform | Architecture | File |
 |----------|--------------|------|
-| Linux | x86_64 | `vector-x86_64-unknown-linux-gnu.tar.gz` |
-| Linux | ARM64 | `vector-aarch64-unknown-linux-gnu.tar.gz` |
-| macOS | x86_64 (Intel) | `vector-x86_64-apple-darwin.tar.gz` |
-| macOS | ARM64 (Apple Silicon) | `vector-aarch64-apple-darwin.tar.gz` |
-| Windows | x86_64 | `vector-x86_64-pc-windows-msvc.zip` |
+| Linux | x86_64 | `vector_VERSION_linux_amd64.tar.gz` |
+| Linux | ARM64 | `vector_VERSION_linux_arm64.tar.gz` |
+| macOS | x86_64 (Intel) | `vector_VERSION_darwin_amd64.tar.gz` |
+| macOS | ARM64 (Apple Silicon) | `vector_VERSION_darwin_arm64.tar.gz` |
+| Windows | x86_64 | `vector_VERSION_windows_amd64.zip` |
 
 ```bash
 # Example: Linux x86_64
-curl -LO https://github.com/built-fast/vector-cli/releases/latest/download/vector-x86_64-unknown-linux-gnu.tar.gz
-tar xzf vector-x86_64-unknown-linux-gnu.tar.gz
+curl -LO https://github.com/built-fast/vector-cli/releases/latest/download/vector_VERSION_linux_amd64.tar.gz
+tar xzf vector_VERSION_linux_amd64.tar.gz
 sudo mv vector /usr/local/bin/
-```
-
-**macOS Gatekeeper:** If you get a security warning, run:
-```bash
-xattr -d com.apple.quarantine ./vector
 ```
 
 ### From source
 
+Requires [Go](https://go.dev/) 1.26+.
+
 ```bash
-cargo install --path .
+go install github.com/built-fast/vector-cli/cmd/vector@latest
 ```
+
+### Shell completions
+
+```bash
+# Bash (add to ~/.bashrc)
+eval "$(vector completion bash)"
+
+# Zsh (add to ~/.zshrc)
+eval "$(vector completion zsh)"
+
+# Fish
+vector completion fish | source
+
+# PowerShell (add to $PROFILE)
+vector completion powershell | Out-String | Invoke-Expression
+```
+
+Homebrew installs completions automatically.
 
 ## Quick Start
 
@@ -76,14 +91,24 @@ vector site create --customer-id cust-123 --dev-php-version 8.3
 # Create a staging environment
 vector env create site-id --name staging --php-version 8.3
 
-# Trigger a deployment
-vector deploy trigger site-id production
+# Trigger a deployment (by environment ID)
+vector deploy trigger env-id
 
 # View deployment history
-vector deploy list site-id production
+vector deploy list env-id
 ```
 
 ## API Reference
+
+### Global Flags
+
+```bash
+vector --token YOUR_TOKEN <command>  # Use a specific API token for this invocation
+vector --json <command>              # Force JSON output
+vector --no-json <command>           # Force table output
+vector --jq <expr> <command>         # Filter JSON output with a jq expression
+vector --version                     # Print version
+```
 
 ### Authentication
 
@@ -99,7 +124,7 @@ vector auth logout                   # Clear credentials
 ```bash
 vector site list
 vector site show <site_id>
-vector site create --customer-id <id> --dev-php-version 8.3 [--tags tag1,tag2]
+vector site create --customer-id <id> --dev-php-version 8.3 [--production-domain example.com] [--staging-domain staging.example.com] [--tags tag1,tag2] [--wp-admin-email admin@example.com] [--wp-admin-user myadmin] [--wp-site-title "My Blog"]
 vector site update <site_id> [--customer-id <id>] [--tags tag1,tag2]
 vector site clone <site_id> [--customer-id <id>] [--dev-php-version 8.3]
 vector site delete <site_id>
@@ -108,6 +133,7 @@ vector site unsuspend <site_id>
 vector site reset-sftp-password <site_id>
 vector site reset-db-password <site_id>
 vector site purge-cache <site_id> [--cache-tag <tag>] [--url <url>]
+vector site wp-reconfig <site_id>
 vector site logs <site_id> [--start-time <time>] [--end-time <time>] [--limit 100]
 ```
 
@@ -123,53 +149,95 @@ vector site ssh-key remove <site_id> <key_id>
 
 ```bash
 vector env list <site_id>
-vector env show <site_id> <env_name>
+vector env show <env_id>
 vector env create <site_id> --name staging --custom-domain example.com --php-version 8.3 [--is-production]
-vector env update <site_id> <env_name> [--name <name>] [--custom-domain <domain>]
-vector env delete <site_id> <env_name>
-vector env reset-db-password <site_id> <env_name>
+vector env update <env_id> [--custom-domain <domain>] [--clear-custom-domain] [--tags tag1,tag2]
+vector env delete <env_id>
+vector env reset-db-password <env_id>
+vector env domain-change-status <env_id> <domain_change_id>
 ```
 
 ### Environments - Secrets
 
 ```bash
-vector env secret list <site_id> <env_name>
-vector env secret show <site_id> <env_name> <secret_id>
-vector env secret create <site_id> <env_name> --key MY_SECRET --value "secret-value"
-vector env secret update <site_id> <env_name> <secret_id> [--key <key>] [--value <value>]
-vector env secret delete <site_id> <env_name> <secret_id>
+vector env secret list <env_id>
+vector env secret show <secret_id>
+vector env secret create <env_id> --key MY_SECRET --value "secret-value" [--no-secret]
+vector env secret update <secret_id> [--key <key>] [--value <value>] [--no-secret]
+vector env secret delete <secret_id>
+```
+
+### Environments - Database
+
+```bash
+# Promote dev database to environment
+vector env db promote <env_id> [--drop-tables] [--disable-foreign-keys]
+vector env db promote-status <env_id> <promote_id>
 ```
 
 ### Deployments
 
 ```bash
-vector deploy list <site_id> <env_name>
-vector deploy show <site_id> <env_name> <deploy_id>
-vector deploy trigger <site_id> <env_name>
-vector deploy rollback <site_id> <env_name> [--target-deployment-id <id>]
+vector deploy list <env_id>
+vector deploy show <deploy_id>
+vector deploy trigger <env_id> [--include-uploads] [--include-database]
+vector deploy rollback <env_id> [--target-deployment-id <id>]
 ```
 
 ### SSL
 
 ```bash
-vector ssl status <site_id> <env_name>
-vector ssl nudge <site_id> <env_name> [--retry]
+vector ssl status <env_id>
+vector ssl nudge <env_id> [--retry]
 ```
 
 ### Database
 
 ```bash
-# Direct import (files under 50MB)
-vector db import <site_id> <file.sql>
-
 # Import session for large files
-vector db import-session create <site_id>
-vector db import-session run <site_id> <import_id>
+vector db import-session create <site_id> [--filename <name>] [--content-length <bytes>] [--drop-tables] [--disable-foreign-keys] [--search-replace-from <from>] [--search-replace-to <to>]
+vector db import-session run <site_id> <import_id> [--parts '<json>']
 vector db import-session status <site_id> <import_id>
 
 # Export
 vector db export create <site_id>
 vector db export status <site_id> <export_id>
+```
+
+When `--content-length` exceeds 5GB, the API returns multipart upload details
+instead of a single upload URL. Use `--json` to see all part URLs, then pass the
+ETags to the run command after uploading each part:
+
+```bash
+vector db import-session run <site_id> <import_id> --parts '[{"part_number":1,"etag":"\"abc...\""},...]'
+```
+
+### Archives
+
+```bash
+vector archive import <site_id> <file.tar.gz> [--drop-tables] [--disable-foreign-keys] [--search-replace-from <from>] [--search-replace-to <to>] [--wait] [--poll-interval <seconds>]
+```
+
+Files larger than 5GB are automatically uploaded using S3 multipart upload. The
+CLI handles splitting the file into parts, uploading each one, and finalizing
+the upload — no additional flags needed.
+
+### Backups
+
+```bash
+vector backup list [--site-id <id>] [--environment-id <id>] [--type site|environment]
+vector backup show <backup_id>
+vector backup create [--site-id <id>] [--environment-id <id>] [--scope full|database|files] [--description <desc>]
+vector backup download create <backup_id>
+vector backup download status <backup_id> <download_id>
+```
+
+### Restores
+
+```bash
+vector restore list [--site-id <id>] [--environment-id <id>] [--type site|environment] [--backup-id <id>]
+vector restore show <restore_id>
+vector restore create <backup_id> [--scope full|database|files] [--drop-tables] [--disable-foreign-keys] [--search-replace-from <from>] [--search-replace-to <to>]
 ```
 
 ### WAF - Rate Limits
@@ -229,8 +297,8 @@ vector account api-key delete <token_id>
 ```bash
 vector account secret list
 vector account secret show <secret_id>
-vector account secret create --key MY_SECRET --value "secret-value"
-vector account secret update <secret_id> [--key <key>] [--value <value>]
+vector account secret create --key MY_SECRET --value "secret-value" [--no-secret]
+vector account secret update <secret_id> [--key <key>] [--value <value>] [--no-secret]
 vector account secret delete <secret_id>
 ```
 
@@ -266,18 +334,47 @@ vector site list --no-json       # Force table
 vector site list | jq '.data'    # Auto JSON when piped
 ```
 
+### JQ Filtering
+
+The `--jq` flag filters JSON output using a built-in jq processor (no external
+`jq` binary required). It automatically forces JSON output.
+
+```bash
+# Extract specific fields
+vector site list --jq '.[].id'
+vector site show 456 --jq '.dev_domain'
+
+# Filter with select
+vector env list --site-id 123 --jq '[.[] | select(.status == "active")]'
+
+# Count items
+vector webhook list --jq 'length'
+```
+
+Format strings are supported for converting values — `@csv`, `@tsv`, `@html`,
+`@uri`, and `@base64`:
+
+```bash
+# CSV output
+vector site list --jq '[.[] | [.id, .name]] | .[] | @csv'
+
+# URL-encode a value
+vector site show 456 --jq '.name | @uri'
+```
+
 ## Configuration
 
 Configuration is stored in `~/.config/vector/` (XDG-compliant):
 
-- `credentials.json` - API token (0600 permissions)
 - `config.json` - Optional settings
+- The API token is stored in the system keyring (macOS Keychain, Windows
+  Credential Manager, Linux Secret Service)
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `VECTOR_API_KEY` | API token (overrides stored credentials) |
+| `VECTOR_API_KEY` | API token (overrides keyring) |
 | `VECTOR_API_URL` | API base URL (default: `https://api.builtfast.com`) |
 | `VECTOR_CONFIG_DIR` | Config directory (default: `~/.config/vector`) |
 
