@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require_relative 'llm_document'
 
 module Scribe
   class EndpointNormalizer
@@ -22,7 +23,7 @@ module Scribe
       clean_query = normalize_to_hash(endpoint['cleanQueryParameters'])
       clean_body = normalize_to_hash(endpoint['cleanBodyParameters'])
 
-      {
+      normalized = {
         'id' => endpoint_id(group_name, method, uri),
         'title' => endpoint_title(metadata),
         'description' => metadata['description'] || '',
@@ -42,6 +43,9 @@ module Scribe
         '_raw' => endpoint,
         'openapi_yaml' => @openapi_builder.build(endpoint, group_name, method, uri, url_params, query_params, body_params)
       }
+
+      normalized['llm_document'] = LlmDocument.build(normalized)
+      normalized
     end
 
     private

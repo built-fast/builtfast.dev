@@ -16,6 +16,7 @@ permalink: /docs/llms.txt
 ## API Reference
 
 - [API Documentation](https://builtfast.dev/api/): Complete REST API reference with request/response examples
+- [API Endpoint Index (text)](https://builtfast.dev/docs/llms/api/index.txt): Per-endpoint LLM-ready .txt specs for agents
 - [OpenAPI Spec](https://builtfast.dev/api/openapi.yaml): Machine-readable API specification
 
 ## Resources

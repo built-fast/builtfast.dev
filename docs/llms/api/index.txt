@@ -1,0 +1,15 @@
+---
+layout: null
+permalink: /docs/llms/api/index.txt
+---
+# BuiltFast API Reference
+
+> API Base URL: https://api.builtfast.com/api/v1/vector
+> Each endpoint below is published as a standalone .txt (OpenAPI spec + description)
+> for LLM and agent use. Fetch an endpoint's file to integrate without copy/pasting.
+{%- for group in site.data.api_groups %}
+
+## {{ group.name }}
+{% for subgroup in group.subgroups %}{% for e in subgroup.endpoints %}
+- [{{ e.method }} {{ e.uri_display | remove: '/api/v1/vector' }} — {{ e.title }}](https://builtfast.dev/docs/llms/api/{{ e.id }}.txt): {{ e.description | strip_html | normalize_whitespace | truncate: 160 }}
+{%- endfor %}{% endfor %}{% endfor %}

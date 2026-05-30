@@ -7,21 +7,16 @@
   'use strict';
 
   /**
-   * Assemble the AI-friendly markdown content for an endpoint
+   * Assemble the AI-friendly markdown content for an endpoint.
+   * The endpoint body is pre-rendered at build time and shared with the
+   * /docs/llms/api/<slug>.txt files (see _plugins/scribe/llm_document.rb); here we
+   * just prepend the documentation-index discovery header.
    */
   function assembleAIContent(button) {
-    const title = button.dataset.endpointTitle || 'Untitled Endpoint';
-    const method = button.dataset.endpointMethod || 'GET';
-    const uri = button.dataset.endpointUri || '';
-
-    // Find hidden content in the same endpoint section
     const section = button.closest('.endpoint-section');
-    const descriptionEl = section?.querySelector('.endpoint-description-text');
-    const description = descriptionEl?.textContent?.trim() || '';
-    const yamlScript = section?.querySelector('.endpoint-openapi-yaml');
-    const openapiYaml = yamlScript?.textContent?.trim() || '';
+    const documentEl = section?.querySelector('.endpoint-llm-document');
+    const document = documentEl?.textContent?.trim() || '';
 
-    // Build the markdown content following Axiom's format
     const lines = [];
 
     // Documentation index reference
@@ -30,23 +25,7 @@
     lines.push('> Use this file to discover all available pages before exploring further.');
     lines.push('');
 
-    // Endpoint title and description
-    lines.push(`# ${title}`);
-    lines.push('');
-
-    if (description) {
-      lines.push(description);
-      lines.push('');
-    }
-
-    // OpenAPI spec
-    if (openapiYaml) {
-      lines.push('## OpenAPI');
-      lines.push('');
-      lines.push(`\`\`\`yaml ${method.toLowerCase()} ${uri}`);
-      lines.push(openapiYaml);
-      lines.push('```');
-    }
+    lines.push(document);
 
     return lines.join('\n');
   }
