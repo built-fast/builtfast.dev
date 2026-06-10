@@ -48,7 +48,9 @@ jobs:
         uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1.310.0
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
+          # Safe: this workflow only runs on main/schedule/manual (never PRs or forks),
+          # and GitHub scopes caches per-branch, so no untrusted ref can poison this cache.
+          bundler-cache: true # zizmor: ignore[cache-poisoning]
 
       - name: Build site
         run: bundle exec jekyll build --destination _site --verbose --trace
