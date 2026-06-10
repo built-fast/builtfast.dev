@@ -15,6 +15,9 @@ vendor/bundle/
 node_modules/
 npm-debug.log*
 
+# Cloudflare Wrangler
+.wrangler/
+
 # Environment
 .envrc
 .env

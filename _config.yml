@@ -116,6 +116,7 @@ exclude:
   - package-lock.json
   - script
   - _mockup.html
+  - wrangler.jsonc
 
 # Redirect settings
 redirect_from:

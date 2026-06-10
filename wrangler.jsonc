@@ -1,0 +1,13 @@
+{
+  // Static-assets-only worker: no "main"/Worker script, no Functions.
+  // Account ID is supplied via the CLOUDFLARE_ACCOUNT_ID env var (CI secret), not committed here.
+  "name": "dev-site",
+  "compatibility_date": "2026-06-10",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./_site",
+    // html_handling defaults to "auto-trailing-slash": Jekyll's /path/index.html is
+    // served at clean /path URLs (matches GitHub Pages). Left at the default.
+    "not_found_handling": "404-page" // serve _site/404.html on misses (matches Pages)
+  }
+}
