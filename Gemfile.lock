@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/built-fast/jekyll-lucide.git
-  revision: ec69a17604f5c42875633571c2bb486d5d5cbf03
+  revision: b02286f4e42e7a8d3a32515f5ccb953afef6d5c1
   branch: main
   specs:
     jekyll-lucide (0.1.0)
@@ -107,7 +107,7 @@ GEM
       tailwindcss-ruby
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    json (2.19.5)
+    json (2.19.8)
     kramdown (2.5.2)
       rexml (>= 3.4.4)
     kramdown-parser-gfm (1.1.0)
